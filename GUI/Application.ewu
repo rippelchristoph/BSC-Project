@@ -1,0 +1,219 @@
+$version 6.60
+
+// This is the root component of the entire GUI application.
+$rect <20,20,220,60>
+$output false
+class Application : Core::Root
+{
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #292A29FF;
+  }
+
+  $rect <820,0,1020,40>
+  inherited property Bounds = <0,0,800,480>;
+
+  // To do:
+  // 
+  // - The simplest way to compose the appearance of the application is to use the \
+  // 'Views' and 'Widget Sets' from the Gallery.
+  // 
+  // - To react to touch or keyboard events use the templates from the Gallery folder \
+  // 'Event Handlers'.
+  // 
+  // - To perform transitions (animations) use the templates from the Gallery folder \
+  // 'Effects'.
+  // 
+  // - To store values use the 'Variable', 'Array' and 'Property' templates available \
+  // in the Gallery folder 'Chora'.
+  // 
+  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
+  // in the Gallery folder 'Chora'.
+  note legend Note1
+  {
+    attr Bounds = <10,500,790,700>;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ToggleButton ButtonMenu1
+  {
+    preset Bounds = <0,0,140,30>;
+    preset Enabled = true;
+    preset OnSwitchOn = SlotMenu1On;
+    preset Active = true;
+    preset Caption = "Menu1";
+  }
+
+  $rect <20,20,160,60>
+  object XFlat::IconButton Button1
+  {
+    preset Bounds = <0,420,160,480>;
+    preset OnAction = SlotTest;
+    preset Caption = "Button1";
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ToggleButton ButtonMenu2
+  {
+    preset Bounds = <140,0,280,30>;
+    preset OnSwitchOn = SlotMenu2On;
+    preset Caption = "Menu2";
+  }
+
+  $rect <820,60,1020,100>
+  slot SlotMenu1On
+  {
+      ButtonMenu2.Active=false;
+      Button2.Visible=false;
+      Button2.Enabled=false;
+      Button1.Visible=true;
+      Button1.Enabled=true;
+  }
+
+  $rect <820,100,1020,140>
+  slot SlotMenu2On
+  {
+      ButtonMenu1.Active=false;
+      Button1.Visible=false;
+      Button1.Enabled=false;
+      Button2.Visible=true;
+      Button2.Enabled=true;
+     
+  }
+
+  $rect <20,20,160,60>
+  object XFlat::IconButton Button2
+  {
+    preset Bounds = <640,420,800,480>;
+    preset Enabled = false;
+    preset Visible = false;
+    preset OnAction = SlotTest;
+    preset Caption = "Button2";
+  }
+
+  $rect <1020,60,1220,100>
+  slot SlotTest
+  {
+    trace "called";
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzBar BarRemainingTime
+  {
+    preset Bounds = <10,190,180,240>;
+    preset MaxValue = 100;
+    preset CurrentValue = 0;
+  }
+
+  $rect <840,420,1040,460>
+  object Core::Timer Timer
+  {
+    preset OnTrigger = SlotTimerTrigger;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Start
+  {
+    preset Bounds = <10,100,90,130>;
+    preset OnAction = SlotStart;
+    preset Caption = "Start";
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider HorzSlider
+  {
+    preset Bounds = <10,130,180,200>;
+  }
+
+  $rect <830,180,1030,220>
+  slot SlotStart
+  {
+    BarRemainingTime.MaxValue=HorzSlider.CurrentValue;
+    Timer.Period=HorzSlider.CurrentValue*600;
+    //Timer.StartTimer;
+    Timer.Enabled=true;
+    //TimerMinuten.StartTimer;
+    TimerMinuten.Enabled=true;
+    trace "start";
+  }
+
+  $rect <840,380,1040,420>
+  object Core::Timer TimerMinuten
+  {
+    preset OnTrigger = SlotTimerMinuten;
+    preset Period = 600;
+    preset Enabled = false;
+  }
+
+  $rect <820,230,1020,270>
+  slot SlotTimerMinuten
+  {
+    BarRemainingTime.CurrentValue=BarRemainingTime.CurrentValue+1;
+    trace   BarRemainingTime.CurrentValue;
+  }
+
+  $rect <820,280,1020,320>
+  slot SlotTimerTrigger
+  {
+    TimerMinuten.StopTimer;
+    TimerMinuten.Enabled=false;
+    Timer.StopTimer;
+    Timer.Enabled=false;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Stop
+  {
+    preset Bounds = <100,100,180,130>;
+    preset OnAction = SlotStart;
+    preset Caption = "Stop";
+  }
+
+  $rect <20,20,160,60>
+  object Core::Outline Outline
+  {
+    preset Bounds = <0,0,800,480>;
+  }
+
+  $reorder Rectangle 147
+}
+
+// To do:
+// 
+// - Open the 'Application' component for editing. It represents your entire GUI. \
+// Use widgets, views, event handlers and effects from the Gallery to assemble there \
+// your desired GUI look and feel.
+// 
+// - Create your own GUI components, widgets, panels, etc. The Gallery folder 'Components' \
+// contains for this purpose various templates you can simply add to the unit and \
+// thus start your own component development.
+// 
+// - You can add your own bitmap and font resources to the unit. Use the templates \
+// 'Bitmap Resource' and 'Font Resource' from the Gallery folder 'Components' for \
+// this purpose.
+// 
+// - You can add here also constants to store e.g. multilingual text fragments. Use \
+// for this purpose the template 'Constant' from the Gallery folder 'Chora'.
+// 
+// - To add an interface for communication with the target device use the template \
+// 'Device Interface' from the Gallery folder 'Device'.
+note legend Note1
+{
+  attr Bounds = <20,80,710,380>;
+}
+
+// This is a font resource.
+$rect <230,20,430,60>
+$output false
+resource Resources::Font Font
+{
+  attr fontname FontName = Arial;
+  attr fontheight Height = 32;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = false;
+  attr fontitalic Italic = false;
+}
