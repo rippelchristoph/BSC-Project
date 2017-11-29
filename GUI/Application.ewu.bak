@@ -44,7 +44,6 @@ class Application : Core::Root
     preset OnSwitchOn = SlotMenu1On;
     preset Active = true;
     preset Caption = "Menu1";
-	penis
   }
 
   $rect <20,20,160,60>
