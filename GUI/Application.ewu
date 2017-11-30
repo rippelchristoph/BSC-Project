@@ -5,13 +5,6 @@ $rect <20,20,220,60>
 $output false
 class Application : Core::Root
 {
-  $rect <20,20,160,60>
-  object Views::Rectangle Rectangle
-  {
-    preset Bounds = <0,0,800,480>;
-    preset Color = #292A29FF;
-  }
-
   $rect <820,0,1020,40>
   inherited property Bounds = <0,0,800,480>;
 
@@ -37,147 +30,34 @@ class Application : Core::Root
   }
 
   $rect <20,20,160,60>
-  object Flat::ToggleButton ButtonMenu1
+  object Core::SlideTouchHandler SlideTouchHandler
   {
-    preset Bounds = <0,0,140,30>;
-    preset Enabled = true;
-    preset OnSwitchOn = SlotMenu1On;
-    preset Active = true;
-    preset Caption = "Menu1";
-  }
-
-  $rect <20,20,160,60>
-  object XFlat::IconButton Button1
-  {
-    preset Bounds = <0,420,160,480>;
-    preset OnAction = SlotTest;
-    preset Caption = "Button1";
-  }
-
-  $rect <20,20,160,60>
-  object Flat::ToggleButton ButtonMenu2
-  {
-    preset Bounds = <140,0,280,30>;
-    preset OnSwitchOn = SlotMenu2On;
-    preset Caption = "Menu2";
-  }
-
-  $rect <820,60,1020,100>
-  slot SlotMenu1On
-  {
-      ButtonMenu2.Active=false;
-      Button2.Visible=false;
-      Button2.Enabled=false;
-      Button1.Visible=true;
-      Button1.Enabled=true;
-  }
-
-  $rect <820,100,1020,140>
-  slot SlotMenu2On
-  {
-      ButtonMenu1.Active=false;
-      Button1.Visible=false;
-      Button1.Enabled=false;
-      Button2.Visible=true;
-      Button2.Enabled=true;
-     
-  }
-
-  $rect <20,20,160,60>
-  object XFlat::IconButton Button2
-  {
-    preset Bounds = <640,420,800,480>;
-    preset Enabled = false;
-    preset Visible = false;
-    preset OnAction = SlotTest;
-    preset Caption = "Button2";
-  }
-
-  $rect <1020,60,1220,100>
-  slot SlotTest
-  {
-    trace "called";
-  }
-
-  $rect <20,20,160,60>
-  object Flat::HorzBar BarRemainingTime
-  {
-    preset Bounds = <10,190,180,240>;
-    preset MaxValue = 100;
-    preset CurrentValue = 0;
-  }
-
-  $rect <840,420,1040,460>
-  object Core::Timer Timer
-  {
-    preset OnTrigger = SlotTimerTrigger;
-  }
-
-  $rect <20,20,160,60>
-  object Flat::ActionButton Start
-  {
-    preset Bounds = <10,100,90,130>;
-    preset OnAction = SlotStart;
-    preset Caption = "Start";
-  }
-
-  $rect <20,20,160,60>
-  object Flat::HorzSlider HorzSlider
-  {
-    preset Bounds = <10,130,180,200>;
-  }
-
-  $rect <830,180,1030,220>
-  slot SlotStart
-  {
-    BarRemainingTime.MaxValue=HorzSlider.CurrentValue;
-    Timer.Period=HorzSlider.CurrentValue*600;
-    //Timer.StartTimer;
-    Timer.Enabled=true;
-    //TimerMinuten.StartTimer;
-    TimerMinuten.Enabled=true;
-    trace "start";
-  }
-
-  $rect <840,380,1040,420>
-  object Core::Timer TimerMinuten
-  {
-    preset OnTrigger = SlotTimerMinuten;
-    preset Period = 600;
-    preset Enabled = false;
-  }
-
-  $rect <820,230,1020,270>
-  slot SlotTimerMinuten
-  {
-    BarRemainingTime.CurrentValue=BarRemainingTime.CurrentValue+1;
-    trace   BarRemainingTime.CurrentValue;
-  }
-
-  $rect <820,280,1020,320>
-  slot SlotTimerTrigger
-  {
-    TimerMinuten.StopTimer;
-    TimerMinuten.Enabled=false;
-    Timer.StopTimer;
-    Timer.Enabled=false;
-  }
-
-  $rect <20,20,160,60>
-  object Flat::ActionButton Stop
-  {
-    preset Bounds = <100,100,180,130>;
-    preset OnAction = SlotStart;
-    preset Caption = "Stop";
+    preset Bounds = <0,0,800,480>;
+    preset SnapLast = <800,0>;
+    preset SlideVert = false;
   }
 
   $rect <20,20,160,60>
   object Core::Outline Outline
   {
     preset Bounds = <0,0,800,480>;
+    preset SlideHandler = SlideTouchHandler;
+    preset Formation = Core::Formation.LeftToRight;
   }
 
-  $reorder Rectangle 147
+  $rect <20,20,160,60>
+  object Application::MainMenue Menu
+  {
+    preset Bounds = <30,990,830,1470>;
+    preset Embedded = true;
+  }
+
+  $rect <20,20,160,60>
+  object Application::Well Menu1
+  {
+    preset Bounds = <830,900,1630,1380>;
+    preset Embedded = true;
+  }
 }
 
 // To do:
@@ -216,4 +96,439 @@ resource Resources::Font Font
   attr fontaspectratio AspectRatio = 1.0;
   attr fontbold Bold = false;
   attr fontitalic Italic = false;
+}
+
+$rect <450,20,650,60>
+$output false
+class MainMenue : Core::Group
+{
+  $rect <820,110,1020,150>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <10,560,210,600>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,520,210,560>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  // To do:
+  // 
+  // - Adjust the visible size of your component (the thick blue border).
+  // 
+  // - The simplest way to compose the appearance of the component is to use the \
+  // 'Views' and 'Widget Sets' from the Gallery.
+  // 
+  // - To react to touch or keyboard events use the templates from the Gallery folder \
+  // 'Event Handlers'.
+  // 
+  // - To perform transitions (animations) use the templates from the Gallery folder \
+  // 'Effects'.
+  // 
+  // - To implement the interface of the component use the 'Property' template from \
+  // the Gallery folder 'Chora'.
+  // 
+  // - To store values use the 'Variable' and 'Array' templates available in the \
+  // Gallery folder 'Chora'.
+  // 
+  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
+  // in the Gallery folder 'Chora'.
+  // 
+  // - In the method 'UpdateViewState()' you can put code to update the state of \
+  // views enclosed in your component.
+  // 
+  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
+  // calculation for enclosed views.
+  note legend Note1
+  {
+    attr Bounds = <250,500,1030,820>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #292A29FF;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzBar BarRemainingTime
+  {
+    preset Bounds = <10,190,180,240>;
+    preset MaxValue = 100;
+    preset CurrentValue = 0;
+  }
+
+  $rect <820,390,1020,430>
+  object Core::Timer Timer
+  {
+    preset OnTrigger = SlotTimerTrigger;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Start
+  {
+    preset Bounds = <10,100,90,130>;
+    preset OnAction = SlotStart;
+    preset Caption = "Start";
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider HorzSlider
+  {
+    preset Bounds = <10,130,180,200>;
+  }
+
+  $rect <830,180,1030,220>
+  slot SlotStart
+  {
+    BarRemainingTime.MaxValue=HorzSlider.CurrentValue;
+    Timer.Period=HorzSlider.CurrentValue*60000;
+
+
+    //Timer.StartTimer;
+    Timer.Enabled=true;
+    //TimerMinuten.StartTimer;
+    TimerMinuten.Enabled=true;
+    trace "start";
+  }
+
+  $rect <820,350,1020,390>
+  object Core::Timer TimerMinuten
+  {
+    preset OnTrigger = SlotTimerMinuten;
+    preset Period = 60000;
+    preset Enabled = false;
+  }
+
+  $rect <820,230,1020,270>
+  slot SlotTimerMinuten
+  {
+    BarRemainingTime.CurrentValue=BarRemainingTime.CurrentValue+1;
+    trace   BarRemainingTime.CurrentValue;
+  }
+
+  $rect <820,280,1020,320>
+  slot SlotTimerTrigger
+  {
+    TimerMinuten.StopTimer;
+    TimerMinuten.Enabled=false;
+    Timer.StopTimer;
+    Timer.Enabled=false;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Stop
+  {
+    preset Bounds = <100,100,180,130>;
+    preset OnAction = SlotStart;
+    preset Caption = "Stop";
+  }
+}
+
+$rect <670,20,870,60>
+$output false
+class Well : Core::Group
+{
+  $rect <0,490,200,530>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <0,650,200,690>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <0,610,200,650>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  // To do:
+  // 
+  // - Adjust the visible size of your component (the thick blue border).
+  // 
+  // - The simplest way to compose the appearance of the component is to use the \
+  // 'Views' and 'Widget Sets' from the Gallery.
+  // 
+  // - To react to touch or keyboard events use the templates from the Gallery folder \
+  // 'Event Handlers'.
+  // 
+  // - To perform transitions (animations) use the templates from the Gallery folder \
+  // 'Effects'.
+  // 
+  // - To implement the interface of the component use the 'Property' template from \
+  // the Gallery folder 'Chora'.
+  // 
+  // - To store values use the 'Variable' and 'Array' templates available in the \
+  // Gallery folder 'Chora'.
+  // 
+  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
+  // in the Gallery folder 'Chora'.
+  // 
+  // - In the method 'UpdateViewState()' you can put code to update the state of \
+  // views enclosed in your component.
+  // 
+  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
+  // calculation for enclosed views.
+  note legend Note1
+  {
+    attr Bounds = <210,490,990,810>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::WarpImage WarpImage
+  {
+    preset Point4 = <0,480>;
+    preset Point3 = <800,480>;
+    preset Point2 = <800,0>;
+    preset Point1 = <0,0>;
+    preset Bitmap = Application::BMPWell;
+  }
+}
+
+$rect <890,150,1090,190>
+$output false
+resource Resources::Bitmap BMPWell
+{
+  attr bitmapfile FileName = .\Resources\48.jpg;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
 }
