@@ -1,7 +1,7 @@
 $version 6.60
 
 // This is the root component of the entire GUI application.
-$rect <20,20,220,60>
+$rect <10,60,210,100>
 $output false
 class Application : Core::Root
 {
@@ -46,14 +46,14 @@ class Application : Core::Root
   }
 
   $rect <20,20,160,60>
-  object Application::MainMenue Menu
+  object Application::MainMenue MainMenu
   {
     preset Bounds = <30,990,830,1470>;
     preset Embedded = true;
   }
 
   $rect <20,20,160,60>
-  object Application::MainMenue Menu1
+  object Application::Well Well
   {
     preset Bounds = <830,900,1630,1380>;
     preset Embedded = true;
@@ -81,11 +81,11 @@ class Application : Core::Root
 // 'Device Interface' from the Gallery folder 'Device'.
 note legend Note1
 {
-  attr Bounds = <20,80,710,380>;
+  attr Bounds = <940,10,1630,310>;
 }
 
 // This is a font resource.
-$rect <230,20,430,60>
+$rect <460,30,660,70>
 $output false
 resource Resources::Font Font
 {
@@ -98,7 +98,7 @@ resource Resources::Font Font
   attr fontitalic Italic = false;
 }
 
-$rect <450,20,650,60>
+$rect <40,100,240,140>
 $output false
 class MainMenue : Core::Group
 {
@@ -268,7 +268,7 @@ class MainMenue : Core::Group
   object Views::Rectangle Rectangle
   {
     preset Bounds = <0,0,800,480>;
-    preset Color = #292A29FF;
+    preset Color = #747674FF;
   }
 
   $rect <20,20,160,60>
@@ -346,10 +346,17 @@ class MainMenue : Core::Group
   }
 }
 
-$rect <670,20,870,60>
+$rect <40,140,240,180>
 $output false
 class Well : Core::Group
 {
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #747674FF;
+  }
+
   $rect <0,490,200,530>
   inherited property Bounds = <0,0,800,480>;
 
@@ -513,19 +520,1367 @@ class Well : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Views::Image Image
+  object Application::WellPart A1
   {
-    preset Bounds = <40,30,840,450>;
-    preset Bitmap = Application::BMPWell;
+    preset Bounds = <230,50,300,120>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart B1
+  {
+    preset Bounds = <230,120,300,190>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart C1
+  {
+    preset Bounds = <230,190,300,260>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart D1
+  {
+    preset Bounds = <230,260,300,330>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart E1
+  {
+    preset Bounds = <230,330,300,400>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart F1
+  {
+    preset Bounds = <230,400,300,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart A2
+  {
+    preset Bounds = <300,50,370,120>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart B2
+  {
+    preset Bounds = <300,120,370,190>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart C2
+  {
+    preset Bounds = <300,190,370,260>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart D2
+  {
+    preset Bounds = <300,260,370,330>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart E2
+  {
+    preset Bounds = <300,330,370,400>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart F2
+  {
+    preset Bounds = <300,400,370,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart A3
+  {
+    preset Bounds = <370,50,440,120>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart B3
+  {
+    preset Bounds = <370,120,440,190>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart C3
+  {
+    preset Bounds = <370,190,440,260>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart D3
+  {
+    preset Bounds = <370,260,440,330>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart E3
+  {
+    preset Bounds = <370,330,440,400>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart F3
+  {
+    preset Bounds = <370,400,440,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart A4
+  {
+    preset Bounds = <440,50,510,120>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart B4
+  {
+    preset Bounds = <440,120,510,190>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart C4
+  {
+    preset Bounds = <440,190,510,260>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart D4
+  {
+    preset Bounds = <440,260,510,330>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart E4
+  {
+    preset Bounds = <440,330,510,400>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart F4
+  {
+    preset Bounds = <440,400,510,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart A5
+  {
+    preset Bounds = <510,50,580,120>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart B5
+  {
+    preset Bounds = <510,120,580,190>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart C5
+  {
+    preset Bounds = <510,190,580,260>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart D5
+  {
+    preset Bounds = <510,260,580,330>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart E5
+  {
+    preset Bounds = <510,330,580,400>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart F5
+  {
+    preset Bounds = <510,400,580,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart A6
+  {
+    preset Bounds = <580,50,650,120>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart B6
+  {
+    preset Bounds = <580,120,650,190>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart C6
+  {
+    preset Bounds = <580,190,650,260>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart D6
+  {
+    preset Bounds = <580,260,650,330>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart E6
+  {
+    preset Bounds = <580,330,650,400>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart F6
+  {
+    preset Bounds = <580,400,650,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart A7
+  {
+    preset Bounds = <650,50,720,120>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart B7
+  {
+    preset Bounds = <650,120,720,190>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart C7
+  {
+    preset Bounds = <650,190,720,260>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart D7
+  {
+    preset Bounds = <650,260,720,330>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart E7
+  {
+    preset Bounds = <650,330,720,400>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart F7
+  {
+    preset Bounds = <650,400,720,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart A8
+  {
+    preset Bounds = <720,50,790,120>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart B8
+  {
+    preset Bounds = <720,120,790,190>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart C8
+  {
+    preset Bounds = <720,190,790,260>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart D8
+  {
+    preset Bounds = <720,260,790,330>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart E8
+  {
+    preset Bounds = <720,330,790,400>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellPart F8
+  {
+    preset Bounds = <720,400,790,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::Clock Time
+  {
+    preset Bounds = <10,10,240,40>;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::Switch Switch
+  {
+    preset Bounds = <30,108,90,153>;
+    preset OnChange = Slot;
+  }
+
+  $rect <860,140,1060,180>
+  slot Slot
+  {
+    timeToWellPart(6,4,Time.TimeProperty); // (int32 Column, int32 Row, string Time)
+
+  }
+
+  // Writes the given Time in the chosen WellPart
+  $rect <830,240,1030,280>
+  method void timeToWellPart( arg int32 aColumn, arg int32 aRow, arg string aTime )
+  {
+    WellPartArray[aColumn,aRow].TimeProperty=aTime;
+
+
+
+  }
+
+  $rect <860,60,1060,100>
+  array Application::WellPart WellPartArray[ 8,6 ] =
+  (
+    Default[0, 0] = A1;
+    Default[0, 1] = B1;
+    Default[0, 2] = C1;
+    Default[0, 3] = D1;
+    Default[0, 4] = E1;
+    Default[0, 5] = F1;
+    Default[1, 0] = A2;
+    Default[1, 1] = B2;
+    Default[1, 2] = C2;
+    Default[1, 3] = D2;
+    Default[1, 4] = E2;
+    Default[1, 5] = F2;
+    Default[2, 0] = A3;
+    Default[2, 1] = B3;
+    Default[2, 2] = C3;
+    Default[2, 3] = D3;
+    Default[2, 4] = E3;
+    Default[2, 5] = F3;
+    Default[3, 0] = A4;
+    Default[3, 1] = B4;
+    Default[3, 2] = C4;
+    Default[3, 3] = D4;
+    Default[3, 4] = E4;
+    Default[3, 5] = F4;
+    Default[4, 0] = A5;
+    Default[4, 1] = B5;
+    Default[4, 2] = C5;
+    Default[4, 3] = D5;
+    Default[4, 4] = E5;
+    Default[4, 5] = F5;
+    Default[5, 0] = A6;
+    Default[5, 1] = B6;
+    Default[5, 2] = C6;
+    Default[5, 3] = D6;
+    Default[5, 4] = E6;
+    Default[5, 5] = F6;
+    Default[6, 0] = A7;
+    Default[6, 1] = B7;
+    Default[6, 2] = C7;
+    Default[6, 3] = D7;
+    Default[6, 4] = E7;
+    Default[6, 5] = F7;
+    Default[7, 0] = A8;
+    Default[7, 1] = B8;
+    Default[7, 2] = C8;
+    Default[7, 3] = D8;
+    Default[7, 4] = E8;
+    Default[7, 5] = F8;
+  );
+
+  $reorder Rectangle 76
+}
+
+$rect <70,260,270,300>
+$output false
+class WellPart : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,70,70>;
+
+  $rect <10,390,210,430>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,350,210,390>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  // To do:
+  // 
+  // - Adjust the visible size of your component (the thick blue border).
+  // 
+  // - The simplest way to compose the appearance of the component is to use the \
+  // 'Views' and 'Widget Sets' from the Gallery.
+  // 
+  // - To react to touch or keyboard events use the templates from the Gallery folder \
+  // 'Event Handlers'.
+  // 
+  // - To perform transitions (animations) use the templates from the Gallery folder \
+  // 'Effects'.
+  // 
+  // - To implement the interface of the component use the 'Property' template from \
+  // the Gallery folder 'Chora'.
+  // 
+  // - To store values use the 'Variable' and 'Array' templates available in the \
+  // Gallery folder 'Chora'.
+  // 
+  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
+  // in the Gallery folder 'Chora'.
+  // 
+  // - In the method 'UpdateViewState()' you can put code to update the state of \
+  // views enclosed in your component.
+  // 
+  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
+  // calculation for enclosed views.
+  note legend Note1
+  {
+    attr Bounds = <220,230,1000,550>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::WarpImage WarpImage
+  {
+    preset Point4 = <0,70>;
+    preset Point3 = <70,70>;
+    preset Point2 = <70,0>;
+    preset Point1 = <0,0>;
+    preset Bitmap = Application::Oval;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Bounds = <0,20,70,50>;
+    preset RowDistance = 10;
+    preset AutoSize = false;
+    preset WrapWidth = 0;
+    preset WrapText = true;
+    preset String = "";
+    preset Font = Resources::FontArial12;
+  }
+
+  $rect <90,10,290,50>
+  property string TimeProperty = "";
+
+  $rect <90,50,290,90>
+  onset TimeProperty
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure TimeProperty == value )
+      return;
+
+
+    // Remember the property's new value.
+    pure TimeProperty = value;
+
+    Text.String = TimeProperty;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <90,90,290,130>
+  onget TimeProperty
+  {
+    return pure TimeProperty;
   }
 }
 
-$rect <890,150,1090,190>
+$rect <100,300,300,340>
 $output false
-resource Resources::Bitmap BMPWell
+resource Resources::Bitmap Oval
 {
-  attr bitmapfile FileName = .\Resources\48.jpg;
+  attr bitmapfile FileName = .\Resources\oval.png;
   attr alphafile AlphaName;
   attr framesize FrameSize;
   attr framedelay FrameDelay;
+}
+
+// The class Core::Time is used for date and time operations. Objects of this class \
+// can store the time, convert it and format strings with the time, etc.
+$rect <100,220,290,260>
+$output false
+class Time
+{
+  $rect <200,610,390,650>
+  method string getMonthName( arg int32 aMonth, arg bool aAbbreviated )
+  {
+    if ( aAbbreviated )
+      switch ( aMonth )
+      {
+        case 1  : return Resources::JanuaryAbbr;
+        case 2  : return Resources::FebruaryAbbr;
+        case 3  : return Resources::MarchAbbr;
+        case 4  : return Resources::AprilAbbr;
+        case 5  : return Resources::MayAbbr;
+        case 6  : return Resources::JuneAbbr;
+        case 7  : return Resources::JulyAbbr;
+        case 8  : return Resources::AugustAbbr;
+        case 9  : return Resources::SeptemberAbbr;
+        case 10 : return Resources::OctoberAbbr;
+        case 11 : return Resources::NovemberAbbr;
+        case 12 : return Resources::DecemberAbbr;
+
+        default  : return "";
+      }
+    else
+      switch ( aMonth )
+      {
+        case 1  : return Resources::January;
+        case 2  : return Resources::February;
+        case 3  : return Resources::March;
+        case 4  : return Resources::April;
+        case 5  : return Resources::May;
+        case 6  : return Resources::June;
+        case 7  : return Resources::July;
+        case 8  : return Resources::August;
+        case 9  : return Resources::September;
+        case 10 : return Resources::October;
+        case 11 : return Resources::November;
+        case 12 : return Resources::December;
+
+        default  : return "";
+      }
+  }
+
+  $rect <200,570,390,610>
+  method string getDayOfWeekName( arg int32 aDayOfWeek, arg bool aAbbreviated )
+  {
+    if ( aAbbreviated )
+      switch ( aDayOfWeek )
+      {
+        case 1  : return Resources::MondayAbbr;
+        case 2  : return Resources::TuesdayAbbr;
+        case 3  : return Resources::WednesdayAbbr;
+        case 4  : return Resources::ThursdayAbbr;
+        case 5  : return Resources::FridayAbbr;
+        case 6  : return Resources::SaturdayAbbr;
+        case 0  : return Resources::SundayAbbr;
+        default : return "";
+      }
+    else
+      switch ( aDayOfWeek )
+      {
+        case 1  : return Resources::Monday;
+        case 2  : return Resources::Tuesday;
+        case 3  : return Resources::Wednesday;
+        case 4  : return Resources::Thursday;
+        case 5  : return Resources::Friday;
+        case 6  : return Resources::Saturday;
+        case 0  : return Resources::Sunday;
+        default : return "";
+      }
+  }
+
+  $rect <10,650,200,690>
+  method uint32 getCurrentTime()
+  {
+    var uint32 result;
+
+    $if $prototyper
+      result = EwGetTime();
+    $endif
+
+    $if !$prototyper && ( $platform != *.WebGL.* )
+      native ( result )
+      {
+        result = (XUInt32)EwGetTime();
+      }
+    $endif
+
+    $if !$prototyper && ( $platform == *.WebGL.* )
+      native ( result )
+      {
+        result = (( new Date ).getTime() / 1000 ) | 0;
+      }
+    $endif
+
+    return result;
+  }
+
+  $rect <10,610,200,650>
+  method int32 days2MonthLeapYear( arg int32 aMonth )
+  {
+    switch ( aMonth )
+    {
+      case 0  : return 0;
+      case 1  : return 31;
+      case 2  : return 60;
+      case 3  : return 91;
+      case 4  : return 121;
+      case 5  : return 152;
+      case 6  : return 182;
+      case 7  : return 213;
+      case 8  : return 244;
+      case 9  : return 274;
+      case 10 : return 305;
+      case 11 : return 335;
+      case 12 : return 366;
+      default : return 0;
+    }
+  }
+
+  $rect <10,570,200,610>
+  method int32 days2Month( arg int32 aMonth )
+  {
+    switch ( aMonth )
+    {
+      case 0  : return 0;
+      case 1  : return 31; 
+      case 2  : return 59;
+      case 3  : return 90;
+      case 4  : return 120;
+      case 5  : return 151;
+      case 6  : return 181;
+      case 7  : return 212;
+      case 8  : return 243;
+      case 9  : return 273;
+      case 10 : return 304;
+      case 11 : return 334;
+      case 12 : return 365;
+      default : return 0;
+    }
+  }
+
+  $rect <370,320,550,360>
+  onget String
+  {
+    var string date = string( Year, 4 ) + "-" + string( Month, 2 ) + "-" + string( Day, 2 );
+    var string time = string( Hour, 2 ) + ":" + string( Minute, 2 ) + ":" + string( Second, 2 );
+
+    return date + " " + time;
+  }
+
+  $rect <190,360,370,400>
+  onget Time
+  {
+    var int32 year = Year;
+    var int32 days;
+
+    if (( year % 4 ) != 0 )
+    {
+      year = year - 1970;
+      days = year * 365 + ( year + 1 ) / 4;
+      days = days + days2Month( Month - 1 ) + Day - 1;
+    }
+    else
+    {
+      year = year - 1970;
+      days = year * 365 + ( year + 1 ) / 4;
+      days = days + days2MonthLeapYear( Month - 1 ) + Day - 1;
+    }
+
+    // Now get the total number of seconds since 1.1.1970
+    return ( uint32( days ) * 60 * 60 * 24 ) +
+           ( uint32( Hour ) * 60 * 60 ) + 
+           ( uint32( Minute ) * 60 ) +
+             uint32( Second );
+  }
+
+  $rect <190,320,370,360>
+  onset Time
+  {
+    var int32 day   = int32(( value / ( 60 * 60 * 24 )) + 365 );
+    var int32 year4 = day / ( 4 * 365 + 1 );
+    var int32 year;
+    var int32 month;
+
+    day  = day - ( year4 * ( 4 * 365 + 1 ));
+    year = day / 365;
+      
+    if ( year == 4 )
+      year = 3;
+
+    day  = day - ( year * 365 );
+    year = ( year4 * 4 ) + year + 1969;
+
+    // all months have less than 32 days, days >> 5 is a good estimate for the month.
+    month = day >> 5;
+
+    // correct month if necessary
+    if (( year % 4 ) != 0 )
+    {
+      /* no leap year */
+      if ( day >= days2Month( month + 1 ))
+        month = month + 1;
+
+      day = day - days2Month( month );
+    }
+    else
+    {
+      // leap year
+      if ( day >= days2MonthLeapYear( month + 1 ))
+        month = month + 1;
+
+      day = day - days2MonthLeapYear( month );
+    }
+
+    Year  = year;
+    Month = month + 1;
+    Day   = day   + 1;
+
+    Hour   = int32(( value / ( 60 * 60 )) % 24 );
+    Minute = int32(( value / 60 ) % 60 );
+    Second = int32( value % 60 );
+  }
+
+  $rect <10,320,190,360>
+  onget CurrentTime
+  {
+    return ( new Core::Time ).Initialize( getCurrentTime());
+  }
+
+  $rect <370,230,550,270>
+  onget WeekOfYear
+  {
+    var int32 days = DayOfYear - 1;
+    var int32 dow  = int32((( Time / ( 60 * 60 * 24 )) - days + 10 ) % 7 );
+
+    return ( days + dow ) / 7;
+  }
+
+  $rect <190,230,370,270>
+  onget DayOfYear
+  {
+    var int32 days     = int32( Time / ( 60 * 60 * 24 ));
+    var int32 leapYear = ( days + 365 ) / ( 4 * 365 + 1 );
+    var int32 year     = ( days - leapYear ) / 365;
+
+    return days - ( year * 365 ) + (( year + 1 ) / 4 ) + 1;
+  }
+
+  $rect <10,230,190,270>
+  onget DayOfWeek
+  {
+    return int32((( Time / ( 60 * 60 * 24 )) + 4 ) % 7 );
+
+  }
+
+  $rect <370,140,550,180>
+  onset Second
+  {
+    if ( value < 0 )
+      value = 0;
+
+    if ( value > 59 )
+      value = 59;
+
+    pure Second = value;
+  }
+
+  $rect <190,140,370,180>
+  onset Minute
+  {
+    if ( value < 0 )
+      value = 0;
+
+    if ( value > 59 )
+      value = 59;
+
+    pure Minute = value;
+  }
+
+  $rect <10,140,190,180>
+  onset Hour
+  {
+    if ( value < 0 )
+      value = 0;
+
+    if ( value > 23 )
+      value = 23;
+
+    pure Hour = value;
+  }
+
+  $rect <370,50,550,90>
+  onset Day
+  {
+    if ( value < 1 )
+      value = 1;
+
+    if ( value > 31 )
+      value = 31;
+
+    pure Day = value;
+  }
+
+  $rect <190,50,370,90>
+  onset Month
+  {
+    if ( value < 1 )
+      value = 1;
+
+    if ( value > 12 )
+      value = 12;
+
+    pure Month = value;
+  }
+
+  $rect <10,50,190,90>
+  onset Year
+  {
+    if ( value < 1970 )
+      value = 1970;
+
+    pure Year = value;
+  }
+
+  // The method Format() converts the stored date and time accordingly to the supplied \
+  // aFormat parameter in a string. The aFormat parameter consists of format codes, \
+  // preceded by the percent sign '%'. At the runtime the codes are replaced with \
+  // their corresponding content. All other signs that do not begin with % are simply \
+  // taken over from aFormat to the output string. Following codes are available:
+  // -%d Day of month as decimal number (01-31)
+  // -%H Hour in 24-hour format (00-23)
+  // -%I Hour in 12-hour format (01-12)
+  // -%m Month as decimal number (01-12)
+  // -%M Minute as decimal number (00-59)
+  // -%p AP / PM indicator
+  // -%S Second as decimal number (00-59)
+  // -%w Weekday as decimal number (0-6; Sunday is 0)
+  // -%y Year without century, as decimal number (00-99)
+  // -%Y Year with century as decimal number
+  // -%j Day of year as decimal number (001-366)
+  // -%W Week of year as decimal number with Monday as first day of week (00-53)
+  // -%a Abbreviated weekday name
+  // -%A Weekday name
+  // -%b Abbreviated month name
+  // -%B Month name
+  // To remove the leading zeros, the '#' sign may prefix the following format code. \
+  // For example '%#m' will format the month as a decimal number in the range 1-12. \
+  // In contrast to it, '%m' formats the number with the leading zero sign 01-12.
+  // The month and weekday names are stored in constants within the unit @Resources. \
+  // To adapt them to a new language, you can create variants of these constants.
+  $rect <370,420,550,460>
+  method string Format( arg string aFormat )
+  {
+    var string result = "";
+    var int32  inx    = 0;
+
+    // Repeat until the whole format string is processed.
+    while ((int32)aFormat[ inx ] != 0 )
+    {
+      // Is this a special escape sequence?
+      if ( aFormat[ inx ] == '%' )
+      {
+        var int32 leadingZeros = 1;
+
+        // Skip over the leading percent sign.
+        inx = inx + 1;
+
+        // The '#' sign removes leading zeros in the following escape sequence.
+        if ( aFormat[ inx ] == '#' )
+        {
+          // Skip over the '#' sign.
+          inx = inx + 1;
+          leadingZeros = 0;
+        }
+
+        // Get the code of the escape sequence.
+        switch ( aFormat[ inx ])
+        {
+          case 'd' : result = result + string( Day,  2 * leadingZeros );
+          case 'H' : result = result + string( Hour, 2 * leadingZeros );
+          case 'I' :
+            if (( Hour % 12 ) == 0 )
+              result = result + "12";
+            else
+              result = result + string( Hour % 12, 2 * leadingZeros );
+          case 'm' : result = result + string( Month,  2 * leadingZeros );
+          case 'M' : result = result + string( Minute, 2 * leadingZeros );
+          case 'p' :
+            if ( Hour < 12 )
+              result = result + "AM";
+            else
+              result = result + "PM";
+          case 'S' : result = result + string( Second, 2 * leadingZeros );
+          case 'w' : result = result + string( DayOfWeek, leadingZeros );
+          case 'y' : result = result + string( Year % 100, 2 * leadingZeros );
+          case 'Y' : result = result + string( Year, 4 * leadingZeros );
+          case '%' : result = result + "%";
+
+          case 'j' : result = result + string( DayOfYear,  3 * leadingZeros );
+          case 'W' : result = result + string( WeekOfYear, 2 * leadingZeros );
+
+          case 'a' : result = result + getDayOfWeekName( DayOfWeek, true );
+          case 'A' : result = result + getDayOfWeekName( DayOfWeek, false );
+          case 'b' : result = result + getMonthName( Month, true );
+          case 'B' : result = result + getMonthName( Month, false );
+
+          default  :;
+        }
+        inx = inx + 1;
+      }
+
+      // This is a normal sign - take it over.
+      else
+      {
+        result = result + aFormat[ inx ];
+        inx = inx + 1;
+      }
+    }
+
+    return result;
+  }
+
+  // The method Initialize2() initializes this Core::Time object with the given time \
+  // and date and returns this object.
+  $rect <190,460,370,500>
+  method Core::Time Initialize2( arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute, arg int32 aSecond )
+  {
+    Year   = aYear;
+    Month  = aMonth;
+    Day    = aDay;
+    Hour   = aHour;
+    Minute = aMinute;
+    Second = aSecond;
+
+    return this;
+  }
+
+  // The method Initialize() initializes this Core::Time object with the given time \
+  // as number of seconds since 1.1.1970 and returns this object.
+  $rect <190,420,370,460>
+  method Core::Time Initialize( arg uint32 aTime )
+  {
+    Time = aTime;
+    return this;
+  }
+
+  // The method Difference() calculates a delta value between this time object and \
+  // the object passed in the parameter aTime. The method creates and initializes \
+  // a new Core::TimeSpan object with the calculated difference.
+  $rect <10,500,190,540>
+  method Core::TimeSpan Difference( arg Core::Time aTime )
+  {
+    if ( aTime == null )
+      return (new Core::TimeSpan).Initialize( int32( Time ));
+
+    return (new Core::TimeSpan).Initialize( int32( Time - aTime.Time ));
+  }
+
+  // The method Subtract() calculates a new time value by a subtraction of the aTimeSpan \
+  // from this time object. The method creates a new Core::Time object and initializes \
+  // it with the new time and date value.
+  $rect <10,460,190,500>
+  method Core::Time Subtract( arg Core::TimeSpan aTimeSpan )
+  {
+    if ( aTimeSpan == null )
+      return this;
+
+    return (new Core::Time).Initialize( uint32( Time - aTimeSpan.Time ));
+  }
+
+  // The method Add() calculates a new time value by an addition of the aTimeSpan \
+  // to this time object. The method creates a new Core::Time object and initializes \
+  // it with the new time and date value.
+  $rect <10,420,190,460>
+  method Core::Time Add( arg Core::TimeSpan aTimeSpan )
+  {
+    if ( aTimeSpan == null )
+      return this;
+
+    return (new Core::Time).Initialize( uint32( Time + aTimeSpan.Time ));
+  }
+
+  // The property 'String' stores the time as a string: "YYYY-MM-DD hh:mm:ss". This \
+  // property is read only - it is not possible to assign a value to it.
+  $rect <370,280,550,320>
+  property string String;
+
+  // The property 'Time' stores the time as the number of seconds since 1.1.1970. \
+  // The Core::Time object converts the given seconds in year, month, day, hour, \
+  // etc.
+  $rect <190,280,370,320>
+  property uint32 Time;
+
+  // The property 'CurrentTime' stores the current time. This property is read only \
+  // - it is not possible to assign a value to it.
+  $rect <10,280,190,320>
+  property Core::Time CurrentTime;
+
+  // The property 'WeekOfYear' contains the week of the year as a number in the range \
+  // 0 .. 53. Each week starts with Monday. This property is read only - it is not \
+  // possible to assign a value to it.
+  $rect <370,190,550,230>
+  property int32 WeekOfYear;
+
+  // The property 'DayOfYear' contains the day of the year as a number in the range \
+  // 1 .. 366. This property is read only - it is not possible to assign a value \
+  // to it.
+  $rect <190,190,370,230>
+  property int32 DayOfYear;
+
+  // The property 'DayOfWeek' contains the day of the week as a number in the range \
+  // 0 .. 6. The value 0 corresponds to Sunday, 1 to Monday, etc. This property is \
+  // read only - it is not possible to assign a value to it.
+  $rect <10,190,190,230>
+  property int32 DayOfWeek;
+
+  // The property 'Second' stores the number of seconds.
+  $rect <370,100,550,140>
+  property int32 Second;
+
+  // The property 'Minute' stores the number of minutes.
+  $rect <190,100,370,140>
+  property int32 Minute;
+
+  // The property 'Hour' stores the number of hours since midnight.
+  $rect <10,100,190,140>
+  property int32 Hour;
+
+  // The property 'Day' stores the day in range 1 .. 31.
+  $rect <370,10,550,50>
+  property int32 Day;
+
+  // The property 'Month' stores the month in range 1 .. 12.
+  $rect <190,10,370,50>
+  property int32 Month;
+
+  // The property 'Year' stores the year including the century.
+  $rect <10,10,190,50>
+  property int32 Year;
+}
+
+$rect <70,180,270,220>
+$output false
+class Clock : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,220,30>;
+
+  $rect <10,390,210,430>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,350,210,390>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  // To do:
+  // 
+  // - Adjust the visible size of your component (the thick blue border).
+  // 
+  // - The simplest way to compose the appearance of the component is to use the \
+  // 'Views' and 'Widget Sets' from the Gallery.
+  // 
+  // - To react to touch or keyboard events use the templates from the Gallery folder \
+  // 'Event Handlers'.
+  // 
+  // - To perform transitions (animations) use the templates from the Gallery folder \
+  // 'Effects'.
+  // 
+  // - To implement the interface of the component use the 'Property' template from \
+  // the Gallery folder 'Chora'.
+  // 
+  // - To store values use the 'Variable' and 'Array' templates available in the \
+  // Gallery folder 'Chora'.
+  // 
+  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
+  // in the Gallery folder 'Chora'.
+  // 
+  // - In the method 'UpdateViewState()' you can put code to update the state of \
+  // views enclosed in your component.
+  // 
+  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
+  // calculation for enclosed views.
+  note legend Note1
+  {
+    attr Bounds = <220,230,1000,550>;
+  }
+
+  $rect <250,60,450,100>
+  slot Slot
+  {
+    var Core::Time currentT= Time.CurrentTime;
+    TimeProperty=string(currentT.Day)+"."+string(currentT.Month)+"."+string(currentT.Year)+" "+string(currentT.Hour)+":"+string(currentT.Minute)+":"+string(currentT.Second);
+  }
+
+  $rect <250,0,450,40>
+  object Core::Timer Timer
+  {
+    preset OnTrigger = Slot;
+    preset Period = 500;
+    preset Begin = 0;
+    preset Enabled = true;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TimeText
+  {
+    preset Bounds = <0,0,220,30>;
+    preset AutoSize = false;
+    preset String = "00.00.0000 00:00:00";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <250,100,450,140>
+  object Application::Time Time;
+
+  $rect <500,20,700,60>
+  property string TimeProperty = 0;
+
+  $rect <500,60,700,100>
+  onset TimeProperty
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure TimeProperty == value )
+      return;
+    TimeText.String=TimeProperty;
+
+    // Remember the property's new value.
+    pure TimeProperty = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <500,100,700,140>
+  onget TimeProperty
+  {
+    return pure TimeProperty;
+  }
 }

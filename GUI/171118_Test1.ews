@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::Application;
+attr active = Application::Well;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Application::MainMenue.SlotTimerMinuten;
-attr codeSelEnd = <0,0>;
-attr codeSelStart = <0,0>;
+attr codeInspector = Application::Well.Slot;
+attr codeSelEnd = <30,0>;
+attr codeSelStart = <30,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -41,7 +41,7 @@ view unit Application
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
+  attr zoom = 1.5;
 }
 
 view class Application::Application
@@ -53,7 +53,7 @@ view class Application::Application
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
-  attr zoom = 0.25;
+  attr zoom = 0.75;
 }
 
 view class Application::MainMenue
@@ -71,6 +71,37 @@ view class Application::MainMenue
 
 view class Application::Well
 {
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Slot;
+  attr codeSelEnd = <26,1>;
+  attr codeSelStart = <26,1>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::WellPart
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = OnSetTimeProperty;
+  attr codeSelEnd = <16,5>;
+  attr codeSelStart = <16,5>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.5;
+}
+
+view class Application::Clock
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Slot;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
