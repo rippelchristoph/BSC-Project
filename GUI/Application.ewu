@@ -48,14 +48,14 @@ class Application : Core::Root
   $rect <20,20,160,60>
   object Application::MainMenue MainMenu
   {
-    preset Bounds = <30,990,830,1470>;
+    preset Bounds = <49,720,849,1200>;
     preset Embedded = true;
   }
 
   $rect <20,20,160,60>
-  object Application::Well Well
+  object Application::Well WellObj
   {
-    preset Bounds = <830,900,1630,1380>;
+    preset Bounds = <889,800,1689,1280>;
     preset Embedded = true;
   }
 }
@@ -85,7 +85,7 @@ note legend Note1
 }
 
 // This is a font resource.
-$rect <460,30,660,70>
+$rect <500,30,700,70>
 $output false
 resource Resources::Font Font
 {
@@ -272,81 +272,49 @@ class MainMenue : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::HorzBar BarRemainingTime
+  object Application::SampleController SCA
   {
-    preset Bounds = <10,190,180,240>;
-    preset MaxValue = 100;
-    preset CurrentValue = 0;
-  }
-
-  $rect <820,390,1020,430>
-  object Core::Timer Timer
-  {
-    preset OnTrigger = SlotTimerTrigger;
+    preset Bounds = <20,90,640,150>;
+    preset NameProperty = '1';
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton Start
+  object Application::SampleController SCA1
   {
-    preset Bounds = <10,100,90,130>;
-    preset OnAction = SlotStart;
-    preset Caption = "Start";
+    preset Bounds = <20,150,640,210>;
+    preset NameProperty = '2';
   }
 
   $rect <20,20,160,60>
-  object Flat::HorzSlider HorzSlider
+  object Application::SampleController SCA2
   {
-    preset Bounds = <10,130,180,200>;
-  }
-
-  $rect <830,180,1030,220>
-  slot SlotStart
-  {
-    BarRemainingTime.MaxValue=HorzSlider.CurrentValue;
-    Timer.Period=HorzSlider.CurrentValue*60000;
-
-
-    //Timer.StartTimer;
-    Timer.Enabled=true;
-    //TimerMinuten.StartTimer;
-    TimerMinuten.Enabled=true;
-    trace "start";
-  }
-
-  $rect <820,350,1020,390>
-  object Core::Timer TimerMinuten
-  {
-    preset OnTrigger = SlotTimerMinuten;
-    preset Period = 60000;
-    preset Enabled = false;
-  }
-
-  $rect <820,230,1020,270>
-  slot SlotTimerMinuten
-  {
-    BarRemainingTime.CurrentValue=BarRemainingTime.CurrentValue+1;
-    trace   BarRemainingTime.CurrentValue;
-  }
-
-  $rect <820,280,1020,320>
-  slot SlotTimerTrigger
-  {
-    TimerMinuten.StopTimer;
-    TimerMinuten.Enabled=false;
-    Timer.StopTimer;
-    Timer.Enabled=false;
+    preset Bounds = <20,210,640,270>;
+    preset NameProperty = '3';
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton Stop
+  object Application::SampleController SCA3
   {
-    preset Bounds = <100,100,180,130>;
-    preset OnAction = SlotStart;
-    preset Caption = "Stop";
+    preset Bounds = <20,270,640,330>;
+    preset NameProperty = '4';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA4
+  {
+    preset Bounds = <20,330,640,390>;
+    preset NameProperty = '5';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA5
+  {
+    preset Bounds = <20,390,640,450>;
+    preset NameProperty = '6';
   }
 }
 
-$rect <40,140,240,180>
+$rect <40,180,240,220>
 $output false
 class Well : Core::Group
 {
@@ -824,11 +792,12 @@ class Well : Core::Group
   slot Slot
   {
     timeToWellPart(6,4,Time.TimeProperty); // (int32 Column, int32 Row, string Time)
+    Device::Device.Temperature();
 
   }
 
   // Writes the given Time in the chosen WellPart
-  $rect <830,240,1030,280>
+  $rect <820,220,1020,260>
   method void timeToWellPart( arg int32 aColumn, arg int32 aRow, arg string aTime )
   {
     WellPartArray[aColumn,aRow].TimeProperty=aTime;
@@ -891,10 +860,56 @@ class Well : Core::Group
     Default[7, 5] = F8;
   );
 
+  // The object 'PropertyObserver' is a handler of property notifications. When the \
+  // affected property is notified, the observer calls the associated slot method \
+  // 'onEvent' automatically. Within the 'onEvent' method you can react to the notification. \
+  // The method 'onEvent' exists for your convenience only. You can remove it and \
+  // connect the observer with another slot method. See inline documentation inside \
+  // the method.
+  // 
+  // Don't forget to connect the observer with the property of interest. To do this \
+  // set the property 'Outlet' of the observer to refer to the desired property.
+  note legend Note
+  {
+    attr Bounds = <1290,270,1790,470>;
+  }
+
+  $rect <810,310,1010,350>
+  object Core::PropertyObserver PropertyObserver
+  {
+    preset OnEvent = onEvent;
+    preset Outlet = ^Device::Device.WellIndex;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <1030,310,1230,350>
+  slot onEvent
+  {
+    trace "sth happend";
+    timeToWellPart(Device::Device.WellIndex[0]-'0',Device::Device.WellIndex[1]-'0',Time.TimeProperty); // (int32 Column, int32 Row, string Time)
+
+
+    /*
+       HINT 1:
+
+       You can evaluate the 'sender' parameter. It refers to the observer
+       this method has been called from. This is very useful if multiple
+       property observer are connected to one and the same 'onEvent'
+       method:
+
+       if ( sender == Observer1 )
+         trace "The event comes from the Observer1";
+
+       if ( sender == Observer2 )
+         trace "... or from the Observer2";
+    */
+  }
+
   $reorder Rectangle 76
 }
 
-$rect <70,260,270,300>
+$rect <70,300,270,340>
 $output false
 class WellPart : Core::Group
 {
@@ -1097,6 +1112,7 @@ class WellPart : Core::Group
     pure TimeProperty = value;
 
     Text.String = TimeProperty;
+    Filled=true;
 
     // TO DO:
     // 
@@ -1108,9 +1124,33 @@ class WellPart : Core::Group
   {
     return pure TimeProperty;
   }
+
+  $rect <320,20,520,60>
+  property bool Filled = false;
+
+  $rect <320,60,520,100>
+  onset Filled
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Filled == value )
+      return;
+
+    // Remember the property's new value.
+    pure Filled = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <320,100,520,140>
+  onget Filled
+  {
+    return pure Filled;
+  }
 }
 
-$rect <100,300,300,340>
+$rect <100,340,300,380>
 $output false
 resource Resources::Bitmap Oval
 {
@@ -1120,553 +1160,7 @@ resource Resources::Bitmap Oval
   attr framedelay FrameDelay;
 }
 
-// The class Core::Time is used for date and time operations. Objects of this class \
-// can store the time, convert it and format strings with the time, etc.
-$rect <100,220,290,260>
-$output false
-class Time
-{
-  $rect <200,610,390,650>
-  method string getMonthName( arg int32 aMonth, arg bool aAbbreviated )
-  {
-    if ( aAbbreviated )
-      switch ( aMonth )
-      {
-        case 1  : return Resources::JanuaryAbbr;
-        case 2  : return Resources::FebruaryAbbr;
-        case 3  : return Resources::MarchAbbr;
-        case 4  : return Resources::AprilAbbr;
-        case 5  : return Resources::MayAbbr;
-        case 6  : return Resources::JuneAbbr;
-        case 7  : return Resources::JulyAbbr;
-        case 8  : return Resources::AugustAbbr;
-        case 9  : return Resources::SeptemberAbbr;
-        case 10 : return Resources::OctoberAbbr;
-        case 11 : return Resources::NovemberAbbr;
-        case 12 : return Resources::DecemberAbbr;
-
-        default  : return "";
-      }
-    else
-      switch ( aMonth )
-      {
-        case 1  : return Resources::January;
-        case 2  : return Resources::February;
-        case 3  : return Resources::March;
-        case 4  : return Resources::April;
-        case 5  : return Resources::May;
-        case 6  : return Resources::June;
-        case 7  : return Resources::July;
-        case 8  : return Resources::August;
-        case 9  : return Resources::September;
-        case 10 : return Resources::October;
-        case 11 : return Resources::November;
-        case 12 : return Resources::December;
-
-        default  : return "";
-      }
-  }
-
-  $rect <200,570,390,610>
-  method string getDayOfWeekName( arg int32 aDayOfWeek, arg bool aAbbreviated )
-  {
-    if ( aAbbreviated )
-      switch ( aDayOfWeek )
-      {
-        case 1  : return Resources::MondayAbbr;
-        case 2  : return Resources::TuesdayAbbr;
-        case 3  : return Resources::WednesdayAbbr;
-        case 4  : return Resources::ThursdayAbbr;
-        case 5  : return Resources::FridayAbbr;
-        case 6  : return Resources::SaturdayAbbr;
-        case 0  : return Resources::SundayAbbr;
-        default : return "";
-      }
-    else
-      switch ( aDayOfWeek )
-      {
-        case 1  : return Resources::Monday;
-        case 2  : return Resources::Tuesday;
-        case 3  : return Resources::Wednesday;
-        case 4  : return Resources::Thursday;
-        case 5  : return Resources::Friday;
-        case 6  : return Resources::Saturday;
-        case 0  : return Resources::Sunday;
-        default : return "";
-      }
-  }
-
-  $rect <10,650,200,690>
-  method uint32 getCurrentTime()
-  {
-    var uint32 result;
-
-    $if $prototyper
-      result = EwGetTime();
-    $endif
-
-    $if !$prototyper && ( $platform != *.WebGL.* )
-      native ( result )
-      {
-        result = (XUInt32)EwGetTime();
-      }
-    $endif
-
-    $if !$prototyper && ( $platform == *.WebGL.* )
-      native ( result )
-      {
-        result = (( new Date ).getTime() / 1000 ) | 0;
-      }
-    $endif
-
-    return result;
-  }
-
-  $rect <10,610,200,650>
-  method int32 days2MonthLeapYear( arg int32 aMonth )
-  {
-    switch ( aMonth )
-    {
-      case 0  : return 0;
-      case 1  : return 31;
-      case 2  : return 60;
-      case 3  : return 91;
-      case 4  : return 121;
-      case 5  : return 152;
-      case 6  : return 182;
-      case 7  : return 213;
-      case 8  : return 244;
-      case 9  : return 274;
-      case 10 : return 305;
-      case 11 : return 335;
-      case 12 : return 366;
-      default : return 0;
-    }
-  }
-
-  $rect <10,570,200,610>
-  method int32 days2Month( arg int32 aMonth )
-  {
-    switch ( aMonth )
-    {
-      case 0  : return 0;
-      case 1  : return 31; 
-      case 2  : return 59;
-      case 3  : return 90;
-      case 4  : return 120;
-      case 5  : return 151;
-      case 6  : return 181;
-      case 7  : return 212;
-      case 8  : return 243;
-      case 9  : return 273;
-      case 10 : return 304;
-      case 11 : return 334;
-      case 12 : return 365;
-      default : return 0;
-    }
-  }
-
-  $rect <370,320,550,360>
-  onget String
-  {
-    var string date = string( Year, 4 ) + "-" + string( Month, 2 ) + "-" + string( Day, 2 );
-    var string time = string( Hour, 2 ) + ":" + string( Minute, 2 ) + ":" + string( Second, 2 );
-
-    return date + " " + time;
-  }
-
-  $rect <190,360,370,400>
-  onget Time
-  {
-    var int32 year = Year;
-    var int32 days;
-
-    if (( year % 4 ) != 0 )
-    {
-      year = year - 1970;
-      days = year * 365 + ( year + 1 ) / 4;
-      days = days + days2Month( Month - 1 ) + Day - 1;
-    }
-    else
-    {
-      year = year - 1970;
-      days = year * 365 + ( year + 1 ) / 4;
-      days = days + days2MonthLeapYear( Month - 1 ) + Day - 1;
-    }
-
-    // Now get the total number of seconds since 1.1.1970
-    return ( uint32( days ) * 60 * 60 * 24 ) +
-           ( uint32( Hour ) * 60 * 60 ) + 
-           ( uint32( Minute ) * 60 ) +
-             uint32( Second );
-  }
-
-  $rect <190,320,370,360>
-  onset Time
-  {
-    var int32 day   = int32(( value / ( 60 * 60 * 24 )) + 365 );
-    var int32 year4 = day / ( 4 * 365 + 1 );
-    var int32 year;
-    var int32 month;
-
-    day  = day - ( year4 * ( 4 * 365 + 1 ));
-    year = day / 365;
-      
-    if ( year == 4 )
-      year = 3;
-
-    day  = day - ( year * 365 );
-    year = ( year4 * 4 ) + year + 1969;
-
-    // all months have less than 32 days, days >> 5 is a good estimate for the month.
-    month = day >> 5;
-
-    // correct month if necessary
-    if (( year % 4 ) != 0 )
-    {
-      /* no leap year */
-      if ( day >= days2Month( month + 1 ))
-        month = month + 1;
-
-      day = day - days2Month( month );
-    }
-    else
-    {
-      // leap year
-      if ( day >= days2MonthLeapYear( month + 1 ))
-        month = month + 1;
-
-      day = day - days2MonthLeapYear( month );
-    }
-
-    Year  = year;
-    Month = month + 1;
-    Day   = day   + 1;
-
-    Hour   = int32(( value / ( 60 * 60 )) % 24 );
-    Minute = int32(( value / 60 ) % 60 );
-    Second = int32( value % 60 );
-  }
-
-  $rect <10,320,190,360>
-  onget CurrentTime
-  {
-    return ( new Core::Time ).Initialize( getCurrentTime());
-  }
-
-  $rect <370,230,550,270>
-  onget WeekOfYear
-  {
-    var int32 days = DayOfYear - 1;
-    var int32 dow  = int32((( Time / ( 60 * 60 * 24 )) - days + 10 ) % 7 );
-
-    return ( days + dow ) / 7;
-  }
-
-  $rect <190,230,370,270>
-  onget DayOfYear
-  {
-    var int32 days     = int32( Time / ( 60 * 60 * 24 ));
-    var int32 leapYear = ( days + 365 ) / ( 4 * 365 + 1 );
-    var int32 year     = ( days - leapYear ) / 365;
-
-    return days - ( year * 365 ) + (( year + 1 ) / 4 ) + 1;
-  }
-
-  $rect <10,230,190,270>
-  onget DayOfWeek
-  {
-    return int32((( Time / ( 60 * 60 * 24 )) + 4 ) % 7 );
-
-  }
-
-  $rect <370,140,550,180>
-  onset Second
-  {
-    if ( value < 0 )
-      value = 0;
-
-    if ( value > 59 )
-      value = 59;
-
-    pure Second = value;
-  }
-
-  $rect <190,140,370,180>
-  onset Minute
-  {
-    if ( value < 0 )
-      value = 0;
-
-    if ( value > 59 )
-      value = 59;
-
-    pure Minute = value;
-  }
-
-  $rect <10,140,190,180>
-  onset Hour
-  {
-    if ( value < 0 )
-      value = 0;
-
-    if ( value > 23 )
-      value = 23;
-
-    pure Hour = value;
-  }
-
-  $rect <370,50,550,90>
-  onset Day
-  {
-    if ( value < 1 )
-      value = 1;
-
-    if ( value > 31 )
-      value = 31;
-
-    pure Day = value;
-  }
-
-  $rect <190,50,370,90>
-  onset Month
-  {
-    if ( value < 1 )
-      value = 1;
-
-    if ( value > 12 )
-      value = 12;
-
-    pure Month = value;
-  }
-
-  $rect <10,50,190,90>
-  onset Year
-  {
-    if ( value < 1970 )
-      value = 1970;
-
-    pure Year = value;
-  }
-
-  // The method Format() converts the stored date and time accordingly to the supplied \
-  // aFormat parameter in a string. The aFormat parameter consists of format codes, \
-  // preceded by the percent sign '%'. At the runtime the codes are replaced with \
-  // their corresponding content. All other signs that do not begin with % are simply \
-  // taken over from aFormat to the output string. Following codes are available:
-  // -%d Day of month as decimal number (01-31)
-  // -%H Hour in 24-hour format (00-23)
-  // -%I Hour in 12-hour format (01-12)
-  // -%m Month as decimal number (01-12)
-  // -%M Minute as decimal number (00-59)
-  // -%p AP / PM indicator
-  // -%S Second as decimal number (00-59)
-  // -%w Weekday as decimal number (0-6; Sunday is 0)
-  // -%y Year without century, as decimal number (00-99)
-  // -%Y Year with century as decimal number
-  // -%j Day of year as decimal number (001-366)
-  // -%W Week of year as decimal number with Monday as first day of week (00-53)
-  // -%a Abbreviated weekday name
-  // -%A Weekday name
-  // -%b Abbreviated month name
-  // -%B Month name
-  // To remove the leading zeros, the '#' sign may prefix the following format code. \
-  // For example '%#m' will format the month as a decimal number in the range 1-12. \
-  // In contrast to it, '%m' formats the number with the leading zero sign 01-12.
-  // The month and weekday names are stored in constants within the unit @Resources. \
-  // To adapt them to a new language, you can create variants of these constants.
-  $rect <370,420,550,460>
-  method string Format( arg string aFormat )
-  {
-    var string result = "";
-    var int32  inx    = 0;
-
-    // Repeat until the whole format string is processed.
-    while ((int32)aFormat[ inx ] != 0 )
-    {
-      // Is this a special escape sequence?
-      if ( aFormat[ inx ] == '%' )
-      {
-        var int32 leadingZeros = 1;
-
-        // Skip over the leading percent sign.
-        inx = inx + 1;
-
-        // The '#' sign removes leading zeros in the following escape sequence.
-        if ( aFormat[ inx ] == '#' )
-        {
-          // Skip over the '#' sign.
-          inx = inx + 1;
-          leadingZeros = 0;
-        }
-
-        // Get the code of the escape sequence.
-        switch ( aFormat[ inx ])
-        {
-          case 'd' : result = result + string( Day,  2 * leadingZeros );
-          case 'H' : result = result + string( Hour, 2 * leadingZeros );
-          case 'I' :
-            if (( Hour % 12 ) == 0 )
-              result = result + "12";
-            else
-              result = result + string( Hour % 12, 2 * leadingZeros );
-          case 'm' : result = result + string( Month,  2 * leadingZeros );
-          case 'M' : result = result + string( Minute, 2 * leadingZeros );
-          case 'p' :
-            if ( Hour < 12 )
-              result = result + "AM";
-            else
-              result = result + "PM";
-          case 'S' : result = result + string( Second, 2 * leadingZeros );
-          case 'w' : result = result + string( DayOfWeek, leadingZeros );
-          case 'y' : result = result + string( Year % 100, 2 * leadingZeros );
-          case 'Y' : result = result + string( Year, 4 * leadingZeros );
-          case '%' : result = result + "%";
-
-          case 'j' : result = result + string( DayOfYear,  3 * leadingZeros );
-          case 'W' : result = result + string( WeekOfYear, 2 * leadingZeros );
-
-          case 'a' : result = result + getDayOfWeekName( DayOfWeek, true );
-          case 'A' : result = result + getDayOfWeekName( DayOfWeek, false );
-          case 'b' : result = result + getMonthName( Month, true );
-          case 'B' : result = result + getMonthName( Month, false );
-
-          default  :;
-        }
-        inx = inx + 1;
-      }
-
-      // This is a normal sign - take it over.
-      else
-      {
-        result = result + aFormat[ inx ];
-        inx = inx + 1;
-      }
-    }
-
-    return result;
-  }
-
-  // The method Initialize2() initializes this Core::Time object with the given time \
-  // and date and returns this object.
-  $rect <190,460,370,500>
-  method Core::Time Initialize2( arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute, arg int32 aSecond )
-  {
-    Year   = aYear;
-    Month  = aMonth;
-    Day    = aDay;
-    Hour   = aHour;
-    Minute = aMinute;
-    Second = aSecond;
-
-    return this;
-  }
-
-  // The method Initialize() initializes this Core::Time object with the given time \
-  // as number of seconds since 1.1.1970 and returns this object.
-  $rect <190,420,370,460>
-  method Core::Time Initialize( arg uint32 aTime )
-  {
-    Time = aTime;
-    return this;
-  }
-
-  // The method Difference() calculates a delta value between this time object and \
-  // the object passed in the parameter aTime. The method creates and initializes \
-  // a new Core::TimeSpan object with the calculated difference.
-  $rect <10,500,190,540>
-  method Core::TimeSpan Difference( arg Core::Time aTime )
-  {
-    if ( aTime == null )
-      return (new Core::TimeSpan).Initialize( int32( Time ));
-
-    return (new Core::TimeSpan).Initialize( int32( Time - aTime.Time ));
-  }
-
-  // The method Subtract() calculates a new time value by a subtraction of the aTimeSpan \
-  // from this time object. The method creates a new Core::Time object and initializes \
-  // it with the new time and date value.
-  $rect <10,460,190,500>
-  method Core::Time Subtract( arg Core::TimeSpan aTimeSpan )
-  {
-    if ( aTimeSpan == null )
-      return this;
-
-    return (new Core::Time).Initialize( uint32( Time - aTimeSpan.Time ));
-  }
-
-  // The method Add() calculates a new time value by an addition of the aTimeSpan \
-  // to this time object. The method creates a new Core::Time object and initializes \
-  // it with the new time and date value.
-  $rect <10,420,190,460>
-  method Core::Time Add( arg Core::TimeSpan aTimeSpan )
-  {
-    if ( aTimeSpan == null )
-      return this;
-
-    return (new Core::Time).Initialize( uint32( Time + aTimeSpan.Time ));
-  }
-
-  // The property 'String' stores the time as a string: "YYYY-MM-DD hh:mm:ss". This \
-  // property is read only - it is not possible to assign a value to it.
-  $rect <370,280,550,320>
-  property string String;
-
-  // The property 'Time' stores the time as the number of seconds since 1.1.1970. \
-  // The Core::Time object converts the given seconds in year, month, day, hour, \
-  // etc.
-  $rect <190,280,370,320>
-  property uint32 Time;
-
-  // The property 'CurrentTime' stores the current time. This property is read only \
-  // - it is not possible to assign a value to it.
-  $rect <10,280,190,320>
-  property Core::Time CurrentTime;
-
-  // The property 'WeekOfYear' contains the week of the year as a number in the range \
-  // 0 .. 53. Each week starts with Monday. This property is read only - it is not \
-  // possible to assign a value to it.
-  $rect <370,190,550,230>
-  property int32 WeekOfYear;
-
-  // The property 'DayOfYear' contains the day of the year as a number in the range \
-  // 1 .. 366. This property is read only - it is not possible to assign a value \
-  // to it.
-  $rect <190,190,370,230>
-  property int32 DayOfYear;
-
-  // The property 'DayOfWeek' contains the day of the week as a number in the range \
-  // 0 .. 6. The value 0 corresponds to Sunday, 1 to Monday, etc. This property is \
-  // read only - it is not possible to assign a value to it.
-  $rect <10,190,190,230>
-  property int32 DayOfWeek;
-
-  // The property 'Second' stores the number of seconds.
-  $rect <370,100,550,140>
-  property int32 Second;
-
-  // The property 'Minute' stores the number of minutes.
-  $rect <190,100,370,140>
-  property int32 Minute;
-
-  // The property 'Hour' stores the number of hours since midnight.
-  $rect <10,100,190,140>
-  property int32 Hour;
-
-  // The property 'Day' stores the day in range 1 .. 31.
-  $rect <370,10,550,50>
-  property int32 Day;
-
-  // The property 'Month' stores the month in range 1 .. 12.
-  $rect <190,10,370,50>
-  property int32 Month;
-
-  // The property 'Year' stores the year including the century.
-  $rect <10,10,190,50>
-  property int32 Year;
-}
-
-$rect <70,180,270,220>
+$rect <70,220,270,260>
 $output false
 class Clock : Core::Group
 {
@@ -1858,7 +1352,7 @@ class Clock : Core::Group
   }
 
   $rect <250,100,450,140>
-  object Application::Time Time;
+  object Core::Time Time;
 
   $rect <500,20,700,60>
   property string TimeProperty = 0;
@@ -1885,3 +1379,387 @@ class Clock : Core::Group
     return pure TimeProperty;
   }
 }
+
+$rect <70,140,270,180>
+$output false
+class SampleController : Core::Group
+{
+  $rect <10,550,210,590>
+  inherited property Bounds = <0,0,600,60>;
+
+  $rect <10,710,210,750>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,670,210,710>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  // To do:
+  // 
+  // - Adjust the visible size of your component (the thick blue border).
+  // 
+  // - The simplest way to compose the appearance of the component is to use the \
+  // 'Views' and 'Widget Sets' from the Gallery.
+  // 
+  // - To react to touch or keyboard events use the templates from the Gallery folder \
+  // 'Event Handlers'.
+  // 
+  // - To perform transitions (animations) use the templates from the Gallery folder \
+  // 'Effects'.
+  // 
+  // - To implement the interface of the component use the 'Property' template from \
+  // the Gallery folder 'Chora'.
+  // 
+  // - To store values use the 'Variable' and 'Array' templates available in the \
+  // Gallery folder 'Chora'.
+  // 
+  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
+  // in the Gallery folder 'Chora'.
+  // 
+  // - In the method 'UpdateViewState()' you can put code to update the state of \
+  // views enclosed in your component.
+  // 
+  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
+  // calculation for enclosed views.
+  note legend Note1
+  {
+    attr Bounds = <220,540,1000,860>;
+  }
+
+  $rect <10,100,210,140>
+  property char NameProperty = 0;
+
+  $rect <10,140,210,180>
+  onset NameProperty
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure NameProperty == value )
+      return;
+
+    // Remember the property's new value.
+    pure NameProperty = value;
+
+    NameText.String=NameProperty;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <10,180,210,220>
+  onget NameProperty
+  {
+    return pure NameProperty;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Border Border
+  {
+    preset Bounds = <1,1,599,59>;
+    preset Width = 2;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text NameText
+  {
+    preset Bounds = <0,10,30,40>;
+    preset String = "A";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider HorzSlider
+  {
+    preset Bounds = <40,0,190,60>;
+    preset Outlet = null;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton BtnStart
+  {
+    preset Bounds = <210,3,320,28>;
+    preset OnAction = SlotStart;
+    preset Caption = "Start";
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton BtnStop
+  {
+    preset Bounds = <210,32,320,57>;
+    preset Caption = "Stop";
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzBar HorzBar
+  {
+    preset Bounds = <350,10,510,60>;
+    preset CurrentValue = 0;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::Indicator Indicator
+  {
+    preset Bounds = <560,10,590,40>;
+  }
+
+  $rect <500,390,700,430>
+  object Core::Timer Timer
+  {
+    preset OnTrigger = SlotTimerTrigger;
+  }
+
+  $rect <510,190,710,230>
+  slot SlotStart
+  {
+    HorzBar.MaxValue=HorzSlider.CurrentValue;
+    HorzBar.CurrentValue=HorzSlider.CurrentValue;
+    Timer.Period=HorzSlider.CurrentValue*60000;
+    Timer.Enabled=true;
+    TimerMinuten.Enabled=true;
+    EnabledProperty=true;
+    trace "start";
+
+  }
+
+  $rect <500,350,700,390>
+  object Core::Timer TimerMinuten
+  {
+    preset OnTrigger = SlotTimerMinuten;
+    preset Period = 600;
+    preset Enabled = false;
+  }
+
+  $rect <510,230,710,270>
+  slot SlotTimerMinuten
+  {
+
+
+    if(HorzBar.CurrentValue!=0){
+      HorzBar.CurrentValue=HorzBar.CurrentValue-1;
+      trace   HorzBar.CurrentValue;
+    }else{
+      
+         Device::Device.WellIndex="01";
+    }
+  }
+
+  $rect <510,270,710,310>
+  slot SlotTimerTrigger
+  {
+    TimerMinuten.StopTimer;
+    TimerMinuten.Enabled=false;
+    Timer.StopTimer;
+    Timer.Enabled=false;
+  }
+
+  $rect <230,100,430,140>
+  property bool EnabledProperty = false;
+
+  $rect <230,140,430,180>
+  onset EnabledProperty
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure EnabledProperty == value )
+      return;
+
+    // Remember the property's new value.
+    pure EnabledProperty = value;
+    Indicator.Active=EnabledProperty;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <230,180,430,220>
+  onget EnabledProperty
+  {
+    return pure EnabledProperty;
+  }
+
+  $reorder OnSetOpacity 8
+  $reorder OnGetEmbedded 8
+  $reorder OnSetEmbedded 8
+  $reorder OnGetAlphaBlended 8
+  $reorder OnSetAlphaBlended 8
+  $reorder OnGetVisible 8
+  $reorder OnSetVisible 8
+  $reorder ObtainFocus 8
+  $reorder HasViewState 8
+  $reorder LocalPosition 8
+  $reorder GlobalPosition 8
+  $reorder DispatchEvent 8
+  $reorder BroadcastEventAtPosition 8
+  $reorder BroadcastEvent 8
+  $reorder UpdateLayout 8
+  $reorder UpdateViewState 8
+  $reorder InvalidateViewState 8
+  $reorder InvalidateArea 8
+  $reorder Init 8
+  $reorder GetIndexOfView 8
+  $reorder GetViewAtIndex 8
+  $reorder CountViews 8
+  $reorder FindViewInDirection 8
+  $reorder FindViewWithinArea 8
+  $reorder FindViewAtPosition 8
+  $reorder FindPrevView 8
+  $reorder FindNextView 8
+  $reorder FindSiblingView 8
+  $reorder GetContentArea 8
+  $reorder RestackBehind 8
+  $reorder RestackBack 8
+  $reorder RestackTop 8
+  $reorder Restack 8
+  $reorder Remove 8
+  $reorder AddBehind 8
+  $reorder Add 8
+  $reorder Focus 8
+  $reorder Buffered 8
+  $reorder Opacity 9
+  $reorder Embedded 9
+  $reorder AlphaBlended 9
+  $reorder Visible 9
+  $reorder Note1 9
+  $reorder NameProperty 9
+  $reorder OnSetNameProperty 9
+  $reorder OnGetNameProperty 9
+  $reorder Border 9
+  $reorder NameText 9
+  $reorder HorzSlider 9
+  $reorder BtnStart 9
+  $reorder BtnStop 9
+  $reorder HorzBar 9
+  $reorder Indicator 9
+  $reorder Timer 9
+  $reorder SlotStart 9
+  $reorder TimerMinuten 9
+  $reorder SlotTimerMinuten 9
+  $reorder SlotTimerTrigger 9
+  $reorder Enabled 5
+  $reorder OnSetEnabled 1
+}
+
+$rect <400,160,600,200>
+$output false
+autoobject Application::Well WellObj;

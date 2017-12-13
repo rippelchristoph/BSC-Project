@@ -1,0 +1,109 @@
+$version 6.60
+
+$rect <100,190,300,230>
+inline Inline
+{
+  #include <unistd.h>				//Needed for I2C port
+  #include <fcntl.h>				//Needed for I2C port
+  #include <sys/ioctl.h>			//Needed for I2C port
+  #include <linux/i2c-dev.h>		//Needed for I2C port
+  #include <stdio.h>
+  #include <time.h>
+}
+
+$rect <0,20,200,60>
+$output false
+class DeviceClass : Templates::DeviceClass
+{
+  // Stores a string of the index of a well part to write the time to
+  $rect <200,10,400,50>
+  property string WellIndex = "";
+
+  $rect <400,10,600,50>
+  onset WellIndex
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure WellIndex == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure WellIndex = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^WellIndex;
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <0,10,200,50>
+  $output true
+  method void UpdateProperty( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure WellIndex )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure WellIndex = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^WellIndex;
+    }
+  }
+
+  // The property 'Property' represents an individual setting or state value existing \
+  // within the device. Through the associated 'onset' method all write operations \
+  // to the property can be directed to your particular device API. The read accesses, \
+  // in contrast, are handled internally by using the last known value of the property. \
+  // See inline documentation inside the 'onset' method 'OnSetProperty'.
+  // 
+  // The method 'UpdateProperty', in turn, is intended to be called by the device \
+  // to notify the GUI application about an alternation of a setting or state value \
+  // represented by the property 'Property'. See inline documentation inside the \
+  // method.
+  // 
+  // You will eventually need to change the data type of the property to match the \
+  // data in your device (e.g. to 'bool', 'uint32', or 'string', etc.). Use for this \
+  // purpose the attribute 'Type' of the property itself. Accordingly the declaration \
+  // of the 'UpdateProperty' method may need an adaptation.
+  note legend Note
+  {
+    attr Bounds = <610,10,1110,340>;
+  }
+}
+
+$rect <200,20,400,60>
+autoobject Device::DeviceClass Device;
+
+// The class 'Device::DeviceClass' implements the interface between the GUI application \
+// and the device. Within the class you can react to system events sent by the device, \
+// exchange data with the device or send commands to the device. You are completely \
+// free in the design of this interface.
+// 
+// The object 'Device' represents the instance of the device interface. It exists \
+// for your convenience. As an autoobject it is globally available for all GUI components \
+// within your project.
+note legend Note
+{
+  attr Bounds = <410,20,910,200>;
+}
