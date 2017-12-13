@@ -44,6 +44,7 @@ profile RasPi : RaspberryPi.OpenGL.RGBA8888
   attr Optimization = High;
   attr ApplicationClass = Application::Application;
   attr CleanOutputDirectories = false;
+  attr OutputDirectory = ../Project/RaspberryPi/BSC/BSC;
 
   $rect <10,10,154,50>
   macro Author = "Dipl. Ing. Paul Banach and Dipl. Ing. Manfred Schweyer, Copyright (C) TARA Systems GmbH";
@@ -142,4 +143,10 @@ $rect <40,390,240,430>
 unit XFlat
 {
   attr Directory = $Mosaic\XFlat;
+}
+
+$rect <530,260,730,300>
+unit Device
+{
+  attr Directory = .\;
 }

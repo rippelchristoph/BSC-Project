@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::SampleController;
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Application::SampleController.onEvent;
-attr codeSelEnd = <20,0>;
-attr codeSelStart = <20,0>;
+attr codeInspector = Device::DeviceClass.UpdateProperty;
+attr codeSelEnd = <8,1>;
+attr codeSelStart = <8,1>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -55,9 +55,10 @@ view unit Device
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,1>;
-  attr codeSelEnd = <2,7>;
-  attr codeSelStart = <2,7>;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = OnSetWellIndex;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -76,8 +77,8 @@ view class Application::Well
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeSelEnd = <2,5>;
-  attr codeSelStart = <2,5>;
+  attr codeSelEnd = <40,0>;
+  attr codeSelStart = <40,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -87,10 +88,10 @@ view class Application::Well
 view class Application::SampleController
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,2>;
+  attr codeFirstPos = <0,4>;
   attr codeInspector = SlotTimerMinuten;
-  attr codeSelEnd = <28,8>;
-  attr codeSelStart = <28,8>;
+  attr codeSelEnd = <33,8>;
+  attr codeSelStart = <33,8>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;

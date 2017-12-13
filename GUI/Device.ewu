@@ -58,7 +58,7 @@ class DeviceClass : Templates::DeviceClass
   // about an alternation of its setting or state value.
   $rect <0,10,200,50>
   $output true
-  method void UpdateProperty( arg int32 aNewValue )
+  method void UpdateProperty( arg string aNewValue )
   {
     // Only if the reported value does differ from the one stored currently in the property.
     if ( aNewValue != pure WellIndex )

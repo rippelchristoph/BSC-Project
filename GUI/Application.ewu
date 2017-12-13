@@ -781,21 +781,6 @@ class Well : Core::Group
     preset Bounds = <10,10,240,40>;
   }
 
-  $rect <20,20,160,60>
-  object Flat::Switch Switch
-  {
-    preset Bounds = <30,108,90,153>;
-    preset OnChange = Slot;
-  }
-
-  $rect <860,140,1060,180>
-  slot Slot
-  {
-    timeToWellPart(6,4,Time.TimeProperty); // (int32 Column, int32 Row, string Time)
-    Device::Device.Temperature();
-
-  }
-
   // Writes the given Time in the chosen WellPart
   $rect <820,220,1020,260>
   method void timeToWellPart( arg int32 aColumn, arg int32 aRow, arg string aTime )
@@ -883,11 +868,13 @@ class Well : Core::Group
 
   // This slot method is executed when the associated property observer 'PropertyObserver' \
   // is notified.
-  $rect <1030,310,1230,350>
+  $rect <810,350,1010,390>
   slot onEvent
   {
     trace "sth happend";
-    timeToWellPart(Device::Device.WellIndex[0]-'0',Device::Device.WellIndex[1]-'0',Time.TimeProperty); // (int32 Column, int32 Row, string Time)
+
+
+    timeToWellPart(Device::Device.WellIndex[0]-'0', Device::Device.WellIndex[1]-'0'-1,Time.TimeProperty); // (int32 Column, int32 Row, string Time)
 
 
     /*
@@ -909,7 +896,7 @@ class Well : Core::Group
   $reorder Rectangle 76
 }
 
-$rect <70,300,270,340>
+$rect <70,260,270,300>
 $output false
 class WellPart : Core::Group
 {
@@ -1150,7 +1137,7 @@ class WellPart : Core::Group
   }
 }
 
-$rect <100,340,300,380>
+$rect <100,300,300,340>
 $output false
 resource Resources::Bitmap Oval
 {
@@ -1592,6 +1579,7 @@ class SampleController : Core::Group
   object Flat::HorzSlider HorzSlider
   {
     preset Bounds = <40,0,190,60>;
+    preset CurrentValue = 10;
     preset Outlet = null;
   }
 
@@ -1659,8 +1647,11 @@ class SampleController : Core::Group
       HorzBar.CurrentValue=HorzBar.CurrentValue-1;
       trace   HorzBar.CurrentValue;
     }else{
-      
-         Device::Device.WellIndex="01";
+         
+         Device::Device.WellIndex=string(CurrentIndex)+NameProperty;
+         CurrentIndex=CurrentIndex+1;
+         TimerMinuten.Enabled=false;
+         trace "abc";
     }
   }
 
@@ -1697,6 +1688,9 @@ class SampleController : Core::Group
   {
     return pure EnabledProperty;
   }
+
+  $rect <650,40,850,80>
+  var int32 CurrentIndex = 0;
 
   $reorder OnSetOpacity 8
   $reorder OnGetEmbedded 8
