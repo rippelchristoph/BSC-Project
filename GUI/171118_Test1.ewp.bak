@@ -44,6 +44,7 @@ profile RasPi : RaspberryPi.OpenGL.RGBA8888
   attr Optimization = High;
   attr ApplicationClass = Application::Application;
   attr CleanOutputDirectories = false;
+  attr OutputDirectory = ../Project/RaspberryPi/BSC/BSC;
 
   $rect <10,10,154,50>
   macro Author = "Dipl. Ing. Paul Banach and Dipl. Ing. Manfred Schweyer, Copyright (C) TARA Systems GmbH";
@@ -120,12 +121,6 @@ note legend Note
   attr Bounds = <20,370,760,570>;
 }
 
-$rect <510,230,710,270>
-unit Keyboard
-{
-  attr Directory = .\;
-}
-
 $rect <40,270,240,310>
 unit Templates
 {
@@ -138,12 +133,6 @@ unit Charts
   attr Directory = $Mosaic\Charts;
 }
 
-$rect <720,230,920,270>
-unit Menu
-{
-  attr Directory = .\;
-}
-
 $rect <40,350,240,390>
 unit Flat
 {
@@ -154,4 +143,10 @@ $rect <40,390,240,430>
 unit XFlat
 {
   attr Directory = $Mosaic\XFlat;
+}
+
+$rect <530,260,730,300>
+unit Device
+{
+  attr Directory = .\;
 }
