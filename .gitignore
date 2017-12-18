@@ -1,0 +1,13 @@
+
+*.vcxproj
+*.filters
+*.obj
+*.idb
+*.tlog
+Project/RaspberryPi/BSC/.vs/BSC/v15/.suo
+*.db
+Project/RaspberryPi/BSC/BSC/.vs/BSC/v15/.suo
+*.ipch
+*.opendb
+*.db-shm
+*.db-wal
