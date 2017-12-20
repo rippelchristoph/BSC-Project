@@ -5,6 +5,7 @@
 % Number of holes in the well [1]
 NWELLX= 6
 NWELLY=4
+NORIGINS=3
 % Z (Vertical) Position while placing a probe (down) or while moving (up)
 ZDOWN=25.2
 ZUP=40
