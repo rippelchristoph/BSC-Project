@@ -1,4 +1,3 @@
-
 *.DS_Store
 *.bak
 *.zip
@@ -19,3 +18,4 @@ Project/RaspberryPi/BSC/BSC/.vs/BSC/v15/.suo
 *.user
 BuildEnvironment
 GUI/171118_Test1.ewp.bak
+
