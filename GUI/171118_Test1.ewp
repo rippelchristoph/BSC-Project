@@ -145,7 +145,7 @@ unit XFlat
   attr Directory = $Mosaic\XFlat;
 }
 
-$rect <530,260,730,300>
+$rect <540,220,740,260>
 unit Device
 {
   attr Directory = .\;

@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application::Well;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Device::DeviceClass.UpdateProperty;
-attr codeSelEnd = <8,1>;
-attr codeSelStart = <8,1>;
+attr codeInspector = Application::Well.onEvent;
+attr codeSelEnd = <0,0>;
+attr codeSelStart = <0,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -52,6 +52,69 @@ view unit Device
   attr zoom = 1.0;
 }
 
+view class Application::MainMenue
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::Well
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = timeToWellPart;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::SampleController
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = WellFull;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::TextEditor
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onNewlineKey;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::NumKeyboard
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::WellPart
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
@@ -65,35 +128,10 @@ view class Device::DeviceClass
   attr zoom = 1.0;
 }
 
-view class Application::MainMenue
+view class Application::Clock
 {
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Well
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeSelEnd = <40,0>;
-  attr codeSelStart = <40,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::SampleController
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,4>;
-  attr codeInspector = SlotTimerMinuten;
-  attr codeSelEnd = <33,8>;
-  attr codeSelStart = <33,8>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
+  attr zoom = 2.5;
 }
