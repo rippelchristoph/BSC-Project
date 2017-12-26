@@ -47,7 +47,7 @@ class DeviceClass : Templates::DeviceClass
   // about an alternation of its setting or state value.
   $rect <0,10,200,50>
   $output true
-  method void UpdateProperty( arg string aNewValue )
+  method void UpdateWellIndex( arg string aNewValue )
   {
     // Only if the reported value does differ from the one stored currently in the property.
     if ( aNewValue != pure WellIndex )
@@ -59,7 +59,158 @@ class DeviceClass : Templates::DeviceClass
       notifyobservers ^WellIndex;
     }
   }
+
+  $rect <200,100,400,140>
+  property int32 Temp = 0;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <0,100,200,140>
+  $output true
+  method void UpdateTemp( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Temp )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Temp = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Temp;
+    }
+  }
+
+  $rect <410,100,610,140>
+  slot getTemp
+  {
+    var int32 aNum  =0 ;
+
+    native (aNum) {
+
+    	int file_i2c;
+    	int length;
+    	unsigned char buffer[60] = {0};
+            int i;
+            
+    	//----- OPEN THE I2C BUS -----
+    	char* filename = (char*)"/dev/i2c-1";
+    	if ((file_i2c = open(filename, O_RDWR)) < 0)
+    	{
+    		//ERROR HANDLING: you can check errno to see what went wrong
+    		printf("Failed to open the i2c bus");
+    		return;
+    	}
+    	
+    	int addr = (0x4f);          //<<<<<The I2C address of the slave
+    	if (ioctl(file_i2c, I2C_SLAVE, addr) < 0)
+    	{
+    		printf("Failed to acquire bus access and/or talk to slave.\n");
+    		//ERROR HANDLING; you can check errno to see what went wrong
+    		return;
+    	}
+    	
+                //----- READ BYTES -----
+                length = 1;			//<<< Number of bytes to read
+                if (read(file_i2c, buffer, length) != length)		//read() returns the number of bytes actually read, if it doesn't match then an error occurred (e.g. no response from the device)
+                {                                                                                                    
+                        //ERROR HANDLING: i2c transaction failed
+                        //printf("Failed to read from the i2c bus.\n");
+                }
+                else
+                {
+                         aNum = buffer[0];
+                }
+    }
+
+    UpdateTemp( aNum);
+  }
+
+  $rect <200,180,400,220>
+  property int32 CircuitNumber = 0;
+
+  $rect <400,180,600,220>
+  onset CircuitNumber
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure CircuitNumber == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure CircuitNumber = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^CircuitNumber;
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <0,180,200,220>
+  $output true
+  method void UpdateCircuitNumber( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure CircuitNumber )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure CircuitNumber = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^CircuitNumber;
+    }
+  }
+
+  // The property 'Property' represents an individual setting or state value existing \
+  // within the device. Through the associated 'onset' method all write operations \
+  // to the property can be directed to your particular device API. The read accesses, \
+  // in contrast, are handled internally by using the last known value of the property. \
+  // See inline documentation inside the 'onset' method 'OnSetProperty'.
+  // 
+  // The method 'UpdateProperty1', in turn, is intended to be called by the device \
+  // to notify the GUI application about an alternation of a setting or state value \
+  // represented by the property 'Property'. See inline documentation inside the \
+  // method.
+  // 
+  // You will eventually need to change the data type of the property to match the \
+  // data in your device (e.g. to 'bool', 'uint32', or 'string', etc.). Use for this \
+  // purpose the attribute 'Type' of the property itself. Accordingly the declaration \
+  // of the 'UpdateProperty1' method may need an adaptation.
+  note legend Note
+  {
+    attr Bounds = <610,180,1110,510>;
+  }
 }
 
 $rect <200,20,400,60>
 autoobject Device::DeviceClass Device;
+
+$rect <40,120,240,160>
+inline Inline
+{
+  #include <unistd.h>				//Needed for I2C port
+  #include <fcntl.h>				//Needed for I2C port
+  #include <sys/ioctl.h>			//Needed for I2C port
+  #include <linux/i2c-dev.h>		//Needed for I2C port
+  #include <stdio.h>
+  #include <time.h>
+}

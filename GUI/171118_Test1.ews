@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::Well;
+attr active = Application::Temperature;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,0>;
+attr codeFirstPos = <1,0>;
 attr codeInspector = Application::Well.onEvent;
-attr codeSelEnd = <0,0>;
-attr codeSelStart = <0,0>;
+attr codeSelEnd = <1,1>;
+attr codeSelStart = <1,1>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -40,7 +40,7 @@ view unit Application
 {
   attr enableGrid = true;
   attr grid = 10;
-  attr scrollTo = <-7,-7>;
+  attr scrollTo = <-7,172>;
   attr zoom = 1.5;
 }
 
@@ -63,52 +63,10 @@ view class Application::MainMenue
 view class Application::Well
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = timeToWellPart;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::SampleController
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = WellFull;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::TextEditor
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onNewlineKey;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::NumKeyboard
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::WellPart
-{
+  attr codeFirstPos = <1,0>;
+  attr codeInspector = onEvent;
+  attr codeSelEnd = <1,1>;
+  attr codeSelStart = <1,1>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -118,20 +76,20 @@ view class Application::WellPart
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = OnSetWellIndex;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeFirstPos = <0,32>;
+  attr codeInspector = getTemp;
+  attr codeSelEnd = <22,39>;
+  attr codeSelStart = <22,39>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
-view class Application::Clock
+view class Application::Temperature
 {
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
-  attr zoom = 2.5;
+  attr zoom = 1.0;
 }
