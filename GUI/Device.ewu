@@ -148,6 +148,8 @@ class DeviceClass : Templates::DeviceClass
 
     // Remember the new value in the internal memory of the property.
     pure NuOfCircuits = value;
+    trace value;
+
 
     // For target code generation you will use your specific device API 
     // to change the affected value.
@@ -203,6 +205,7 @@ class DeviceClass : Templates::DeviceClass
 
     // Remember the new value in the internal memory of the property.
     pure HomePosition = value;
+    trace value;
 
     // For target code generation you will use your specific device API 
     // to change the affected value.
@@ -258,6 +261,7 @@ class DeviceClass : Templates::DeviceClass
 
     // Remember the new value in the internal memory of the property.
     pure TrashPosition = value;
+    trace value;
 
     // For target code generation you will use your specific device API 
     // to change the affected value.
@@ -313,6 +317,7 @@ class DeviceClass : Templates::DeviceClass
 
     // Remember the new value in the internal memory of the property.
     pure CurrentPosition = value;
+    trace value;
 
     // For target code generation you will use your specific device API 
     // to change the affected value.
@@ -353,6 +358,55 @@ class DeviceClass : Templates::DeviceClass
 
       // Notify all associated property observers.
       notifyobservers ^CurrentPosition;
+    }
+  }
+
+  $rect <200,470,400,510>
+  property bool NewWell = false;
+
+  $rect <400,470,600,510>
+  onset NewWell
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure NewWell == value )
+      return;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^NewWell;
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <0,470,200,510>
+  $output true
+  method void UpdateNewWell( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure NewWell )
+    {
+     
+      notifyobservers ^NewWell;
     }
   }
 }

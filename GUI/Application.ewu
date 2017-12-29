@@ -52,7 +52,7 @@ class Application : Core::Root
     preset Bounds = <49,720,849,1200>;
     preset Enabled = true;
     preset Embedded = true;
-    preset Visible = false;
+    preset Visible = true;
   }
 
   $rect <20,20,160,60>
@@ -61,14 +61,7 @@ class Application : Core::Root
     preset Bounds = <889,800,1689,1280>;
     preset Enabled = true;
     preset Embedded = true;
-    preset Visible = false;
-  }
-
-  $rect <20,20,160,60>
-  object Application::Config Config
-  {
-    preset Menu = MainMenu;
-    preset Well = WellObj;
+    preset Visible = true;
   }
 }
 
@@ -318,6 +311,51 @@ class MainMenue : Core::Group
     Default[4] = SCA4;
     Default[5] = SCA5;
   );
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_Config
+  {
+    preset Bounds = <530,50,650,80>;
+    preset OnAction = onConfig;
+    preset Caption = "Config";
+  }
+
+  $rect <830,190,1030,230>
+  slot onConfig
+  {
+    Config.ConfigHome.Visible=true;
+    Config.ConfigTrash.Visible=true;
+    Config.Visible=true;
+
+    Config.ConfigHome.Enabled=true;
+    Config.ConfigTrash.Enabled=true;
+    Config.Enabled=true;
+
+
+    Config.Bounds.x1=0;
+    Config.Bounds.y1=0;
+  }
+
+  $rect <20,20,160,60>
+  object Application::Config Config
+  {
+    preset Bounds = <960,1210,1760,1690>;
+    preset Visible = true;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_NewWell
+  {
+    preset Bounds = <530,90,650,120>;
+    preset OnAction = onBtn_NewWell;
+    preset Caption = "NewWell";
+  }
+
+  $rect <830,240,1030,280>
+  slot onBtn_NewWell
+  {
+    Device::Device.NewWell=true;
+  }
 }
 
 $rect <40,300,240,340>
@@ -334,7 +372,7 @@ class Well : Core::Group
   $rect <0,490,200,530>
   inherited property Bounds = <0,0,800,480>;
 
-  $rect <0,650,200,690>
+  $rect <0,580,200,620>
   inherited method UpdateLayout()
   {
     // Always invoke the inherited method.
@@ -363,7 +401,7 @@ class Well : Core::Group
     */
   }
 
-  $rect <0,610,200,650>
+  $rect <0,540,200,580>
   inherited method UpdateViewState()
   {
     // Always invoke the inherited method.
@@ -756,7 +794,7 @@ class Well : Core::Group
   }
 
   // Writes the given Time in the chosen WellPart
-  $rect <820,220,1020,260>
+  $rect <1220,140,1420,180>
   method void timeToWellPart( arg int32 aColumn, arg int32 aRow, arg string aTime )
   {
     WellPartArray[aColumn,aRow].TimeProperty=aTime;
@@ -766,7 +804,7 @@ class Well : Core::Group
   }
 
   // Stores all Well Parts
-  $rect <820,100,1020,140>
+  $rect <820,80,1020,120>
   array Application::WellPart WellPartArray[ 8,6 ] =
   (
     Default[0, 0] = A1;
@@ -830,7 +868,7 @@ class Well : Core::Group
 
   // This slot method is executed when the associated property observer 'PropertyObserver' \
   // is notified.
-  $rect <820,180,1020,220>
+  $rect <1020,140,1220,180>
   slot onWellIndex
   {
     timeToWellPart(Device::Device.WellIndex[0]-'0', Device::Device.WellIndex[1]-'0'-1,Time.TimeProperty); // (int32 Column, int32 Row, string Time)
@@ -957,6 +995,29 @@ class Well : Core::Group
   {
     preset Bounds = <0,410,70,450>;
     preset TextString = "F";
+  }
+
+  $rect <820,190,1020,230>
+  object Core::PropertyObserver NewWellObserver
+  {
+    preset OnEvent = onNewWell;
+    preset Outlet = ^Device::Device.NewWell;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <1020,190,1220,230>
+  slot onNewWell
+  {
+    var int32 r;
+    var int32 c;
+
+    for(r=0; r<6;r=r+1){
+      for(c=0;c<8;c=c+1){
+        WellPartArray[c,r].Text.String="";
+      }
+    }
+
   }
 
   $reorder Rectangle 76
@@ -1465,7 +1526,7 @@ class SampleController : Core::Group
   $rect <10,550,210,590>
   inherited property Bounds = <0,0,440,70>;
 
-  $rect <220,590,420,630>
+  $rect <20,630,220,670>
   inherited method UpdateLayout()
   {
     // Always invoke the inherited method.
@@ -1494,7 +1555,7 @@ class SampleController : Core::Group
     */
   }
 
-  $rect <220,550,420,590>
+  $rect <20,590,220,630>
   inherited method UpdateViewState()
   {
     // Always invoke the inherited method.
@@ -1592,10 +1653,10 @@ class SampleController : Core::Group
     */
   }
 
-  $rect <10,100,210,140>
+  $rect <310,130,510,170>
   property char NameProperty = 0;
 
-  $rect <10,140,210,180>
+  $rect <310,170,510,210>
   onset NameProperty
   {
     // The value doesn't change - nothing to do.
@@ -1612,7 +1673,7 @@ class SampleController : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <10,180,210,220>
+  $rect <310,210,510,250>
   onget NameProperty
   {
     return pure NameProperty;
@@ -1664,7 +1725,7 @@ class SampleController : Core::Group
     preset Bounds = <400,20,430,50>;
   }
 
-  $rect <510,190,710,230>
+  $rect <30,180,230,220>
   slot SlotStart
   {
     if(TextEditor.String.parse_int32(0)!=0){ //User has to enter a Integer > 0
@@ -1676,7 +1737,7 @@ class SampleController : Core::Group
 
   }
 
-  $rect <510,350,710,390>
+  $rect <30,300,230,340>
   object Core::Timer TimerMinuten
   {
     preset OnTrigger = SlotTimerMinuten;
@@ -1684,7 +1745,7 @@ class SampleController : Core::Group
     preset Enabled = false;
   }
 
-  $rect <510,230,710,270>
+  $rect <30,220,230,260>
   slot SlotTimerMinuten
   {
     if(HorzBar.CurrentValue!=1){
@@ -1712,10 +1773,10 @@ class SampleController : Core::Group
 
   }
 
-  $rect <230,100,430,140>
+  $rect <310,400,510,440>
   property bool EnabledProperty = false;
 
-  $rect <230,140,430,180>
+  $rect <310,440,510,480>
   onset EnabledProperty
   {
     // The value doesn't change - nothing to do.
@@ -1741,19 +1802,19 @@ class SampleController : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <230,180,430,220>
+  $rect <310,480,510,520>
   onget EnabledProperty
   {
     return pure EnabledProperty;
   }
 
-  $rect <510,150,710,190>
+  $rect <30,140,230,180>
   slot SlotStop
   {
     EnabledProperty=false;
   }
 
-  $rect <510,290,710,330>
+  $rect <30,260,230,300>
   method void WellFull()
   {
     EnabledProperty=false;
@@ -1777,10 +1838,10 @@ class SampleController : Core::Group
     preset Color = #000000FF;
   }
 
-  $rect <950,60,1150,100>
+  $rect <310,270,510,310>
   property int32 CurrentIndex = 0;
 
-  $rect <950,100,1150,140>
+  $rect <310,310,510,350>
   onset CurrentIndex
   {
     // The value doesn't change - nothing to do.
@@ -1795,10 +1856,39 @@ class SampleController : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <950,140,1150,180>
+  $rect <310,350,510,390>
   onget CurrentIndex
   {
     return pure CurrentIndex;
+  }
+
+  $rect <590,110,790,150>
+  object Core::PropertyObserver NewWellObserver
+  {
+    preset OnEvent = onNewWell;
+    preset Outlet = ^Device::Device.NewWell;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <590,150,790,190>
+  slot onNewWell
+  {
+    CurrentIndex=0;
+    BtnStart.Enabled=true;
+
+  }
+
+  // Properties
+  note group Note
+  {
+    attr Bounds = <280,90,540,540>;
+  }
+
+  // Timing
+  note group Note1
+  {
+    attr Bounds = <10,90,260,360>;
   }
 
   $reorder OnSetOpacity 8
@@ -3854,63 +3944,15 @@ class Config : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton Btn_OK
+  object Flat::ActionButton Btn_Ok
   {
     preset Bounds = <670,440,790,470>;
-    preset OnAction = onButton;
+    preset OnAction = onBtn_Ok;
     preset Caption = "OK";
   }
 
-  $rect <430,540,630,580>
-  property Application::MainMenue Menu = null;
-
-  $rect <430,580,630,620>
-  onset Menu
-  {
-    // The value doesn't change - nothing to do.
-    if ( pure Menu == value )
-      return;
-
-    // Remember the property's new value.
-    pure Menu = value;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <430,620,630,660>
-  onget Menu
-  {
-    return pure Menu;
-  }
-
-  $rect <220,540,420,580>
-  property Application::Well Well = null;
-
-  $rect <220,580,420,620>
-  onset Well
-  {
-    // The value doesn't change - nothing to do.
-    if ( pure Well == value )
-      return;
-
-    // Remember the property's new value.
-    pure Well = value;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <220,620,420,660>
-  onget Well
-  {
-    return pure Well;
-  }
-
   $rect <650,540,850,580>
-  slot onButton
+  slot onBtn_Ok
   {
     if(TextEditor.String.parse_int32(6)>6||TextEditor.String.parse_int32(6)<1){
       Device::Device.NuOfCircuits=6;
@@ -3918,12 +3960,12 @@ class Config : Core::Group
       Device::Device.NuOfCircuits=TextEditor.String.parse_int32(6);
 
     }
-
-
-
-    Menu.Visible=true;
-    Well.Visible=true;
+    this.Enabled=false;
     this.Visible=false;
+
+
+
+
   }
 
   $rect <20,20,160,60>
@@ -4116,8 +4158,10 @@ class ConfigHome : Core::Group
   slot onNext
   {
 
-    Device::Device.HomePosition=Device::Device.CurrentPosition;
-
+    Device::Device.HomePosition.x=XSlider.CurrentValue;
+    Device::Device.HomePosition.y=YSlider.CurrentValue;
+                    
+                    
     this.Visible=false;
     this.Enabled=false;
   }
@@ -4314,7 +4358,8 @@ class ConfigTrash : Core::Group
   $rect <550,560,750,600>
   slot onNext
   {
-    Device::Device.TrashPosition=Device::Device.CurrentPosition;
+    Device::Device.TrashPosition.x=XSlider.CurrentValue;
+    Device::Device.TrashPosition.y=YSlider.CurrentValue;
 
     this.Visible=false;
     this.Enabled=false;
@@ -4325,7 +4370,7 @@ class ConfigTrash : Core::Group
   {
     preset Bounds = <60,10,690,120>;
     preset WrapText = true;
-    preset String = "Bewegen Sie den Schlauch über den Mülleimer";
+    preset String = "Bewegen Sie den Schlauch über den Abfallbehälter";
     preset Font = Flat::FontL;
   }
 
