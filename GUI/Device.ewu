@@ -1,10 +1,21 @@
 $version 6.60
 
+$rect <40,120,240,160>
+inline Inline
+{
+  #include <unistd.h>				//Needed for I2C port
+  #include <fcntl.h>				//Needed for I2C port
+  #include <sys/ioctl.h>			//Needed for I2C port
+  #include <linux/i2c-dev.h>		//Needed for I2C port
+  #include <stdio.h>
+  #include <time.h>
+}
+
 $rect <0,20,200,60>
 $output false
 class DeviceClass : Templates::DeviceClass
 {
-  // Stores a string of the index of a well part to write the time to
+  // String:"Column"+"Row"
   $rect <200,10,400,50>
   property string WellIndex = "";
 
@@ -80,7 +91,7 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <410,100,610,140>
+  $rect <400,100,600,140>
   slot getTemp
   {
     var int32 aNum  =0 ;
@@ -126,17 +137,17 @@ class DeviceClass : Templates::DeviceClass
   }
 
   $rect <200,180,400,220>
-  property int32 CircuitNumber = 0;
+  property int32 NuOfCircuits = 6;
 
   $rect <400,180,600,220>
-  onset CircuitNumber
+  onset NuOfCircuits
   {
     // The property doesn't change -> nothing to do.
-    if ( pure CircuitNumber == value )
+    if ( pure NuOfCircuits == value )
       return;
 
     // Remember the new value in the internal memory of the property.
-    pure CircuitNumber = value;
+    pure NuOfCircuits = value;
 
     // For target code generation you will use your specific device API 
     // to change the affected value.
@@ -160,57 +171,191 @@ class DeviceClass : Templates::DeviceClass
     $endif
 
     // Notify all associated property observers.
-    notifyobservers ^CircuitNumber;
+    notifyobservers ^NuOfCircuits;
   }
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
   $rect <0,180,200,220>
   $output true
-  method void UpdateCircuitNumber( arg int32 aNewValue )
+  method void UpdateNuOfCircuits( arg int32 aNewValue )
   {
     // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure CircuitNumber )
+    if ( aNewValue != pure NuOfCircuits )
     {
       // Remember the new value in the internal memory of the property.
-      pure CircuitNumber = aNewValue;
+      pure NuOfCircuits = aNewValue;
 
       // Notify all associated property observers.
-      notifyobservers ^CircuitNumber;
+      notifyobservers ^NuOfCircuits;
     }
   }
 
-  // The property 'Property' represents an individual setting or state value existing \
-  // within the device. Through the associated 'onset' method all write operations \
-  // to the property can be directed to your particular device API. The read accesses, \
-  // in contrast, are handled internally by using the last known value of the property. \
-  // See inline documentation inside the 'onset' method 'OnSetProperty'.
-  // 
-  // The method 'UpdateProperty1', in turn, is intended to be called by the device \
-  // to notify the GUI application about an alternation of a setting or state value \
-  // represented by the property 'Property'. See inline documentation inside the \
-  // method.
-  // 
-  // You will eventually need to change the data type of the property to match the \
-  // data in your device (e.g. to 'bool', 'uint32', or 'string', etc.). Use for this \
-  // purpose the attribute 'Type' of the property itself. Accordingly the declaration \
-  // of the 'UpdateProperty1' method may need an adaptation.
-  note legend Note
+  $rect <200,265,400,305>
+  property point HomePosition = <0,0>;
+
+  $rect <400,265,600,305>
+  onset HomePosition
   {
-    attr Bounds = <610,180,1110,510>;
+    // The property doesn't change -> nothing to do.
+    if ( pure HomePosition == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure HomePosition = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^HomePosition;
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <0,265,200,305>
+  $output true
+  method void UpdateHomePosition( arg point aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure HomePosition )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure HomePosition = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^HomePosition;
+    }
+  }
+
+  $rect <200,330,400,370>
+  property point TrashPosition = <0,0>;
+
+  $rect <400,330,600,370>
+  onset TrashPosition
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure TrashPosition == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure TrashPosition = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^TrashPosition;
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <0,330,200,370>
+  $output true
+  method void UpdateTrashPosition( arg point aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure TrashPosition )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure TrashPosition = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^TrashPosition;
+    }
+  }
+
+  $rect <200,400,400,440>
+  property point CurrentPosition = <0,0>;
+
+  $rect <400,400,600,440>
+  onset CurrentPosition
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure CurrentPosition == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure CurrentPosition = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^CurrentPosition;
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <0,400,200,440>
+  $output true
+  method void UpdateCurrentPosition( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure CurrentPosition )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure CurrentPosition = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^CurrentPosition;
+    }
   }
 }
 
 $rect <200,20,400,60>
 autoobject Device::DeviceClass Device;
-
-$rect <40,120,240,160>
-inline Inline
-{
-  #include <unistd.h>				//Needed for I2C port
-  #include <fcntl.h>				//Needed for I2C port
-  #include <sys/ioctl.h>			//Needed for I2C port
-  #include <linux/i2c-dev.h>		//Needed for I2C port
-  #include <stdio.h>
-  #include <time.h>
-}

@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::Temperature;
+attr active = Application::Config;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <1,0>;
-attr codeInspector = Application::Well.onEvent;
-attr codeSelEnd = <1,1>;
-attr codeSelStart = <1,1>;
+attr codeFirstPos = <0,0>;
+attr codeInspector = Device::DeviceClass.OnSetCurrentPosition;
+attr codeSelEnd = <0,6>;
+attr codeSelStart = <0,6>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -15,6 +15,7 @@ attr extractDoc_IgnoreAccessors = true;
 attr extractDoc_IgnoreMembers = true;
 attr extractDoc_Profiles = false;
 attr extractDoc_Title = Documentation;
+attr extractDoc_Units = Application;
 attr extractDoc_Variants = false;
 attr generateClut_ReservedColors = 0;
 attr heapMonitor_Show = false;
@@ -40,7 +41,7 @@ view unit Application
 {
   attr enableGrid = true;
   attr grid = 10;
-  attr scrollTo = <-7,172>;
+  attr scrollTo = <-7,283>;
   attr zoom = 1.5;
 }
 
@@ -52,21 +53,13 @@ view unit Device
   attr zoom = 1.0;
 }
 
-view class Application::MainMenue
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Well
+view class Application::Config
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <1,0>;
-  attr codeInspector = onEvent;
-  attr codeSelEnd = <1,1>;
-  attr codeSelStart = <1,1>;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onButton;
+  attr codeSelEnd = <37,3>;
+  attr codeSelStart = <37,3>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -76,18 +69,49 @@ view class Application::Well
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,32>;
-  attr codeInspector = getTemp;
-  attr codeSelEnd = <22,39>;
-  attr codeSelStart = <22,39>;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = OnSetCurrentPosition;
+  attr codeSelEnd = <28,6>;
+  attr codeSelStart = <28,6>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
-view class Application::Temperature
+view class Application::MainMenue
 {
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onEvent;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::ConfigHome
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = OnChangePos;
+  attr codeSelEnd = <22,5>;
+  attr codeSelStart = <22,5>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::ConfigTrash
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onNext;
+  attr codeSelEnd = <28,0>;
+  attr codeSelStart = <28,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
