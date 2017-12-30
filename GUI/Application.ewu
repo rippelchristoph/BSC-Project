@@ -1,7 +1,7 @@
 $version 6.60
 
 // This is the root component of the entire GUI application.
-$rect <10,60,210,100>
+$rect <360,20,560,60>
 $output false
 class Application : Core::Root
 {
@@ -65,7 +65,7 @@ class Application : Core::Root
   }
 }
 
-$rect <40,100,240,140>
+$rect <130,120,330,160>
 $output false
 class MainMenue : Core::Group
 {
@@ -200,140 +200,10 @@ class MainMenue : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Views::Rectangle Rectangle
+  object Application::ControllMenue ControllMenue
   {
     preset Bounds = <0,0,800,480>;
-    preset Color = #747674FF;
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA
-  {
-    preset Bounds = <10,50,450,120>;
-    preset NameProperty = '1';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA1
-  {
-    preset Bounds = <10,120,450,190>;
-    preset NameProperty = '2';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA2
-  {
-    preset Bounds = <10,190,450,260>;
-    preset NameProperty = '3';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA3
-  {
-    preset Bounds = <10,260,450,330>;
-    preset NameProperty = '4';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA4
-  {
-    preset Bounds = <10,330,450,400>;
-    preset NameProperty = '5';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA5
-  {
-    preset Bounds = <10,400,450,470>;
-    preset NameProperty = '6';
-  }
-
-  $rect <20,20,160,60>
-  object Application::Clock Clock
-  {
-    preset Bounds = <670,410,790,470>;
-  }
-
-  $rect <20,20,160,60>
-  object Views::WarpImage Logo
-  {
-    preset Point4 = <700,110>;
-    preset Point3 = <800,110>;
-    preset Point2 = <800,10>;
-    preset Point1 = <700,10>;
-    preset Bitmap = Application::Logo;
-  }
-
-  $rect <20,20,160,60>
-  object Application::NumKeyboard NumKeyboard
-  {
-    preset Bounds = <460,290,660,470>;
-  }
-
-  $rect <20,20,160,60>
-  object Application::Temperature Temperature
-  {
-    preset Bounds = <520,220,600,280>;
-  }
-
-  $rect <840,100,1040,140>
-  object Core::PropertyObserver NuOfCircuitsObserver
-  {
-    preset OnEvent = onEvent;
-    preset Outlet = ^Device::Device.NuOfCircuits;
-  }
-
-  // This slot method is executed when the associated property observer 'PropertyObserver' \
-  // is notified.
-  $rect <1040,100,1240,140>
-  slot onEvent
-  {
-    var int32 i;
-    for(i=0;i<6;i=i+1){
-      SampleController[i].Visible=false;
-      SampleController[i].Enabled=false;
-    }
-
-    for(i=0;i<Device::Device.NuOfCircuits;i=i+1){
-      SampleController[i].Visible=true;
-      SampleController[i].Enabled=true;
-    }
-
-  }
-
-  $rect <840,60,1040,100>
-  array Application::SampleController SampleController[ 6 ] =
-  (
-    Default[0] = SCA;
-    Default[1] = SCA1;
-    Default[2] = SCA2;
-    Default[3] = SCA3;
-    Default[4] = SCA4;
-    Default[5] = SCA5;
-  );
-
-  $rect <20,20,160,60>
-  object Flat::ActionButton Btn_Config
-  {
-    preset Bounds = <530,50,650,80>;
-    preset OnAction = onConfig;
-    preset Caption = "Config";
-  }
-
-  $rect <830,190,1030,230>
-  slot onConfig
-  {
-    Config.ConfigHome.Visible=true;
-    Config.ConfigTrash.Visible=true;
-    Config.Visible=true;
-
-    Config.ConfigHome.Enabled=true;
-    Config.ConfigTrash.Enabled=true;
-    Config.Enabled=true;
-
-
-    Config.Bounds.x1=0;
-    Config.Bounds.y1=0;
+    preset Config = Config;
   }
 
   $rect <20,20,160,60>
@@ -341,24 +211,11 @@ class MainMenue : Core::Group
   {
     preset Bounds = <960,1210,1760,1690>;
     preset Visible = true;
-  }
-
-  $rect <20,20,160,60>
-  object Flat::ActionButton Btn_NewWell
-  {
-    preset Bounds = <530,90,650,120>;
-    preset OnAction = onBtn_NewWell;
-    preset Caption = "NewWell";
-  }
-
-  $rect <830,240,1030,280>
-  slot onBtn_NewWell
-  {
-    Device::Device.NewWell=true;
+    preset ControllMenue = ControllMenue;
   }
 }
 
-$rect <40,300,240,340>
+$rect <580,120,780,160>
 $output false
 class Well : Core::Group
 {
@@ -1023,7 +880,7 @@ class Well : Core::Group
   $reorder Rectangle 76
 }
 
-$rect <70,380,270,420>
+$rect <610,160,810,200>
 $output false
 class WellPart : Core::Group
 {
@@ -1288,7 +1145,7 @@ class WellPart : Core::Group
   }
 }
 
-$rect <400,160,600,200>
+$rect <910,600,1110,640>
 $output false
 resource Resources::Bitmap Oval
 {
@@ -1298,7 +1155,7 @@ resource Resources::Bitmap Oval
   attr framedelay FrameDelay;
 }
 
-$rect <70,340,270,380>
+$rect <560,440,760,480>
 $output false
 class Clock : Core::Group
 {
@@ -1519,7 +1376,7 @@ class Clock : Core::Group
   }
 }
 
-$rect <70,220,270,260>
+$rect <150,290,350,330>
 $output false
 class SampleController : Core::Group
 {
@@ -1699,7 +1556,7 @@ class SampleController : Core::Group
   object Flat::ActionButton BtnStart
   {
     preset Bounds = <100,4,210,29>;
-    preset OnAction = SlotStart;
+    preset OnAction = onStart;
     preset Caption = "Start";
   }
 
@@ -1708,7 +1565,7 @@ class SampleController : Core::Group
   {
     preset Bounds = <100,40,210,65>;
     preset Enabled = false;
-    preset OnAction = SlotStop;
+    preset OnAction = onStop;
     preset Caption = "Stop";
   }
 
@@ -1726,12 +1583,12 @@ class SampleController : Core::Group
   }
 
   $rect <30,180,230,220>
-  slot SlotStart
+  slot onStart
   {
     if(TextEditor.String.parse_int32(0)!=0){ //User has to enter a Integer > 0
       HorzBar.MaxValue=TextEditor.String.parse_int32( 0 );
       HorzBar.CurrentValue=TextEditor.String.parse_int32( 0 );
-      TimerMinuten.Enabled=true;
+      //TimerMinuten.Enabledten.Enabled=true;  //?????
       EnabledProperty=true;
     }
 
@@ -1740,13 +1597,13 @@ class SampleController : Core::Group
   $rect <30,300,230,340>
   object Core::Timer TimerMinuten
   {
-    preset OnTrigger = SlotTimerMinuten;
+    preset OnTrigger = onTimerMinuten;
     preset Period = 1000;
     preset Enabled = false;
   }
 
   $rect <30,220,230,260>
-  slot SlotTimerMinuten
+  slot onTimerMinuten
   {
     if(HorzBar.CurrentValue!=1){
       HorzBar.CurrentValue=HorzBar.CurrentValue-1;
@@ -1809,9 +1666,10 @@ class SampleController : Core::Group
   }
 
   $rect <30,140,230,180>
-  slot SlotStop
+  slot onStop
   {
     EnabledProperty=false;
+
   }
 
   $rect <30,260,230,300>
@@ -1942,14 +1800,14 @@ class SampleController : Core::Group
   $reorder BtnStop 9
   $reorder HorzBar 9
   $reorder Indicator 9
-  $reorder SlotStart 9
+  $reorder onStart 9
   $reorder TimerMinuten 9
-  $reorder SlotTimerMinuten 9
+  $reorder onTimerMinuten 9
   $reorder Enabled 5
   $reorder OnSetEnabled 1
 }
 
-$rect <400,120,600,160>
+$rect <910,560,1110,600>
 $output false
 resource Resources::Bitmap Logo
 {
@@ -1959,7 +1817,7 @@ resource Resources::Bitmap Logo
   attr framedelay FrameDelay;
 }
 
-$rect <400,80,600,120>
+$rect <910,520,1110,560>
 $output false
 resource Resources::Font FontArial17
 {
@@ -1973,7 +1831,7 @@ resource Resources::Font FontArial17
 }
 
 // This component implements an editor.
-$rect <100,260,300,300>
+$rect <560,360,760,400>
 $output false
 class TextEditor : Templates::TextEditor
 {
@@ -2915,7 +2773,7 @@ class TextEditor : Templates::TextEditor
 }
 
 // This component implements a virtual keyboard.
-$rect <70,180,270,220>
+$rect <560,400,760,440>
 $output false
 class NumKeyboard : Templates::NumKeyboard
 {
@@ -3437,16 +3295,10 @@ class NumKeyboard : Templates::NumKeyboard
 // Resources
 note group Note
 {
-  attr Bounds = <380,40,650,230>;
+  attr Bounds = <890,480,1160,670>;
 }
 
-// Main Program
-note group Note1
-{
-  attr Bounds = <0,0,320,590>;
-}
-
-$rect <70,420,270,460>
+$rect <610,200,810,240>
 $output false
 class WellLabel : Core::Group
 {
@@ -3615,7 +3467,7 @@ class WellLabel : Core::Group
   }
 }
 
-$rect <70,140,270,180>
+$rect <150,250,350,290>
 $output false
 class Temperature : Core::Group
 {
@@ -3802,7 +3654,7 @@ class Temperature : Core::Group
   }
 }
 
-$rect <40,460,240,500>
+$rect <120,400,320,440>
 $output false
 class Config : Core::Group
 {
@@ -3962,7 +3814,7 @@ class Config : Core::Group
     }
     this.Enabled=false;
     this.Visible=false;
-
+    ControllMenue.Enabled=true;
 
 
 
@@ -3991,8 +3843,38 @@ class Config : Core::Group
     preset Font = Flat::FontL;
   }
 
+  $rect <940,240,1140,280>
+  property Application::ControllMenue ControllMenue = null;
+
+  $rect <940,280,1140,320>
+  onset ControllMenue
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure ControllMenue == value )
+      return;
+
+    // Remember the property's new value.
+    pure ControllMenue = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <940,320,1140,360>
+  onget ControllMenue
+  {
+    return pure ControllMenue;
+  }
+
   $rect <20,20,160,60>
-  object Application::ConfigHome ConfigHome
+  object Application::ConfigTR ConfigTR
+  {
+    preset Bounds = <0,0,800,480>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ConfigBL ConfigBL
   {
     preset Bounds = <0,0,800,480>;
   }
@@ -4004,9 +3886,9 @@ class Config : Core::Group
   }
 }
 
-$rect <70,500,270,540>
+$rect <150,440,350,480>
 $output false
-class ConfigHome : Core::Group
+class ConfigBL : Core::Group
 {
   $rect <10,540,210,580>
   inherited property Bounds = <0,0,800,480>;
@@ -4154,12 +4036,12 @@ class ConfigHome : Core::Group
     preset Caption = "Next";
   }
 
-  $rect <550,560,750,600>
+  $rect <840,90,1040,130>
   slot onNext
   {
 
-    Device::Device.HomePosition.x=XSlider.CurrentValue;
-    Device::Device.HomePosition.y=YSlider.CurrentValue;
+    Device::Device.BLPosition.x=XSlider.CurrentValue;
+    Device::Device.BLPosition.y=YSlider.CurrentValue;
                     
                     
     this.Visible=false;
@@ -4205,7 +4087,7 @@ class ConfigHome : Core::Group
   }
 }
 
-$rect <70,540,270,580>
+$rect <150,520,350,560>
 $output false
 class ConfigTrash : Core::Group
 {
@@ -4379,6 +4261,566 @@ class ConfigTrash : Core::Group
   {
     preset Bounds = <50,160,770,230>;
     preset CurrentValue = 0;
+    preset OnChange = OnChangePos;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider YSlider
+  {
+    preset Bounds = <50,240,770,300>;
+    preset CurrentValue = 0;
+    preset OnChange = OnChangePos;
+  }
+
+  $rect <840,50,1040,90>
+  slot OnChangePos
+  {
+    if(sender==XSlider){
+      Device::Device.CurrentPosition.x=XSlider.CurrentValue;
+    }else if(sender==YSlider){
+     Device::Device.CurrentPosition.y=YSlider.CurrentValue;
+    }
+    Btn_Next.Enabled=true;
+
+  }
+}
+
+$rect <120,210,320,250>
+$output false
+class ControllMenue : Core::Group
+{
+  $rect <10,600,210,640>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <10,560,210,600>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,520,210,560>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #747674FF;
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA
+  {
+    preset Bounds = <10,50,450,120>;
+    preset NameProperty = '1';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA1
+  {
+    preset Bounds = <10,120,450,190>;
+    preset NameProperty = '2';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA2
+  {
+    preset Bounds = <10,190,450,260>;
+    preset NameProperty = '3';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA3
+  {
+    preset Bounds = <10,260,450,330>;
+    preset NameProperty = '4';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA4
+  {
+    preset Bounds = <10,330,450,400>;
+    preset NameProperty = '5';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA5
+  {
+    preset Bounds = <10,400,450,470>;
+    preset NameProperty = '6';
+  }
+
+  $rect <20,20,160,60>
+  object Application::Clock Clock
+  {
+    preset Bounds = <670,410,790,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::WarpImage Logo
+  {
+    preset Point4 = <700,110>;
+    preset Point3 = <800,110>;
+    preset Point2 = <800,10>;
+    preset Point1 = <700,10>;
+    preset Bitmap = Application::Logo;
+  }
+
+  $rect <20,20,160,60>
+  object Application::NumKeyboard NumKeyboard
+  {
+    preset Bounds = <460,290,660,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::Temperature Temperature
+  {
+    preset Bounds = <520,220,600,280>;
+  }
+
+  $rect <840,100,1040,140>
+  object Core::PropertyObserver NuOfCircuitsObserver
+  {
+    preset OnEvent = onEvent;
+    preset Outlet = ^Device::Device.NuOfCircuits;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <1040,100,1240,140>
+  slot onEvent
+  {
+    var int32 i;
+    for(i=0;i<6;i=i+1){
+      SampleController[i].Visible=false;
+      SampleController[i].Enabled=false;
+    }
+
+    for(i=0;i<Device::Device.NuOfCircuits;i=i+1){
+      SampleController[i].Visible=true;
+      SampleController[i].Enabled=true;
+    }
+
+  }
+
+  $rect <840,60,1040,100>
+  array Application::SampleController SampleController[ 6 ] =
+  (
+    Default[0] = SCA;
+    Default[1] = SCA1;
+    Default[2] = SCA2;
+    Default[3] = SCA3;
+    Default[4] = SCA4;
+    Default[5] = SCA5;
+  );
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_Config
+  {
+    preset Bounds = <530,50,650,80>;
+    preset OnAction = onConfig;
+    preset Caption = "Config";
+  }
+
+  $rect <830,190,1030,230>
+  slot onConfig
+  {
+    Config.ConfigBL.Visible=true;
+    Config.ConfigTrash.Visible=true;
+    Config.Visible=true;
+
+    Config.ConfigBL.Enabled=true;
+    Config.ConfigTrash.Enabled=true;
+    Config.Enabled=true;
+
+    this.Enabled=false;
+
+    Config.Bounds.x1=0;
+    Config.Bounds.y1=0;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_NewWell
+  {
+    preset Bounds = <530,90,650,120>;
+    preset OnAction = onBtn_NewWell;
+    preset Caption = "NewWell";
+  }
+
+  $rect <830,240,1030,280>
+  slot onBtn_NewWell
+  {
+    Device::Device.NewWell=true;
+  }
+
+  $rect <830,320,1030,360>
+  property Application::Config Config = null;
+
+  $rect <830,360,1030,400>
+  onset Config
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Config == value )
+      return;
+
+    // Remember the property's new value.
+    pure Config = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <830,400,1030,440>
+  onget Config
+  {
+    return pure Config;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_StopAll
+  {
+    preset Bounds = <530,130,650,160>;
+    preset Caption = "StopAll";
+  }
+}
+
+// Tab1
+note group Note2
+{
+  attr Bounds = <20,90,430,690>;
+}
+
+// ControllMenue
+note group Note3
+{
+  attr Bounds = <100,170,360,350>;
+}
+
+// Config
+note group Note4
+{
+  attr Bounds = <100,360,360,640>;
+}
+
+// Tab2
+note group Note5
+{
+  attr Bounds = <460,90,870,300>;
+}
+
+// Other Components
+note group Note6
+{
+  attr Bounds = <460,310,870,520>;
+}
+
+note arrow Note1
+{
+  attr Point1 = <260,120>;
+  attr Point2 = <370,50>;
+}
+
+note arrow Note7
+{
+  attr Point1 = <610,120>;
+  attr Point2 = <550,50>;
+}
+
+$rect <150,480,350,520>
+$output false
+class ConfigTR : Core::Group
+{
+  $rect <10,540,210,580>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <10,620,210,660>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,580,210,620>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #747674FF;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_Next
+  {
+    preset Bounds = <670,440,790,470>;
+    preset Enabled = false;
+    preset OnAction = onNext;
+    preset Caption = "Next";
+  }
+
+  $rect <550,560,750,600>
+  slot onNext
+  {
+    Device::Device.TRPosition.x=XSlider.CurrentValue;
+    Device::Device.TRPosition.y=YSlider.CurrentValue;
+                    
+                    
+    this.Visible=false;
+    this.Enabled=false;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Bounds = <60,10,690,120>;
+    preset WrapText = true;
+    preset String = "Bewegen sie den Schlauch über die Well Öffnung rechts oben";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider XSlider
+  {
+    preset Bounds = <50,160,770,230>;
+    preset CurrentValue = 0;
+    preset Outlet = null;
     preset OnChange = OnChangePos;
   }
 

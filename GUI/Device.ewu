@@ -194,17 +194,17 @@ class DeviceClass : Templates::DeviceClass
   }
 
   $rect <200,265,400,305>
-  property point HomePosition = <0,0>;
+  property point BLPosition = <0,0>;
 
   $rect <400,265,600,305>
-  onset HomePosition
+  onset BLPosition
   {
     // The property doesn't change -> nothing to do.
-    if ( pure HomePosition == value )
+    if ( pure BLPosition == value )
       return;
 
     // Remember the new value in the internal memory of the property.
-    pure HomePosition = value;
+    pure BLPosition = value;
     trace value;
 
     // For target code generation you will use your specific device API 
@@ -229,30 +229,30 @@ class DeviceClass : Templates::DeviceClass
     $endif
 
     // Notify all associated property observers.
-    notifyobservers ^HomePosition;
+    notifyobservers ^BLPosition;
   }
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
   $rect <0,265,200,305>
   $output true
-  method void UpdateHomePosition( arg point aNewValue )
+  method void UpdateBLPosition( arg point aNewValue )
   {
     // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure HomePosition )
+    if ( aNewValue != pure BLPosition )
     {
       // Remember the new value in the internal memory of the property.
-      pure HomePosition = aNewValue;
+      pure BLPosition = aNewValue;
 
       // Notify all associated property observers.
-      notifyobservers ^HomePosition;
+      notifyobservers ^BLPosition;
     }
   }
 
-  $rect <200,330,400,370>
+  $rect <200,370,400,410>
   property point TrashPosition = <0,0>;
 
-  $rect <400,330,600,370>
+  $rect <400,370,600,410>
   onset TrashPosition
   {
     // The property doesn't change -> nothing to do.
@@ -290,7 +290,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,330,200,370>
+  $rect <0,370,200,410>
   $output true
   method void UpdateTrashPosition( arg point aNewValue )
   {
@@ -305,10 +305,10 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,400,400,440>
+  $rect <200,440,400,480>
   property point CurrentPosition = <0,0>;
 
-  $rect <400,400,600,440>
+  $rect <400,440,600,480>
   onset CurrentPosition
   {
     // The property doesn't change -> nothing to do.
@@ -346,7 +346,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,400,200,440>
+  $rect <0,440,200,480>
   $output true
   method void UpdateCurrentPosition( arg int32 aNewValue )
   {
@@ -361,10 +361,10 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,470,400,510>
+  $rect <200,510,400,550>
   property bool NewWell = false;
 
-  $rect <400,470,600,510>
+  $rect <400,510,600,550>
   onset NewWell
   {
     // The property doesn't change -> nothing to do.
@@ -398,7 +398,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,470,200,510>
+  $rect <0,510,200,550>
   $output true
   method void UpdateNewWell( arg int32 aNewValue )
   {
@@ -407,6 +407,62 @@ class DeviceClass : Templates::DeviceClass
     {
      
       notifyobservers ^NewWell;
+    }
+  }
+
+  $rect <200,320,400,360>
+  property point TRPosition = <0,0>;
+
+  $rect <400,320,600,360>
+  onset TRPosition
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure TRPosition == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure TRPosition = value;
+    trace value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^TRPosition;
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <0,320,200,360>
+  $output true
+  method void UpdateTRPosition( arg point aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure TRPosition )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure TRPosition = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^TRPosition;
     }
   }
 }
