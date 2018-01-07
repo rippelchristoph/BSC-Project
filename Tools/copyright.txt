@@ -1,4 +1,4 @@
  *
- * Copyright (c) 2017 TARA Systems GmbH, Munich.
- * All rights reserved.
+ * Bioreactor Sample Collector
+ * Written by Jakob Zuchna
  *
