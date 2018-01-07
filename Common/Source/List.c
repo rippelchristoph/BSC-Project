@@ -1,14 +1,32 @@
 /****************************************************************************
-*
-* FILE: List.c
-*
-* DESCRIPTION:
-*   This File handles a UART Connection
-*
-* PUBLIC FUNCTIONS:
-*
-*
-****************************************************************************/
+ *
+ * Bioreactor Sample Collector
+ * Written by Jakob Zuchna
+ *
+ ****************************************************************************
+ * FILE: List.c
+ *
+ * DESCRIPTION:
+ *   This is a Common Type. With the functions you can set up a Singly Linked
+ *   List The 'ReadPointer' in the header is used to save time when
+ *   itterating over every single element. It can NOT be assured that the
+ *   readPointer stays the same after calling a different function
+ *
+ *   The functions do NOT handle the storage allocation of the Node Data
+ *   Fields
+ *
+ * PUBLIC FUNCTIONS:
+ *   newList
+ *   destroyList
+ *   ListAdd
+ *   ListSetReadPointer
+ *   ListGetNext
+ *   ListRemove
+ *
+ * PRIVATE FUNCTIONS:
+ *   makeNode
+ *   freeNode
+ ****************************************************************************/
 
 /****************************************************************************
 * SECTION: #include
@@ -16,9 +34,8 @@
 
 #include <stdlib.h>
 
-
 /** HEADER ******************************************************************
-*/
+ */
 #ifndef  LIST_H
 
 /****************************************************************************
@@ -26,13 +43,11 @@
 ****************************************************************************/
 #include "HtlStdDef.h"
 
-
-
 /****************************************************************************
 * SECTION: typedef
 ****************************************************************************/
 /****************************************************************************
-*
+*	_TYPE: TListNode
 ****************************************************************************/
 typedef struct ListNode {
 	void* Data;
@@ -49,26 +64,33 @@ typedef struct ListHeader {
 
 #endif
 
-/*** HEADER ****************************************************************/
+/*
+ ** HEADER ******************************************************************/
 
 /****************************************************************************
-* SECTION: Declaration of private functions
-****************************************************************************/
-PRIVATE TListNode* makeNode(void* aData, TListNode* aNext);
+ * SECTION: Declaration of private functions
+ ****************************************************************************/
 
-PRIVATE void* freeNode(TListNode* aNode);
-/****************************************************************************
-* SECTION: Implementation of public functions
-****************************************************************************/
+PRIVATE TListNode *
+makeNode (
+  void *                        aData,
+  TListNode *                   aNext );
+
+PRIVATE void *
+freeNode (
+  TListNode *                   aNode );
+
 
 /****************************************************************************
-* FUNCTION: newList
-*
-* DESCRIPTION:
-*   Initializes a new Plotter
-*
-****************************************************************************/
-PUBLIC TListHeader* newList()
+ * FUNCTION: newList
+ *
+ * DESCRIPTION:
+ *   Initializes a new List by creating a Header.
+ * RETURN:
+ *   Returns the Pointer of the new allocated TListHeader
+ ****************************************************************************/
+PUBLIC TListHeader *
+newList ( void )
 {
 	TListHeader * aList;
 	if ((aList = (TListHeader*) malloc(sizeof(TListHeader))) != NULL) {
@@ -80,17 +102,46 @@ PUBLIC TListHeader* newList()
 	return aList;
 }
 
+/****************************************************************************
+ * FUNCTION: destroyList
+ *
+ * DESCRIPTION:
+ *   Before calling this function all Nodes have to be deleted by repeatedly
+ *   calling ListRemove(TListHeader*, 0) until it
+ *   returns NULL
+ * PARAMTER:
+ *   aList - The Adress of the TListHeader that should be destroyed
+ ****************************************************************************/
 
+PUBLIC void
+destroyList (
+  TListHeader * aList )
+{
+	if (aList->Len!=NULL)
+	{
+		//TODO: Mimimi
+	}
 
+	free(aList);
+
+	return;
+}
 
 /****************************************************************************
-* FUNCTION: ListAdd
-*
-* DESCRIPTION:
-*	Adds a new Node to the End of the List
-*
-****************************************************************************/
-PUBLIC TListNode *ListAdd(TListHeader* aList, void* aData) {
+ * FUNCTION: ListAdd
+ *
+ * DESCRIPTION:
+ *   Adds a new Node to the End of the List
+ * PARAMETER:
+ *   aList - The List Header
+ *   aData - The Pointer that will be written into the Data Field of the new
+ *           Node
+ ****************************************************************************/
+PUBLIC TListNode *
+ListAdd (
+  TListHeader * aList,
+  void *        aData )
+{
 	TListNode *newPtr;
 	if ((newPtr = makeNode(aData, (TListNode*)NULL)) != NULL)
 	{
@@ -109,13 +160,15 @@ PUBLIC TListNode *ListAdd(TListHeader* aList, void* aData) {
 
 
 /****************************************************************************
-* FUNCTION: ListSetReadPointer
-*
-* DESCRIPTION:
-*
-*
-****************************************************************************/
-PUBLIC TListNode *ListSetReadPointer(TListHeader* aList, int aIndex) {
+ * FUNCTION: ListSetReadPointer
+ *
+ * DESCRIPTION:
+ ****************************************************************************/
+PUBLIC TListNode *
+ListSetReadPointer (
+  TListHeader * aList,
+  int           aIndex )
+{
 	int i = 0;
 	aList->ReadPointer = aList->First;
 
@@ -130,13 +183,14 @@ PUBLIC TListNode *ListSetReadPointer(TListHeader* aList, int aIndex) {
 }
 
 /****************************************************************************
-* FUNCTION: ListGetNext
-*
-* DESCRIPTION:
-*
-*
-****************************************************************************/
-PUBLIC void* ListGetNext(TListHeader* aList) {
+ * FUNCTION: ListGetNext
+ *
+ * DESCRIPTION:
+ ****************************************************************************/
+PUBLIC void *
+ListGetNext (
+  TListHeader * aList )
+{
 
 	TListNode* retPtr;
 	retPtr = aList->ReadPointer;
@@ -145,32 +199,40 @@ PUBLIC void* ListGetNext(TListHeader* aList) {
 	return retPtr->Data;
 }
 
-/****************************************************************************
-* FUNCTION: ListIndexOf
-*
-* DESCRIPTION:
-*
-*
-****************************************************************************/
-PUBLIC int ListIndexOf(TListHeader* aList, void* aData) {
-	ListSetReadPointer(aList, 0);
+///****************************************************************************
+//* FUNCTION: ListIndexOf
+//*
+//* DESCRIPTION:
+//*	
+//*
+//****************************************************************************/
+//PUBLIC int
+//ListIndexOf (
+//  TListHeader * aList,
+//  void *        aData )
+//{
+//	ListSetReadPointer(aList, 0);
+//
+//	for (int i = 0; i < aList->Len; i++) {
+//		if (ListGetNext(aList) == aData) {
+//			return i;
+//		}
+//	}
+//}
 
-	for (int i = 0; i < aList->Len; i++) {
-		if (ListGetNext(aList) == aData) {
-			return i;
-		}
-	}
-}
 /****************************************************************************
-* FUNCTION: ListRemove
-*
-* DESCRIPTION:
-*	Deletes a single Node out of the List and returns the Pointer
-*		that was saved in the Data field of the Node
-*	
-*
-****************************************************************************/
-PUBLIC void* ListRemove(TListHeader* aList, int aIndex) {
+ * FUNCTION: ListRemove
+ *
+ * DESCRIPTION:
+ *   Deletes a single Node out of the List and returns the Pointer that was
+ *   saved in the Data field of the Node The malloc of the Node is free´d but
+ *   not the Data pointer
+ ****************************************************************************/
+PUBLIC void *
+ListRemove (
+  TListHeader * aList,
+  int           aIndex )
+{
 
 	TListNode* delNode;
 
@@ -221,8 +283,21 @@ PUBLIC void* ListRemove(TListHeader* aList, int aIndex) {
 /****************************************************************************
 * SECTION: Implementation of private functions
 ****************************************************************************/
-
-PRIVATE TListNode* makeNode(void* aData, TListNode* aNext) {
+/****************************************************************************
+ * FUNCTION: makeNode
+ *
+ * DESCRIPTION:
+ *   Allocates the Storage for a new Node and initializes the Data and Next
+ *   field of it with the Paramters given PARAMETER: aData - Data Pointer
+ *   aNext - Next Pointer
+ * RETURN:
+ *   Returns the Pointer of the new Node
+ ****************************************************************************/
+PRIVATE TListNode *
+makeNode (
+  void *      aData,
+  TListNode * aNext )
+{
 	TListNode *newPtr;    /* Zeiger auf zugewiesenen Speicher */
 
 	if ((newPtr = (TListHeader *)malloc(sizeof(TListNode))) != NULL) {
@@ -231,8 +306,20 @@ PRIVATE TListNode* makeNode(void* aData, TListNode* aNext) {
 
 	return newPtr;
 }
-
-PRIVATE void* freeNode(TListNode* aNode) {
+/****************************************************************************
+ * FUNCTION: freeNode
+ *
+ * DESCRIPTION:
+ *   Calls the free Function for the Node. PARAMETER: aNode - Pointer of the
+ *   node that should be destroyed
+ * RETURN:
+ *   Returns the Pointer of the Data Field of the Node because the storage
+ *   allocation of this Field is not handled by this Type
+ ****************************************************************************/
+PRIVATE void *
+freeNode (
+  TListNode * aNode )
+{
 
 	void* retPtr = aNode->Data;
 	free(aNode);
