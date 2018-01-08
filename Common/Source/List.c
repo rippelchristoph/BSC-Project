@@ -54,6 +54,9 @@ typedef struct ListNode {
 	struct ListNode* Next
 } TListNode;
 
+/****************************************************************************
+*	_TYPE: TListHeader
+****************************************************************************/
 typedef struct ListHeader {
 	int Len;
 	TListNode* First;
@@ -109,7 +112,7 @@ newList ( void )
  *   Before calling this function all Nodes have to be deleted by repeatedly
  *   calling ListRemove(TListHeader*, 0) until it
  *   returns NULL
- * PARAMTER:
+ * PARAMETER:
  *   aList - The Adress of the TListHeader that should be destroyed
  ****************************************************************************/
 
@@ -136,6 +139,8 @@ destroyList (
  *   aList - The List Header
  *   aData - The Pointer that will be written into the Data Field of the new
  *           Node
+ * RETURN:
+ *   Returns the Address of the new Node
  ****************************************************************************/
 PUBLIC TListNode *
 ListAdd (
@@ -163,6 +168,12 @@ ListAdd (
  * FUNCTION: ListSetReadPointer
  *
  * DESCRIPTION:
+ *   Function sets The ReadPointer to the given Index
+ * PARAMETER:
+ *   aList  - The Pointer of the List Header
+ *   aIndex - The Index to which the ReadPointer is set
+ * RETURN:
+ *   Returns the new ReadPointer
  ****************************************************************************/
 PUBLIC TListNode *
 ListSetReadPointer (
@@ -186,39 +197,44 @@ ListSetReadPointer (
  * FUNCTION: ListGetNext
  *
  * DESCRIPTION:
+ *   This Function is for itterations over the List. It uses the ReadPointer,
+ *   that always points on the next node of which the data is returned. If
+ *   another List Function is called between calling the GetNext Function
+ *   twice, it is undefined if the ReadPointer is still on the same Spot.
+ * PARAMETER:
+ *   aList - a List of which the next Node is returned
+ * RETURN:
+ *   Function Returns the Data Pointer of the Node on which the ReadPointer
+ *   points. If the List is at its end the Function will return NULL
  ****************************************************************************/
 PUBLIC void *
 ListGetNext (
   TListHeader * aList )
 {
+	//List Empty?
+	if (aList->Len <= 0) {
+		return NULL;
+	}
+
+	//List at the End?
+	if (aList->ReadPointer == NULL) {
+		return NULL;
+	}
 
 	TListNode* retPtr;
 	retPtr = aList->ReadPointer;
-	aList->ReadPointer = aList->ReadPointer->Next;
+	
+	//Last time that retPtr->Data is returned. Next Time -> NULL
+	if (retPtr == aList->Last) {
+		aList->ReadPointer = NULL;
+	}
+	else {
+		//Go to Next Node for next iteration
+		aList->ReadPointer = aList->ReadPointer->Next;
+	}
 
 	return retPtr->Data;
 }
-
-///****************************************************************************
-//* FUNCTION: ListIndexOf
-//*
-//* DESCRIPTION:
-//*	
-//*
-//****************************************************************************/
-//PUBLIC int
-//ListIndexOf (
-//  TListHeader * aList,
-//  void *        aData )
-//{
-//	ListSetReadPointer(aList, 0);
-//
-//	for (int i = 0; i < aList->Len; i++) {
-//		if (ListGetNext(aList) == aData) {
-//			return i;
-//		}
-//	}
-//}
 
 /****************************************************************************
  * FUNCTION: ListRemove
@@ -227,6 +243,11 @@ ListGetNext (
  *   Deletes a single Node out of the List and returns the Pointer that was
  *   saved in the Data field of the Node The malloc of the Node is free´d but
  *   not the Data pointer
+ * PARAMETER:
+ *   aList  - The Pointer of the List Header
+ *   aIndex - The Index of the Node that should be removed
+ * RETURN:
+ *   Returns the Data Pointer of the Removed Node.
  ****************************************************************************/
 PUBLIC void *
 ListRemove (
@@ -290,6 +311,9 @@ ListRemove (
  *   Allocates the Storage for a new Node and initializes the Data and Next
  *   field of it with the Paramters given PARAMETER: aData - Data Pointer
  *   aNext - Next Pointer
+ * PARAMETER:
+ *   aData - The Data Pointer for the new Node
+ *   aNext - A Next Pointer for the new Node
  * RETURN:
  *   Returns the Pointer of the new Node
  ****************************************************************************/
@@ -312,6 +336,8 @@ makeNode (
  * DESCRIPTION:
  *   Calls the free Function for the Node. PARAMETER: aNode - Pointer of the
  *   node that should be destroyed
+ * PARAMETER:
+ *   aNode - The node which should be desroyed
  * RETURN:
  *   Returns the Pointer of the Data Field of the Node because the storage
  *   allocation of this Field is not handled by this Type
@@ -320,9 +346,7 @@ PRIVATE void *
 freeNode (
   TListNode * aNode )
 {
-
 	void* retPtr = aNode->Data;
 	free(aNode);
-
 	return retPtr;
 }
