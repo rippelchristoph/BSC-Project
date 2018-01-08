@@ -44,7 +44,7 @@ profile RasPi : RaspberryPi.OpenGL.RGBA8888
   attr Optimization = High;
   attr ApplicationClass = Application::Application;
   attr CleanOutputDirectories = false;
-  attr OutputDirectory = C:\Maturaprojekt\BSC-Project\Project\RaspberryPi\Template\GeneratedCode;
+  attr OutputDirectory = C:\Maturaprojekt\BSC-Project\BuildEnvironment\RaspberryPi\Template\GeneratedCode;
 
   $rect <10,10,154,50>
   macro Author = "Dipl. Ing. Paul Banach and Dipl. Ing. Manfred Schweyer, Copyright (C) TARA Systems GmbH";
@@ -65,7 +65,7 @@ unit Application
 // Mosaic Framework
 note group Note1
 {
-  attr Bounds = <20,20,260,290>;
+  attr Bounds = <20,20,260,450>;
 }
 
 // Configuration for the target code generation
@@ -80,45 +80,10 @@ note group Note3
   attr Bounds = <520,20,760,160>;
 }
 
-// To do:
-// 
-// - Select the profile brick and set the attribute 'OutputDirectory' to the desired \
-// destination folder for the generated code (e.g. within your Build Environment \
-// '\Examples\Template\GeneratedCode'). 
-// 
-// - Open the unit 'Application'. You will find there the application component (the \
-// root component of your GUI). Implement there your desired GUI look and feel.
-// 
-// - To better structure your project you can add more units here. Use for this purpose \
-// the template 'Unit' from the Gallery folder 'Chora'. Afterwards you can open the \
-// unit and put there your own GUI components.
-// 
-// - If you plan to develop a multilingual GUI application, you can add more language \
-// members to the project. Use for this purpose the template 'Language' found in \
-// the Gallery folder 'Chora'.
-note legend Note4
-{
-  attr Bounds = <20,510,760,760>;
-}
-
 // Project Units
 note group Note5
 {
-  attr Bounds = <270,170,980,370>;
-}
-
-// Welcome to Embedded Wizard!
-// 
-// This empty project is prepared to create a GUI application suitable for a Raspberry \
-// Pi board with a display size of 800x480 pixel (landscape mode).
-// 
-// In order to get your first Embedded Wizard generated UI application up and running \
-// on your Raspberry Pi target, we highly recommend to study the following document:
-// 
-// http://ask.embedded-wizard.de/
-note legend Note
-{
-  attr Bounds = <20,370,760,570>;
+  attr Bounds = <270,170,760,310>;
 }
 
 $rect <40,270,240,310>
@@ -145,7 +110,7 @@ unit XFlat
   attr Directory = $Mosaic\XFlat;
 }
 
-$rect <530,260,730,300>
+$rect <530,230,730,270>
 unit Device
 {
   attr Directory = .\;

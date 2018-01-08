@@ -1,7 +1,7 @@
 $version 6.60
 
 // This is the root component of the entire GUI application.
-$rect <10,60,210,100>
+$rect <360,20,560,60>
 $output false
 class Application : Core::Root
 {
@@ -34,6 +34,7 @@ class Application : Core::Root
   {
     preset Bounds = <0,0,800,480>;
     preset SnapLast = <800,0>;
+    preset SlideHorz = true;
     preset SlideVert = false;
   }
 
@@ -49,60 +50,26 @@ class Application : Core::Root
   object Application::MainMenue MainMenu
   {
     preset Bounds = <49,720,849,1200>;
+    preset Enabled = true;
     preset Embedded = true;
+    preset Visible = true;
   }
 
   $rect <20,20,160,60>
   object Application::Well WellObj
   {
     preset Bounds = <889,800,1689,1280>;
+    preset Enabled = true;
     preset Embedded = true;
+    preset Visible = true;
   }
 }
 
-// To do:
-// 
-// - Open the 'Application' component for editing. It represents your entire GUI. \
-// Use widgets, views, event handlers and effects from the Gallery to assemble there \
-// your desired GUI look and feel.
-// 
-// - Create your own GUI components, widgets, panels, etc. The Gallery folder 'Components' \
-// contains for this purpose various templates you can simply add to the unit and \
-// thus start your own component development.
-// 
-// - You can add your own bitmap and font resources to the unit. Use the templates \
-// 'Bitmap Resource' and 'Font Resource' from the Gallery folder 'Components' for \
-// this purpose.
-// 
-// - You can add here also constants to store e.g. multilingual text fragments. Use \
-// for this purpose the template 'Constant' from the Gallery folder 'Chora'.
-// 
-// - To add an interface for communication with the target device use the template \
-// 'Device Interface' from the Gallery folder 'Device'.
-note legend Note1
-{
-  attr Bounds = <940,10,1630,310>;
-}
-
-// This is a font resource.
-$rect <500,30,700,70>
-$output false
-resource Resources::Font Font
-{
-  attr fontname FontName = Arial;
-  attr fontheight Height = 32;
-  attr fontquality Quality = High;
-  attr fontranges Ranges = 0x20-0xFF;
-  attr fontaspectratio AspectRatio = 1.0;
-  attr fontbold Bold = false;
-  attr fontitalic Italic = false;
-}
-
-$rect <40,100,240,140>
+$rect <130,120,330,160>
 $output false
 class MainMenue : Core::Group
 {
-  $rect <820,110,1020,150>
+  $rect <10,600,210,640>
   inherited property Bounds = <0,0,800,480>;
 
   $rect <10,560,210,600>
@@ -232,89 +199,23 @@ class MainMenue : Core::Group
     */
   }
 
-  // To do:
-  // 
-  // - Adjust the visible size of your component (the thick blue border).
-  // 
-  // - The simplest way to compose the appearance of the component is to use the \
-  // 'Views' and 'Widget Sets' from the Gallery.
-  // 
-  // - To react to touch or keyboard events use the templates from the Gallery folder \
-  // 'Event Handlers'.
-  // 
-  // - To perform transitions (animations) use the templates from the Gallery folder \
-  // 'Effects'.
-  // 
-  // - To implement the interface of the component use the 'Property' template from \
-  // the Gallery folder 'Chora'.
-  // 
-  // - To store values use the 'Variable' and 'Array' templates available in the \
-  // Gallery folder 'Chora'.
-  // 
-  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
-  // in the Gallery folder 'Chora'.
-  // 
-  // - In the method 'UpdateViewState()' you can put code to update the state of \
-  // views enclosed in your component.
-  // 
-  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
-  // calculation for enclosed views.
-  note legend Note1
-  {
-    attr Bounds = <250,500,1030,820>;
-  }
-
   $rect <20,20,160,60>
-  object Views::Rectangle Rectangle
+  object Application::ControllMenue ControllMenue
   {
     preset Bounds = <0,0,800,480>;
-    preset Color = #747674FF;
+    preset Config = Config;
   }
 
   $rect <20,20,160,60>
-  object Application::SampleController SCA
+  object Application::Config Config
   {
-    preset Bounds = <20,90,640,150>;
-    preset NameProperty = '1';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA1
-  {
-    preset Bounds = <20,150,640,210>;
-    preset NameProperty = '2';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA2
-  {
-    preset Bounds = <20,210,640,270>;
-    preset NameProperty = '3';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA3
-  {
-    preset Bounds = <20,270,640,330>;
-    preset NameProperty = '4';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA4
-  {
-    preset Bounds = <20,330,640,390>;
-    preset NameProperty = '5';
-  }
-
-  $rect <20,20,160,60>
-  object Application::SampleController SCA5
-  {
-    preset Bounds = <20,390,640,450>;
-    preset NameProperty = '6';
+    preset Bounds = <960,1210,1760,1690>;
+    preset Visible = true;
+    preset ControllMenue = ControllMenue;
   }
 }
 
-$rect <40,180,240,220>
+$rect <580,120,780,160>
 $output false
 class Well : Core::Group
 {
@@ -328,7 +229,7 @@ class Well : Core::Group
   $rect <0,490,200,530>
   inherited property Bounds = <0,0,800,480>;
 
-  $rect <0,650,200,690>
+  $rect <0,580,200,620>
   inherited method UpdateLayout()
   {
     // Always invoke the inherited method.
@@ -357,7 +258,7 @@ class Well : Core::Group
     */
   }
 
-  $rect <0,610,200,650>
+  $rect <0,540,200,580>
   inherited method UpdateViewState()
   {
     // Always invoke the inherited method.
@@ -455,334 +356,302 @@ class Well : Core::Group
     */
   }
 
-  // To do:
-  // 
-  // - Adjust the visible size of your component (the thick blue border).
-  // 
-  // - The simplest way to compose the appearance of the component is to use the \
-  // 'Views' and 'Widget Sets' from the Gallery.
-  // 
-  // - To react to touch or keyboard events use the templates from the Gallery folder \
-  // 'Event Handlers'.
-  // 
-  // - To perform transitions (animations) use the templates from the Gallery folder \
-  // 'Effects'.
-  // 
-  // - To implement the interface of the component use the 'Property' template from \
-  // the Gallery folder 'Chora'.
-  // 
-  // - To store values use the 'Variable' and 'Array' templates available in the \
-  // Gallery folder 'Chora'.
-  // 
-  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
-  // in the Gallery folder 'Chora'.
-  // 
-  // - In the method 'UpdateViewState()' you can put code to update the state of \
-  // views enclosed in your component.
-  // 
-  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
-  // calculation for enclosed views.
-  note legend Note1
-  {
-    attr Bounds = <210,490,990,810>;
-  }
-
   $rect <20,20,160,60>
   object Application::WellPart A1
   {
-    preset Bounds = <230,50,300,120>;
+    preset Bounds = <70,50,140,120>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart B1
   {
-    preset Bounds = <230,120,300,190>;
+    preset Bounds = <70,120,140,190>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart C1
   {
-    preset Bounds = <230,190,300,260>;
+    preset Bounds = <70,190,140,260>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart D1
   {
-    preset Bounds = <230,260,300,330>;
+    preset Bounds = <70,260,140,330>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart E1
   {
-    preset Bounds = <230,330,300,400>;
+    preset Bounds = <70,330,140,400>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart F1
   {
-    preset Bounds = <230,400,300,470>;
+    preset Bounds = <70,400,140,470>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart A2
   {
-    preset Bounds = <300,50,370,120>;
+    preset Bounds = <140,50,210,120>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart B2
   {
-    preset Bounds = <300,120,370,190>;
+    preset Bounds = <140,120,210,190>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart C2
   {
-    preset Bounds = <300,190,370,260>;
+    preset Bounds = <140,190,210,260>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart D2
   {
-    preset Bounds = <300,260,370,330>;
+    preset Bounds = <140,260,210,330>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart E2
   {
-    preset Bounds = <300,330,370,400>;
+    preset Bounds = <140,330,210,400>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart F2
   {
-    preset Bounds = <300,400,370,470>;
+    preset Bounds = <140,400,210,470>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart A3
   {
-    preset Bounds = <370,50,440,120>;
+    preset Bounds = <210,50,280,120>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart B3
   {
-    preset Bounds = <370,120,440,190>;
+    preset Bounds = <210,120,280,190>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart C3
   {
-    preset Bounds = <370,190,440,260>;
+    preset Bounds = <210,190,280,260>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart D3
   {
-    preset Bounds = <370,260,440,330>;
+    preset Bounds = <210,260,280,330>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart E3
   {
-    preset Bounds = <370,330,440,400>;
+    preset Bounds = <210,330,280,400>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart F3
   {
-    preset Bounds = <370,400,440,470>;
+    preset Bounds = <210,400,280,470>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart A4
   {
-    preset Bounds = <440,50,510,120>;
+    preset Bounds = <280,50,350,120>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart B4
   {
-    preset Bounds = <440,120,510,190>;
+    preset Bounds = <280,120,350,190>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart C4
   {
-    preset Bounds = <440,190,510,260>;
+    preset Bounds = <280,190,350,260>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart D4
   {
-    preset Bounds = <440,260,510,330>;
+    preset Bounds = <280,260,350,330>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart E4
   {
-    preset Bounds = <440,330,510,400>;
+    preset Bounds = <280,330,350,400>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart F4
   {
-    preset Bounds = <440,400,510,470>;
+    preset Bounds = <280,400,350,470>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart A5
   {
-    preset Bounds = <510,50,580,120>;
+    preset Bounds = <350,50,420,120>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart B5
   {
-    preset Bounds = <510,120,580,190>;
+    preset Bounds = <350,120,420,190>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart C5
   {
-    preset Bounds = <510,190,580,260>;
+    preset Bounds = <350,190,420,260>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart D5
   {
-    preset Bounds = <510,260,580,330>;
+    preset Bounds = <350,260,420,330>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart E5
   {
-    preset Bounds = <510,330,580,400>;
+    preset Bounds = <350,330,420,400>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart F5
   {
-    preset Bounds = <510,400,580,470>;
+    preset Bounds = <350,400,420,470>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart A6
   {
-    preset Bounds = <580,50,650,120>;
+    preset Bounds = <420,50,490,120>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart B6
   {
-    preset Bounds = <580,120,650,190>;
+    preset Bounds = <420,120,490,190>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart C6
   {
-    preset Bounds = <580,190,650,260>;
+    preset Bounds = <420,190,490,260>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart D6
   {
-    preset Bounds = <580,260,650,330>;
+    preset Bounds = <420,260,490,330>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart E6
   {
-    preset Bounds = <580,330,650,400>;
+    preset Bounds = <420,330,490,400>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart F6
   {
-    preset Bounds = <580,400,650,470>;
+    preset Bounds = <420,400,490,470>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart A7
   {
-    preset Bounds = <650,50,720,120>;
+    preset Bounds = <490,50,560,120>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart B7
   {
-    preset Bounds = <650,120,720,190>;
+    preset Bounds = <490,120,560,190>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart C7
   {
-    preset Bounds = <650,190,720,260>;
+    preset Bounds = <490,190,560,260>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart D7
   {
-    preset Bounds = <650,260,720,330>;
+    preset Bounds = <490,260,560,330>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart E7
   {
-    preset Bounds = <650,330,720,400>;
+    preset Bounds = <490,330,560,400>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart F7
   {
-    preset Bounds = <650,400,720,470>;
+    preset Bounds = <490,400,560,470>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart A8
   {
-    preset Bounds = <720,50,790,120>;
+    preset Bounds = <560,50,630,120>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart B8
   {
-    preset Bounds = <720,120,790,190>;
+    preset Bounds = <560,120,630,190>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart C8
   {
-    preset Bounds = <720,190,790,260>;
+    preset Bounds = <560,190,630,260>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart D8
   {
-    preset Bounds = <720,260,790,330>;
+    preset Bounds = <560,260,630,330>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart E8
   {
-    preset Bounds = <720,330,790,400>;
+    preset Bounds = <560,330,630,400>;
   }
 
   $rect <20,20,160,60>
   object Application::WellPart F8
   {
-    preset Bounds = <720,400,790,470>;
+    preset Bounds = <560,400,630,470>;
   }
 
   $rect <20,20,160,60>
   object Application::Clock Time
   {
-    preset Bounds = <10,10,240,40>;
+    preset Bounds = <670,400,790,470>;
   }
 
   // Writes the given Time in the chosen WellPart
-  $rect <820,220,1020,260>
+  $rect <1220,140,1420,180>
   method void timeToWellPart( arg int32 aColumn, arg int32 aRow, arg string aTime )
   {
     WellPartArray[aColumn,aRow].TimeProperty=aTime;
@@ -792,7 +661,7 @@ class Well : Core::Group
   }
 
   // Stores all Well Parts
-  $rect <860,60,1060,100>
+  $rect <820,80,1020,120>
   array Application::WellPart WellPartArray[ 8,6 ] =
   (
     Default[0, 0] = A1;
@@ -845,35 +714,20 @@ class Well : Core::Group
     Default[7, 5] = F8;
   );
 
-  // The object 'PropertyObserver' is a handler of property notifications. When the \
-  // affected property is notified, the observer calls the associated slot method \
-  // 'onEvent' automatically. Within the 'onEvent' method you can react to the notification. \
-  // The method 'onEvent' exists for your convenience only. You can remove it and \
-  // connect the observer with another slot method. See inline documentation inside \
-  // the method.
-  // 
-  // Don't forget to connect the observer with the property of interest. To do this \
-  // set the property 'Outlet' of the observer to refer to the desired property.
-  note legend Note
+  // Waits till the WellIndex in Unit Device is changed and calls Function OnEvent \
+  // if notified
+  $rect <820,140,1020,180>
+  object Core::PropertyObserver WellIndexObserver
   {
-    attr Bounds = <1290,270,1790,470>;
-  }
-
-  $rect <810,310,1010,350>
-  object Core::PropertyObserver PropertyObserver
-  {
-    preset OnEvent = onEvent;
+    preset OnEvent = onWellIndex;
     preset Outlet = ^Device::Device.WellIndex;
   }
 
   // This slot method is executed when the associated property observer 'PropertyObserver' \
   // is notified.
-  $rect <810,350,1010,390>
-  slot onEvent
+  $rect <1020,140,1220,180>
+  slot onWellIndex
   {
-    trace "sth happend";
-
-
     timeToWellPart(Device::Device.WellIndex[0]-'0', Device::Device.WellIndex[1]-'0'-1,Time.TimeProperty); // (int32 Column, int32 Row, string Time)
 
 
@@ -893,10 +747,140 @@ class Well : Core::Group
     */
   }
 
+  $rect <20,20,160,60>
+  object Views::WarpImage Logo
+  {
+    preset Point4 = <700,110>;
+    preset Point3 = <800,110>;
+    preset Point2 = <800,10>;
+    preset Point1 = <700,10>;
+    preset Bitmap = Application::Logo;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel
+  {
+    preset Bounds = <70,10,140,50>;
+    preset TextString = "1";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel1
+  {
+    preset Bounds = <140,10,210,50>;
+    preset TextString = "2";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel2
+  {
+    preset Bounds = <210,10,280,50>;
+    preset TextString = "3";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel3
+  {
+    preset Bounds = <280,10,350,50>;
+    preset TextString = "4";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel4
+  {
+    preset Bounds = <350,10,420,50>;
+    preset TextString = "5";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel5
+  {
+    preset Bounds = <420,10,490,50>;
+    preset TextString = "6";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel6
+  {
+    preset Bounds = <490,10,560,50>;
+    preset TextString = "7";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel7
+  {
+    preset Bounds = <560,10,630,50>;
+    preset TextString = "8";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel8
+  {
+    preset Bounds = <0,60,70,100>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel9
+  {
+    preset Bounds = <0,130,70,170>;
+    preset TextString = "B";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel10
+  {
+    preset Bounds = <0,200,70,240>;
+    preset TextString = "C";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel11
+  {
+    preset Bounds = <0,270,70,310>;
+    preset TextString = "D";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel12
+  {
+    preset Bounds = <0,340,70,380>;
+    preset TextString = "E";
+  }
+
+  $rect <20,20,160,60>
+  object Application::WellLabel WellLabel13
+  {
+    preset Bounds = <0,410,70,450>;
+    preset TextString = "F";
+  }
+
+  $rect <820,190,1020,230>
+  object Core::PropertyObserver NewWellObserver
+  {
+    preset OnEvent = onNewWell;
+    preset Outlet = ^Device::Device.NewWell;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <1020,190,1220,230>
+  slot onNewWell
+  {
+    var int32 r;
+    var int32 c;
+
+    for(r=0; r<6;r=r+1){
+      for(c=0;c<8;c=c+1){
+        WellPartArray[c,r].Text.String="";
+      }
+    }
+
+  }
+
   $reorder Rectangle 76
 }
 
-$rect <70,260,270,300>
+$rect <610,160,810,200>
 $output false
 class WellPart : Core::Group
 {
@@ -1076,12 +1060,12 @@ class WellPart : Core::Group
   object Views::Text Text
   {
     preset Bounds = <0,20,70,50>;
-    preset RowDistance = 10;
+    preset RowDistance = 14;
     preset AutoSize = false;
     preset WrapWidth = 0;
     preset WrapText = true;
     preset String = "";
-    preset Font = Resources::FontArial12;
+    preset Font = Application::FontArial17;
   }
 
   $rect <90,10,290,50>
@@ -1135,9 +1119,33 @@ class WellPart : Core::Group
   {
     return pure Filled;
   }
+
+  $rect <610,20,810,60>
+  property point Coordinate = <0,0>;
+
+  $rect <610,60,810,100>
+  onset Coordinate
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Coordinate == value )
+      return;
+
+    // Remember the property's new value.
+    pure Coordinate = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <610,100,810,140>
+  onget Coordinate
+  {
+    return pure Coordinate;
+  }
 }
 
-$rect <100,300,300,340>
+$rect <910,600,1110,640>
 $output false
 resource Resources::Bitmap Oval
 {
@@ -1147,12 +1155,12 @@ resource Resources::Bitmap Oval
   attr framedelay FrameDelay;
 }
 
-$rect <70,220,270,260>
+$rect <560,440,760,480>
 $output false
 class Clock : Core::Group
 {
   $rect <10,230,210,270>
-  inherited property Bounds = <0,0,220,30>;
+  inherited property Bounds = <0,0,120,60>;
 
   $rect <10,390,210,430>
   inherited method UpdateLayout()
@@ -1317,7 +1325,7 @@ class Clock : Core::Group
   slot Slot
   {
     var Core::Time currentT= Time.CurrentTime;
-    TimeProperty=string(currentT.Day)+"."+string(currentT.Month)+"."+string(currentT.Year)+" "+string(currentT.Hour)+":"+string(currentT.Minute)+":"+string(currentT.Second);
+    TimeProperty=string(currentT.Day)+"."+string(currentT.Month)+"."+string(currentT.Year)[2]+string(currentT.Year)[3]+" "+string(currentT.Hour)+":"+string(currentT.Minute)+":"+string(currentT.Second);
   }
 
   $rect <250,0,450,40>
@@ -1332,8 +1340,9 @@ class Clock : Core::Group
   $rect <20,20,160,60>
   object Views::Text TimeText
   {
-    preset Bounds = <0,0,220,30>;
+    preset Bounds = <0,0,120,60>;
     preset AutoSize = false;
+    preset WrapText = true;
     preset String = "00.00.0000 00:00:00";
     preset Font = Flat::FontM;
   }
@@ -1367,14 +1376,14 @@ class Clock : Core::Group
   }
 }
 
-$rect <70,140,270,180>
+$rect <150,290,350,330>
 $output false
 class SampleController : Core::Group
 {
   $rect <10,550,210,590>
-  inherited property Bounds = <0,0,600,60>;
+  inherited property Bounds = <0,0,440,70>;
 
-  $rect <10,710,210,750>
+  $rect <20,630,220,670>
   inherited method UpdateLayout()
   {
     // Always invoke the inherited method.
@@ -1403,7 +1412,2098 @@ class SampleController : Core::Group
     */
   }
 
-  $rect <10,670,210,710>
+  $rect <20,590,220,630>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <310,130,510,170>
+  property char NameProperty = 0;
+
+  $rect <310,170,510,210>
+  onset NameProperty
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure NameProperty == value )
+      return;
+
+    // Remember the property's new value.
+    pure NameProperty = value;
+
+    NameText.String=NameProperty;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <310,210,510,250>
+  onget NameProperty
+  {
+    return pure NameProperty;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Border Border
+  {
+    preset Bounds = <1,1,440,69>;
+    preset Width = 3;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text NameText
+  {
+    preset Bounds = <0,16,30,46>;
+    preset String = "A";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton BtnStart
+  {
+    preset Bounds = <100,4,210,29>;
+    preset OnAction = onStart;
+    preset Caption = "Start";
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton BtnStop
+  {
+    preset Bounds = <100,40,210,65>;
+    preset Enabled = false;
+    preset OnAction = onStop;
+    preset Caption = "Stop";
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzBar HorzBar
+  {
+    preset Bounds = <220,10,380,60>;
+    preset CurrentValue = 0;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::Indicator Indicator
+  {
+    preset Bounds = <400,20,430,50>;
+  }
+
+  $rect <30,180,230,220>
+  slot onStart
+  {
+    if(TextEditor.String.parse_int32(0)!=0){ //User has to enter a Integer > 0
+      HorzBar.MaxValue=TextEditor.String.parse_int32( 0 );
+      HorzBar.CurrentValue=TextEditor.String.parse_int32( 0 );
+      //TimerMinuten.Enabledten.Enabled=true;  //?????
+      EnabledProperty=true;
+    }
+
+  }
+
+  $rect <30,300,230,340>
+  object Core::Timer TimerMinuten
+  {
+    preset OnTrigger = onTimerMinuten;
+    preset Period = 1000;
+    preset Enabled = false;
+  }
+
+  $rect <30,220,230,260>
+  slot onTimerMinuten
+  {
+    if(HorzBar.CurrentValue!=1){
+      HorzBar.CurrentValue=HorzBar.CurrentValue-1;
+
+    }else{
+      
+      HorzBar.CurrentValue=TextEditor.String.parse_int32( 0 );
+      Device::Device.WellIndex=string(CurrentIndex)+NameProperty;
+      if(CurrentIndex==7)
+        WellFull();
+      else
+        CurrentIndex=CurrentIndex+1; 
+      
+
+    }
+
+
+     
+           
+          
+         
+
+        
+
+  }
+
+  $rect <310,400,510,440>
+  property bool EnabledProperty = false;
+
+  $rect <310,440,510,480>
+  onset EnabledProperty
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure EnabledProperty == value )
+      return;
+
+    // Remember the property's new value.
+    pure EnabledProperty = value;
+    if(EnabledProperty){
+      BtnStart.Enabled=false;
+      BtnStop.Enabled=true;
+    }else{
+      BtnStart.Enabled=true;
+      BtnStop.Enabled=false;
+    }
+
+
+    Indicator.Active=EnabledProperty;
+    TimerMinuten.Enabled=EnabledProperty;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <310,480,510,520>
+  onget EnabledProperty
+  {
+    return pure EnabledProperty;
+  }
+
+  $rect <30,140,230,180>
+  slot onStop
+  {
+    EnabledProperty=false;
+
+  }
+
+  $rect <30,260,230,300>
+  method void WellFull()
+  {
+    EnabledProperty=false;
+    BtnStart.Enabled=false;
+  }
+
+  $rect <20,20,160,60>
+  object Application::TextEditor TextEditor
+  {
+    preset Bounds = <30,20,90,60>;
+    preset WrapText = false;
+    preset String = "10";
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line
+  {
+    preset Point2 = <90,45>;
+    preset Point1 = <30,45>;
+    preset Width = 2;
+    preset Color = #000000FF;
+  }
+
+  $rect <310,270,510,310>
+  property int32 CurrentIndex = 0;
+
+  $rect <310,310,510,350>
+  onset CurrentIndex
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CurrentIndex == value )
+      return;
+
+    // Remember the property's new value.
+    pure CurrentIndex = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <310,350,510,390>
+  onget CurrentIndex
+  {
+    return pure CurrentIndex;
+  }
+
+  $rect <590,110,790,150>
+  object Core::PropertyObserver NewWellObserver
+  {
+    preset OnEvent = onNewWell;
+    preset Outlet = ^Device::Device.NewWell;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <590,150,790,190>
+  slot onNewWell
+  {
+    CurrentIndex=0;
+    BtnStart.Enabled=true;
+
+  }
+
+  // Properties
+  note group Note
+  {
+    attr Bounds = <280,90,540,540>;
+  }
+
+  // Timing
+  note group Note1
+  {
+    attr Bounds = <10,90,260,360>;
+  }
+
+  $reorder OnSetOpacity 8
+  $reorder OnGetEmbedded 8
+  $reorder OnSetEmbedded 8
+  $reorder OnGetAlphaBlended 8
+  $reorder OnSetAlphaBlended 8
+  $reorder OnGetVisible 8
+  $reorder OnSetVisible 8
+  $reorder ObtainFocus 8
+  $reorder HasViewState 8
+  $reorder LocalPosition 8
+  $reorder GlobalPosition 8
+  $reorder DispatchEvent 8
+  $reorder BroadcastEventAtPosition 8
+  $reorder BroadcastEvent 8
+  $reorder UpdateLayout 8
+  $reorder UpdateViewState 8
+  $reorder InvalidateViewState 8
+  $reorder InvalidateArea 8
+  $reorder Init 8
+  $reorder GetIndexOfView 8
+  $reorder GetViewAtIndex 8
+  $reorder CountViews 8
+  $reorder FindViewInDirection 8
+  $reorder FindViewWithinArea 8
+  $reorder FindViewAtPosition 8
+  $reorder FindPrevView 8
+  $reorder FindNextView 8
+  $reorder FindSiblingView 8
+  $reorder GetContentArea 8
+  $reorder RestackBehind 8
+  $reorder RestackBack 8
+  $reorder RestackTop 8
+  $reorder Restack 8
+  $reorder Remove 8
+  $reorder AddBehind 8
+  $reorder Add 8
+  $reorder Focus 8
+  $reorder Buffered 8
+  $reorder Opacity 9
+  $reorder Embedded 9
+  $reorder AlphaBlended 9
+  $reorder Visible 9
+  $reorder NameProperty 9
+  $reorder OnSetNameProperty 9
+  $reorder OnGetNameProperty 9
+  $reorder Border 9
+  $reorder NameText 9
+  $reorder BtnStart 9
+  $reorder BtnStop 9
+  $reorder HorzBar 9
+  $reorder Indicator 9
+  $reorder onStart 9
+  $reorder TimerMinuten 9
+  $reorder onTimerMinuten 9
+  $reorder Enabled 5
+  $reorder OnSetEnabled 1
+}
+
+$rect <910,560,1110,600>
+$output false
+resource Resources::Bitmap Logo
+{
+  attr bitmapfile FileName = .\Resources\Logo.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+$rect <910,520,1110,560>
+$output false
+resource Resources::Font FontArial17
+{
+  attr fontname FontName = Arial;
+  attr fontheight Height = 17;
+  attr fontquality Quality = High;
+  attr fontranges Ranges = 0x20-0xFF;
+  attr fontaspectratio AspectRatio = 1.0;
+  attr fontbold Bold = true;
+  attr fontitalic Italic = false;
+}
+
+// This component implements an editor.
+$rect <560,360,760,400>
+$output false
+class TextEditor : Templates::TextEditor
+{
+  $rect <670,620,870,660>
+  inherited property Bounds = <0,0,160,130>;
+
+  $rect <680,280,880,320>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited version of the method
+    super( aState );
+
+    // Activate the caret blinking if the editor component has the input focus
+    if ( aState.contains( Core::ViewState[ Focused ]))
+      blinkEffect.Enabled = true;
+
+    // ... otherwise hide the caret
+    else
+    {
+      blinkEffect.Enabled = false;
+      Caret.Visible       = false;
+    }
+  }
+
+  // To do:
+  // 
+  // - Adjust the visible size of the text editor (the thick blue border). This will \
+  // be the editor's default size.
+  // - Resize and arrange the member 'Text' so it covers the area where you intend \
+  // to display the text. This is usually the entire area.
+  // - Adjust the position and the size of the 'SimpleTouchHandler' and 'SlideTouchHandler', \
+  // so they cover the 'Text' view.
+  // - If your design it expects, add and configure more views in the component, \
+  // e.g. views to display background, borders, etc.
+  // - The editor implements several handler to process keyboard inputs. See the \
+  // annotation 'Keyboard events'. Feel free to add more handler for other key events \
+  // or remove the handler you don't need in your version.
+  // - The editor displays a magnifying glass when the user touches and holds the \
+  // finger for a while (see the method 'onHoldTouch'). If you don't want it, remove \
+  // the contents within the annotation 'Magnifying glass' and the slot method 'onHoldTouch'.
+  // - The editor reacts to touch interactions. See the annotation 'Touch screen \
+  // events'. If your device is not touch driven, you can remove the both handlers \
+  // 'SimpleTouchHandler', 'SlideTouchHandler' and the methods from the annotation \
+  // 'Touch screen events'.
+  // - Adapt the implementation of the 'UpdateViewState()' method. This method should \
+  // update your views so they reflect the editor's current state (e.g. focused editor \
+  // may appear with other colors, etc.)
+  // - The editor is implemented with various properties allowing the configuration \
+  // of the text (e.g. 'Font', 'Color', ...). If your version of the editor doesn't \
+  // need such configuration, remove the properties and the associated OnSet methods.
+  // - If you need other properties to configure the editor, add from the Gallery \
+  // folder 'Chora' new properties. One property for every new setting (e.g. 'BorderWidth', \
+  // etc.)
+  // - Rename the properties accordingly their usage and remove their 'OnGet...' \
+  // methods.
+  // - For every newly added property adapt their 'OnSet...' method implementation. \
+  // Ensure in the method that the assigned value is correctly passed to the corresponding \
+  // view (e.g. a property 'BorderWidth' should update the eventually used 'Border' \
+  // view, etc.).
+  // - Feel free to modify any other member in this component accordingly your needs. \
+  // Please note the member description and inline comments within methods.
+  note legend Note6
+  {
+    attr Bounds = <10,690,990,1150>;
+  }
+
+  // Magnifying glass
+  note group Note5
+  {
+    attr Bounds = <440,500,660,670>;
+  }
+
+  // Caret
+  note group Note4
+  {
+    attr Bounds = <10,500,430,670>;
+  }
+
+  // State management
+  note group Note3
+  {
+    attr Bounds = <670,240,890,330>;
+  }
+
+  // Touch screen events
+  note group Note2
+  {
+    attr Bounds = <440,240,660,450>;
+  }
+
+  // Keyboard events
+  note group Note1
+  {
+    attr Bounds = <10,240,430,490>;
+  }
+
+  // This internal variable refers to a temporary Views::Image object used to show \
+  // the background for the augmented text content around the caret. This view appears \
+  // during the user is moving this caret by touching the caret with the finger.
+  $rect <450,620,650,660>
+  var Views::Rectangle magnifyingBack = null;
+
+  // This internal variable refers to a temporary Views::WarpGroup object used to \
+  // show the augmented text content around the caret. This view appears during the \
+  // user is moving this caret by touching the caret with the finger.
+  $rect <450,580,650,620>
+  var Views::WarpGroup magnifyingView = null;
+
+  // This flag is set if it is evtl. necessary to scroll the editor content in order \
+  // to ensure that the caret is still visible.
+  $rect <220,620,420,660>
+  var bool autoScroll;
+
+  // This internal variable stores the current caret index. This is the position \
+  // within Text.String property where the user can input text or delete signs.
+  $rect <20,620,220,660>
+  var int32 caretIndex = 0;
+
+  // This slot method is called after the caret has been adjusted. Its job is to \
+  // adjust too the position of the magnifying glass view where the augmented text \
+  // content around the caret is shown.
+  $rect <450,540,650,580>
+  slot updateMagnifyingView
+  {
+    // There is actually no magnifying glass displayed. Nothing to do.
+    if ( magnifyingView == null )
+      return;
+
+    var rect  srcArea = magnifyingView.SourceArea;
+    var rect  extent  = magnifyingView.GetExtent();
+    var rect  bounds  = Bounds;
+    var point caret   = Caret.Point1;
+
+    // Calculate the start position of the area to show in the magnifying
+    // view. Preferably the caret should appear in the center of this area.
+    var int32 srcX = caret.x - ( srcArea.w / 2 );
+
+    // However, the part of magnifying glass displaying the caret should 
+    // remain arranged horizontally within the editor area.
+    if ( srcX < 0 )
+      srcX = 0;
+
+    if (( srcX + srcArea.w ) > bounds.w )
+      srcX = bounds.w - srcArea.w;
+
+    // The resulting start position of the area to augment
+    magnifyingView.SourceArea.origin = point( srcX, caret.y );
+
+    // Now calculate the position for the magnifyingView. Preferably the
+    // the view should be arranged so it shows the augmented caret 
+    // exactly above the origin caret
+    var int32 dstX = ( bounds.x1 + caret.x ) - ( caret.x - srcX ) * 2;
+
+    // From the new magnifyingView position and its current position calculate
+    // an offset.
+    var point ofs = point( dstX - extent.x1, bounds.y1 + caret.y - extent.y2 );
+
+    // Move the magnifyingView and its background by the just calculated offset
+    magnifyingView.MoveView( ofs, false );
+    magnifyingBack.MoveView( ofs, false );
+  }
+
+  // This slot method is called after a short delay when the user has moved the caret \
+  // or modified the text. Its job is to ensure that the caret is still visible. \
+  // If necessary, the editor content is scrolled.
+  $rect <220,540,420,580>
+  slot updateScrollOffset
+  {
+    // Get the visible area of the text view
+    var rect  bounds = Text.Bounds;
+    var int32 ofsX   = 0;
+    var int32 ofsY   = 0;
+
+    // Calculate an offset to scroll the text content if the caret lies
+    // outside the visible area
+    if ( Caret.Point1.x < bounds.x1 ) ofsX = bounds.x1 - Caret.Point1.x;
+    if ( Caret.Point1.x > bounds.x2 ) ofsX = bounds.x2 - Caret.Point1.x;
+    if ( Caret.Point1.y < bounds.y1 ) ofsY = bounds.y1 - Caret.Point1.y;
+    if ( Caret.Point2.y > bounds.y2 ) ofsY = bounds.y2 - Caret.Point2.y;
+
+    // Should the cont be scrolled?
+    if (( ofsX != 0 ) || ( ofsY != 0 ))
+      Text.ScrollOffset = Text.ScrollOffset + point( ofsX, ofsY );
+
+    // The following code takes care of the automatic adjustment of the
+    // text scroll position if after modifying the text, its area is small
+    // enough to be completely visible.
+    ofsX = Text.ScrollOffset.x;
+    ofsY = Text.ScrollOffset.y;
+
+    // Get the current text area of the 
+    var point size = Text.GetContentArea().size;
+
+    // Does the area fit completely within the text editor?
+    if ( size.x <= Text.Bounds.w ) ofsX = 0;
+    if ( size.y <= Text.Bounds.h ) ofsY = 0;
+
+    // If possible arrange the text so it fits within the text editor.
+    Text.ScrollOffset = point( ofsX, ofsY );
+  }
+
+  // This slot method is attached to the Text view. Each time the Text view has rearranged \
+  // the text, this method is called. Its job is to adjust the caret to the evtl. \
+  // new position.
+  $rect <20,540,220,580>
+  slot updateCaret
+  {
+    // Without the font we don't know the height of the caret
+    if ( Font == null )
+      return;
+
+    // Get the pixel position of the sign right to the caret
+    var point rowCol = Text.StringIndex2RowCol( caretIndex );
+    var point pos    = Text.RowCol2Position( rowCol );
+
+    // Arrange the caret at the just determined position. The height of 
+    // the caret corresponds to the height of a text row drawn with the
+    // font
+    Caret.Point1 = pos - point( 0, Font.Ascent  );
+    Caret.Point2 = pos + point( 0, Font.Descent );
+
+    // Restart the blink effect -> this ensures that the user can see the
+    // caret while it is moved or the text is modified
+    if ( blinkEffect.Enabled )
+    {
+      blinkEffect.Enabled = false;
+      blinkEffect.Enabled = true;
+    }
+
+    // Should adjust the scroll position so that the caret remains in the visible
+    // area? Finally clear the 'autoScroll' flag again.
+    if ( autoScroll )
+    {
+      postsignal updateScrollOffset;
+      autoScroll = false;
+    }
+
+    // If there is a magnifying glass view visible -> arrange it also to the
+    // current caret position.
+    if ( magnifyingView != null )
+      postsignal updateMagnifyingView;
+  }
+
+  // This method is called from the corresponding SimpleTouchHandler. Its job is \
+  // to hide the magnifying glass view again.
+  $rect <450,400,650,440>
+  slot onReleaseTouch
+  {
+    // Hide the views used temporarily to show the augmented editor content
+    if ( magnifyingView != null )
+    {
+      Owner.Remove( magnifyingView );
+      Owner.Remove( magnifyingBack );
+      magnifyingView = null;
+      magnifyingBack = null;
+
+      // Free the temporary used off-screen memory
+      Buffered = false;
+    }
+  }
+
+  // This method is called from the corresponding SimpleTouchHandler. Its job is \
+  // to move the caret accordingly to the user's finger movement.
+  $rect <450,360,650,400>
+  slot onDragTouch
+  {
+    // Does the user currently drag the caret?
+    if ( magnifyingView != null )
+    {
+      // From the touched screen position estimate the corresponding position
+      // within the text string.
+      var point rc            = Text.Position2RowCol( SimpleTouchHandler.CurrentPos );
+      var int32 newCaretIndex = Text.RowCol2StringIndex( rc );
+
+      // Does the caret position change? Force the editor to update the
+      // position of the blinking caret
+      if ( newCaretIndex != caretIndex )
+      {
+        caretIndex = newCaretIndex;
+        postsignal updateCaret;
+
+        // Ensure the caret is still visible later in the updateText slot method
+        autoScroll = true;
+      }
+    }
+
+    // No, then redirect the touch interaction to the slide touch handler when the
+    // user moved the finger a little bit. In this manner the user can scroll the text.
+    else
+    {
+      var point ofs   = SimpleTouchHandler.CurrentPos - SimpleTouchHandler.HittingPos;
+      var int32 limit = GetRoot().CursorDragLimit;
+
+      // Start the slide mode if the user has dragged the finger a little bit
+      if (( ofs.x < -limit ) || ( ofs.x > limit ) ||
+          ( ofs.y < -limit ) || ( ofs.y > limit ))
+        GetRoot().DeflectCursor( SlideTouchHandler, <0,0>);
+    }
+  }
+
+  // This method is called from the corresponding SimpleTouchHandler. Its job is \
+  // to activate the caret movement mode if the user has pressed the finger on the \
+  // screen for a while. The method also shows a small magnifying glass where the \
+  // text around the caret is shown. This should help the user to navigate the caret \
+  // with the finger.
+  $rect <450,320,650,360>
+  slot onHoldTouch
+  {
+    // When the user presses the finger within the text editor area,
+    // the editor enters the caret dragging mode. In this mode the
+    // user can move the caret with the finger. For convenience the
+    // area below the finger is displayed in a kind of magnifying glass.
+    // Does enter the mode?
+    if (( SimpleTouchHandler.HoldPeriod >= 300 ) && ( magnifyingView == null ))
+    {
+      // Calculate the size of the area to augment
+      var int32 height = Caret.Point2.y - Caret.Point1.y;
+      var int32 width  = height * 3;
+
+      // Limit to the available size of the editor component
+      if ( height > Bounds.h ) height = Bounds.h;
+      if ( width  > Bounds.w ) width  = Bounds.w;
+
+      // The editor component should store its content in an off-screen bitmap
+      // in order to be able to to show it augmented in an overlay 'magnifyingView'
+      Buffered = true;
+
+      // Create a temporary view to show the augmented content and to show the
+      // 'magnifying glass' background
+      magnifyingView = new Views::WarpGroup;
+      magnifyingBack = new Views::Rectangle;
+
+      // Prepare a magnifyingView to show an augmented content of the edited text
+      // row. The content is augmented by the factor x 2
+      magnifyingView.Group       = this;
+      magnifyingView.Quality     = true;
+      magnifyingView.Opacity     = 200;
+      magnifyingView.SourceArea  = rect( 0, 0, width, height );
+      magnifyingView.Point2.x    = width  * 2;
+      magnifyingView.Point3.x    = width  * 2;
+      magnifyingView.Point3.y    = height * 2;
+      magnifyingView.Point4.y    = height * 2;
+
+      // Also prepare the magnifying glass background view. It is a semitransparent
+      // rectangle.
+      magnifyingBack.Bounds.size   = point( width * 2, height * 2 ) + <20,20>;
+      magnifyingBack.Bounds.origin = <-10,-10>;
+      magnifyingBack.Color         = #EEEEEECC;
+
+      // Make the just created views visible on the screen
+      Owner.Add( magnifyingBack, 0 );
+      Owner.Add( magnifyingView, 0 );
+
+      // Arrange the 'magnifying glass' views at the correct position
+      postsignal updateMagnifyingView;
+    }
+
+    // Even if the user is not moving the cursor (finger) continue the scrolling when
+    // the user holds the finger near an edge of the text editor.
+    if ( magnifyingView != null )
+      signal onDragTouch;
+  }
+
+  // This method is called from the corresponding SimpleTouchHandler. Its job is \
+  // to obtain the focused state for the editor so the user can interact with the \
+  // editor content and to place the caret at the touched position.
+  $rect <450,280,650,320>
+  slot onPressTouch
+  {
+    // With the first touch focus the text editor
+    if ( !HasViewState( Core::ViewState[ Focused ]))
+      ObtainFocus();
+
+    // Estimate the position within the text string corresponding to the
+    // position touched on the screen.
+    var point rc            = Text.Position2RowCol( SimpleTouchHandler.CurrentPos );
+    var int32 newCaretIndex = Text.RowCol2StringIndex( rc );
+
+    // Does the caret position change? Force the text editor to update the
+    // position of the blinking caret
+    if ( newCaretIndex != caretIndex )
+    {
+      caretIndex = newCaretIndex;
+      postsignal updateCaret;
+
+      // Ensure the caret is still visible later in the updateText slot method
+      autoScroll = true;
+    }
+  }
+
+  // This method is called from the corresponding keyboard handler. Its job is to \
+  // move the caret up/down/left or right in the editor text.
+  $rect <220,440,420,480>
+  slot onCursorKey
+  {
+    // No font specified to show the text -> no navigation
+    // possible
+    if ( Font == null )
+      return;
+
+    // Knowing the position of the caret within the string, get the
+    // corresponding row/column position in the displayed text.
+    var point rc = Text.StringIndex2RowCol( caretIndex );
+
+    // Has the user moved the caret to the left? Get the new resulting
+    // row/column number
+    if ( CursorKeyHandler.Code == Core::KeyCode.Left )
+    {
+      // Navigate to the previous column
+      rc.x = rc.x - 1;
+
+      // Skip to the end of the preceding row?
+      if ( rc.x < 0 )
+      {
+        rc.y = rc.y - 1;
+        rc.x = Text.GetRowString( rc.y ).length;
+      }
+    }
+
+    // Has the user moved the caret to the right? Get the resulting
+    // row/column number
+    if ( CursorKeyHandler.Code == Core::KeyCode.Right )
+    {
+      // Navigate to the next column
+      rc.x = rc.x + 1;
+
+      // Skip to the begin of the next row?
+      if ( rc.x == Text.GetRowString( rc.y ).length )
+      {
+        rc.y = rc.y + 1;
+        rc.x = 0;
+      }
+    }
+
+    // Has the user moved the caret one row up? Get the resulting
+    // row/column number
+    if ( CursorKeyHandler.Code == Core::KeyCode.Up )
+    {
+      // Get the pixel position where the sign at actual caret position
+      // is displayed
+      var point pos       = Text.RowCol2Position( rc );
+      var int32 rowHeight = Font.Ascent + Font.Descent + Font.Leading;
+
+      // Get the row/column corresponding to the sign in the row just above
+      rc = Text.Position2RowCol( pos - point( 0, rowHeight ));
+    }
+
+    // Has the user moved the caret one row down? Get the resulting
+    // row/column number
+    if ( CursorKeyHandler.Code == Core::KeyCode.Down )
+    {
+      // Get the pixel position where the sign at actual caret position
+      // is displayed
+      var point pos       = Text.RowCol2Position( rc );
+      var int32 rowHeight = Font.Ascent + Font.Descent + Font.Leading;
+
+      // Get the row/column corresponding to the sign in the row just below
+      rc = Text.Position2RowCol( pos + point( 0, rowHeight ));
+    }
+
+    // From the just determined new row/column position get the corresponding
+    // position within the text string
+    var int32 newCaretIndex = Text.RowCol2StringIndex( rc );
+
+    // Does the caret position change? Force the editor to update the
+    // position of the blinking caret
+    if ( newCaretIndex != caretIndex )
+    {
+      caretIndex = newCaretIndex;
+      postsignal updateCaret;
+
+      // Ensure the caret is still visible later in the updateText slot method
+      autoScroll = true;
+    }
+  }
+
+  // This method is called from the corresponding keyboard handler. Its job is to \
+  // delete the sign preceding the current caret position and to move the caret accordingly.
+  $rect <220,400,420,440>
+  slot onBackspaceKey
+  {
+    // No signs preceding the caret -> Nothing to delete
+    if ( caretIndex == 0 )
+      return;
+
+    // Get the sign which should be deleted from the text.
+    var char  ch    = Text.String[ caretIndex - 1 ];
+    var int32 count = 1;
+
+    // Is this a space sign? Usually space signs are eliminated by the
+    // text view unless we use the non-breakable space sign \xA0. However,
+    // to perform the text wrap, a silent break sign '^' is placed behind
+    // the space sign. Consider the both signs '\xA0^' as a unit
+    if (( caretIndex > 1 ) && ( ch == '^' ) && 
+        ( Text.String[ caretIndex - 2 ] == '\xA0' ))
+      count = 2;
+
+    // The sign was a special control sign? In this case the sign comes
+    // together with the preceding '%' escape sign - otherwise the user
+    // couldn't see the sign
+    else if (( ch == '^' ) || ( ch == '~' ) || ( ch == '%' ))
+      count = 2;
+
+    // Remove the affected text portion and adjust the caret position
+    Text.String = Text.String.remove( caretIndex - count, count );
+    caretIndex  = caretIndex - count;
+
+    // Ensure the caret is still visible later in the updateText slot method
+    autoScroll = true;
+
+    // Inform the owner of this text editor component, that the text has been
+    // modified by the user
+    postsignal OnChange;
+  }
+
+  // This method is called from the corresponding keyboard handler. Its job is to \
+  // delete the sign at the current caret position.
+  $rect <220,360,420,400>
+  slot onDeleteKey
+  {
+    // No signs following the caret -> Nothing to delete
+    if ( caretIndex >= ( Text.String.length - 1 ))
+      return;
+
+    // Get the sign which should be deleted from the text.
+    var char  ch    = Text.String[ caretIndex ];
+    var int32 count = 1;
+
+    // The sign was a special control sign? In this case the sign comes
+    // together with the preceding '%' escape sign - otherwise the user
+    // couldn't see the sign
+    if ( ch == '%' )
+      count = 2;
+
+    // Is this a space sign? Usually space signs are eliminated by the
+    // text view unless we use the non-breakable space sign \xA0. However,
+    // to perform the text wrap, a silent break sign '^' is placed behind
+    // the space sign. Consider the both signs '\xA0^' as a unit
+    else if ( ch == '\xA0' )
+      count = 2;
+
+    // Remove the affected text fragment
+    Text.String = Text.String.remove( caretIndex, count );
+
+    // Ensure the caret is still visible later in the updateText slot method
+    autoScroll = true;
+
+    // Inform the owner of this text editor component, that the text has been
+    // modified by the user
+    postsignal OnChange;
+  }
+
+  // This method is called from the corresponding keyboard handler. Its job is to \
+  // insert at the current caret position the <new line> sign and to move the caret \
+  // to the next row.
+  $rect <220,320,420,360>
+  slot onNewlineKey
+  {
+    // Take over the just input sign and adjust the caret position
+    Text.String = Text.String.insert( '\n', caretIndex );
+    caretIndex  = caretIndex + 1;
+
+    // Ensure the caret is still visible later in the updateText slot method
+    autoScroll = true;
+
+    // Inform the owner of this text editor component, that the text has been
+    // modified by the user
+    postsignal OnChange;
+  }
+
+  // This method is called from the corresponding keyboard handler. Its job is to \
+  // insert at the current caret position the sign which has been input by the user \
+  // and to move the caret to the next column.
+  $rect <220,280,420,320>
+  slot onCharacterKey
+  {
+    var char   ch  = CharacterKeyHandler.CharCode;
+    var string str = ch;
+
+    // Precede all special control signs with the '%' escape sign. Otherwise
+    // the user can't input nor see them
+    if (( ch == '^' ) || ( ch == '~' ) || ( ch == '\xAD' ) || ( ch == '%' ))
+      str = "%" + ch;
+
+    // To avoid the elimination of space signs at the end of a wrapped row
+    // use the non-breakable space signs mit the additional 'silent' break
+    // sign to perform the wrapping
+    else if ( ch == ' ' )
+      str = "\xA0^";
+
+    // Take over the just input sign and adjust the caret position
+    Text.String = Text.String.insert( str, caretIndex );
+    caretIndex  = caretIndex + str.length;
+
+    // Ensure the caret is still visible later in the updateText slot method
+    autoScroll = true;
+
+    // Inform the owner of this text editor component, that the text has been
+    // modified by the user
+    postsignal OnChange;
+  }
+
+  $rect <390,180,590,220>
+  onset WrapText
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure WrapText == value )
+      return;
+
+    // Remember the new value ...
+    pure WrapText = value;
+    Text.WrapText = value;
+
+    // If the text is warp automatically in rows, there is no need to
+    // scroll the text horizontally.
+    SlideTouchHandler.SlideHorz = !value;
+
+    // Ensure the caret is still visible later in the updateText slot method
+    autoScroll        = true;
+    Text.ScrollOffset = <0,0>;
+  }
+
+  $rect <190,180,390,220>
+  onset Alignment
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Alignment == value )
+      return;
+
+    // The justified mode is not supported by the editor.
+    if ( value.contains( Views::TextAlignment[ AlignHorzJustified ]))
+      value = value - Views::TextAlignment[ AlignHorzJustified ]
+                    + Views::TextAlignment[ AlignHorzLeft ];
+
+    // Remember the new value ...
+    pure Alignment = value;
+    Text.Alignment = value;
+
+    // Ensure the caret is still visible later in the updateText slot method
+    autoScroll        = true;
+    Text.ScrollOffset = <0,0>;
+  }
+
+  $rect <590,90,790,130>
+  onget String
+  {
+    // Get the current text view content
+    var string str = Text.String;
+
+    // In the following steps remove any special text view control signs
+    // which are usually used to control the text flow. The resulting string
+    // should contain the 'pure' text only.
+    var int32  inx = str.find( '\xA0', 0 );
+
+    // Internally the text editor works with the sign sequence '\xA0^' as
+    // the space ' ' sign. This is because the text view tends to eliminate
+    // regular space signs at the end of a text row.
+    // Convert all '\xA0^' sign sequences to a regular space ' '
+    while ( inx >= 0 )
+    {
+      if ( str[ inx + 1 ] == '^' )
+      {
+        str = str.remove( inx, 1 );
+        str[ inx ] = ' ';
+      }
+
+      inx = str.find( '\xA0', inx + 1 );
+    }
+
+    inx = str.find( '%', 0 );
+
+    // The special control/escape signs are not visible until there is a
+    // '%' sign in front of them. Remove all superfluous '%' signs
+    while ( inx >= 0 )
+    {
+      str = str.remove( inx, 1 );
+      inx = str.find( '%', inx + 1 );
+    }
+
+    // Finally remove the <new line> sign at the end of text which was used
+    // as workaround for a text flow parser issue
+    return str.left( str.length - 1 );
+  }
+
+  $rect <590,50,790,90>
+  onset String
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure String == value )
+      return;
+
+    // Remember the new string ...
+    pure String = value;
+
+    // In the following steps disarm in the assigned Unicode string the special
+    // control and escape signs, which usually control the text flow in a  text
+    // view. Without this conversion step, signs like '%' couldn't be seen in
+    // the editor.
+    var string str = value;
+    var int32  inx = str.find( '%', 0 );
+
+    // The special '%' escape sign is not visible until there is other
+    // '%' sign in front of it. Convert all '%' signs into '%%' sequences
+    while ( inx >= 0 )
+    {
+      str = str.insert( "%", inx );
+      inx = str.find( '%', inx + 2 );
+    }
+
+    inx = str.find( '^', 0 );
+
+    // The special '^' control sign is not visible until there is a '%'
+    // sign in front of it. Convert all '^' signs into '%^' sequences
+    while ( inx >= 0 )
+    {
+      str = str.insert( "%", inx );
+      inx = str.find( '^', inx + 2 );
+    }
+
+    inx = str.find( '~', 0 );
+
+    // The special '~' control sign is not visible until there is a '%'
+    // sign in front of it. Convert all '~' signs into '%~' sequences
+    while ( inx >= 0 )
+    {
+      str = str.insert( "%", inx );
+      inx = str.find( '~', inx + 2 );
+    }
+
+    inx = str.find( '\xAD', 0 );
+
+    // The special '\xAD' hyphen sign is not visible until there is a '%'
+    // sign in front of it. Convert all '\xAD' hyphen signs into '%\xAD'
+    // sequences
+    while ( inx >= 0 )
+    {
+      str = str.insert( "%", inx );
+      inx = str.find( '\xAD', inx + 2 );
+    }
+
+    inx = str.find( ' ', 0 );
+
+    // The text view tends to eliminate space signs at the end of a text row.
+    // To avoid it, the editor will work internally with the non-breakable
+    // space \xA0 sign. To perform the line wrap, an additional '^' silent
+    // break control sign is placed behind the non-breakable space.
+    // Convert all ' ' space signs to '\xA0^' sequence
+    while ( inx >= 0 )
+    {
+      str[ inx ] = '\xA0';
+      str = str.insert( "^", inx + 1 );
+      inx = str.find( ' ', inx + 2 );
+    }
+
+    // Ensure that the caret still refers to a sign within the string
+    if ( caretIndex > str.length )
+      caretIndex = str.length;
+
+    // Now show the new string in the editor's text view. The additional
+    // <new line> is a workaround for a flow text parser issue
+    Text.String = str + "\n";
+
+    // Ensure the caret is still visible later in the updateText slot method
+    autoScroll        = true;
+    Text.ScrollOffset = <0,0>;
+  }
+
+  $rect <390,50,590,90>
+  onset Color
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Color == value )
+      return;
+
+    // Store the new Color
+    pure Color  = value;
+    Text.Color  = value;
+    Caret.Color = value;
+  }
+
+  $rect <190,50,390,90>
+  onset Font
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Font == value )
+      return;
+
+    // Store the new font...
+    pure Font = value;
+    Text.Font = value;
+
+    // Ensure the caret is still visible later in the updateText slot method
+    autoScroll        = true;
+    Text.ScrollOffset = <0,0>;
+  }
+
+  // This bool change effect is used to blink the caret.
+  $rect <20,580,220,620>
+  object Effects::BoolEffect blinkEffect
+  {
+    preset Value2 = false;
+    preset Value1 = true;
+    preset Outlet = ^Caret.Visible;
+    preset CycleDuration = 500;
+    preset InterCycleDelay = 500;
+  }
+
+  // This key handler reacts to user inputs if the user has pressed the 'up', 'down', \
+  // 'left' or 'right' key. In this case the associated onCursorKey method is called.
+  $rect <20,440,220,480>
+  object Core::KeyPressHandler CursorKeyHandler
+  {
+    preset OnPress = onCursorKey;
+    preset Filter = Core::KeyCode.CursorKeys;
+    preset OnHold = onCursorKey;
+  }
+
+  // This key handler reacts to user inputs if the user has pressed the 'backspace' \
+  // key. In this case the associated onBackspaceKey method is called.
+  $rect <20,400,220,440>
+  object Core::KeyPressHandler BackspaceKeyHandler
+  {
+    preset OnPress = onBackspaceKey;
+    preset Filter = Core::KeyCode.Backspace;
+    preset OnHold = onBackspaceKey;
+  }
+
+  // This key handler reacts to user inputs if the user has pressed the 'delete' \
+  // key. In this case the associated onDeleteKey method is called.
+  $rect <20,360,220,400>
+  object Core::KeyPressHandler DeleteKeyHandler
+  {
+    preset OnPress = onDeleteKey;
+    preset Filter = Core::KeyCode.Delete;
+    preset OnHold = onDeleteKey;
+  }
+
+  // This key handler reacts to user inputs if the user has pressed the 'enter' key. \
+  // In this case the associated onNewlineKey method is called.
+  $rect <20,320,220,360>
+  object Core::KeyPressHandler NewlineKeyHandler
+  {
+    preset OnPress = onNewlineKey;
+    preset Filter = Core::KeyCode.Enter;
+    preset Enabled = false;
+    preset OnHold = onNewlineKey;
+  }
+
+  // This key handler reacts to user inputs if the user has pressed a key corresponding \
+  // to character/digit. In this case the associated onCharacterKey method is called.
+  $rect <20,280,220,320>
+  object Core::KeyPressHandler CharacterKeyHandler
+  {
+    preset OnPress = onCharacterKey;
+    preset Filter = Core::KeyCode.CharacterKeys;
+    preset OnHold = onCharacterKey;
+  }
+
+  // This slide gesture handler is used to scroll the text content.
+  $rect <20,20,160,60>
+  object Core::SlideTouchHandler SlideTouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,160,120>;
+    preset SlideHorz = false;
+    preset Friction = 0.05;
+  }
+
+  // This generic touch handler is used to move the caret.
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,120>;
+    preset Point3 = <160,120>;
+    preset Point2 = <160,0>;
+    preset Point1 = <0,0>;
+    preset OnDrag = onDragTouch;
+    preset OnHold = onHoldTouch;
+    preset OnRelease = onReleaseTouch;
+    preset OnPress = onPressTouch;
+    preset MaxStrikeCount = 3;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <2,2,157,117>;
+    preset OnUpdate = updateCaret;
+    preset SlideHandler = SlideTouchHandler;
+    preset WrapText = true;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Text\n";
+    preset Font = Resources::FontVerdana24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Caret
+  {
+    preset Point2 = <50,70>;
+    preset Point1 = <50,50>;
+    preset Width2 = 2;
+    preset Width1 = 2;
+    preset Color = #000000FF;
+    preset Visible = false;
+  }
+
+  // The property 'OnChange' can refer to a slot method, which should be invoked \
+  // by the text editor when the user modifies the text.
+  $rect <590,140,790,180>
+  property slot OnChange = null;
+
+  // The property 'WrapText' determines whether long text rows should be wrapped \
+  // automatically.
+  $rect <390,140,590,180>
+  property bool WrapText = true;
+
+  // The property 'Alignment' determines how the editor should display the text rows \
+  // if their size differ from the size of the editor. 
+  // In this manner the rows can be aligned horizontally. The entire text block can \
+  // be aligned vertically.
+  $rect <190,140,390,180>
+  property Views::TextAlignment Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+
+  // The property 'String' stores the text of the editor.
+  $rect <590,10,790,50>
+  property string String = "Text";
+
+  // The property 'Color' controls the color of the text.
+  $rect <390,10,590,50>
+  property color Color = #000000FF;
+
+  // The property 'Font' refers to the font object used to display the text. The \
+  // text is determined by the property @String.
+  $rect <190,10,390,50>
+  property Resources::Font Font = Resources::FontVerdana24;
+}
+
+// This component implements a virtual keyboard.
+$rect <560,400,760,440>
+$output false
+class NumKeyboard : Templates::NumKeyboard
+{
+  $rect <250,370,450,410>
+  inherited property Bounds = <0,0,170,180>;
+
+  $rect <480,250,680,290>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    // Determine the new state of the affected keyboard.
+    //
+    // isKeyView --> the 'text' or 'image' view representing the pressed key.
+    // isPressed --> the affected key should appear pressed.
+    //
+    var Core::View isKeyView = null;
+    var bool       isPressed = ( TouchHandler.Down && TouchHandler.Inside ) || 
+                                 FlashTimer.Enabled;
+
+    // Search for the view representing the key at the recent touch position.
+    // Do this however only when the position is valid - it lies inside the
+    // area where keys are found (here the area of the TouchHandler) and the
+    // key should appear pressed (isPressed == true)
+    if ( isPressed && ( recentPosition == TouchHandler.GetExtent()))
+      isKeyView = FindViewAtPosition( null, recentPosition, Core::ViewState[]);
+
+    /*
+       In this template, the keys are represented by simple 'text' and 'image'
+       views. Any other view is considered as not corresponding to a key. Thus
+       ignore every view, which is not an instance of 'text' or 'image'.
+     
+       TO DO:
+
+       If you are using other views (not image nor text) to represent the keys,
+       adapt the object runtime cast operations in the condition below to react
+       on your particular views only. After this condition, 'isKeyView' should
+       be either 'null' if the user is not pressing a key or it should refer to
+       the view which represents the affected key.
+    */
+
+    if (((Views::Text)isKeyView == null ) && ((Views::Image)isKeyView == null ))
+      isKeyView = null;
+
+    /*
+
+      TO DO:
+
+      Depending on your keyboard design, you have surely added some new views
+      to your keyboard. In the below code you should update the properties of
+      these views. For example, when the user drags the finger between two keys
+      one key should appear pressed while the other released.
+
+      Whether the user has pressed/released a key can be estimated by comparing
+      the variable 'isKeyView' with 'keyView'. If they differ, the user has
+      pressed/released a key.
+
+        if ( isKeyView != keyView )
+          ...
+
+      In practice, the variable 'isKeyView' represents the just pressed key.
+      Your implementation should thus ensure, that the affected key appears
+      pressed. If the user is not pressing any key, the variable is 'null'.
+
+      The variable 'keyView' represents the key pressed in the preceding
+      interaction. This key has thus to appear released. If there was no key
+      pressed, the variable is 'null'.
+
+      In the simplest case you modify the properties of the affected views, so
+      they reflect their new state. Please note, the variables 'isKeyView' and
+      'keyView' are declared with the generic Core::View class. In order to
+      modify view specific properties you have to apply an object runtime cast
+      operation on them. For example, if you are using 'text' views to represent
+      keys, cast the variable to (Views::Text).
+
+        if ( isKeyView != null )
+          ((Views::Text)isKeyView).Color = color for a pressed key
+
+        if ( keyView != null )
+          ((Views::Text)keyView).Color = color for a released key
+
+      Or you use, as demonstrated below, another views to highlight the area
+      occupied by the affected key. For example, arrange some 'border' view
+      to appear at the position of the pressed key with additional 5 pixel 
+      padding:
+
+        if ( isKeyView != null )
+          BorderView.Bounds = isKeyView.GetExtent() * <5,5>;
+
+      HINT:
+
+      Instead of instantly alternate the views properties you can also start
+      here effects to do this with an animation. Important: To decide when
+      to start an effect you should compare the current state of the keyboard
+      (e.g. 'isKeyView') with its preceding state (e.g. variable 'keyView').
+
+      Assuming you have already added to your keyboard component a new effect
+      member, named it 'pressedEffect' and configured it to animate e.g. the
+      opacity of an image lying behind the pressed key. Then following is 
+      sufficient to trigger the animation:
+
+        if (( isKeyView != null ) && ( keyView == null ))
+        {
+          pressedEffect.Reversed = false;
+          pressedEffect.Enabled  = true;
+        }
+        else if (( isKeyView == null ) && ( keyView != null ))
+        {
+          pressedEffect.Reversed = true;
+          pressedEffect.Enabled  = true;
+        }
+
+    */
+
+    // Detect a state alternation when the user presses a new or releases a
+    // previously pressed key.
+    if ( isKeyView != keyView )
+    {
+      var Views::Text isTextKeyView = (Views::Text)isKeyView;
+      var Views::Text textKeyView   = (Views::Text)keyView;
+
+      // If the user is actually pressing a key, arrange the background view
+      // just behind the affected key view so it appears selected. If no key
+      // is pressed, the background should disappear.
+      if ( isKeyView != null )
+      {
+        Highlight.Bounds  = isKeyView.GetExtent();
+        Highlight.Visible = true;
+      }
+      else
+        Highlight.Visible = false;
+
+      // If the user has pressed a key represented by a 'text' view, change the
+      // color of the text to appear highlighted.
+      if ( isTextKeyView != null )
+        isTextKeyView.Color = #FFFFFFFF;
+
+      // If the user has released a key represented by a 'text' view, restore
+      // the color of the text.
+      if ( textKeyView != null )
+        textKeyView.Color = #000000FF;
+    }
+
+    // Remember the current state. Next time when the UpdateViewState() is called
+    // you can compare the 'old' state with the 'new' state and perform more
+    // sophisticated update, e.g. you can start an animation effect for the
+    // pressed <<-->> not pressed transition.
+    keyView = isKeyView;
+  }
+
+  // To do:
+  // 
+  // - Adjust the visible size of your keyboard (the thick blue border). This will \
+  // be the keyboard's default size.
+  // - Resize and arrange the member 'TouchHandler' so it covers the area where you \
+  // intend to place the keys.
+  // - Remove the 'Background' and 'Border' members if you want other views to be \
+  // shown instead these in your keyboard.
+  // - In this template, the individual keys are represented by text views 'TextKey0' \
+  // .. 'TextKey9'.
+  // - Special keys like the 'clear' and 'enter' key are represented by image views \
+  // 'ImageKeyClear' and 'ImageKeyEnter'.
+  // - Remove the above described 'text' and 'image' views if you don't want them.
+  // - Add more 'text' and 'image' views to represent more keys.
+  // - Arrange the 'text' and 'image' views within the area of the 'TouchHandler'. \
+  // The position of a view determine the area of the corresponding key.
+  // - According to your desired keyboard design add and configure new decoration \
+  // views (e.g. an image view to show some icon, etc.).
+  // - Adapt the implementation of the 'UpdateViewState()' method. This method should \
+  // update your views so they reflect the keyboard's current state.
+  // - Adapt the implementation of the 'activateKey' slot method. This method evaluates \
+  // which key the user has pressed and feeds the corresponding key event to the \
+  // application.
+  // - You can also add and configure animation effects to your keyboard. See 'UpdateViewState()' \
+  // implementation for hint how to start the effects.
+  // - Configure the property 'Layout' of the views. In this manner you can determine \
+  // for every view how it should move/resize when the keyboard itself is resized.
+  // - Configure the property 'Begin' of the 'FlashTimer' member to change the duration \
+  // of the feedback flash effect. The default duration is 50 millisec.
+  // - From the Gallery folder 'Chora' add properties to your keyboard. One property \
+  // for every keyboard specific setting (e.g. 'Caption', 'Color', 'Font', ...)
+  // - Rename the properties accordingly their usage and remove their 'OnGet...' \
+  // methods.
+  // - For every newly added property adapt their 'OnSet...' method implementation. \
+  // Ensure in the method that the assigned value is correctly passed to the corresponding \
+  // view (e.g. a property 'Font' should update the key related 'text' views in your \
+  // component).
+  // - Feel free to modify any other member in this component accordingly your needs. \
+  // Please note the member description and inline comments within methods.
+  note legend Note4
+  {
+    attr Bounds = <10,430,990,890>;
+  }
+
+  // State management
+  note group Note3
+  {
+    attr Bounds = <470,210,690,380>;
+  }
+
+  // Feedback flash effect
+  note group Note2
+  {
+    attr Bounds = <240,210,460,340>;
+  }
+
+  // Touch screen events
+  note group Note1
+  {
+    attr Bounds = <10,210,230,420>;
+  }
+
+  // This variable refers to the view representing the actually pressed key or it \
+  // is 'null' if the user is not touching a key.
+  $rect <480,330,680,370>
+  var Core::View keyView;
+
+  // This variable stores the recent position inside the keyboard area where the \
+  // user is touching the screen.
+  $rect <20,370,220,410>
+  var point recentPosition;
+
+  // This timer object is used to flash the pressed key when the user has tapped \
+  // it very quickly. This is just a visual feedback effect.
+  $rect <250,250,450,290>
+  object Core::Timer FlashTimer
+  {
+    preset OnTrigger = onFlashTimer;
+    preset Period = 0;
+    preset Begin = 50;
+  }
+
+  // This internal slot method is called when the recently pressed key should be \
+  // activated. This is when the user presses on a key and then releases the finger \
+  // again.
+  $rect <480,290,680,330>
+  slot activateKey
+  {
+    // Applying the object runtime casting test whether the user is
+    // touching a key with 'text' caption.
+    var Views::Text textKeyView = (Views::Text)keyView;
+
+    // Depending on the pressed key, the following variables will be
+    // initialized with the corresponding code.
+    var char          charCode = '\0';
+    var Core::KeyCode keyCode  = Core::KeyCode.NoKey;
+
+    // Has the user touched (activated) one of the keys with text
+    // as caption? Use the text as character code to feed the application 
+    // with a keyboard event.
+    if ( textKeyView != null )
+      charCode = textKeyView.String[0];
+
+    // Has the user touched the 'Enter' key?
+    else if ( keyView == ImageKeyEnter )
+      keyCode = Core::KeyCode.Enter;
+
+    // Has the user touched the 'Clear' key?
+    else if ( keyView == ImageKeyClear )
+      keyCode = Core::KeyCode.Backspace;
+
+    // The user has pressed a regular character/digit key. Feed it as keyboard
+    // event to the application.
+    if ( charCode != '\0' )
+    {
+      GetRoot().DriveKeyboardHitting( Core::KeyCode.NoKey, charCode, true );
+      GetRoot().DriveKeyboardHitting( Core::KeyCode.NoKey, charCode, false );
+    }
+
+    // The user has pressed a special key (e.g. Enter). Feed it as keyboard
+    // event to the application.
+    if ( keyCode != Core::KeyCode.NoKey )
+    {
+      GetRoot().DriveKeyboardHitting( keyCode, '\0', true );
+      GetRoot().DriveKeyboardHitting( keyCode, '\0', false );
+    }
+  }
+
+  // This internal slot method is called when the '@FlashTimer' is expired. It ends \
+  // the short flash feedback effect.
+  $rect <250,290,450,330>
+  slot onFlashTimer
+  {
+    // The feedback flash timer is finished. Request the keyboard to update 
+    // its appearance. The update will occur in the UpdateViewState() method.
+    InvalidateViewState();
+
+    // With the end of the feedback flash effect the key is activated.
+    signal activateKey;
+  }
+
+  // This internal slot method is called when the user drags the finger while pressing \
+  // the keyboard. This updates the keyboard to highlight the key at the new touch \
+  // position.
+  $rect <20,330,220,370>
+  slot onDragTouch
+  {
+    // Every time the user touches the keyboard or drags the finger inside/outside
+    // a key area request the keyboard update its appearance. The update will occur
+    // in the UpdateViewState() method.
+    InvalidateViewState();
+
+    // Remember the new position where the user recently touched the screen
+    recentPosition = TouchHandler.CurrentPos;
+  }
+
+  // This internal slot method is called when the user releases the touch screen \
+  // after touching the keyboard area. This activates the key the user has touched.
+  $rect <20,290,220,330>
+  slot onReleaseTouch
+  {
+    // Every time the user touches the keyboard or drags the finger inside/outside
+    // a key area request the keyboard update its appearance. The update will occur
+    // in the UpdateViewState() method.
+    InvalidateViewState();
+
+    // Did the user moved the finger outside the keyboard's area? In such case
+    // the keyboard is not activated.
+    if ( !TouchHandler.Inside )
+      return;
+
+    // The user has pressed and held a key for longer time. This was enough
+    // long to give a visual 'press' feedback to the user. The keyboard can be
+    // activated immediately.
+    if ( TouchHandler.HoldPeriod >= FlashTimer.Begin )
+      signal activateKey;
+
+    // The user has tapped the keyboard very quickly. Defer the key activation
+    // to give the user first a short visual feedback that the key has been
+    // pressed.
+    else
+      FlashTimer.Enabled = true;
+  }
+
+  // This internal slot method is called when the user touches the keyboard area.
+  $rect <20,250,220,290>
+  slot onPressTouch
+  {
+    // Every time the user touches the keyboard or drags the finger inside/outside
+    // a key area request the keyboard update its appearance. The update will occur
+    // in the UpdateViewState() method.
+    InvalidateViewState();
+
+    // The keyboard is still performing the feedback flash effect from the preceding
+    // tap. This can occur when the user taps the keyboard in a very rapid succession. 
+    // Thus complete this preceding tap (simulate the timer expiration) before 
+    // starting a new key interaction.
+    if ( FlashTimer.Enabled )
+    {
+      signal activateKey;
+      FlashTimer.Enabled = false;
+    }
+
+    // Remember the new position where the user has touched the screen
+    recentPosition = TouchHandler.CurrentPos;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Background
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,170,180>;
+    preset Color = #747674FF;
+  }
+
+  // This is a border view.
+  $rect <20,20,160,60>
+  object Views::Border Border
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,170,180>;
+    preset Width = 3;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <10,170>;
+    preset Point3 = <160,170>;
+    preset Point2 = <160,10>;
+    preset Point1 = <10,10>;
+    preset OnDrag = onDragTouch;
+    preset OnRelease = onReleaseTouch;
+    preset OnPress = onPressTouch;
+    preset EnableMultiTouch = true;
+    preset MaxStrikeCount = 100;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Highlight
+  {
+    preset Bounds = <10,10,60,50>;
+    preset Color = #4C4C4AFF;
+    preset Visible = false;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey1
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <10,10,60,50>;
+    preset String = "1";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey2
+  {
+    preset Layout = Core::Layout[AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <60,10,110,50>;
+    preset String = "2";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey3
+  {
+    preset Layout = Core::Layout[AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <110,10,160,50>;
+    preset String = "3";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey4
+  {
+    preset Layout = Core::Layout[AlignToLeft, ResizeHorz, ResizeVert];
+    preset Bounds = <10,50,60,90>;
+    preset String = "4";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey5
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <60,50,110,90>;
+    preset String = "5";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey6
+  {
+    preset Layout = Core::Layout[AlignToRight, ResizeHorz, ResizeVert];
+    preset Bounds = <110,50,160,90>;
+    preset String = "6";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey7
+  {
+    preset Layout = Core::Layout[AlignToLeft, ResizeHorz, ResizeVert];
+    preset Bounds = <10,90,60,130>;
+    preset String = "7";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey8
+  {
+    preset Layout = Core::Layout[ResizeHorz, ResizeVert];
+    preset Bounds = <60,90,110,130>;
+    preset String = "8";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey9
+  {
+    preset Layout = Core::Layout[AlignToRight, ResizeHorz, ResizeVert];
+    preset Bounds = <110,90,160,130>;
+    preset String = "9";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextKey0
+  {
+    preset Layout = Core::Layout[AlignToBottom, ResizeHorz, ResizeVert];
+    preset Bounds = <60,130,110,170>;
+    preset String = "0";
+    preset Font = Resources::FontArial24;
+    preset Color = #000000FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image ImageKeyClear
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, ResizeHorz, ResizeVert];
+    preset Bounds = <10,130,60,170>;
+    preset FrameNumber = 1;
+    preset Bitmap = Resources::KeyBackspace;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image ImageKeyEnter
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToRight, ResizeHorz, ResizeVert];
+    preset Bounds = <110,130,160,170>;
+    preset FrameNumber = 1;
+    preset Bitmap = Resources::KeyEnter;
+  }
+}
+
+// Resources
+note group Note
+{
+  attr Bounds = <890,480,1160,670>;
+}
+
+$rect <610,200,810,240>
+$output false
+class WellLabel : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,70,40>;
+
+  $rect <10,390,210,430>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,350,210,390>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Bounds = <0,0,70,40>;
+    preset String = "A";
+    preset Font = Flat::FontL;
+    preset Color = #000000FF;
+  }
+
+  $rect <300,0,500,40>
+  property string TextString = "A";
+
+  $rect <300,40,500,80>
+  onset TextString
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure TextString == value )
+      return;
+
+    // Remember the property's new value.
+    pure TextString = value;
+    Text.String=TextString;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <300,80,500,120>
+  onget TextString
+  {
+    return pure TextString;
+  }
+}
+
+$rect <150,250,350,290>
+$output false
+class Temperature : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,80,60>;
+
+  $rect <10,390,210,430>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,350,210,390>
   inherited method UpdateViewState()
   {
     // Always invoke the inherited method.
@@ -1530,230 +3630,1217 @@ class SampleController : Core::Group
   // calculation for enclosed views.
   note legend Note1
   {
-    attr Bounds = <220,540,1000,860>;
-  }
-
-  $rect <10,100,210,140>
-  property char NameProperty = 0;
-
-  $rect <10,140,210,180>
-  onset NameProperty
-  {
-    // The value doesn't change - nothing to do.
-    if ( pure NameProperty == value )
-      return;
-
-    // Remember the property's new value.
-    pure NameProperty = value;
-
-    NameText.String=NameProperty;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <10,180,210,220>
-  onget NameProperty
-  {
-    return pure NameProperty;
+    attr Bounds = <220,230,1000,550>;
   }
 
   $rect <20,20,160,60>
-  object Views::Border Border
+  object Flat::DigitalDisplay DigitalDisplay
   {
-    preset Bounds = <1,1,599,59>;
-    preset Width = 2;
-    preset Color = #000000FF;
+    preset Bounds = <0,0,80,60>;
+    preset Outlet = ^Device::Device.Temp;
+  }
+
+  $rect <120,10,320,50>
+  object Core::Timer UpdateTemp
+  {
+    preset OnTrigger = Device::Device.getTemp;
+    preset Period = 500;
   }
 
   $rect <20,20,160,60>
-  object Views::Text NameText
+  object Flat::Label Label
   {
-    preset Bounds = <0,10,30,40>;
-    preset String = "A";
-    preset Font = Flat::FontM;
+    preset Bounds = <0,140,140,170>;
   }
-
-  $rect <20,20,160,60>
-  object Flat::HorzSlider HorzSlider
-  {
-    preset Bounds = <40,0,190,60>;
-    preset CurrentValue = 10;
-    preset Outlet = null;
-  }
-
-  $rect <20,20,160,60>
-  object Flat::ActionButton BtnStart
-  {
-    preset Bounds = <210,3,320,28>;
-    preset OnAction = SlotStart;
-    preset Caption = "Start";
-  }
-
-  $rect <20,20,160,60>
-  object Flat::ActionButton BtnStop
-  {
-    preset Bounds = <210,32,320,57>;
-    preset Caption = "Stop";
-  }
-
-  $rect <20,20,160,60>
-  object Flat::HorzBar HorzBar
-  {
-    preset Bounds = <350,10,510,60>;
-    preset CurrentValue = 0;
-  }
-
-  $rect <20,20,160,60>
-  object Flat::Indicator Indicator
-  {
-    preset Bounds = <560,10,590,40>;
-  }
-
-  $rect <500,390,700,430>
-  object Core::Timer Timer
-  {
-    preset OnTrigger = SlotTimerTrigger;
-  }
-
-  $rect <510,190,710,230>
-  slot SlotStart
-  {
-    HorzBar.MaxValue=HorzSlider.CurrentValue;
-    HorzBar.CurrentValue=HorzSlider.CurrentValue;
-    Timer.Period=HorzSlider.CurrentValue*60000;
-    Timer.Enabled=true;
-    TimerMinuten.Enabled=true;
-    EnabledProperty=true;
-    trace "start";
-
-  }
-
-  $rect <500,350,700,390>
-  object Core::Timer TimerMinuten
-  {
-    preset OnTrigger = SlotTimerMinuten;
-    preset Period = 600;
-    preset Enabled = false;
-  }
-
-  $rect <510,230,710,270>
-  slot SlotTimerMinuten
-  {
-
-
-    if(HorzBar.CurrentValue!=0){
-      HorzBar.CurrentValue=HorzBar.CurrentValue-1;
-      trace   HorzBar.CurrentValue;
-    }else{
-         
-         Device::Device.WellIndex=string(CurrentIndex)+NameProperty;
-         CurrentIndex=CurrentIndex+1;
-         TimerMinuten.Enabled=false;
-         trace "abc";
-    }
-  }
-
-  $rect <510,270,710,310>
-  slot SlotTimerTrigger
-  {
-    TimerMinuten.StopTimer;
-    TimerMinuten.Enabled=false;
-    Timer.StopTimer;
-    Timer.Enabled=false;
-  }
-
-  $rect <230,100,430,140>
-  property bool EnabledProperty = false;
-
-  $rect <230,140,430,180>
-  onset EnabledProperty
-  {
-    // The value doesn't change - nothing to do.
-    if ( pure EnabledProperty == value )
-      return;
-
-    // Remember the property's new value.
-    pure EnabledProperty = value;
-    Indicator.Active=EnabledProperty;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <230,180,430,220>
-  onget EnabledProperty
-  {
-    return pure EnabledProperty;
-  }
-
-  $rect <650,40,850,80>
-  var int32 CurrentIndex = 0;
-
-  $reorder OnSetOpacity 8
-  $reorder OnGetEmbedded 8
-  $reorder OnSetEmbedded 8
-  $reorder OnGetAlphaBlended 8
-  $reorder OnSetAlphaBlended 8
-  $reorder OnGetVisible 8
-  $reorder OnSetVisible 8
-  $reorder ObtainFocus 8
-  $reorder HasViewState 8
-  $reorder LocalPosition 8
-  $reorder GlobalPosition 8
-  $reorder DispatchEvent 8
-  $reorder BroadcastEventAtPosition 8
-  $reorder BroadcastEvent 8
-  $reorder UpdateLayout 8
-  $reorder UpdateViewState 8
-  $reorder InvalidateViewState 8
-  $reorder InvalidateArea 8
-  $reorder Init 8
-  $reorder GetIndexOfView 8
-  $reorder GetViewAtIndex 8
-  $reorder CountViews 8
-  $reorder FindViewInDirection 8
-  $reorder FindViewWithinArea 8
-  $reorder FindViewAtPosition 8
-  $reorder FindPrevView 8
-  $reorder FindNextView 8
-  $reorder FindSiblingView 8
-  $reorder GetContentArea 8
-  $reorder RestackBehind 8
-  $reorder RestackBack 8
-  $reorder RestackTop 8
-  $reorder Restack 8
-  $reorder Remove 8
-  $reorder AddBehind 8
-  $reorder Add 8
-  $reorder Focus 8
-  $reorder Buffered 8
-  $reorder Opacity 9
-  $reorder Embedded 9
-  $reorder AlphaBlended 9
-  $reorder Visible 9
-  $reorder Note1 9
-  $reorder NameProperty 9
-  $reorder OnSetNameProperty 9
-  $reorder OnGetNameProperty 9
-  $reorder Border 9
-  $reorder NameText 9
-  $reorder HorzSlider 9
-  $reorder BtnStart 9
-  $reorder BtnStop 9
-  $reorder HorzBar 9
-  $reorder Indicator 9
-  $reorder Timer 9
-  $reorder SlotStart 9
-  $reorder TimerMinuten 9
-  $reorder SlotTimerMinuten 9
-  $reorder SlotTimerTrigger 9
-  $reorder Enabled 5
-  $reorder OnSetEnabled 1
 }
 
-$rect <400,160,600,200>
+$rect <120,400,320,440>
 $output false
-autoobject Application::Well WellObj;
+class Config : Core::Group
+{
+  $rect <10,540,210,580>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <10,620,210,660>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,580,210,620>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #747674FF;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_Ok
+  {
+    preset Bounds = <670,440,790,470>;
+    preset OnAction = onBtn_Ok;
+    preset Caption = "OK";
+  }
+
+  $rect <650,540,850,580>
+  slot onBtn_Ok
+  {
+    if(TextEditor.String.parse_int32(6)>6||TextEditor.String.parse_int32(6)<1){
+      Device::Device.NuOfCircuits=6;
+    }else{
+      Device::Device.NuOfCircuits=TextEditor.String.parse_int32(6);
+
+    }
+    this.Enabled=false;
+    this.Visible=false;
+    ControllMenue.Enabled=true;
+
+
+
+  }
+
+  $rect <20,20,160,60>
+  object Application::TextEditor TextEditor
+  {
+    preset Bounds = <330,110,470,170>;
+    preset String = "6";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Application::NumKeyboard NumKeyboard
+  {
+    preset Bounds = <610,230,780,410>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Bounds = <60,10,690,120>;
+    preset WrapText = true;
+    preset String = "Geben Sie die Anzahl der zu verwendenden Kreisläufe ein (Zahl von 1 bis 6)";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <940,240,1140,280>
+  property Application::ControllMenue ControllMenue = null;
+
+  $rect <940,280,1140,320>
+  onset ControllMenue
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure ControllMenue == value )
+      return;
+
+    // Remember the property's new value.
+    pure ControllMenue = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <940,320,1140,360>
+  onget ControllMenue
+  {
+    return pure ControllMenue;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ConfigTR ConfigTR
+  {
+    preset Bounds = <0,0,800,480>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ConfigBL ConfigBL
+  {
+    preset Bounds = <0,0,800,480>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ConfigTrash ConfigTrash
+  {
+    preset Bounds = <0,0,800,480>;
+  }
+}
+
+$rect <150,440,350,480>
+$output false
+class ConfigBL : Core::Group
+{
+  $rect <10,540,210,580>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <10,620,210,660>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,580,210,620>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #747674FF;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_Next
+  {
+    preset Bounds = <670,440,790,470>;
+    preset Enabled = false;
+    preset OnAction = onNext;
+    preset Caption = "Next";
+  }
+
+  $rect <840,90,1040,130>
+  slot onNext
+  {
+
+    Device::Device.BLPosition.x=XSlider.CurrentValue;
+    Device::Device.BLPosition.y=YSlider.CurrentValue;
+                    
+                    
+    this.Visible=false;
+    this.Enabled=false;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Bounds = <60,10,690,120>;
+    preset WrapText = true;
+    preset String = "Bewegen sie den Schlauch über die Well Öffnung links unten";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider XSlider
+  {
+    preset Bounds = <50,160,770,230>;
+    preset CurrentValue = 0;
+    preset Outlet = null;
+    preset OnChange = OnChangePos;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider YSlider
+  {
+    preset Bounds = <50,240,770,300>;
+    preset CurrentValue = 0;
+    preset OnChange = OnChangePos;
+  }
+
+  $rect <840,50,1040,90>
+  slot OnChangePos
+  {
+    if(sender==XSlider){
+      Device::Device.CurrentPosition.x=XSlider.CurrentValue;
+    }else if(sender==YSlider){
+     Device::Device.CurrentPosition.y=YSlider.CurrentValue;
+    }
+    Btn_Next.Enabled=true;
+
+  }
+}
+
+$rect <150,520,350,560>
+$output false
+class ConfigTrash : Core::Group
+{
+  $rect <10,540,210,580>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <10,620,210,660>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,580,210,620>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #747674FF;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_Next
+  {
+    preset Bounds = <670,440,790,470>;
+    preset Enabled = false;
+    preset OnAction = onNext;
+    preset Caption = "Next";
+  }
+
+  $rect <550,560,750,600>
+  slot onNext
+  {
+    Device::Device.TrashPosition.x=XSlider.CurrentValue;
+    Device::Device.TrashPosition.y=YSlider.CurrentValue;
+
+    this.Visible=false;
+    this.Enabled=false;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Bounds = <60,10,690,120>;
+    preset WrapText = true;
+    preset String = "Bewegen Sie den Schlauch über den Abfallbehälter";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider XSlider
+  {
+    preset Bounds = <50,160,770,230>;
+    preset CurrentValue = 0;
+    preset OnChange = OnChangePos;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider YSlider
+  {
+    preset Bounds = <50,240,770,300>;
+    preset CurrentValue = 0;
+    preset OnChange = OnChangePos;
+  }
+
+  $rect <840,50,1040,90>
+  slot OnChangePos
+  {
+    if(sender==XSlider){
+      Device::Device.CurrentPosition.x=XSlider.CurrentValue;
+    }else if(sender==YSlider){
+     Device::Device.CurrentPosition.y=YSlider.CurrentValue;
+    }
+    Btn_Next.Enabled=true;
+
+  }
+}
+
+$rect <120,210,320,250>
+$output false
+class ControllMenue : Core::Group
+{
+  $rect <10,600,210,640>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <10,560,210,600>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,520,210,560>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #747674FF;
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA
+  {
+    preset Bounds = <10,50,450,120>;
+    preset NameProperty = '1';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA1
+  {
+    preset Bounds = <10,120,450,190>;
+    preset NameProperty = '2';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA2
+  {
+    preset Bounds = <10,190,450,260>;
+    preset NameProperty = '3';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA3
+  {
+    preset Bounds = <10,260,450,330>;
+    preset NameProperty = '4';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA4
+  {
+    preset Bounds = <10,330,450,400>;
+    preset NameProperty = '5';
+  }
+
+  $rect <20,20,160,60>
+  object Application::SampleController SCA5
+  {
+    preset Bounds = <10,400,450,470>;
+    preset NameProperty = '6';
+  }
+
+  $rect <20,20,160,60>
+  object Application::Clock Clock
+  {
+    preset Bounds = <670,410,790,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::WarpImage Logo
+  {
+    preset Point4 = <700,110>;
+    preset Point3 = <800,110>;
+    preset Point2 = <800,10>;
+    preset Point1 = <700,10>;
+    preset Bitmap = Application::Logo;
+  }
+
+  $rect <20,20,160,60>
+  object Application::NumKeyboard NumKeyboard
+  {
+    preset Bounds = <460,290,660,470>;
+  }
+
+  $rect <20,20,160,60>
+  object Application::Temperature Temperature
+  {
+    preset Bounds = <520,220,600,280>;
+  }
+
+  $rect <840,100,1040,140>
+  object Core::PropertyObserver NuOfCircuitsObserver
+  {
+    preset OnEvent = onEvent;
+    preset Outlet = ^Device::Device.NuOfCircuits;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <1040,100,1240,140>
+  slot onEvent
+  {
+    var int32 i;
+    for(i=0;i<6;i=i+1){
+      SampleController[i].Visible=false;
+      SampleController[i].Enabled=false;
+    }
+
+    for(i=0;i<Device::Device.NuOfCircuits;i=i+1){
+      SampleController[i].Visible=true;
+      SampleController[i].Enabled=true;
+    }
+
+  }
+
+  $rect <840,60,1040,100>
+  array Application::SampleController SampleController[ 6 ] =
+  (
+    Default[0] = SCA;
+    Default[1] = SCA1;
+    Default[2] = SCA2;
+    Default[3] = SCA3;
+    Default[4] = SCA4;
+    Default[5] = SCA5;
+  );
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_Config
+  {
+    preset Bounds = <530,50,650,80>;
+    preset OnAction = onConfig;
+    preset Caption = "Config";
+  }
+
+  $rect <830,190,1030,230>
+  slot onConfig
+  {
+    Config.ConfigBL.Visible=true;
+    Config.ConfigTrash.Visible=true;
+    Config.Visible=true;
+
+    Config.ConfigBL.Enabled=true;
+    Config.ConfigTrash.Enabled=true;
+    Config.Enabled=true;
+
+    this.Enabled=false;
+
+    Config.Bounds.x1=0;
+    Config.Bounds.y1=0;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_NewWell
+  {
+    preset Bounds = <530,90,650,120>;
+    preset OnAction = onBtn_NewWell;
+    preset Caption = "NewWell";
+  }
+
+  $rect <830,240,1030,280>
+  slot onBtn_NewWell
+  {
+    Device::Device.NewWell=true;
+  }
+
+  $rect <830,320,1030,360>
+  property Application::Config Config = null;
+
+  $rect <830,360,1030,400>
+  onset Config
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Config == value )
+      return;
+
+    // Remember the property's new value.
+    pure Config = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <830,400,1030,440>
+  onget Config
+  {
+    return pure Config;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_StopAll
+  {
+    preset Bounds = <530,130,650,160>;
+    preset Caption = "StopAll";
+  }
+}
+
+// Tab1
+note group Note2
+{
+  attr Bounds = <20,90,430,690>;
+}
+
+// ControllMenue
+note group Note3
+{
+  attr Bounds = <100,170,360,350>;
+}
+
+// Config
+note group Note4
+{
+  attr Bounds = <100,360,360,640>;
+}
+
+// Tab2
+note group Note5
+{
+  attr Bounds = <460,90,870,300>;
+}
+
+// Other Components
+note group Note6
+{
+  attr Bounds = <460,310,870,520>;
+}
+
+note arrow Note1
+{
+  attr Point1 = <260,120>;
+  attr Point2 = <370,50>;
+}
+
+note arrow Note7
+{
+  attr Point1 = <610,120>;
+  attr Point2 = <550,50>;
+}
+
+$rect <150,480,350,520>
+$output false
+class ConfigTR : Core::Group
+{
+  $rect <10,540,210,580>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <10,620,210,660>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,580,210,620>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = #747674FF;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_Next
+  {
+    preset Bounds = <670,440,790,470>;
+    preset Enabled = false;
+    preset OnAction = onNext;
+    preset Caption = "Next";
+  }
+
+  $rect <550,560,750,600>
+  slot onNext
+  {
+    Device::Device.TRPosition.x=XSlider.CurrentValue;
+    Device::Device.TRPosition.y=YSlider.CurrentValue;
+                    
+                    
+    this.Visible=false;
+    this.Enabled=false;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Text
+  {
+    preset Bounds = <60,10,690,120>;
+    preset WrapText = true;
+    preset String = "Bewegen sie den Schlauch über die Well Öffnung rechts oben";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider XSlider
+  {
+    preset Bounds = <50,160,770,230>;
+    preset CurrentValue = 0;
+    preset Outlet = null;
+    preset OnChange = OnChangePos;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::HorzSlider YSlider
+  {
+    preset Bounds = <50,240,770,300>;
+    preset CurrentValue = 0;
+    preset OnChange = OnChangePos;
+  }
+
+  $rect <840,50,1040,90>
+  slot OnChangePos
+  {
+    if(sender==XSlider){
+      Device::Device.CurrentPosition.x=XSlider.CurrentValue;
+    }else if(sender==YSlider){
+     Device::Device.CurrentPosition.y=YSlider.CurrentValue;
+    }
+    Btn_Next.Enabled=true;
+
+  }
+}
