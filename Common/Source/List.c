@@ -21,7 +21,8 @@
  *   ListAdd
  *   ListSetReadPointer
  *   ListGetNext
- *   ListRemove
+ *   ListRemoveByIndex
+ *   ListRemoveByDataPointer
  *
  * PRIVATE FUNCTIONS:
  *   makeNode
@@ -237,12 +238,12 @@ ListGetNext (
 }
 
 /****************************************************************************
- * FUNCTION: ListRemove
+ * FUNCTION: ListRemoveByIndex
  *
  * DESCRIPTION:
  *   Deletes a single Node out of the List and returns the Pointer that was
  *   saved in the Data field of the Node The malloc of the Node is free´d but
- *   not the Data pointer
+ *   not the Data pointer. The Node is selected by its Index in the List
  * PARAMETER:
  *   aList  - The Pointer of the List Header
  *   aIndex - The Index of the Node that should be removed
@@ -250,7 +251,7 @@ ListGetNext (
  *   Returns the Data Pointer of the Removed Node.
  ****************************************************************************/
 PUBLIC void *
-ListRemove (
+ListRemoveByIndex (
   TListHeader * aList,
   int           aIndex )
 {
@@ -301,6 +302,41 @@ ListRemove (
 	return freeNode(delNode);
 }
 
+
+/****************************************************************************
+ * FUNCTION: ListRemoveByDataPointer
+ *
+ *   DESCRIPTION:
+ *     Deletes a single Node out of the List and returns the Pointer that was
+ *     saved in the Data field of the Node The malloc of the Node is free´d
+ *     but not the Data pointer The Node is selected by comparing its Data
+ *     Pointer with the Parameter. A maximum of one Node will be deleted
+ * PARAMETER:
+ *   aList        - The Pointer of the List Header
+ *   aDataPointer - The Pointer which is compared with the DataFields of the
+ *                  Nodes
+ * RETURN:
+ *   Returns the Data Pointer of the Removed Node.
+ ****************************************************************************/
+PUBLIC void *
+ListRemoveByDataPointer (
+  TListHeader * aList,
+  void *        aDataPointer )
+{
+	TListNode* retPtr;
+	if (aDataPointer == NULL | aList == NULL) {
+		return NULL;
+	}
+
+	ListSetReadPointer(aList, 0);
+	while ((retPtr = ListGetNext(aList)) != NULL)
+	{
+		if (retPtr->Data == aDataPointer) {
+			return freeNode(retPtr);
+		}
+	}
+
+}
 /****************************************************************************
 * SECTION: Implementation of private functions
 ****************************************************************************/
@@ -309,8 +345,7 @@ ListRemove (
  *
  * DESCRIPTION:
  *   Allocates the Storage for a new Node and initializes the Data and Next
- *   field of it with the Paramters given PARAMETER: aData - Data Pointer
- *   aNext - Next Pointer
+ *   field of it with the Paramters given
  * PARAMETER:
  *   aData - The Data Pointer for the new Node
  *   aNext - A Next Pointer for the new Node
@@ -322,7 +357,7 @@ makeNode (
   void *      aData,
   TListNode * aNext )
 {
-	TListNode *newPtr;    /* Zeiger auf zugewiesenen Speicher */
+	TListNode *newPtr = NULL;    /* Zeiger auf zugewiesenen Speicher */
 
 	if ((newPtr = (TListHeader *)malloc(sizeof(TListNode))) != NULL) {
 		newPtr->Next = aNext;
@@ -337,7 +372,7 @@ makeNode (
  *   Calls the free Function for the Node. PARAMETER: aNode - Pointer of the
  *   node that should be destroyed
  * PARAMETER:
- *   aNode - The node which should be desroyed
+ *   aNode - The node which should be destroyed
  * RETURN:
  *   Returns the Pointer of the Data Field of the Node because the storage
  *   allocation of this Field is not handled by this Type
@@ -346,7 +381,12 @@ PRIVATE void *
 freeNode (
   TListNode * aNode )
 {
-	void* retPtr = aNode->Data;
-	free(aNode);
-	return retPtr;
+	if (aNode != NULL) {
+		void* retPtr = aNode->Data;
+		free(aNode);
+		return retPtr;
+	}
+	else {
+		return NULL;
+	}
 }

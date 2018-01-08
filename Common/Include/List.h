@@ -21,7 +21,8 @@
  *   ListAdd
  *   ListSetReadPointer
  *   ListGetNext
- *   ListRemove
+ *   ListRemoveByIndex
+ *   ListRemoveByDataPointer
  ****************************************************************************/
 
 #ifndef LIST_H
@@ -150,12 +151,12 @@ ListGetNext (
 
 
 /****************************************************************************
- * FUNCTION: ListRemove
+ * FUNCTION: ListRemoveByIndex
  *
  * DESCRIPTION:
  *   Deletes a single Node out of the List and returns the Pointer that was
  *   saved in the Data field of the Node The malloc of the Node is free´d but
- *   not the Data pointer
+ *   not the Data pointer. The Node is selected by its Index in the List
  * PARAMETER:
  *   aList  - The Pointer of the List Header
  *   aIndex - The Index of the Node that should be removed
@@ -164,9 +165,31 @@ ListGetNext (
  ****************************************************************************/
 
 PUBLIC void *
-ListRemove (
+ListRemoveByIndex (
   TListHeader * aList,
   int           aIndex );
+
+
+/****************************************************************************
+ * FUNCTION: ListRemoveByDataPointer
+ *
+ *   DESCRIPTION:
+ *     Deletes a single Node out of the List and returns the Pointer that was
+ *     saved in the Data field of the Node The malloc of the Node is free´d
+ *     but not the Data pointer The Node is selected by comparing its Data
+ *     Pointer with the Parameter. A maximum of one Node will be deleted
+ * PARAMETER:
+ *   aList        - The Pointer of the List Header
+ *   aDataPointer - The Pointer which is compared with the DataFields of the
+ *                  Nodes
+ * RETURN:
+ *   Returns the Data Pointer of the Removed Node.
+ ****************************************************************************/
+
+PUBLIC void *
+ListRemoveByDataPointer (
+  TListHeader * aList,
+  void *        aDataPointer );
 
 
 
