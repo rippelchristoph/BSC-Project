@@ -23,6 +23,7 @@
  *   ListGetNext
  *   ListRemoveByIndex
  *   ListRemoveByDataPointer
+ *   ListIsNotEmty
  *
  * PRIVATE FUNCTIONS:
  *   makeNode
@@ -298,7 +299,7 @@ ListRemoveByIndex (
 	delNode = aList->ReadPointer->Next;	//Keep Pointer to free the Node
 	aList->ReadPointer->Next = aList->ReadPointer->Next->Next; 
 										//Now Pointers skip the Deleted Node
-
+	aList->Len--;
 	return freeNode(delNode);
 }
 
@@ -332,11 +333,34 @@ ListRemoveByDataPointer (
 	while ((retPtr = ListGetNext(aList)) != NULL)
 	{
 		if (retPtr->Data == aDataPointer) {
+			aList->Len--;
 			return freeNode(retPtr);
 		}
 	}
-
 }
+
+/****************************************************************************
+ * FUNCTION: ListIsNotEmty
+ *
+ * DESCRIPTION:
+ *   Function checks if the List is Empty
+ * PARAMETER:
+ *   aList - The Adress of the List Header
+ * RETURN:
+ *   Returns TRUE if the List is not empty, FALSE if the List is empty
+ ****************************************************************************/
+PUBLIC TBoolean
+ListNotEmty (
+  TListHeader * aList )
+{
+	if (aList->Len == 0) {
+		return EFALSE;
+	}
+	else {
+		return ETRUE;
+	}
+}
+
 /****************************************************************************
 * SECTION: Implementation of private functions
 ****************************************************************************/
