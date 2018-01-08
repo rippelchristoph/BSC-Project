@@ -12,7 +12,7 @@
  * PUBLIC FUNCTIONS:
  *   newOrder
  *   destroyOrder
- *   orderProcess
+ *   ProcessOrder
  ****************************************************************************/
 
 /****************************************************************************
@@ -62,8 +62,8 @@ typedef struct Order {
  ****************************************************************************/
 PUBLIC TOrder *
 newOrder (
-  int aOrigin,
-  int aInterval )
+  int    aOrigin,
+  time_t aInterval )
 {
 	TOrder* retPtr;
 	retPtr = (TOrder*)malloc(sizeof(TOrder));
@@ -87,13 +87,18 @@ PUBLIC int
 destroyOrder (
   TOrder * aOrder )
 {
-	int retVal = aOrder->Origin;
-	free(aOrder);
-	return retVal;
+	if (aOrder != NULL) {
+		int retVal = aOrder->Origin;
+		free(aOrder);
+		return retVal;
+	} else {
+		return NULL;
+	}
+	
 }
 
 /****************************************************************************
- * FUNCTION: orderProcess
+ * FUNCTION: ProcessOrder
  *
  * DESCRIPTION:
  *   Processes an Order. Therefore it has to be called periodically.
@@ -104,7 +109,7 @@ destroyOrder (
  *   there is nothing to do, the function returns '-1'
  ****************************************************************************/
 PUBLIC int
-orderProcess (
+ProcessOrder (
   TOrder * aOrder )
 {
 	time_t now = time(NULL);
@@ -117,7 +122,6 @@ orderProcess (
 		return -1;
 	}
 }
-
 /****************************************************************************
  * SECTION: Implementation of private functions
  ****************************************************************************/

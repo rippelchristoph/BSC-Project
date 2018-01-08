@@ -12,7 +12,7 @@
  * PUBLIC FUNCTIONS:
  *   newOrder
  *   destroyOrder
- *   orderProcess
+ *   ProcessOrder
  ****************************************************************************/
 
 #ifndef ORDER_H
@@ -51,8 +51,8 @@ typedef struct Order {
 
 PUBLIC TOrder *
 newOrder (
-  int aOrigin,
-  int aInterval );
+  int    aOrigin,
+  time_t aInterval );
 
 
 /****************************************************************************
@@ -73,7 +73,7 @@ destroyOrder (
 
 
 /****************************************************************************
- * FUNCTION: orderProcess
+ * FUNCTION: ProcessOrder
  *
  * DESCRIPTION:
  *   Processes an Order. Therefore it has to be called periodically.
@@ -85,7 +85,7 @@ destroyOrder (
  ****************************************************************************/
 
 PUBLIC int
-orderProcess (
+ProcessOrder (
   TOrder * aOrder );
 
 
