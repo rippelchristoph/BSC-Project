@@ -1,28 +1,22 @@
 #include <time.h>
 
-#define EWELLSTATUS enum Wellstatus
-
-typedef struct Order {
-	int Origin;
-	TBoolean isInterval;
-	time_t lastExe;
-	time_t interval;
-}TOrder;
 
 typedef struct Task {
 	int Origin;
 }TTask;
 
-enum WellStatus
-{
+
+enum WellStatus {
 	EMPTY,
 	ERROR,
 	FULL
 };
 
+typedef enum WellStatus EWellStatus;
+
 typedef struct WellData {
 	struct tm* Timestamp;
-	EWELLSTATUS Status;
+	EWellStatus Status;
 	int Origin;
 } TWellData;
 
