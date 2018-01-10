@@ -115,3 +115,9 @@ unit Device
 {
   attr Directory = .\;
 }
+
+$rect <40,430,240,470>
+unit Steel
+{
+  attr Directory = $Mosaic\Steel;
+}
