@@ -23,6 +23,7 @@
  *   ListGetNext
  *   ListRemoveByIndex
  *   ListRemoveByDataPointer
+ *   ListIsNotEmty
  ****************************************************************************/
 
 #ifndef LIST_H
@@ -190,6 +191,21 @@ PUBLIC void *
 ListRemoveByDataPointer (
   TListHeader * aList,
   void *        aDataPointer );
+
+
+/****************************************************************************
+ * FUNCTION: ListIsNotEmty
+ *
+ *   DESCRIPTION:
+ *     PARAMETER: aList - The Adress of the List Header
+ *
+ *   RETURN:
+ *     Returns TRUE if the List is not empty, FALSE if the List is empty
+ ****************************************************************************/
+
+PUBLIC TBoolean
+ListIsNotEmty (
+  TListHeader * aList );
 
 
 

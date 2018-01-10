@@ -12,7 +12,9 @@
  * PUBLIC FUNCTIONS:
  *   newOrder
  *   destroyOrder
- *   orderProcess
+ *   OrderGetRemainingTime
+ *   OrderGetNextExecution
+ *   ProcessOrder
  ****************************************************************************/
 
 /****************************************************************************
@@ -20,6 +22,7 @@
  ****************************************************************************/
 
 #include <stdlib.h>
+
 
 /** HEADER ******************************************************************
  */
@@ -29,6 +32,7 @@
  * SECTION: #include
  ****************************************************************************/
 #include "HtlStdDef.h"
+#include <time.h>
 
 /****************************************************************************
 * SECTION: typedef
@@ -62,8 +66,8 @@ typedef struct Order {
  ****************************************************************************/
 PUBLIC TOrder *
 newOrder (
-  int aOrigin,
-  int aInterval )
+  int    aOrigin,
+  time_t aInterval )
 {
 	TOrder* retPtr;
 	retPtr = (TOrder*)malloc(sizeof(TOrder));
@@ -87,13 +91,55 @@ PUBLIC int
 destroyOrder (
   TOrder * aOrder )
 {
-	int retVal = aOrder->Origin;
-	free(aOrder);
-	return retVal;
+	if (aOrder != NULL) {
+		int retVal = aOrder->Origin;
+		free(aOrder);
+		return retVal;
+	} else {
+		return NULL;
+	}
+	
 }
 
 /****************************************************************************
- * FUNCTION: orderProcess
+ * FUNCTION: OrderGetRemainingTime
+ *
+ * DESCRIPTION:
+ *   Returns the remaining Time of an Order until its next Activated
+ * PARAMETER:
+ *   aOrder - The Adress of Order
+ * RETURN:
+ *   Returns the Remaining time until the next Execution of the Order in
+ *   Seconds
+ ****************************************************************************/
+PUBLIC time_t
+OrderGetRemainingTime (
+  TOrder * aOrder )
+{
+	time_t now = time(NULL);
+
+	return OrderGetNextExecution(aOrder) - now;
+}
+
+/****************************************************************************
+ * FUNCTION: OrderGetNextExecution
+ *
+ * DESCRIPTION:
+ *   Returns the timestamp of the Next time the Order will be executed
+ * PARAMETER:
+ *   aOrder - The Adress of Order
+ * RETURN:
+ *   Returns the absolute Time stamp of the Next Execution in seconds
+ ****************************************************************************/
+PUBLIC time_t
+OrderGetNextExecution (
+  TOrder * aOrder )
+{
+	return aOrder->lastExe + aOrder->interval;
+}
+
+/****************************************************************************
+ * FUNCTION: ProcessOrder
  *
  * DESCRIPTION:
  *   Processes an Order. Therefore it has to be called periodically.
@@ -104,7 +150,7 @@ destroyOrder (
  *   there is nothing to do, the function returns '-1'
  ****************************************************************************/
 PUBLIC int
-orderProcess (
+ProcessOrder (
   TOrder * aOrder )
 {
 	time_t now = time(NULL);
@@ -117,7 +163,6 @@ orderProcess (
 		return -1;
 	}
 }
-
 /****************************************************************************
  * SECTION: Implementation of private functions
  ****************************************************************************/
