@@ -47,7 +47,7 @@ class Application : Core::Root
   }
 
   $rect <20,20,160,60>
-  object Application::MainMenue MainMenu
+  object Application::MainMenu MainMenu
   {
     preset Bounds = <49,720,849,1200>;
     preset Enabled = true;
@@ -67,7 +67,7 @@ class Application : Core::Root
 
 $rect <130,120,330,160>
 $output false
-class MainMenue : Core::Group
+class MainMenu : Core::Group
 {
   $rect <10,600,210,640>
   inherited property Bounds = <0,0,800,480>;
@@ -200,7 +200,7 @@ class MainMenue : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Application::ControllMenue ControllMenue
+  object Application::ControllMenu ControllMenue
   {
     preset Bounds = <0,0,800,480>;
     preset Config = Config;
@@ -360,6 +360,7 @@ class Well : Core::Group
   object Application::WellPart A1
   {
     preset Bounds = <70,50,140,120>;
+    preset CircuitNumber = 0;
   }
 
   $rect <20,20,160,60>
@@ -651,10 +652,12 @@ class Well : Core::Group
   }
 
   // Writes the given Time in the chosen WellPart
-  $rect <1220,140,1420,180>
-  method void timeToWellPart( arg int32 aColumn, arg int32 aRow, arg string aTime )
+  $rect <1230,300,1430,340>
+  method void timeToWellPart( arg int32 aCircuitNumber, arg int32 aColumn, arg int32 aRow, arg string aTime )
   {
     WellPartArray[aColumn,aRow].TimeProperty=aTime;
+    WellPartArray[aColumn,aRow].CircuitNumber=aCircuitNumber;
+
 
 
 
@@ -713,39 +716,6 @@ class Well : Core::Group
     Default[7, 4] = E8;
     Default[7, 5] = F8;
   );
-
-  // Waits till the WellIndex in Unit Device is changed and calls Function OnEvent \
-  // if notified
-  $rect <820,140,1020,180>
-  object Core::PropertyObserver WellIndexObserver
-  {
-    preset OnEvent = onWellIndex;
-    preset Outlet = ^Device::Device.WellIndex;
-  }
-
-  // This slot method is executed when the associated property observer 'PropertyObserver' \
-  // is notified.
-  $rect <1020,140,1220,180>
-  slot onWellIndex
-  {
-    timeToWellPart(Device::Device.WellIndex[0]-'0', Device::Device.WellIndex[1]-'0'-1,Time.TimeProperty); // (int32 Column, int32 Row, string Time)
-
-
-    /*
-       HINT 1:
-
-       You can evaluate the 'sender' parameter. It refers to the observer
-       this method has been called from. This is very useful if multiple
-       property observer are connected to one and the same 'onEvent'
-       method:
-
-       if ( sender == Observer1 )
-         trace "The event comes from the Observer1";
-
-       if ( sender == Observer2 )
-         trace "... or from the Observer2";
-    */
-  }
 
   $rect <20,20,160,60>
   object Views::WarpImage Logo
@@ -814,44 +784,45 @@ class Well : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Application::WellLabel WellLabel8
+  object Application::WellLabel WellLabelA
   {
     preset Bounds = <0,60,70,100>;
+    preset TextString = "1";
   }
 
   $rect <20,20,160,60>
-  object Application::WellLabel WellLabel9
+  object Application::WellLabel WellLabelB
   {
     preset Bounds = <0,130,70,170>;
-    preset TextString = "B";
+    preset TextString = "2";
   }
 
   $rect <20,20,160,60>
-  object Application::WellLabel WellLabel10
+  object Application::WellLabel WellLabelC
   {
     preset Bounds = <0,200,70,240>;
-    preset TextString = "C";
+    preset TextString = "3";
   }
 
   $rect <20,20,160,60>
-  object Application::WellLabel WellLabel11
+  object Application::WellLabel WellLabelD
   {
     preset Bounds = <0,270,70,310>;
-    preset TextString = "D";
+    preset TextString = "4";
   }
 
   $rect <20,20,160,60>
-  object Application::WellLabel WellLabel12
+  object Application::WellLabel WellLabelE
   {
     preset Bounds = <0,340,70,380>;
-    preset TextString = "E";
+    preset TextString = "5";
   }
 
   $rect <20,20,160,60>
-  object Application::WellLabel WellLabel13
+  object Application::WellLabel WellLabelF
   {
     preset Bounds = <0,410,70,450>;
-    preset TextString = "F";
+    preset TextString = "6";
   }
 
   $rect <820,190,1020,230>
@@ -874,6 +845,37 @@ class Well : Core::Group
         WellPartArray[c,r].Text.String="";
       }
     }
+
+  }
+
+  $rect <1030,80,1230,120>
+  array Application::WellLabel WellLabelArray[ 6 ] =
+  (
+    Default[0] = WellLabelA;
+    Default[1] = WellLabelB;
+    Default[2] = WellLabelC;
+    Default[3] = WellLabelD;
+    Default[4] = WellLabelE;
+    Default[5] = WellLabelF;
+  );
+
+  $rect <820,300,1020,340>
+  object Core::SystemEventHandler SampleCollected
+  {
+    preset OnEvent = onSampleCollected;
+    preset Event = Device::Device.SampleCollectedEvent;
+  }
+
+  // This slot method is executed when the associated system event handler 'SystemEventHandler' \
+  // receives an event.
+  $rect <1020,300,1220,340>
+  slot onSampleCollected
+  {
+    var Device::SampleCollectedContext context = (Device::SampleCollectedContext)SampleCollected.Context;
+     
+    timeToWellPart(context.CircuitNumber,context.WellIndex.x,context.WellIndex.y,context.Time);
+     
+
 
   }
 
@@ -1066,6 +1068,7 @@ class WellPart : Core::Group
     preset WrapText = true;
     preset String = "";
     preset Font = Application::FontArial17;
+    preset Color = #FFFFFFFF;
   }
 
   $rect <90,10,290,50>
@@ -1096,34 +1099,10 @@ class WellPart : Core::Group
     return pure TimeProperty;
   }
 
-  $rect <320,20,520,60>
-  property bool Filled = false;
-
-  $rect <320,60,520,100>
-  onset Filled
-  {
-    // The value doesn't change - nothing to do.
-    if ( pure Filled == value )
-      return;
-
-    // Remember the property's new value.
-    pure Filled = value;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <320,100,520,140>
-  onget Filled
-  {
-    return pure Filled;
-  }
-
-  $rect <610,20,810,60>
+  $rect <300,10,500,50>
   property point Coordinate = <0,0>;
 
-  $rect <610,60,810,100>
+  $rect <300,50,500,90>
   onset Coordinate
   {
     // The value doesn't change - nothing to do.
@@ -1138,14 +1117,76 @@ class WellPart : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <610,100,810,140>
+  $rect <300,90,500,130>
   onget Coordinate
   {
     return pure Coordinate;
   }
+
+  $rect <530,10,730,50>
+  property int32 CircuitNumber = 0;
+
+  $rect <530,50,730,90>
+  onset CircuitNumber
+  {
+    if(value>5){
+      Text.Color.blue=255;
+      Text.Color.red=255;
+      Text.Color.green=255;
+    }
+      
+    if(value==0){
+      Text.Color.blue=255;
+      Text.Color.red=0;
+      Text.Color.green=0;
+    }
+    if(value==1){
+      Text.Color.blue=255;
+      Text.Color.red=255;
+      Text.Color.green=0;
+    }
+    if(value==2){
+      Text.Color.blue=0;
+      Text.Color.red=255;
+      Text.Color.green=0;
+    }
+    if(value==3){
+      Text.Color.blue=0;
+      Text.Color.red=255;
+      Text.Color.green=255;
+    }
+    if(value==4){
+      Text.Color.blue=0;
+      Text.Color.red=0;
+      Text.Color.green=255;
+    }
+    if(value==5){
+      Text.Color.blue=255;
+      Text.Color.red=0;
+      Text.Color.green=255;
+    }
+                      
+
+    // The value doesn't change - nothing to do.
+    if ( pure CircuitNumber == value )
+      return;
+
+    // Remember the property's new value.
+    pure CircuitNumber = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <530,90,730,130>
+  onget CircuitNumber
+  {
+    return pure CircuitNumber;
+  }
 }
 
-$rect <910,600,1110,640>
+$rect <570,650,770,690>
 $output false
 resource Resources::Bitmap Oval
 {
@@ -1380,7 +1421,7 @@ $rect <150,290,350,330>
 $output false
 class SampleController : Core::Group
 {
-  $rect <10,550,210,590>
+  $rect <20,550,220,590>
   inherited property Bounds = <0,0,440,70>;
 
   $rect <20,630,220,670>
@@ -1548,7 +1589,7 @@ class SampleController : Core::Group
   object Views::Text NameText
   {
     preset Bounds = <0,16,30,46>;
-    preset String = "A";
+    preset String = "1";
     preset Font = Flat::FontM;
   }
 
@@ -1586,54 +1627,21 @@ class SampleController : Core::Group
   slot onStart
   {
     if(TextEditor.String.parse_int32(0)!=0){ //User has to enter a Integer > 0
-      HorzBar.MaxValue=TextEditor.String.parse_int32( 0 );
-      HorzBar.CurrentValue=TextEditor.String.parse_int32( 0 );
-      //TimerMinuten.Enabledten.Enabled=true;  //?????
+      HorzBar.MaxValue=TextEditor.String.parse_int32( 1 );
+      HorzBar.CurrentValue=TextEditor.String.parse_int32( 1 );
       EnabledProperty=true;
-    }
-
-  }
-
-  $rect <30,300,230,340>
-  object Core::Timer TimerMinuten
-  {
-    preset OnTrigger = onTimerMinuten;
-    preset Period = 1000;
-    preset Enabled = false;
-  }
-
-  $rect <30,220,230,260>
-  slot onTimerMinuten
-  {
-    if(HorzBar.CurrentValue!=1){
-      HorzBar.CurrentValue=HorzBar.CurrentValue-1;
-
-    }else{
-      
-      HorzBar.CurrentValue=TextEditor.String.parse_int32( 0 );
-      Device::Device.WellIndex=string(CurrentIndex)+NameProperty;
-      if(CurrentIndex==7)
-        WellFull();
-      else
-        CurrentIndex=CurrentIndex+1; 
-      
-
+      Device::Device.StartSampling( TextEditor.String.parse_int32( 1 ), (int32) NameProperty -1);
     }
 
 
-     
-           
-          
-         
 
-        
 
   }
 
-  $rect <310,400,510,440>
+  $rect <310,270,510,310>
   property bool EnabledProperty = false;
 
-  $rect <310,440,510,480>
+  $rect <310,310,510,350>
   onset EnabledProperty
   {
     // The value doesn't change - nothing to do.
@@ -1652,14 +1660,9 @@ class SampleController : Core::Group
 
 
     Indicator.Active=EnabledProperty;
-    TimerMinuten.Enabled=EnabledProperty;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
   }
 
-  $rect <310,480,510,520>
+  $rect <310,350,510,390>
   onget EnabledProperty
   {
     return pure EnabledProperty;
@@ -1696,30 +1699,6 @@ class SampleController : Core::Group
     preset Color = #000000FF;
   }
 
-  $rect <310,270,510,310>
-  property int32 CurrentIndex = 0;
-
-  $rect <310,310,510,350>
-  onset CurrentIndex
-  {
-    // The value doesn't change - nothing to do.
-    if ( pure CurrentIndex == value )
-      return;
-
-    // Remember the property's new value.
-    pure CurrentIndex = value;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <310,350,510,390>
-  onget CurrentIndex
-  {
-    return pure CurrentIndex;
-  }
-
   $rect <590,110,790,150>
   object Core::PropertyObserver NewWellObserver
   {
@@ -1732,21 +1711,51 @@ class SampleController : Core::Group
   $rect <590,150,790,190>
   slot onNewWell
   {
-    CurrentIndex=0;
-    BtnStart.Enabled=true;
+    if(!EnabledProperty){ //So that you cant activate the Start Button while its already running
+      BtnStart.Enabled=true;
+    }
+
+
+
 
   }
 
   // Properties
   note group Note
   {
-    attr Bounds = <280,90,540,540>;
+    attr Bounds = <280,90,540,820>;
   }
 
   // Timing
   note group Note1
   {
     attr Bounds = <10,90,260,360>;
+  }
+
+  $rect <310,400,510,440>
+  property int32 RemainingTime = 0;
+
+  $rect <310,440,510,480>
+  onset RemainingTime
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure RemainingTime == value )
+      return;
+
+    // Remember the property's new value.
+    pure RemainingTime = value;
+
+    HorzBar.CurrentValue=RemainingTime;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <310,480,510,520>
+  onget RemainingTime
+  {
+    return pure RemainingTime;
   }
 
   $reorder OnSetOpacity 8
@@ -1801,13 +1810,11 @@ class SampleController : Core::Group
   $reorder HorzBar 9
   $reorder Indicator 9
   $reorder onStart 9
-  $reorder TimerMinuten 9
-  $reorder onTimerMinuten 9
   $reorder Enabled 5
   $reorder OnSetEnabled 1
 }
 
-$rect <910,560,1110,600>
+$rect <570,610,770,650>
 $output false
 resource Resources::Bitmap Logo
 {
@@ -1817,7 +1824,7 @@ resource Resources::Bitmap Logo
   attr framedelay FrameDelay;
 }
 
-$rect <910,520,1110,560>
+$rect <570,570,770,610>
 $output false
 resource Resources::Font FontArial17
 {
@@ -3295,7 +3302,7 @@ class NumKeyboard : Templates::NumKeyboard
 // Resources
 note group Note
 {
-  attr Bounds = <890,480,1160,670>;
+  attr Bounds = <460,530,870,720>;
 }
 
 $rect <610,200,810,240>
@@ -3637,7 +3644,7 @@ class Temperature : Core::Group
   object Flat::DigitalDisplay DigitalDisplay
   {
     preset Bounds = <0,0,80,60>;
-    preset Outlet = ^Device::Device.Temp;
+    preset Outlet = ^Device::Device.CurrentTemp;
   }
 
   $rect <120,10,320,50>
@@ -3803,7 +3810,7 @@ class Config : Core::Group
     preset Caption = "OK";
   }
 
-  $rect <650,540,850,580>
+  $rect <940,370,1140,410>
   slot onBtn_Ok
   {
     if(TextEditor.String.parse_int32(6)>6||TextEditor.String.parse_int32(6)<1){
@@ -3844,7 +3851,7 @@ class Config : Core::Group
   }
 
   $rect <940,240,1140,280>
-  property Application::ControllMenue ControllMenue = null;
+  property Application::ControllMenu ControllMenue = null;
 
   $rect <940,280,1140,320>
   onset ControllMenue
@@ -4039,7 +4046,6 @@ class ConfigBL : Core::Group
   $rect <840,90,1040,130>
   slot onNext
   {
-
     Device::Device.BLPosition.x=XSlider.CurrentValue;
     Device::Device.BLPosition.y=YSlider.CurrentValue;
                     
@@ -4287,7 +4293,7 @@ class ConfigTrash : Core::Group
 
 $rect <120,210,320,250>
 $output false
-class ControllMenue : Core::Group
+class ControllMenu : Core::Group
 {
   $rect <10,600,210,640>
   inherited property Bounds = <0,0,800,480>;
@@ -4493,7 +4499,7 @@ class ControllMenue : Core::Group
   $rect <20,20,160,60>
   object Application::Temperature Temperature
   {
-    preset Bounds = <520,220,600,280>;
+    preset Bounds = <700,140,780,200>;
   }
 
   $rect <840,100,1040,140>
@@ -4535,7 +4541,7 @@ class ControllMenue : Core::Group
   $rect <20,20,160,60>
   object Flat::ActionButton Btn_Config
   {
-    preset Bounds = <530,50,650,80>;
+    preset Bounds = <480,140,600,170>;
     preset OnAction = onConfig;
     preset Caption = "Config";
   }
@@ -4544,10 +4550,12 @@ class ControllMenue : Core::Group
   slot onConfig
   {
     Config.ConfigBL.Visible=true;
+    Config.ConfigTR.Visible=true;
     Config.ConfigTrash.Visible=true;
     Config.Visible=true;
 
     Config.ConfigBL.Enabled=true;
+    Config.ConfigTR.Enabled=true;
     Config.ConfigTrash.Enabled=true;
     Config.Enabled=true;
 
@@ -4560,7 +4568,7 @@ class ControllMenue : Core::Group
   $rect <20,20,160,60>
   object Flat::ActionButton Btn_NewWell
   {
-    preset Bounds = <530,90,650,120>;
+    preset Bounds = <480,180,600,210>;
     preset OnAction = onBtn_NewWell;
     preset Caption = "NewWell";
   }
@@ -4598,18 +4606,68 @@ class ControllMenue : Core::Group
   $rect <20,20,160,60>
   object Flat::ActionButton Btn_StopAll
   {
-    preset Bounds = <530,130,650,160>;
+    preset Bounds = <480,220,600,250>;
     preset Caption = "StopAll";
+  }
+
+  $rect <370,500,570,540>
+  object Core::SystemEventHandler RemainingTime
+  {
+    preset OnEvent = onRemainingTime;
+    preset Event = Device::Device.RemainingTimeEvent;
+  }
+
+  // This slot method is executed when the associated system event handler 'SystemEventHandler' \
+  // receives an event.
+  $rect <570,500,770,540>
+  slot onRemainingTime
+  {
+    /*
+       HINT 1:
+
+       You can evaluate the 'sender' parameter. It refers to the handler 
+       this method has been called from. This is very useful if multiple
+       system event handlers are connected to one and the same 'onEvent1'
+       method:
+
+       if ( sender == Handler1 )
+         trace "The event comes from the Handler1";
+
+       if ( sender == Handler2 )
+         trace "... or from the Handler2";
+    */
+
+    /*
+       HINT 2:
+
+       From this 'onEvent1' slot method you can evaluate the optional
+       'context' data dispatched together with the system event:
+
+       // First get the context data. You need to cast from the generic 'object'
+       // to your own specific context class:
+       var YourUnit::ContextClass context = (YourUnit::ContextClass)SystemEventHandler.Context;
+
+       // Any context data passed and the cast was successful?
+       if ( context != null )
+       {
+         // Evaluate the context data:
+         someTarget1 = context.SomeData1;
+         someTarget2 = context.SomeData2;
+       }
+    */
+    var Device::RemainingTimeContext context = (Device::RemainingTimeContext)SystemEventHandler.Context;
+    SampleController[context.CircuitNumber].RemainingTime=context.RemainingTime;
+
   }
 }
 
-// Tab1
+// Tab1: MainMenu
 note group Note2
 {
   attr Bounds = <20,90,430,690>;
 }
 
-// ControllMenue
+// ControllMenu
 note group Note3
 {
   attr Bounds = <100,170,360,350>;
@@ -4621,7 +4679,7 @@ note group Note4
   attr Bounds = <100,360,360,640>;
 }
 
-// Tab2
+// Tab2: Well
 note group Note5
 {
   attr Bounds = <460,90,870,300>;
@@ -4635,13 +4693,13 @@ note group Note6
 
 note arrow Note1
 {
-  attr Point1 = <260,120>;
+  attr Point1 = <320,90>;
   attr Point2 = <370,50>;
 }
 
 note arrow Note7
 {
-  attr Point1 = <610,120>;
+  attr Point1 = <610,90>;
   attr Point2 = <550,50>;
 }
 

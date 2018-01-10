@@ -1,6 +1,6 @@
 $version 6.60
 
-$rect <40,120,240,160>
+$rect <0,100,200,140>
 inline Inline
 {
   #include <unistd.h>				//Needed for I2C port
@@ -71,27 +71,27 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,100,400,140>
-  property int32 Temp = 0;
+  $rect <200,70,400,110>
+  property int32 CurrentTemp = 0;
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,100,200,140>
+  $rect <0,70,200,110>
   $output true
-  method void UpdateTemp( arg int32 aNewValue )
+  method void UpdateCurrentTemp( arg int32 aNewValue )
   {
     // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure Temp )
+    if ( aNewValue != pure CurrentTemp )
     {
       // Remember the new value in the internal memory of the property.
-      pure Temp = aNewValue;
+      pure CurrentTemp = aNewValue;
 
       // Notify all associated property observers.
-      notifyobservers ^Temp;
+      notifyobservers ^CurrentTemp;
     }
   }
 
-  $rect <400,100,600,140>
+  $rect <400,70,600,110>
   slot getTemp
   {
     var int32 aNum  =0 ;
@@ -133,13 +133,13 @@ class DeviceClass : Templates::DeviceClass
                 }
     }
 
-    UpdateTemp( aNum);
+    UpdateCurrentTemp( aNum);
   }
 
-  $rect <200,180,400,220>
+  $rect <200,130,400,170>
   property int32 NuOfCircuits = 6;
 
-  $rect <400,180,600,220>
+  $rect <400,130,600,170>
   onset NuOfCircuits
   {
     // The property doesn't change -> nothing to do.
@@ -178,7 +178,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,180,200,220>
+  $rect <0,130,200,170>
   $output true
   method void UpdateNuOfCircuits( arg int32 aNewValue )
   {
@@ -193,10 +193,10 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,265,400,305>
+  $rect <200,190,400,230>
   property point BLPosition = <0,0>;
 
-  $rect <400,265,600,305>
+  $rect <400,190,600,230>
   onset BLPosition
   {
     // The property doesn't change -> nothing to do.
@@ -234,7 +234,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,265,200,305>
+  $rect <0,190,200,230>
   $output true
   method void UpdateBLPosition( arg point aNewValue )
   {
@@ -249,10 +249,10 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,370,400,410>
+  $rect <200,295,400,335>
   property point TrashPosition = <0,0>;
 
-  $rect <400,370,600,410>
+  $rect <400,295,600,335>
   onset TrashPosition
   {
     // The property doesn't change -> nothing to do.
@@ -290,7 +290,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,370,200,410>
+  $rect <0,295,200,335>
   $output true
   method void UpdateTrashPosition( arg point aNewValue )
   {
@@ -305,10 +305,10 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,440,400,480>
+  $rect <200,345,400,385>
   property point CurrentPosition = <0,0>;
 
-  $rect <400,440,600,480>
+  $rect <400,345,600,385>
   onset CurrentPosition
   {
     // The property doesn't change -> nothing to do.
@@ -346,7 +346,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,440,200,480>
+  $rect <0,345,200,385>
   $output true
   method void UpdateCurrentPosition( arg int32 aNewValue )
   {
@@ -361,10 +361,10 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,510,400,550>
+  $rect <200,405,400,445>
   property bool NewWell = false;
 
-  $rect <400,510,600,550>
+  $rect <400,405,600,445>
   onset NewWell
   {
     // The property doesn't change -> nothing to do.
@@ -398,7 +398,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,510,200,550>
+  $rect <0,405,200,445>
   $output true
   method void UpdateNewWell( arg int32 aNewValue )
   {
@@ -410,10 +410,10 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,320,400,360>
+  $rect <200,245,400,285>
   property point TRPosition = <0,0>;
 
-  $rect <400,320,600,360>
+  $rect <400,245,600,285>
   onset TRPosition
   {
     // The property doesn't change -> nothing to do.
@@ -451,7 +451,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,320,200,360>
+  $rect <0,245,200,285>
   $output true
   method void UpdateTRPosition( arg point aNewValue )
   {
@@ -465,7 +465,344 @@ class DeviceClass : Templates::DeviceClass
       notifyobservers ^TRPosition;
     }
   }
+
+  // intervall in seconds; circuitNumber from 1 to 6
+  $rect <0,460,200,500>
+  method int32 StartSampling( arg int32 intervall, arg int32 circuitNumber )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+      /*
+         TO DO:
+
+         List all parameters of this method not used explicitly. This will
+         suppress the Chora warnings because of unused parameters.
+      */
+
+      intervall;
+      circuitNumber;
+
+      /*
+         TO DO:
+
+         The following code is necessary for command methods intended to
+         return a value. It can be removed if the method is declared with
+         'void' as its return data type.
+
+         In the case a return value is desired, adapt the 'return' statement
+         to match the method's return data type. The value is just a dummy
+         used during prototyping only.
+      */
+
+      return 0;
+    $endif
+
+    // For target code generation you will use your specific device API 
+    // to perform the command in the device.
+    $if !$prototyper
+      /*
+         TO DO:
+
+         The following variable declaration is reasonable for command methods
+         which return a value. It can be removed if the method is declared with
+         'void' as its return data type or if the return value is not obtained
+         from the native code.
+
+         Additionally you may need to adapt this declaration to the method's
+         return data type.
+      */
+
+      var int32 result = 0;
+       
+      /*
+         TO DO:
+
+         The following native statement encloses the code to communicate with
+         your device API. Chora expects here all variables accessed from the
+         native code to be explicitly listed in the head of the native statement.
+         
+         Write here all parameters and locally declared variables you intend to 
+         access from the native code.
+      */
+
+      native ( intervall, circuitNumber, result )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify variables existing in your middleware to reflect the
+           command:
+
+           YourDevice_DoSomething( aParameter1, aParameter2, ... );
+
+           or
+
+           YourDevice_SomeVariable    = aParameter1;
+           YourDevice_AnotherVariable = aParameter2;
+
+           Also receive a return value:
+
+           result = YourDevice_DoSomething();
+        */
+      }
+
+      /*
+         TO DO:
+
+         The following 'return' statement is needed only when the command method
+         is declared to return a value. Otherwise you can remove the statement.
+      */
+      return result;
+    $endif
+  }
+
+  $rect <200,510,400,550>
+  object Core::SystemEvent SampleCollectedEvent;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about a particular system event.
+  $rect <0,510,200,550>
+  $output true
+  method void onSampleCollected( arg point aWellIndex, arg int32 aCircuitNumber, arg string aTime )
+  {
+    // Just trigger the system event. All associated system event handler
+    // will then be notified automatically.
+
+
+    /*
+       HINT 1:
+
+       When triggering the event you can pass an optional 'context' object.
+       With it additional event specific data can be attached at the event
+       and dispatched with it. All notified system event handler can thus
+       evaluate this 'context' information.
+
+       To do this, you will need to define a particular 'context' class
+       suitable to store the event specific information. Then create an
+       instance of the class, initialize it with all the specific context
+       data and finally pass the instance in the first parameter of the
+       Trigger() method:
+
+
+       var YourUnit::ContextClass context = new YourUnit::ContextClass;
+
+       context.SomeData1 = ...
+       context.SomeData2 = ...
+
+       SystemEvent.Trigger( context, false );
+
+
+       You can add parameters to the method in order to simply receive
+       values from the device.
+    */
+
+    /*
+       HINT 2:
+
+       When triggering a system event you can determine its priority. Per
+       default system events are delivered strictly in the order in which
+       they have been triggered. When you pass 'true' in the last parameter
+       of Trigger() you can force the event to be dispatched early:
+
+       SystemEvent.Trigger( null, true );
+    */
+
+    var Device::SampleCollectedContext context = new Device::SampleCollectedContext;
+
+    context.WellIndex = aWellIndex;
+    context.CircuitNumber = aCircuitNumber;
+    context.Time = aTime;
+    SampleCollectedEvent.Trigger( context, false );
+  }
+
+  $rect <200,560,400,600>
+  object Core::SystemEvent RemainingTimeEvent;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about a particular system event.
+  $rect <0,560,200,600>
+  $output true
+  method void onRemainingTime( arg int32 aCircuitNumber, arg int32 aRemainingTime )
+  {
+    // Just trigger the system event. All associated system event handler
+    // will then be notified automatically.
+
+
+    /*
+       HINT 1:
+
+       When triggering the event you can pass an optional 'context' object.
+       With it additional event specific data can be attached at the event
+       and dispatched with it. All notified system event handler can thus
+       evaluate this 'context' information.
+
+       To do this, you will need to define a particular 'context' class
+       suitable to store the event specific information. Then create an
+       instance of the class, initialize it with all the specific context
+       data and finally pass the instance in the first parameter of the
+       Trigger() method:
+
+
+       var YourUnit::ContextClass context = new YourUnit::ContextClass;
+
+       context.SomeData1 = ...
+       context.SomeData2 = ...
+
+       SystemEvent.Trigger( context, false );
+
+
+       You can add parameters to the method in order to simply receive
+       values from the device.
+    */
+
+    /*
+       HINT 2:
+
+       When triggering a system event you can determine its priority. Per
+       default system events are delivered strictly in the order in which
+       they have been triggered. When you pass 'true' in the last parameter
+       of Trigger() you can force the event to be dispatched early:
+
+       SystemEvent.Trigger( null, true );
+    */
+    var Device::RemainingTimeContext context = new Device::RemainingTimeContext;
+    context.CircuitNumber=aCircuitNumber;
+    context.RemainingTime=aRemainingTime;
+    RemainingTimeEvent.Trigger( context, false );
+  }
 }
 
-$rect <200,20,400,60>
+$rect <0,60,200,100>
 autoobject Device::DeviceClass Device;
+
+$rect <680,10,880,50>
+$output false
+class SampleCollectedContext
+{
+  $rect <40,40,240,80>
+  property point WellIndex = <0,0>;
+
+  $rect <40,80,240,120>
+  onset WellIndex
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure WellIndex == value )
+      return;
+
+    // Remember the property's new value.
+    pure WellIndex = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <40,120,240,160>
+  onget WellIndex
+  {
+    return pure WellIndex;
+  }
+
+  $rect <260,40,460,80>
+  property int32 CircuitNumber = 0;
+
+  $rect <260,80,460,120>
+  onset CircuitNumber
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CircuitNumber == value )
+      return;
+
+    // Remember the property's new value.
+    pure CircuitNumber = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <260,120,460,160>
+  onget CircuitNumber
+  {
+    return pure CircuitNumber;
+  }
+
+  $rect <480,40,680,80>
+  property string Time = null;
+
+  $rect <480,80,680,120>
+  onset Time
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Time == value )
+      return;
+
+    // Remember the property's new value.
+    pure Time = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <480,120,680,160>
+  onget Time
+  {
+    return pure Time;
+  }
+}
+
+$rect <680,50,880,90>
+$output false
+class RemainingTimeContext
+{
+  $rect <10,10,210,50>
+  property int32 RemainingTime = 0;
+
+  $rect <10,50,210,90>
+  onset RemainingTime
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure RemainingTime == value )
+      return;
+
+    // Remember the property's new value.
+    pure RemainingTime = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <10,90,210,130>
+  onget RemainingTime
+  {
+    return pure RemainingTime;
+  }
+
+  $rect <220,10,420,50>
+  property int32 CircuitNumber = 0;
+
+  $rect <220,50,420,90>
+  onset CircuitNumber
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CircuitNumber == value )
+      return;
+
+    // Remember the property's new value.
+    pure CircuitNumber = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <220,90,420,130>
+  onget CircuitNumber
+  {
+    return pure CircuitNumber;
+  }
+}
