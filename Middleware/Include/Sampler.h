@@ -10,6 +10,7 @@
  *   newSampler
  *   destroySampler
  *   SamplerAddToQueue
+ *   ProcessSampler
  ****************************************************************************/
 
 #ifndef SAMPLER_H
@@ -31,11 +32,14 @@
  ****************************************************************************/
 typedef struct Sampler {
 	TListHeader* Queue;
+	ESamplerStates State;
+	char* ErrorMessage;
 }TSampler;
 /****************************************************************************
 *	_ENUM: ESamplerStates
 ****************************************************************************/
 typedef enum SamplerStates {
+	Wait,
 	Home,
 	Waist,
 	OverPos,
@@ -83,12 +87,31 @@ destroySampler (
 
 /****************************************************************************
  * FUNCTION: SamplerAddToQueue
+ * DESCRIPTION:
+ *   Adds an Origin to the Queue of the Sampler as it can only process one at
+ *   a time
+ * PARAMETER:
+ *   aSampler - The Address of the Sampler
+ *   aOrigin  - The Origin of which the Probe should be
  ****************************************************************************/
 
 PUBLIC void
 SamplerAddToQueue (
   TSampler * aSampler,
   int        aOrigin );
+
+
+/****************************************************************************
+ * FUNCTION: ProcessSampler
+ * DESCRIPTION:
+ *   Processes the Sampler. Therefore it has to be called periodically
+ * PARAMETER:
+ *   aSampler - The Address of the Sampler
+ ****************************************************************************/
+
+PUBLIC TBoolean
+ProcessSampler (
+  TSampler * aSampler );
 
 
 
