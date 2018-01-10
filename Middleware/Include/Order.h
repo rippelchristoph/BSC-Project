@@ -12,6 +12,8 @@
  * PUBLIC FUNCTIONS:
  *   newOrder
  *   destroyOrder
+ *   OrderGetRemainingTime
+ *   OrderGetNextExecution
  *   ProcessOrder
  ****************************************************************************/
 
@@ -23,6 +25,7 @@
  * SECTION: #include
  ****************************************************************************/
 #include "HtlStdDef.h"
+#include <time.h>
 
 /****************************************************************************
 * SECTION: typedef
@@ -69,6 +72,39 @@ newOrder (
 
 PUBLIC int
 destroyOrder (
+  TOrder * aOrder );
+
+
+/****************************************************************************
+ * FUNCTION: OrderGetRemainingTime
+ *
+ * DESCRIPTION:
+ *   Returns the remaining Time of an Order until its next Activated
+ * PARAMETER:
+ *   aOrder - The Adress of Order
+ * RETURN:
+ *   Returns the Remaining time until the next Execution of the Order in
+ *   Seconds
+ ****************************************************************************/
+
+PUBLIC time_t
+OrderGetRemainingTime (
+  TOrder * aOrder );
+
+
+/****************************************************************************
+ * FUNCTION: OrderGetNextExecution
+ *
+ * DESCRIPTION:
+ *   Returns the timestamp of the Next time the Order will be executed
+ * PARAMETER:
+ *   aOrder - The Adress of Order
+ * RETURN:
+ *   Returns the absolute Time stamp of the Next Execution in seconds
+ ****************************************************************************/
+
+PUBLIC time_t
+OrderGetNextExecution (
   TOrder * aOrder );
 
 
