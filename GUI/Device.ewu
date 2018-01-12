@@ -1,7 +1,7 @@
 $version 6.60
 
-$rect <0,100,200,140>
-inline Inline
+$rect <50,250,250,290>
+inline I2CHeader
 {
   #include <unistd.h>				//Needed for I2C port
   #include <fcntl.h>				//Needed for I2C port
@@ -11,135 +11,14 @@ inline Inline
   #include <time.h>
 }
 
-$rect <0,20,200,60>
+$rect <60,70,260,110>
 $output false
 class DeviceClass : Templates::DeviceClass
 {
-  // String:"Column"+"Row"
-  $rect <200,10,400,50>
-  property string WellIndex = "";
-
-  $rect <400,10,600,50>
-  onset WellIndex
-  {
-    // The property doesn't change -> nothing to do.
-    if ( pure WellIndex == value )
-      return;
-
-    // Remember the new value in the internal memory of the property.
-    pure WellIndex = value;
-
-    // For target code generation you will use your specific device API 
-    // to change the affected value.
-    $if !$prototyper
-      native ( value )
-      {
-        /*
-           TO DO:
-
-           You can call a function of your own device API or you simply
-           modify a variable existing in your middleware to reflect the
-           new value:
-
-           YourDevice_SetSomeValue( value );
-
-           or
-
-           YourDevice_SomeVariable = value;
-        */
-      }
-    $endif
-
-    // Notify all associated property observers.
-    notifyobservers ^WellIndex;
-  }
-
-  // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
-  $rect <0,10,200,50>
-  $output true
-  method void UpdateWellIndex( arg string aNewValue )
-  {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure WellIndex )
-    {
-      // Remember the new value in the internal memory of the property.
-      pure WellIndex = aNewValue;
-
-      // Notify all associated property observers.
-      notifyobservers ^WellIndex;
-    }
-  }
-
-  $rect <200,70,400,110>
-  property int32 CurrentTemp = 0;
-
-  // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
-  $rect <0,70,200,110>
-  $output true
-  method void UpdateCurrentTemp( arg int32 aNewValue )
-  {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure CurrentTemp )
-    {
-      // Remember the new value in the internal memory of the property.
-      pure CurrentTemp = aNewValue;
-
-      // Notify all associated property observers.
-      notifyobservers ^CurrentTemp;
-    }
-  }
-
-  $rect <400,70,600,110>
-  slot getTemp
-  {
-    var int32 aNum  =0 ;
-
-    native (aNum) {
-
-    	int file_i2c;
-    	int length;
-    	unsigned char buffer[60] = {0};
-            int i;
-            
-    	//----- OPEN THE I2C BUS -----
-    	char* filename = (char*)"/dev/i2c-1";
-    	if ((file_i2c = open(filename, O_RDWR)) < 0)
-    	{
-    		//ERROR HANDLING: you can check errno to see what went wrong
-    		printf("Failed to open the i2c bus");
-    		return;
-    	}
-    	
-    	int addr = (0x4f);          //<<<<<The I2C address of the slave
-    	if (ioctl(file_i2c, I2C_SLAVE, addr) < 0)
-    	{
-    		printf("Failed to acquire bus access and/or talk to slave.\n");
-    		//ERROR HANDLING; you can check errno to see what went wrong
-    		return;
-    	}
-    	
-                //----- READ BYTES -----
-                length = 1;			//<<< Number of bytes to read
-                if (read(file_i2c, buffer, length) != length)		//read() returns the number of bytes actually read, if it doesn't match then an error occurred (e.g. no response from the device)
-                {                                                                                                    
-                        //ERROR HANDLING: i2c transaction failed
-                        //printf("Failed to read from the i2c bus.\n");
-                }
-                else
-                {
-                         aNum = buffer[0];
-                }
-    }
-
-    UpdateCurrentTemp( aNum);
-  }
-
-  $rect <200,130,400,170>
+  $rect <920,80,1120,120>
   property int32 NuOfCircuits = 6;
 
-  $rect <400,130,600,170>
+  $rect <1120,80,1320,120>
   onset NuOfCircuits
   {
     // The property doesn't change -> nothing to do.
@@ -148,7 +27,7 @@ class DeviceClass : Templates::DeviceClass
 
     // Remember the new value in the internal memory of the property.
     pure NuOfCircuits = value;
-    trace value;
+    trace "NumberOfCircuits:"+string(NuOfCircuits);
 
 
     // For target code generation you will use your specific device API 
@@ -178,7 +57,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,130,200,170>
+  $rect <720,80,920,120>
   $output true
   method void UpdateNuOfCircuits( arg int32 aNewValue )
   {
@@ -193,178 +72,10 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,190,400,230>
-  property point BLPosition = <0,0>;
-
-  $rect <400,190,600,230>
-  onset BLPosition
-  {
-    // The property doesn't change -> nothing to do.
-    if ( pure BLPosition == value )
-      return;
-
-    // Remember the new value in the internal memory of the property.
-    pure BLPosition = value;
-    trace value;
-
-    // For target code generation you will use your specific device API 
-    // to change the affected value.
-    $if !$prototyper
-      native ( value )
-      {
-        /*
-           TO DO:
-
-           You can call a function of your own device API or you simply
-           modify a variable existing in your middleware to reflect the
-           new value:
-
-           YourDevice_SetSomeValue( value );
-
-           or
-
-           YourDevice_SomeVariable = value;
-        */
-      }
-    $endif
-
-    // Notify all associated property observers.
-    notifyobservers ^BLPosition;
-  }
-
-  // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
-  $rect <0,190,200,230>
-  $output true
-  method void UpdateBLPosition( arg point aNewValue )
-  {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure BLPosition )
-    {
-      // Remember the new value in the internal memory of the property.
-      pure BLPosition = aNewValue;
-
-      // Notify all associated property observers.
-      notifyobservers ^BLPosition;
-    }
-  }
-
-  $rect <200,295,400,335>
-  property point TrashPosition = <0,0>;
-
-  $rect <400,295,600,335>
-  onset TrashPosition
-  {
-    // The property doesn't change -> nothing to do.
-    if ( pure TrashPosition == value )
-      return;
-
-    // Remember the new value in the internal memory of the property.
-    pure TrashPosition = value;
-    trace value;
-
-    // For target code generation you will use your specific device API 
-    // to change the affected value.
-    $if !$prototyper
-      native ( value )
-      {
-        /*
-           TO DO:
-
-           You can call a function of your own device API or you simply
-           modify a variable existing in your middleware to reflect the
-           new value:
-
-           YourDevice_SetSomeValue( value );
-
-           or
-
-           YourDevice_SomeVariable = value;
-        */
-      }
-    $endif
-
-    // Notify all associated property observers.
-    notifyobservers ^TrashPosition;
-  }
-
-  // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
-  $rect <0,295,200,335>
-  $output true
-  method void UpdateTrashPosition( arg point aNewValue )
-  {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure TrashPosition )
-    {
-      // Remember the new value in the internal memory of the property.
-      pure TrashPosition = aNewValue;
-
-      // Notify all associated property observers.
-      notifyobservers ^TrashPosition;
-    }
-  }
-
-  $rect <200,345,400,385>
-  property point CurrentPosition = <0,0>;
-
-  $rect <400,345,600,385>
-  onset CurrentPosition
-  {
-    // The property doesn't change -> nothing to do.
-    if ( pure CurrentPosition == value )
-      return;
-
-    // Remember the new value in the internal memory of the property.
-    pure CurrentPosition = value;
-    trace value;
-
-    // For target code generation you will use your specific device API 
-    // to change the affected value.
-    $if !$prototyper
-      native ( value )
-      {
-        /*
-           TO DO:
-
-           You can call a function of your own device API or you simply
-           modify a variable existing in your middleware to reflect the
-           new value:
-
-           YourDevice_SetSomeValue( value );
-
-           or
-
-           YourDevice_SomeVariable = value;
-        */
-      }
-    $endif
-
-    // Notify all associated property observers.
-    notifyobservers ^CurrentPosition;
-  }
-
-  // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
-  $rect <0,345,200,385>
-  $output true
-  method void UpdateCurrentPosition( arg int32 aNewValue )
-  {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure CurrentPosition )
-    {
-      // Remember the new value in the internal memory of the property.
-      pure CurrentPosition = aNewValue;
-
-      // Notify all associated property observers.
-      notifyobservers ^CurrentPosition;
-    }
-  }
-
-  $rect <200,405,400,445>
+  $rect <240,80,440,120>
   property bool NewWell = false;
 
-  $rect <400,405,600,445>
+  $rect <440,80,640,120>
   onset NewWell
   {
     // The property doesn't change -> nothing to do.
@@ -398,7 +109,7 @@ class DeviceClass : Templates::DeviceClass
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
-  $rect <0,405,200,445>
+  $rect <40,80,240,120>
   $output true
   method void UpdateNewWell( arg int32 aNewValue )
   {
@@ -410,160 +121,43 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  $rect <200,245,400,285>
-  property point TRPosition = <0,0>;
-
-  $rect <400,245,600,285>
-  onset TRPosition
-  {
-    // The property doesn't change -> nothing to do.
-    if ( pure TRPosition == value )
-      return;
-
-    // Remember the new value in the internal memory of the property.
-    pure TRPosition = value;
-    trace value;
-
-    // For target code generation you will use your specific device API 
-    // to change the affected value.
-    $if !$prototyper
-      native ( value )
-      {
-        /*
-           TO DO:
-
-           You can call a function of your own device API or you simply
-           modify a variable existing in your middleware to reflect the
-           new value:
-
-           YourDevice_SetSomeValue( value );
-
-           or
-
-           YourDevice_SomeVariable = value;
-        */
-      }
-    $endif
-
-    // Notify all associated property observers.
-    notifyobservers ^TRPosition;
-  }
-
-  // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
-  $rect <0,245,200,285>
-  $output true
-  method void UpdateTRPosition( arg point aNewValue )
-  {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure TRPosition )
-    {
-      // Remember the new value in the internal memory of the property.
-      pure TRPosition = aNewValue;
-
-      // Notify all associated property observers.
-      notifyobservers ^TRPosition;
-    }
-  }
-
   // intervall in seconds; circuitNumber from 1 to 6
-  $rect <0,460,200,500>
-  method int32 StartSampling( arg int32 intervall, arg int32 circuitNumber )
+  $rect <40,180,240,220>
+  method void StartSampling( arg int32 aIntervall, arg int32 aCircuitNumber )
   {
-    // The following code is used during prototyping only. It simply returns
-    // a dummy value. No device specific API is used during prototyping.
+
     $if $prototyper
-      /*
-         TO DO:
 
-         List all parameters of this method not used explicitly. This will
-         suppress the Chora warnings because of unused parameters.
-      */
 
-      intervall;
-      circuitNumber;
+    aIntervall;
+    aCircuitNumber;
+    trace "StartSampling - Intervall:"+string(aIntervall)+" CircuitNumber:"+string(aCircuitNumber);
 
-      /*
-         TO DO:
 
-         The following code is necessary for command methods intended to
-         return a value. It can be removed if the method is declared with
-         'void' as its return data type.
-
-         In the case a return value is desired, adapt the 'return' statement
-         to match the method's return data type. The value is just a dummy
-         used during prototyping only.
-      */
-
-      return 0;
     $endif
 
-    // For target code generation you will use your specific device API 
-    // to perform the command in the device.
+
     $if !$prototyper
-      /*
-         TO DO:
+     
+    if(aCircuitNumber<0||aCircuitNumber>5){
+      trace "ERROR: Wrong CircuitNumber";
+      return;
+    }if(aIntervall<=0){
+      trace "ERROR: Wrong Intervall";
+      return;
+    }
 
-         The following variable declaration is reasonable for command methods
-         which return a value. It can be removed if the method is declared with
-         'void' as its return data type or if the return value is not obtained
-         from the native code.
-
-         Additionally you may need to adapt this declaration to the method's
-         return data type.
-      */
-
-      var int32 result = 0;
-       
-      /*
-         TO DO:
-
-         The following native statement encloses the code to communicate with
-         your device API. Chora expects here all variables accessed from the
-         native code to be explicitly listed in the head of the native statement.
-         
-         Write here all parameters and locally declared variables you intend to 
-         access from the native code.
-      */
-
-      native ( intervall, circuitNumber, result )
-      {
-        /*
-           TO DO:
-
-           You can call a function of your own device API or you simply
-           modify variables existing in your middleware to reflect the
-           command:
-
-           YourDevice_DoSomething( aParameter1, aParameter2, ... );
-
-           or
-
-           YourDevice_SomeVariable    = aParameter1;
-           YourDevice_AnotherVariable = aParameter2;
-
-           Also receive a return value:
-
-           result = YourDevice_DoSomething();
-        */
-      }
-
-      /*
-         TO DO:
-
-         The following 'return' statement is needed only when the command method
-         is declared to return a value. Otherwise you can remove the statement.
-      */
-      return result;
+      
+     
     $endif
   }
 
-  $rect <200,510,400,550>
+  $rect <240,280,440,320>
   object Core::SystemEvent SampleCollectedEvent;
 
   // This method is intended to be called by the device to notify the GUI application \
   // about a particular system event.
-  $rect <0,510,200,550>
+  $rect <40,280,240,320>
   $output true
   method void onSampleCollected( arg point aWellIndex, arg int32 aCircuitNumber, arg string aTime )
   {
@@ -617,67 +211,147 @@ class DeviceClass : Templates::DeviceClass
     SampleCollectedEvent.Trigger( context, false );
   }
 
-  $rect <200,560,400,600>
+  $rect <240,330,440,370>
   object Core::SystemEvent RemainingTimeEvent;
 
   // This method is intended to be called by the device to notify the GUI application \
   // about a particular system event.
-  $rect <0,560,200,600>
+  $rect <40,330,240,370>
   $output true
   method void onRemainingTime( arg int32 aCircuitNumber, arg int32 aRemainingTime )
   {
-    // Just trigger the system event. All associated system event handler
-    // will then be notified automatically.
-
-
-    /*
-       HINT 1:
-
-       When triggering the event you can pass an optional 'context' object.
-       With it additional event specific data can be attached at the event
-       and dispatched with it. All notified system event handler can thus
-       evaluate this 'context' information.
-
-       To do this, you will need to define a particular 'context' class
-       suitable to store the event specific information. Then create an
-       instance of the class, initialize it with all the specific context
-       data and finally pass the instance in the first parameter of the
-       Trigger() method:
-
-
-       var YourUnit::ContextClass context = new YourUnit::ContextClass;
-
-       context.SomeData1 = ...
-       context.SomeData2 = ...
-
-       SystemEvent.Trigger( context, false );
-
-
-       You can add parameters to the method in order to simply receive
-       values from the device.
-    */
-
-    /*
-       HINT 2:
-
-       When triggering a system event you can determine its priority. Per
-       default system events are delivered strictly in the order in which
-       they have been triggered. When you pass 'true' in the last parameter
-       of Trigger() you can force the event to be dispatched early:
-
-       SystemEvent.Trigger( null, true );
-    */
     var Device::RemainingTimeContext context = new Device::RemainingTimeContext;
+    if(aCircuitNumber>5||aCircuitNumber<0){
+      trace "ERROR: Wrong Circuit Number";
+      return;
+    }
+
     context.CircuitNumber=aCircuitNumber;
     context.RemainingTime=aRemainingTime;
     RemainingTimeEvent.Trigger( context, false );
   }
+
+  $rect <40,230,240,270>
+  method void StopSampling( arg int32 aCircuitNumber )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+
+
+
+      trace "StopSampling - CircuitNumber:"+string(aCircuitNumber);
+
+
+    $endif
+
+    $if !$prototyper
+
+    if(aCircuitNumber<0||aCircuitNumber>5){
+      trace "ERROR: Wrong CircuitNumber";
+      return;
+    }
+     
+    $endif
+  }
+
+  $rect <240,130,440,170>
+  property int32 Temperature = 0;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <40,130,240,170>
+  $output true
+  method void UpdateTemperature( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Temperature )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Temperature = aNewValue;
+
+      // Notify all associated property observers.
+      notifyobservers ^Temperature;
+    }
+  }
+
+  $rect <720,120,920,160>
+  method void SetBLPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+    trace "BLPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+    $endif
+
+
+    $if !$prototyper
+     
+    $endif
+  }
+
+  $rect <720,160,920,200>
+  method void SetTRPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+     trace "TRPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+    $endif
+
+
+    $if !$prototyper
+     
+    $endif
+  }
+
+  $rect <720,200,920,240>
+  method void SetWastePosition( arg int32 aX, arg int32 aY, arg int32 aZ )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+    trace "WastePostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+    $endif
+
+
+    $if !$prototyper
+     
+    $endif
+  }
+
+  $rect <720,240,920,280>
+  method void SetCurrentPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+    trace "CurrentPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+    $endif
+
+
+    $if !$prototyper
+     
+    $endif
+  }
+
+  // Configuration
+  note group Note
+  {
+    attr Bounds = <700,40,1330,440>;
+  }
+
+  // Events
+  note group Note1
+  {
+    attr Bounds = <20,40,650,440>;
+  }
 }
 
-$rect <0,60,200,100>
+$rect <60,110,260,150>
 autoobject Device::DeviceClass Device;
 
-$rect <680,10,880,50>
+$rect <600,60,800,100>
 $output false
 class SampleCollectedContext
 {
@@ -754,7 +428,7 @@ class SampleCollectedContext
   }
 }
 
-$rect <680,50,880,90>
+$rect <600,100,800,140>
 $output false
 class RemainingTimeContext
 {
@@ -805,4 +479,16 @@ class RemainingTimeContext
   {
     return pure CircuitNumber;
   }
+}
+
+// System Event Context
+note group Note
+{
+  attr Bounds = <540,10,840,210>;
+}
+
+// Device Interface
+note group Note1
+{
+  attr Bounds = <10,20,310,220>;
 }
