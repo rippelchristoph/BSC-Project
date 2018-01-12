@@ -11,14 +11,21 @@
  *
  *   PUBLIC FUNCTIONS:
  *
+ * PUBLIC FUNCTIONS:
+ *   ProcessBSCController
+ *   BSCWriteConfiguration
+ *   GetFormattedTime
+ *
  * PRIVATE FUNCTIONS:
  *   UpdateRemainingTimes
+ *   getConfigByIndex
  ****************************************************************************/
 
 /****************************************************************************
 * SECTION: #include
 ****************************************************************************/
 #include "BSCController.h"
+
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -34,6 +41,8 @@
 #include "HtlStdDef.h"
 #include "BSCCommonTypes.h"
 #include "Device.h"
+#include "OrderController.h"
+#include "Sampler.h"
 
 /****************************************************************************
 * SECTION: #define
@@ -52,23 +61,26 @@
 
 #define NORIGINS	8
 
+#define WAISTPOSX 9
+#define WAISTPOSZ 10
+
 const char * const ConfigSyntaxWords[] = { "NWELLX", "NWELLY", "ZDOWN",
 "ZUP", "WELLZEROX", "WELLZEROY", "WELLENDX",
-"WELLENDY", "NORIGINS", NULL };
+"WELLENDY", "NORIGINS", "WAISTPOSX",  "WAISTPOSZ", NULL };
 
 /****************************************************************************
 * SECTION: typedef
 ****************************************************************************/
 
 /****************************************************************************
-* _TYPE: BSCConfig
-* 
-* DESCRIPTION:
-*	Configruation type that keeps all vaues that the BSCController and
-*	all classes beneath need.
-*	To add another value, you have to add it in the BSCConfig type,
-*	the array and the #define with the corresponding index
-****************************************************************************/
+ * TYPE: BSCConfig
+ *
+ * DESCRIPTION:
+ *   Configruation type that keeps all values that the BSCController and some
+ *   classes beneath need. To add another value, you have to add it in the
+ *   BSCConfig type, the array and the #define with the corresponding index
+ *   and the switch/case statement
+ ****************************************************************************/
 
 typedef struct BSCConfig {
 	int NWellX;
@@ -83,6 +95,10 @@ typedef struct BSCConfig {
 	double WellEndX;
 	double WellEndY;
 
+	double WaistPosX;
+	double WaistPosY;
+	double WaistPosZ;
+
 	int NOrigins;
 } TBSCConfig;
 
@@ -91,6 +107,8 @@ typedef struct BSCConfig {
 typedef struct BSCController {
 	TBSCConfig* Configuration;
 	TWellData** Well;
+	TOrderController* Orders;
+	TSampler* Sampler;
 	DeviceDeviceClass EwDeviceObject;
 } TBSCController;
 
@@ -118,6 +136,11 @@ PRIVATE void
 UpdateRemainingTimes (
   TBSCController *              aController );
 
+PRIVATE void *
+getConfigByIndex (
+  TBSCConfig *                  aConfiguration,
+  int                           aIndex );
+
 
 /****************************************************************************
  * SECTION: Implementation of public functions
@@ -127,15 +150,32 @@ UpdateRemainingTimes (
 * FUNCTION: newBSCController
 *
 * DESCRIPTION:
-*   Initializes a new Plotter
-*
+*   Initializes a new BSC Controller
+* RETURN:
+Returns the new Address of the BSController
 ****************************************************************************/
 PUBLIC TBSCController *
 newBSCController ( void )
 {
+	TBSCController* retPtr;
+	retPtr = malloc(sizeof(TBSCController));
+	retPtr->Orders = newOrderController();
+	retPtr->Sampler = newSampler();
+	
+	BSCReadConfiguration(retPtr->Configuration, NULL); //TODO: Configuration Path
+	
+	//Allocate Storage for multidimensional ar
+	retPtr->Well = malloc(retPtr->Configuration->NWellX * sizeof(TWellData*));
+	for (int i = 0; i < retPtr->Configuration->NWellX; i++) {
+		retPtr->Well[i] = malloc(retPtr->Configuration->NWellY * sizeof(TWellData));
+		for (int j = 0; j < retPtr->Configuration->NWellY) {
+			retPtr->Well[i][j].Status = EMPTY;
+		}
+	}
 
+	//TODO: EwDeviceObject Initialisieren
 
-	return NULL;
+	return retPtr;
 }
 
 /****************************************************************************
@@ -207,16 +247,114 @@ BSCReadConfiguration (
 				case WELLENDY:
 					aConfiguration->WellEndY = dNumber;
 					break;
+				case WAISTPOSX:
+					aConfiguration->WaistPosX = dNumber;
+					break;
+				case WAISTPOSZ:
+					aConfiguration->WaistPosZ = dNumber;
+					break;
 				default:
-					return 0;
+					return;
 				}
 				break;
 			}
 			i++;
 		}
 
-
+		fclose(fp);
+		return;
 	}
+}
+
+
+/****************************************************************************
+ * FUNCTION: ProcessBSCController
+ ****************************************************************************/
+PUBLIC void
+ProcessBSCController (
+  TBSCController * aBSCController )
+{
+	int retVal = -1;
+	char line[30];
+	if ((retVal = ProcessOrderController(aBSCController->Orders)) != -1) {
+		SamplerAddToQueue(aBSCController->Sampler, retVal);
+	}
+
+	ProcessSampler(aBSCController->Sampler);
+	
+	GetFormattedTime(time(NULL), line);
+	//TODO: UpdateTime - EwDevice Function call
+
+
+	
+}
+/****************************************************************************
+ * FUNCTION: BSCWriteConfiguration
+ *
+ *   DESCRIPTION:
+ *     Writes the Configuration into the File Directory given.
+ * PARAMETER:
+ *   aConfiguration - The Configuration that is written
+ *   aFilePath      - The Drectory the Configuration is written to e.g:
+ *                    "C:\Data\Configuration.txt"
+ ****************************************************************************/
+PUBLIC void
+BSCWriteConfiguration (
+  TBSCConfig * aConfiguration,
+  char *       aFilePath )
+{
+
+		int i = 0;
+		char line[80];
+
+		FILE* fp;
+		fp = fopen(aFilePath, "w");
+
+		if (fp == NULL)
+		{
+			//TODO: Give Some Kind of Error Message to GUI
+			fclose(fp);
+			return NULL;
+		}
+
+		while (ConfigSyntaxWords[i])
+		{
+			sprintf(line, "%s=%f", ConfigSyntaxWords[i], *getConfigByIndex(i));
+			fputs(line, fp);
+		}
+		
+		fclose(fp);
+			
+		return;
+}
+
+/****************************************************************************
+ * FUNCTION: GetFormattedTime
+ * DESCRIPTION:
+ *   Writes the given Timestamp formatted as a string into the Buffer.
+ *   Format: DD.MM.YYYY HH.MM.SS
+ * PARAMETER:
+ *   aTimeStamp - The Timestamp that should be formatted aBuffer - Address of
+ *                already allocated Storage. There should be at least space
+ *                for 20 characters
+ ****************************************************************************/
+
+PUBLIC void
+GetFormattedTime (
+  time_t aTimeStamp,
+  char * aBuffer )
+{
+	struct tm * timeinfo = localtime(aTimeStamp);
+	strcpy(aBuffer, "");
+
+	sprintf(aBuffer, "%02d.%02d.%d %02d:%02d:%02d",
+		timeinfo->tm_mday,
+		(timeinfo->tm_mon + 1),
+		(timeinfo->tm_year + 1900),
+		timeinfo->tm_hour,
+		timeinfo->tm_min,
+		timeinfo->tm_sec);
+}
 
 /****************************************************************************
  * SECTION: Implementation of private Functions
@@ -237,4 +375,57 @@ UpdateRemainingTimes (
   TBSCController * aController )
 {
 
+}
+
+/****************************************************************************
+ * FUNCTION: getConfigByIndex
+ * DESCRIPTION:
+ *   Returns the Pointer to the Value of a Parameter of the Configuration.
+ *   The Indexes are handled according to the defines
+ * PARAMETER:
+ *   aConfiguration - The Address of the Configuration
+ *   aIndex         - The Index of which the Address is Returned.
+ * RETURN:
+ *   Returns the Address of the Parameter in the Configuration
+ ****************************************************************************/
+PRIVATE void *
+getConfigByIndex (
+  TBSCConfig * aConfiguration,
+  int          aIndex )
+{
+	switch (aIndex)
+	{
+	case NWELLX:
+		return &(aConfiguration->NWellX);
+		break;
+	case NWELLY:
+		return &(aConfiguration->NWellY);
+		break;
+	case ZDOWN:
+		return &(aConfiguration->ZDown);
+		break;
+	case ZUP:
+		return &(aConfiguration->ZUp);
+		break;
+	case WELLZEROX:
+		return &(aConfiguration->WellZeroX);
+		break;
+	case WELLZEROY:
+		return &(aConfiguration->WellZeroY);
+		break;
+	case WELLENDX:
+		return &(aConfiguration->WellEndX);
+		break;
+	case WELLENDY:
+		return &(aConfiguration->WellEndY);
+		break;
+	case WAISTPOSX:
+		return &(aConfiguration->WaistPosX);
+		break;
+	case WAISTPOSZ:
+		return &(aConfiguration->WaistPosZ);
+		break;
+	default:
+		return;
+	}
 }

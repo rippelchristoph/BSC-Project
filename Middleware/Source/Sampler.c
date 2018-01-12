@@ -6,6 +6,10 @@
  ****************************************************************************
  * FILE: Sampler.c
  *
+ * DESCRIPTION:
+ *   This File handles the whole process of making a new probe. It operates
+ *   the Plotter and the valves that control the Flow of the fluid
+ *
  * PUBLIC FUNCTIONS:
  *   newSampler
  *   destroySampler
@@ -42,6 +46,7 @@
  ****************************************************************************/
 
 #include <stdlib.h>
+#include "BSCController.h"
 
 /** HEADER ******************************************************************
  */
@@ -52,6 +57,7 @@
  ****************************************************************************/
 #include "HtlStdDef.h"
 #include "List.h"
+#include "BSCCommonTypes.h"
 
 
 /****************************************************************************
@@ -63,6 +69,7 @@
 typedef struct Sampler {
 	TListHeader* Queue;
 	ESamplerStates State;
+	TWellData** Well;
 	char* ErrorMessage;
 }TSampler;
 /****************************************************************************
@@ -192,11 +199,14 @@ StateERROR (
  *   Returns the Address of the new Sampler
  ****************************************************************************/
 PUBLIC TSampler *
-newSampler ( void )
+newSampler (
+  TBSCConfig * aConfiguration,
+  TWellData ** aWell )
 {
 	TSampler* retSampler;
 	retSampler = malloc(sizeof(TSampler));
 
+	retSampler->Well = aWell;
 	retSampler->Queue = newList();
 	return retSampler;
 }

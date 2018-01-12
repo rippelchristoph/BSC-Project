@@ -1,31 +1,40 @@
 /****************************************************************************
-*
-* FILE: PlotterController.c
-*
-* DESCRIPTION:
-*   This File handles a UART Connection
-*
-* PUBLIC FUNCTIONS:
-* 
-*
-****************************************************************************/
+ *
+ * Bioreactor Sample Collector
+ * Written by Jakob Zuchna
+ *
+ ****************************************************************************
+ * FILE: PlotterController.c
+ *
+ *   DESCRIPTION:
+ *     This File operates the Connection to the Plotter and sends the
+ *     Commands to it
+ *
+ * PUBLIC FUNCTIONS:
+ *   newPlotter
+ *   PLTSendCommand
+ *   PLTSendCommandAndOK
+ *   PLTHomeAxis
+ ****************************************************************************/
 
 /****************************************************************************
-* SECTION: #include
-****************************************************************************/
+ * SECTION: #include
+ ****************************************************************************/
 
 #include <stdlib.h>
 #include <string.h>
+#include "BSCController.h"
 
 /** HEADER ******************************************************************
-*/
+ */
 #ifndef  PLOTTERCONTROLLER_H
 
 /****************************************************************************
-* SECTION: #include
-****************************************************************************/
+ * SECTION: #include
+ ****************************************************************************/
 #include "HtlStdDef.h"
 #include "SerialConnection.h"
+
 /****************************************************************************
 * SECTION: #define
 ****************************************************************************/
@@ -43,17 +52,17 @@
 
 
 /****************************************************************************
-* SECTION: typedef
-****************************************************************************/
+ * SECTION: typedef
+ ****************************************************************************/
 /****************************************************************************
-* General Comments to the Plotter Type:
+ * General Comments to the Plotter Type:
 * Z Axis is the vertical Axis
 * X Axis is in the direction of the moving head of the Plotter
 * Y Axis is the axis in which the ground Plate is moving
 ****************************************************************************/
 typedef struct Plotter {
-	UARTFilestream filestream
-		
+	UARTFilestream filestream;
+	TBSCConfig* aConfiguration;
 
 
 
@@ -62,37 +71,38 @@ typedef struct Plotter {
 
 #endif
 
-/*** HEADER ****************************************************************/
+/*
+ ** HEADER ******************************************************************/
 
 
 
 /****************************************************************************
-* SECTION: #define
-****************************************************************************/
+ * SECTION: #define
+ ****************************************************************************/
 
 
 /****************************************************************************
-* SECTION: typedef
-****************************************************************************/
+ * SECTION: typedef
+ ****************************************************************************/
 
 
 /****************************************************************************
-* SECTION: Declaration of private functions
-****************************************************************************/
+ * SECTION: Declaration of private functions
+ ****************************************************************************/
 
 
 /****************************************************************************
-* SECTION: Implementation of public functions
-****************************************************************************/
+ * SECTION: Implementation of public functions
+ ****************************************************************************/
 
 /****************************************************************************
-* FUNCTION: newPlotter
-*
-* DESCRIPTION:
-*   Initializes a new Plotter
-*
-****************************************************************************/
-PUBLIC TPlotter* newPlotter()
+ * FUNCTION: newPlotter
+ *
+ *   DESCRIPTION:
+ *     Initializes a new Plotter
+ ****************************************************************************/
+PUBLIC TPlotter *
+newPlotter ( void )
 {
 	TPlotter* retPlot = malloc(sizeof(TPlotter));
 	retPlot->filestream = newUART();
@@ -103,13 +113,15 @@ PUBLIC TPlotter* newPlotter()
 }
 
 /****************************************************************************
-* FUNCTION: PLTSendCommand
-*
-* DESCRIPTION:
-*   Sends a Command to the Plotter
-****************************************************************************/
+ * FUNCTION: PLTSendCommand
+ *
+ *   DESCRIPTION:
+ *     Sends a Command to the Plotter
+ ****************************************************************************/
 PUBLIC void
-PLTSendCommand(TPlotter* aPlotter, char* aCommand)
+PLTSendCommand (
+  TPlotter * aPlotter,
+  char *     aCommand )
 {
 	char sendString[30];
 	strcpy(sendString, aCommand);
@@ -119,15 +131,17 @@ PLTSendCommand(TPlotter* aPlotter, char* aCommand)
 }
 
 /****************************************************************************
-* FUNCTION: PLTSendCommandAndOK
-*
-* DESCRIPTION:
-*   Sends a Command to the Plotter and waits until it returns "ok"
-*	if something else is returned the Function returns False
-****************************************************************************/
+ * FUNCTION: PLTSendCommandAndOK
+ *
+ *   DESCRIPTION:
+ *     Sends a Command to the Plotter and waits until it returns "ok" if
+ *     something else is returned the Function returns False
+ ****************************************************************************/
 
 PUBLIC void
-PLTSendCommandAndOK(TPlotter* aPlotter, char* aCommand)
+PLTSendCommandAndOK (
+  TPlotter * aPlotter,
+  char *     aCommand )
 {
 	char aString[30];
 	PLTSendCommand(aPlotter, aCommand);
@@ -136,25 +150,27 @@ PLTSendCommandAndOK(TPlotter* aPlotter, char* aCommand)
 }
 
 /****************************************************************************
-* FUNCTION: PLTHomeAxis
-*
-* DESCRIPTION:
-*   Homes All Axis in this order: X Y Z
-*
-* PARAMETER:
-*   aStream	- The Stream the Receive
-*   aRelayState - The State that the Relay of the Hydroport should have
-*                 after function. e.g. IEMiddlewareRelayStateON
-****************************************************************************/
+ * FUNCTION: PLTHomeAxis
+ *
+ *   DESCRIPTION:
+ *     Homes All Axis in this order: X Y Z
+ *
+ *   PARAMETER:
+ *     aStream	- The Stream the Receive aRelayState - The State that the
+ *     Relay of the Hydroport should have after function. e.g.
+ *     IEMiddlewareRelayStateON
+ ****************************************************************************/
 PUBLIC TBoolean
-PLTHomeAxis(TPlotter* aPlotter)
+PLTHomeAxis (
+  TPlotter * aPlotter )
 {
-	PLTSendCommand(aPlotter, HOMEX);
-
+	PLTSendCommandAndOK(aPlotter, HOMEX);
+	PLTSendCommandAndOK(aPlotter, HOMEY);
+	PLTSendCommandAndOK(aPlotter, HOMEZ);
 }
 
 
 
 /****************************************************************************
-* SECTION: Implementation of private functions
-****************************************************************************/
+ * SECTION: Implementation of private functions
+ ****************************************************************************/
