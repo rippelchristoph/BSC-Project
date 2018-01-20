@@ -82,6 +82,8 @@ class DeviceClass : Templates::DeviceClass
     if ( pure NewWell == value )
       return;
 
+
+
     // For target code generation you will use your specific device API 
     // to change the affected value.
     $if !$prototyper
@@ -103,6 +105,8 @@ class DeviceClass : Templates::DeviceClass
       }
     $endif
 
+    trace "NewWell";
+
     // Notify all associated property observers.
     notifyobservers ^NewWell;
   }
@@ -111,7 +115,7 @@ class DeviceClass : Templates::DeviceClass
   // about an alternation of its setting or state value.
   $rect <40,80,240,120>
   $output true
-  method void UpdateNewWell( arg int32 aNewValue )
+  method void UpdateNewWell( arg bool aNewValue )
   {
     // Only if the reported value does differ from the one stored currently in the property.
     if ( aNewValue != pure NewWell )
@@ -125,17 +129,17 @@ class DeviceClass : Templates::DeviceClass
   $rect <40,180,240,220>
   method void StartSampling( arg int32 aIntervall, arg int32 aCircuitNumber )
   {
-
     $if $prototyper
 
 
     aIntervall;
     aCircuitNumber;
-    trace "StartSampling - Intervall:"+string(aIntervall)+" CircuitNumber:"+string(aCircuitNumber);
+
 
 
     $endif
 
+    trace "StartSampling - Intervall:"+string(aIntervall)+" CircuitNumber:"+string(aCircuitNumber);
 
     $if !$prototyper
      
@@ -202,9 +206,10 @@ class DeviceClass : Templates::DeviceClass
 
        SystemEvent.Trigger( null, true );
     */
+    trace "SampleCollected - X:"+string(aWellIndex.x)+"X:"+string(aWellIndex.y)+" CircuitNumber:"+string(aCircuitNumber)+" Time:"+aTime;
+
 
     var Device::SampleCollectedContext context = new Device::SampleCollectedContext;
-
     context.WellIndex = aWellIndex;
     context.CircuitNumber = aCircuitNumber;
     context.Time = aTime;
@@ -237,14 +242,8 @@ class DeviceClass : Templates::DeviceClass
     // The following code is used during prototyping only. It simply returns
     // a dummy value. No device specific API is used during prototyping.
     $if $prototyper
-
-
-
-      trace "StopSampling - CircuitNumber:"+string(aCircuitNumber);
-
-
     $endif
-
+    trace "StopSampling - CircuitNumber:"+string(aCircuitNumber);
     $if !$prototyper
 
     if(aCircuitNumber<0||aCircuitNumber>5){
@@ -255,35 +254,15 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <240,130,440,170>
-  property int32 Temperature = 0;
-
-  // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
-  $rect <40,130,240,170>
-  $output true
-  method void UpdateTemperature( arg int32 aNewValue )
-  {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure Temperature )
-    {
-      // Remember the new value in the internal memory of the property.
-      pure Temperature = aNewValue;
-
-      // Notify all associated property observers.
-      notifyobservers ^Temperature;
-    }
-  }
-
   $rect <720,120,920,160>
   method void SetBLPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
     // a dummy value. No device specific API is used during prototyping.
     $if $prototyper
-    trace "BLPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
     $endif
 
+    trace "BLPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
 
     $if !$prototyper
      
@@ -296,9 +275,10 @@ class DeviceClass : Templates::DeviceClass
     // The following code is used during prototyping only. It simply returns
     // a dummy value. No device specific API is used during prototyping.
     $if $prototyper
-     trace "TRPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+     
     $endif
 
+    trace "TRPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
 
     $if !$prototyper
      
@@ -311,24 +291,26 @@ class DeviceClass : Templates::DeviceClass
     // The following code is used during prototyping only. It simply returns
     // a dummy value. No device specific API is used during prototyping.
     $if $prototyper
-    trace "WastePostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+
     $endif
 
+    trace "WastePostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
 
     $if !$prototyper
      
     $endif
   }
 
-  $rect <720,240,920,280>
+  $rect <720,280,920,320>
   method void SetCurrentPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
     // a dummy value. No device specific API is used during prototyping.
     $if $prototyper
-    trace "CurrentPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+
     $endif
 
+    trace "CurrentPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
 
     $if !$prototyper
      
@@ -345,6 +327,79 @@ class DeviceClass : Templates::DeviceClass
   note group Note1
   {
     attr Bounds = <20,40,650,440>;
+  }
+
+  $rect <720,240,920,280>
+  method void SetTopPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+
+    $endif
+
+    trace "TopPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+
+    $if !$prototyper
+     
+    $endif
+  }
+
+  $rect <240,130,440,170>
+  property int32 Temperature = 0;
+
+  $rect <440,130,640,170>
+  onset Temperature
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure Temperature == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure Temperature = value;
+    trace "Temperature: "+string(Temperature);
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^Temperature;
+  }
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <40,130,240,170>
+  $output true
+  method void UpdateTemperature( arg int32 aNewValue )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Temperature )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Temperature = aNewValue;
+      trace "Temperature: "+string(Temperature);
+
+      // Notify all associated property observers.
+      notifyobservers ^Temperature;
+    }
   }
 }
 
@@ -404,7 +459,7 @@ class SampleCollectedContext
   }
 
   $rect <480,40,680,80>
-  property string Time = null;
+  property string Time = "";
 
   $rect <480,80,680,120>
   onset Time

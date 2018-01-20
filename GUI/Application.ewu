@@ -1,5 +1,16 @@
 $version 6.60
 
+$rect <980,130,1180,170>
+inline I2CHeader
+{
+  #include <unistd.h>				//Needed for I2C port
+  #include <fcntl.h>				//Needed for I2C port
+  #include <sys/ioctl.h>			//Needed for I2C port
+  #include <linux/i2c-dev.h>		//Needed for I2C port
+  #include <stdio.h>
+  #include <time.h>
+}
+
 // This is the root component of the entire GUI application.
 $rect <360,20,560,60>
 $output false
@@ -226,10 +237,10 @@ class Well : Core::Group
     preset Color = #747674FF;
   }
 
-  $rect <0,490,200,530>
+  $rect <0,560,200,600>
   inherited property Bounds = <0,0,800,480>;
 
-  $rect <0,580,200,620>
+  $rect <0,650,200,690>
   inherited method UpdateLayout()
   {
     // Always invoke the inherited method.
@@ -258,7 +269,7 @@ class Well : Core::Group
     */
   }
 
-  $rect <0,540,200,580>
+  $rect <0,610,200,650>
   inherited method UpdateViewState()
   {
     // Always invoke the inherited method.
@@ -360,7 +371,7 @@ class Well : Core::Group
   object Application::WellPart A1
   {
     preset Bounds = <70,50,140,120>;
-    preset TimeProperty = "";
+    preset TimeProperty = Time.TimeProperty;
     preset CircuitNumber = 0;
   }
 
@@ -398,6 +409,8 @@ class Well : Core::Group
   object Application::WellPart A2
   {
     preset Bounds = <140,50,210,120>;
+    preset TimeProperty = "19.01.2018 14:38";
+    preset CircuitNumber = 1;
   }
 
   $rect <20,20,160,60>
@@ -434,6 +447,8 @@ class Well : Core::Group
   object Application::WellPart A3
   {
     preset Bounds = <210,50,280,120>;
+    preset TimeProperty = "19.01.2018 14:43";
+    preset CircuitNumber = 2;
   }
 
   $rect <20,20,160,60>
@@ -653,7 +668,7 @@ class Well : Core::Group
   }
 
   // Writes the given Time in the chosen WellPart
-  $rect <1230,300,1430,340>
+  $rect <1210,300,1410,340>
   method void timeToWellPart( arg int32 aCircuitNumber, arg int32 aColumn, arg int32 aRow, arg string aTime )
   {
     WellPartArray[aColumn,aRow].TimeProperty=aTime;
@@ -1393,7 +1408,7 @@ class Clock : Core::Group
   object Core::Time Time;
 
   $rect <500,20,700,60>
-  property string TimeProperty = 0;
+  property string TimeProperty = "00.00.0000 00:00:00";
 
   $rect <500,60,700,100>
   onset TimeProperty
@@ -1405,6 +1420,7 @@ class Clock : Core::Group
 
     // Remember the property's new value.
     pure TimeProperty = value;
+
 
     // TO DO:
     // 
@@ -1592,6 +1608,7 @@ class SampleController : Core::Group
     preset Bounds = <0,16,30,46>;
     preset String = "1";
     preset Font = Flat::FontM;
+    preset Color = #000000FF;
   }
 
   $rect <20,20,160,60>
@@ -1831,7 +1848,7 @@ $output false
 resource Resources::Font FontArial17
 {
   attr fontname FontName = Arial;
-  attr fontheight Height = 17;
+  attr fontheight Height = 16;
   attr fontquality Quality = High;
   attr fontranges Ranges = 0x20-0xFF;
   attr fontaspectratio AspectRatio = 1.0;
@@ -2736,7 +2753,7 @@ class TextEditor : Templates::TextEditor
     preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
     preset String = "Text\n";
     preset Font = Resources::FontVerdana24;
-    preset Color = #000000FF;
+    preset Color = #FFFFFFFF;
   }
 
   $rect <20,20,160,60>
@@ -3481,10 +3498,10 @@ $rect <150,250,350,290>
 $output false
 class Temperature : Core::Group
 {
-  $rect <10,230,210,270>
-  inherited property Bounds = <0,0,80,60>;
+  $rect <0,300,200,340>
+  inherited property Bounds = <0,0,130,60>;
 
-  $rect <10,390,210,430>
+  $rect <0,380,200,420>
   inherited method UpdateLayout()
   {
     // Always invoke the inherited method.
@@ -3513,7 +3530,7 @@ class Temperature : Core::Group
     */
   }
 
-  $rect <10,350,210,390>
+  $rect <0,340,200,380>
   inherited method UpdateViewState()
   {
     // Always invoke the inherited method.
@@ -3611,49 +3628,79 @@ class Temperature : Core::Group
     */
   }
 
-  // To do:
-  // 
-  // - Adjust the visible size of your component (the thick blue border).
-  // 
-  // - The simplest way to compose the appearance of the component is to use the \
-  // 'Views' and 'Widget Sets' from the Gallery.
-  // 
-  // - To react to touch or keyboard events use the templates from the Gallery folder \
-  // 'Event Handlers'.
-  // 
-  // - To perform transitions (animations) use the templates from the Gallery folder \
-  // 'Effects'.
-  // 
-  // - To implement the interface of the component use the 'Property' template from \
-  // the Gallery folder 'Chora'.
-  // 
-  // - To store values use the 'Variable' and 'Array' templates available in the \
-  // Gallery folder 'Chora'.
-  // 
-  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
-  // in the Gallery folder 'Chora'.
-  // 
-  // - In the method 'UpdateViewState()' you can put code to update the state of \
-  // views enclosed in your component.
-  // 
-  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
-  // calculation for enclosed views.
-  note legend Note1
+  $rect <140,10,340,50>
+  object Core::Timer Timer
   {
-    attr Bounds = <220,230,1000,550>;
+    preset OnTrigger = onEvent;
+    preset Period = 1000;
+    preset Enabled = true;
   }
 
   $rect <20,20,160,60>
-  object Flat::DigitalDisplay DigitalDisplay
+  object Views::Text Text
   {
-    preset Bounds = <0,0,80,60>;
-    preset Outlet = ^Device::Device.Temperature;
+    preset Bounds = <0,0,130,60>;
+    preset String = "25°C";
+    preset Font = Flat::FontXL;
   }
 
-  $rect <20,20,160,60>
-  object Flat::Label Label
+  $rect <90,120,290,160>
+  object Core::PropertyObserver PropertyObserver
   {
-    preset Bounds = <0,140,140,170>;
+    preset OnEvent = onEvent;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <290,120,490,160>
+  slot onEvent
+  {
+    /*
+    var int32 aNum  =0 ;
+
+    native (aNum) {
+
+    	int file_i2c;
+    	int length;
+    	unsigned char buffer[60] = {0};
+          
+            
+    	//----- OPEN THE I2C BUS -----
+    	char* filename = (char*)"/dev/i2c-1";
+    	if ((file_i2c = open(filename, O_RDWR)) < 0)
+    	{
+    		//ERROR HANDLING: you can check errno to see what went wrong
+    		printf("Failed to open the i2c bus");
+    		return;
+    	}
+    	
+    	int addr = (0x4f);          //<<<<<The I2C address of the slave
+    	if (ioctl(file_i2c, I2C_SLAVE, addr) < 0)
+    	{
+    		printf("Failed to acquire bus access and/or talk to slave.\n");
+    		//ERROR HANDLING; you can check errno to see what went wrong
+    		return;
+    	}
+    	
+                //----- READ BYTES -----
+                length = 1;			//<<< Number of bytes to read
+                if (read(file_i2c, buffer, length) != length)		//read() returns the number of bytes actually read, if it doesn't match then an error occurred (e.g. no response from the device)
+                {                                                                                                    
+                        //ERROR HANDLING: i2c transaction failed
+                        //printf("Failed to read from the i2c bus.\n");
+                }
+                else
+                {
+                         aNum = buffer[0];
+                }
+    }
+
+
+    Device::Device.Temperature=aNum;
+
+      */
+    Text.String=string(Device::Device.Temperature)+"°C";
+
   }
 }
 
@@ -3802,6 +3849,7 @@ class Config : Core::Group
   object Flat::ActionButton Btn_Ok
   {
     preset Bounds = <670,440,790,470>;
+    preset Enabled = false;
     preset OnAction = onBtn_Ok;
     preset Caption = "OK";
   }
@@ -3809,12 +3857,12 @@ class Config : Core::Group
   $rect <940,370,1140,410>
   slot onBtn_Ok
   {
-    if(TextEditor.String.parse_int32(6)>6||TextEditor.String.parse_int32(6)<1){
+    /*if(TextEditor.String.parse_int32(6)>6||TextEditor.String.parse_int32(6)<1){
       Device::Device.NuOfCircuits=6;
       trace "ERROR: Not allowed Number of Circuits";
     }else{
       Device::Device.NuOfCircuits=TextEditor.String.parse_int32(6);
-    }
+    }*/
     this.Enabled=false;
     this.Visible=false;
     ControllMenue.Enabled=true;
@@ -3873,7 +3921,6 @@ class Config : Core::Group
   $rect <850,540,1050,580>
   slot onNextWaste
   {
-
     Device::Device.SetWastePosition( ConfigWaste.XSlider.CurrentValue, ConfigWaste.YSlider.CurrentValue, ConfigWaste.ZSlider.CurrentValue );
 
     ConfigWaste.Visible=false;
@@ -3901,6 +3948,14 @@ class Config : Core::Group
   }
 
   $rect <20,20,160,60>
+  object Application::ConfigPosition ConfigTop
+  {
+    preset Bounds = <0,0,800,480>;
+    preset onNext = onNextTop;
+    preset Title = "Bewegen sie den Schlauch so hoch, damit er die Kühlvorrichtung nicht berührt";
+  }
+
+  $rect <20,20,160,60>
   object Application::ConfigPosition ConfigTR
   {
     preset Bounds = <0,0,800,480>;
@@ -3920,8 +3975,19 @@ class Config : Core::Group
   object Application::ConfigPosition ConfigWaste
   {
     preset Bounds = <0,0,800,480>;
+    preset Visible = true;
     preset onNext = onNextWaste;
     preset Title = "Bewegen Sie den Schlauch über den Waste Behälter";
+  }
+
+  $rect <850,660,1050,700>
+  slot onNextTop
+  {
+    Device::Device.SetTopPosition( ConfigBL.XSlider.CurrentValue, ConfigBL.YSlider.CurrentValue, ConfigBL.ZSlider.CurrentValue );
+
+    ConfigTop.Visible=false;
+    ConfigTop.Enabled=false;
+    Btn_Ok.Enabled=true;
   }
 }
 
@@ -4076,7 +4142,7 @@ class ConfigPosition : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Views::Text Text
+  object Views::Text TextTitle
   {
     preset Bounds = <60,10,690,120>;
     preset WrapText = true;
@@ -4087,7 +4153,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Flat::HorzSlider XSlider
   {
-    preset Bounds = <50,160,770,230>;
+    preset Bounds = <60,170,780,240>;
     preset CurrentValue = 0;
     preset OnChange = OnChangePos;
   }
@@ -4095,7 +4161,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Flat::HorzSlider YSlider
   {
-    preset Bounds = <50,240,770,300>;
+    preset Bounds = <60,240,780,300>;
     preset CurrentValue = 0;
     preset OnChange = OnChangePos;
   }
@@ -4111,7 +4177,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Flat::HorzSlider ZSlider
   {
-    preset Bounds = <50,300,770,360>;
+    preset Bounds = <60,300,780,360>;
     preset CurrentValue = 0;
     preset OnChange = OnChangePos;
   }
@@ -4153,7 +4219,7 @@ class ConfigPosition : Core::Group
     // Remember the property's new value.
     pure Title = value;
 
-    Text.String=Title;
+    TextTitle.String=Title;
 
     // TO DO:
     // 
@@ -4170,6 +4236,33 @@ class ConfigPosition : Core::Group
   slot onBtnNext
   {
     signal onNext;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextX
+  {
+    preset Bounds = <10,180,50,230>;
+    preset WrapText = true;
+    preset String = "X";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextY
+  {
+    preset Bounds = <10,240,50,290>;
+    preset WrapText = true;
+    preset String = "Y";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextZ
+  {
+    preset Bounds = <10,300,50,350>;
+    preset WrapText = true;
+    preset String = "Z";
+    preset Font = Flat::FontL;
   }
 }
 
@@ -4381,20 +4474,20 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::Temperature Temperature
   {
-    preset Bounds = <700,140,780,200>;
+    preset Bounds = <660,330,800,390>;
   }
 
   $rect <840,100,1040,140>
   object Core::PropertyObserver NuOfCircuitsObserver
   {
-    preset OnEvent = onEvent;
+    preset OnEvent = onNuOfCircuits;
     preset Outlet = ^Device::Device.NuOfCircuits;
   }
 
   // This slot method is executed when the associated property observer 'PropertyObserver' \
   // is notified.
   $rect <1040,100,1240,140>
-  slot onEvent
+  slot onNuOfCircuits
   {
     var int32 i;
     for(i=0;i<6;i=i+1){
@@ -4424,12 +4517,12 @@ class ControllMenu : Core::Group
   object Flat::ActionButton Btn_Config
   {
     preset Bounds = <480,140,600,170>;
-    preset OnAction = onConfig;
+    preset OnAction = onBtn_Config;
     preset Caption = "Config";
   }
 
   $rect <830,190,1030,230>
-  slot onConfig
+  slot onBtn_Config
   {
     Config.ConfigBL.Visible=true;
     Config.ConfigTR.Visible=true;
@@ -4455,7 +4548,7 @@ class ControllMenu : Core::Group
     preset Caption = "NewWell";
   }
 
-  $rect <830,240,1030,280>
+  $rect <830,230,1030,270>
   slot onBtn_NewWell
   {
     Device::Device.NewWell=true;
@@ -4504,7 +4597,7 @@ class ControllMenu : Core::Group
   $rect <570,500,770,540>
   slot onRemainingTime
   {
-    var Device::RemainingTimeContext context = (Device::RemainingTimeContext)SystemEventHandler.Context;
+    var Device::RemainingTimeContext context = (Device::RemainingTimeContext)RemainingTime.Context;
     SampleController[context.CircuitNumber].RemainingTime=context.RemainingTime;
 
   }

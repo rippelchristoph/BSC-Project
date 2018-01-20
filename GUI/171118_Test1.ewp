@@ -47,7 +47,7 @@ profile RasPi : RaspberryPi.OpenGL.RGBA8888
   attr OutputDirectory = C:\Maturaprojekt\BSC-Project\BuildEnvironment\RaspberryPi\Template\GeneratedCode;
 
   $rect <10,10,154,50>
-  macro Author = "Dipl. Ing. Paul Banach and Dipl. Ing. Manfred Schweyer, Copyright (C) TARA Systems GmbH";
+  macro Author = "Oliver Peter";
 }
 
 // The 'default' Language. Each project has to contain at least one language brick \
@@ -65,7 +65,7 @@ unit Application
 // Mosaic Framework
 note group Note1
 {
-  attr Bounds = <20,20,260,450>;
+  attr Bounds = <20,20,260,500>;
 }
 
 // Configuration for the target code generation
