@@ -46,7 +46,7 @@
 #include "_DeviceSampleCollectedContext.h"
 
 /* User defined auto object: 'Device::Device' */
-	  EW_DECLARE_AUTOOBJECT(DeviceDevice, DeviceDeviceClass);
+EW_DECLARE_AUTOOBJECT(DeviceDevice, DeviceDeviceClass)
 
 #ifdef __cplusplus
   }
