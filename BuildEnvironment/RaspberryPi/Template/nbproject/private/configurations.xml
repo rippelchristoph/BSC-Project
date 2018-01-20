@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="GeneratedCode">
+        <in>Application.c</in>
+        <in>Application.h</in>
+        <in>BrickGame.c</in>
+        <in>BrickGame.h</in>
+        <in>Core.c</in>
+        <in>Core.h</in>
+        <in>Device.c</in>
+        <in>Device.h</in>
+        <in>Effects.c</in>
+        <in>Effects.h</in>
+        <in>Flat.c</in>
+        <in>Flat.h</in>
+        <in>Graphics.c</in>
+        <in>Graphics.h</in>
+        <in>Resources.c</in>
+        <in>Resources.h</in>
+        <in>Templates.c</in>
+        <in>Templates.h</in>
+        <in>Views.c</in>
+        <in>Views.h</in>
+        <in>_ApplicationApplication.h</in>
+        <in>_BrickGameBallPosition.h</in>
+        <in>_BrickGameBrickGame.h</in>
+        <in>_BrickGameBrickRow.h</in>
+        <in>_BrickGameDataClass.h</in>
+        <in>_BrickGameLcdDisplay.h</in>
+        <in>_CoreCursorEvent.h</in>
+        <in>_CoreCursorGrabEvent.h</in>
+        <in>_CoreCursorHit.h</in>
+        <in>_CoreDragEvent.h</in>
+        <in>_CoreEvent.h</in>
+        <in>_CoreGroup.h</in>
+        <in>_CoreKeyEvent.h</in>
+        <in>_CoreKeyPressHandler.h</in>
+        <in>_CoreLayoutContext.h</in>
+        <in>_CoreLayoutQuadContext.h</in>
+        <in>_CoreModalContext.h</in>
+        <in>_CoreOutline.h</in>
+        <in>_CoreQuadView.h</in>
+        <in>_CoreRectView.h</in>
+        <in>_CoreResource.h</in>
+        <in>_CoreRoot.h</in>
+        <in>_CoreSimpleTouchHandler.h</in>
+        <in>_CoreTimer.h</in>
+        <in>_CoreView.h</in>
+        <in>_DeviceDeviceClass.h</in>
+        <in>_EffectsEffectTimerClass.h</in>
+        <in>_FlatSwitch.h</in>
+        <in>_GraphicsCanvas.h</in>
+        <in>_ResourcesBitmap.h</in>
+        <in>_ResourcesFont.h</in>
+        <in>_TemplatesDeviceClass.h</in>
+        <in>_ViewsImage.h</in>
+        <in>_ViewsRectangle.h</in>
+        <in>_ViewsText.h</in>
+        <in>ewlocale.h</in>
+      </df>
+      <df name="obj">
+      </df>
+      <in>main - B.c</in>
+      <in>main.c</in>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>3</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

@@ -136,7 +136,7 @@ class DeviceClass : Templates::DeviceClass
     aCircuitNumber;
 
 
-
+                                                        
     $endif
 
     trace "StartSampling - Intervall:"+string(aIntervall)+" CircuitNumber:"+string(aCircuitNumber);
@@ -346,7 +346,7 @@ class DeviceClass : Templates::DeviceClass
   }
 
   $rect <240,130,440,170>
-  property int32 Temperature = 0;
+  property float Temperature = 0;
 
   $rect <440,130,640,170>
   onset Temperature
@@ -388,7 +388,7 @@ class DeviceClass : Templates::DeviceClass
   // about an alternation of its setting or state value.
   $rect <40,130,240,170>
   $output true
-  method void UpdateTemperature( arg int32 aNewValue )
+  method void UpdateTemperature( arg float aNewValue )
   {
     // Only if the reported value does differ from the one stored currently in the property.
     if ( aNewValue != pure Temperature )

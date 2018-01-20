@@ -1,12 +1,11 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application::MainMenu;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,28>;
-attr codeInspector = Application::Temperature.onEvent;
-attr codeSelEnd = <0,43>;
-attr codeSelStart = <0,43>;
+attr codeSelEnd = <30,41>;
+attr codeSelStart = <30,41>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -62,9 +61,9 @@ view class Device::DeviceClass
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = UpdateNewWell;
-  attr codeSelEnd = <2,4>;
-  attr codeSelStart = <27,4>;
+  attr codeInspector = UpdateTemperature;
+  attr codeSelEnd = <87,3>;
+  attr codeSelStart = <87,3>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -134,10 +133,10 @@ view class Application::MainMenu
 view class Application::Temperature
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
+  attr codeFirstPos = <0,28>;
   attr codeInspector = onEvent;
-  attr codeSelEnd = <14,43>;
-  attr codeSelStart = <14,43>;
+  attr codeSelEnd = <30,41>;
+  attr codeSelStart = <30,41>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;

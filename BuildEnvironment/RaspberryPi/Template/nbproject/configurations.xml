@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="GeneratedCode">
+        <in>Application.c</in>
+        <in>Application.h</in>
+        <in>BrickGame.c</in>
+        <in>BrickGame.h</in>
+        <in>Core.c</in>
+        <in>Core.h</in>
+        <in>Device.c</in>
+        <in>Device.h</in>
+        <in>Effects.c</in>
+        <in>Effects.h</in>
+        <in>Flat.c</in>
+        <in>Flat.h</in>
+        <in>Graphics.c</in>
+        <in>Graphics.h</in>
+        <in>Resources.c</in>
+        <in>Resources.h</in>
+        <in>Templates.c</in>
+        <in>Templates.h</in>
+        <in>Views.c</in>
+        <in>Views.h</in>
+        <in>_ApplicationApplication.h</in>
+        <in>_BrickGameBallPosition.h</in>
+        <in>_BrickGameBrickGame.h</in>
+        <in>_BrickGameBrickRow.h</in>
+        <in>_BrickGameDataClass.h</in>
+        <in>_BrickGameLcdDisplay.h</in>
+        <in>_CoreCursorEvent.h</in>
+        <in>_CoreCursorGrabEvent.h</in>
+        <in>_CoreCursorHit.h</in>
+        <in>_CoreDragEvent.h</in>
+        <in>_CoreEvent.h</in>
+        <in>_CoreGroup.h</in>
+        <in>_CoreKeyEvent.h</in>
+        <in>_CoreKeyPressHandler.h</in>
+        <in>_CoreLayoutContext.h</in>
+        <in>_CoreLayoutQuadContext.h</in>
+        <in>_CoreModalContext.h</in>
+        <in>_CoreOutline.h</in>
+        <in>_CoreQuadView.h</in>
+        <in>_CoreRectView.h</in>
+        <in>_CoreResource.h</in>
+        <in>_CoreRoot.h</in>
+        <in>_CoreSimpleTouchHandler.h</in>
+        <in>_CoreTimer.h</in>
+        <in>_CoreView.h</in>
+        <in>_DeviceDeviceClass.h</in>
+        <in>_EffectsEffectTimerClass.h</in>
+        <in>_FlatSwitch.h</in>
+        <in>_GraphicsCanvas.h</in>
+        <in>_ResourcesBitmap.h</in>
+        <in>_ResourcesFont.h</in>
+        <in>_TemplatesDeviceClass.h</in>
+        <in>_ViewsImage.h</in>
+        <in>_ViewsRectangle.h</in>
+        <in>_ViewsText.h</in>
+        <in>ewlocale.h</in>
+      </df>
+      <in>main - B.c</in>
+      <in>main.c</in>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="GeneratedCode/Application.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Application.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/BrickGame.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/BrickGame.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Core.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Core.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Device.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Device.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Effects.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Effects.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Flat.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Flat.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Graphics.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Graphics.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Resources.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Resources.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Templates.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Templates.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Views.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="GeneratedCode/Views.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_ApplicationApplication.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_BrickGameBallPosition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_BrickGameBrickGame.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_BrickGameBrickRow.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_BrickGameDataClass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_BrickGameLcdDisplay.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreCursorEvent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreCursorGrabEvent.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreCursorHit.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreDragEvent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreEvent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreGroup.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreKeyEvent.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreKeyPressHandler.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreLayoutContext.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreLayoutQuadContext.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreModalContext.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreOutline.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreQuadView.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreRectView.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreResource.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreRoot.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreSimpleTouchHandler.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreTimer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_CoreView.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_DeviceDeviceClass.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_EffectsEffectTimerClass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_FlatSwitch.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_GraphicsCanvas.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_ResourcesBitmap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_ResourcesFont.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_TemplatesDeviceClass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="GeneratedCode/_ViewsImage.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_ViewsRectangle.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/_ViewsText.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GeneratedCode/ewlocale.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main - B.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
