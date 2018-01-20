@@ -95,7 +95,7 @@ typedef struct BSCController {
 	TWellData** Well;
 	TOrderController* Orders;
 	TSampler* Sampler;
-	DeviceDeviceClass EwDeviceObject;
+	DeviceDeviceClass* EwDeviceObject;
 } TBSCController;
 
 

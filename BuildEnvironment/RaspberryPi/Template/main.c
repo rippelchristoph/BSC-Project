@@ -52,6 +52,10 @@
 #include <pthread.h>
 #include <linux/input.h>
 
+
+
+#include "BSCController.h"
+
 /* real values from touch */
 #define Y_MIN    0 //!!!!!!!!!!!!
 #define Y_MAX 480
@@ -464,6 +468,8 @@ int main( int argc, char** argv )
   pthread_attr_destroy( &threadAttr );
   sleep( 1 );
 
+  TBSCController* BSCController = newBSCController();
+
   /* start the EmWi main loop and process all user inputs, timers and signals */
   EwPrint( "Start EmWi Main Loop...                      " );
   EwPrint( "[OK]\n" );
@@ -473,6 +479,8 @@ int main( int argc, char** argv )
     int signals = 0;
     int events  = 0;
     XPoint lastPos = {0,0};
+
+	ProcessBSCController(BSCController);
 
     /* receive keyboard events and provide it to the application */
     cmd = GetKeyCommand();
@@ -519,6 +527,8 @@ int main( int argc, char** argv )
 
     /* process the pending signals */
     signals = EwProcessSignals();
+
+	
 
     /* refresh the screen, if something has changed and draw its content */
     if ( timers || signals || events )
