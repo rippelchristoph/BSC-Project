@@ -272,18 +272,32 @@ ProcessSampler (
 		StateWait(aSampler);
 		break;
 	case Home:
+		StateHome(aSampler);
+		break;
+	case WaistPos:
+		StateWaistPos(aSampler);
 		break;
 	case Waist:
+		StateWaist(aSampler);
 		break;
 	case OverPos:
+		StateOverPos(aSampler);
 		break;
 	case DrawerOpen:
+		StateDrawerOpen(aSampler);
 		break;
 	case DropPos:
+		StateDropPos(aSampler);
 		break;
 	case Flow:
+		StateFlow(aSampler);
+		break;
 	case BackOut:
+		StateBackOut(aSampler);
+		break;
 	case DrawerClose:
+		StateDrawerClose(aSampler);
+		break;
 	case ERROR:
 	default:
 		break;

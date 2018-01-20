@@ -18,6 +18,7 @@
  *
  * PRIVATE FUNCTIONS:
  *   UpdateRemainingTimes
+ *   UpdateTemperature
  *   getConfigByIndex
  ****************************************************************************/
 
@@ -29,6 +30,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "i2c.h"
+#include "Device.h"
 
 
 /** HEADER ******************************************************************
@@ -109,7 +112,7 @@ typedef struct BSCController {
 	TWellData** Well;
 	TOrderController* Orders;
 	TSampler* Sampler;
-	DeviceDeviceClass EwDeviceObject;
+	DeviceDeviceClass* EwDeviceObject;
 } TBSCController;
 
 
@@ -134,6 +137,10 @@ typedef struct BSCController {
 
 PRIVATE void
 UpdateRemainingTimes (
+  TBSCController *              aController );
+
+PRIVATE void
+UpdateTemperature (
   TBSCController *              aController );
 
 PRIVATE void *
@@ -164,7 +171,7 @@ newBSCController ( void )
 	
 	BSCReadConfiguration(retPtr->Configuration, NULL); //TODO: Configuration Path
 	
-	//Allocate Storage for multidimensional ar
+	//Allocate Storage for multidimensional array
 	retPtr->Well = malloc(retPtr->Configuration->NWellX * sizeof(TWellData*));
 	for (int i = 0; i < retPtr->Configuration->NWellX; i++) {
 		retPtr->Well[i] = malloc(retPtr->Configuration->NWellY * sizeof(TWellData));
@@ -174,6 +181,8 @@ newBSCController ( void )
 	}
 
 	//TODO: EwDeviceObject Initialisieren
+	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, _DeviceDeviceClass_);
+
 
 	return retPtr;
 }
@@ -274,7 +283,7 @@ PUBLIC void
 ProcessBSCController (
   TBSCController * aBSCController )
 {
-	int retVal = -1;
+	/*int retVal = -1;
 	char line[30];
 	if ((retVal = ProcessOrderController(aBSCController->Orders)) != -1) {
 		SamplerAddToQueue(aBSCController->Sampler, retVal);
@@ -282,8 +291,9 @@ ProcessBSCController (
 
 	ProcessSampler(aBSCController->Sampler);
 	
-	GetFormattedTime(time(NULL), line);
+	GetFormattedTime(time(NULL), line);*/
 	//TODO: UpdateTime - EwDevice Function call
+	UpdateTemperature(aBSCController);
 
 
 	
@@ -375,6 +385,37 @@ UpdateRemainingTimes (
   TBSCController * aController )
 {
 
+}
+
+/****************************************************************************
+ * FUNCTION: UpdateTemperature
+ * DESCRIPTION:
+ *   Updates the Remaining Times of all Orders until next Execution.
+ *   Therefore it uses the NextPointer of the List that is a property of the
+ *   OrderController to make the Process faster
+ * PARAMETER:
+ *   aController - The Address of the Controller Device Object -
+ ****************************************************************************/
+
+PRIVATE void
+UpdateTemperature (
+  TBSCController * aController )
+{
+	unsigned char byteAdd[] = { 0x00 };
+	char buffer[2];
+	float updateVal = 0;
+	TI2C* dataStream = newI2C(0x4F);
+	I2CWriteBytes(dataStream, byteAdd, 1);
+	I2CReadBytes(dataStream, buffer, 2);
+
+	unsigned char buffer[2] = { 0x01, 0xEF };
+
+	char num = buffer[0] << 7 | buffer[1] >> 1;
+	updateVal = num;
+	updateVal += (float)(buffer[1] & 0x01) / (float)2;
+
+	_DeviceDeviceClass__UpdateTemperature_(aController->EwDeviceObject, updateVal);
+	
 }
 
 /****************************************************************************
