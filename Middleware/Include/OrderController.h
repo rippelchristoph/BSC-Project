@@ -7,7 +7,8 @@
  * FILE: Orders.h
  *
  *   DESCRIPTION:
- *     This File handles a UART Connection
+ *     This File handles the List of Orders and among other tasks, checks if
+ *     any of the Orders due.
  *
  * PUBLIC FUNCTIONS:
  *   newOrderController

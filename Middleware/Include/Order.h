@@ -7,7 +7,7 @@
  * FILE: Order.h
  *
  * DESCRIPTION:
- *   This File handles a UART Connection
+ *   This File represents a single Order
  *
  * PUBLIC FUNCTIONS:
  *   newOrder
