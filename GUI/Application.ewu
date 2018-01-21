@@ -371,7 +371,7 @@ class Well : Core::Group
   object Application::WellPart A1
   {
     preset Bounds = <70,50,140,120>;
-    preset TimeProperty = Time.TimeProperty;
+    preset TimeProperty = "19.01.2018 14:38:12";
     preset CircuitNumber = 0;
   }
 
@@ -409,7 +409,7 @@ class Well : Core::Group
   object Application::WellPart A2
   {
     preset Bounds = <140,50,210,120>;
-    preset TimeProperty = "19.01.2018 14:38";
+    preset TimeProperty = "19.01.2018 14:38:12";
     preset CircuitNumber = 1;
   }
 
@@ -485,6 +485,8 @@ class Well : Core::Group
   object Application::WellPart A4
   {
     preset Bounds = <280,50,350,120>;
+    preset TimeProperty = "19.01.2018 14:38:12";
+    preset CircuitNumber = 3;
   }
 
   $rect <20,20,160,60>
@@ -521,6 +523,8 @@ class Well : Core::Group
   object Application::WellPart A5
   {
     preset Bounds = <350,50,420,120>;
+    preset TimeProperty = "19.01.2018 14:38:12";
+    preset CircuitNumber = 4;
   }
 
   $rect <20,20,160,60>
@@ -557,6 +561,8 @@ class Well : Core::Group
   object Application::WellPart A6
   {
     preset Bounds = <420,50,490,120>;
+    preset TimeProperty = "19.01.2018 14:38:12";
+    preset CircuitNumber = 5;
   }
 
   $rect <20,20,160,60>
@@ -593,6 +599,8 @@ class Well : Core::Group
   object Application::WellPart A7
   {
     preset Bounds = <490,50,560,120>;
+    preset TimeProperty = "19.01.2018 14:38:12";
+    preset CircuitNumber = 6;
   }
 
   $rect <20,20,160,60>
@@ -803,42 +811,42 @@ class Well : Core::Group
   object Application::WellLabel WellLabelA
   {
     preset Bounds = <0,60,70,100>;
-    preset TextString = "1";
+    preset TextString = "A";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelB
   {
     preset Bounds = <0,130,70,170>;
-    preset TextString = "2";
+    preset TextString = "B";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelC
   {
     preset Bounds = <0,200,70,240>;
-    preset TextString = "3";
+    preset TextString = "C";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelD
   {
     preset Bounds = <0,270,70,310>;
-    preset TextString = "4";
+    preset TextString = "D";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelE
   {
     preset Bounds = <0,340,70,380>;
-    preset TextString = "5";
+    preset TextString = "E";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelF
   {
     preset Bounds = <0,410,70,450>;
-    preset TextString = "6";
+    preset TextString = "F";
   }
 
   $rect <820,190,1020,230>
@@ -1145,42 +1153,7 @@ class WellPart : Core::Group
   $rect <530,50,730,90>
   onset CircuitNumber
   {
-    if(value>5){
-      Text.Color.blue=255;
-      Text.Color.red=255;
-      Text.Color.green=255;
-    }
-      
-    if(value==0){
-      Text.Color.blue=255;
-      Text.Color.red=0;
-      Text.Color.green=0;
-    }
-    if(value==1){
-      Text.Color.blue=255;
-      Text.Color.red=255;
-      Text.Color.green=0;
-    }
-    if(value==2){
-      Text.Color.blue=0;
-      Text.Color.red=255;
-      Text.Color.green=0;
-    }
-    if(value==3){
-      Text.Color.blue=0;
-      Text.Color.red=255;
-      Text.Color.green=255;
-    }
-    if(value==4){
-      Text.Color.blue=0;
-      Text.Color.red=0;
-      Text.Color.green=255;
-    }
-    if(value==5){
-      Text.Color.blue=255;
-      Text.Color.red=0;
-      Text.Color.green=255;
-    }
+    Text.Color=Device::Device.getColor( value );
                       
 
     // The value doesn't change - nothing to do.
@@ -1439,7 +1412,7 @@ $output false
 class SampleController : Core::Group
 {
   $rect <20,550,220,590>
-  inherited property Bounds = <0,0,440,70>;
+  inherited property Bounds = <0,0,420,70>;
 
   $rect <20,630,220,670>
   inherited method UpdateLayout()
@@ -1582,6 +1555,7 @@ class SampleController : Core::Group
     pure NameProperty = value;
 
     NameText.String=NameProperty;
+    NameText.Color=Device::Device.getColor( NameText.String.parse_int32( -1 )-1 );
 
     // TO DO:
     // 
@@ -1597,7 +1571,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Views::Border Border
   {
-    preset Bounds = <1,1,440,69>;
+    preset Bounds = <0,1,418,69>;
     preset Width = 3;
     preset Color = #000000FF;
   }
@@ -1605,7 +1579,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Views::Text NameText
   {
-    preset Bounds = <0,16,30,46>;
+    preset Bounds = <0,1,30,31>;
     preset String = "1";
     preset Font = Flat::FontM;
     preset Color = #000000FF;
@@ -1614,7 +1588,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Flat::ActionButton BtnStart
   {
-    preset Bounds = <100,4,210,29>;
+    preset Bounds = <120,6,200,31>;
     preset OnAction = onStart;
     preset Caption = "Start";
   }
@@ -1622,23 +1596,16 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Flat::ActionButton BtnStop
   {
-    preset Bounds = <100,40,210,65>;
+    preset Bounds = <120,40,200,65>;
     preset Enabled = false;
     preset OnAction = onStop;
     preset Caption = "Stop";
   }
 
   $rect <20,20,160,60>
-  object Flat::HorzBar HorzBar
-  {
-    preset Bounds = <220,10,380,60>;
-    preset CurrentValue = 0;
-  }
-
-  $rect <20,20,160,60>
   object Flat::Indicator Indicator
   {
-    preset Bounds = <400,20,430,50>;
+    preset Bounds = <380,20,410,50>;
   }
 
   $rect <30,180,230,220>
@@ -1704,15 +1671,16 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Application::TextEditor TextEditor
   {
-    preset Bounds = <30,20,90,60>;
+    preset Bounds = <30,20,70,60>;
     preset WrapText = false;
     preset String = "10";
+    preset Color = #000000FF;
   }
 
   $rect <20,20,160,60>
   object Views::Line Line
   {
-    preset Point2 = <90,45>;
+    preset Point2 = <110,45>;
     preset Point1 = <30,45>;
     preset Width = 2;
     preset Color = #000000FF;
@@ -1777,6 +1745,20 @@ class SampleController : Core::Group
     return pure RemainingTime;
   }
 
+  $rect <20,20,160,60>
+  object Application::AHorzBar HorzBar
+  {
+    preset Bounds = <210,10,370,60>;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::Label Label
+  {
+    preset Bounds = <70,20,110,50>;
+    preset String = "min";
+    preset TextColor = #000000FF;
+  }
+
   $reorder OnSetOpacity 8
   $reorder OnGetEmbedded 8
   $reorder OnSetEmbedded 8
@@ -1826,7 +1808,6 @@ class SampleController : Core::Group
   $reorder NameText 9
   $reorder BtnStart 9
   $reorder BtnStop 9
-  $reorder HorzBar 9
   $reorder Indicator 9
   $reorder onStart 9
   $reorder Enabled 5
@@ -2753,7 +2734,7 @@ class TextEditor : Templates::TextEditor
     preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
     preset String = "Text\n";
     preset Font = Resources::FontVerdana24;
-    preset Color = #FFFFFFFF;
+    preset Color = #000000FF;
   }
 
   $rect <20,20,160,60>
@@ -3322,7 +3303,7 @@ class NumKeyboard : Templates::NumKeyboard
 // Resources
 note group Note
 {
-  attr Bounds = <460,530,870,720>;
+  attr Bounds = <460,530,860,1020>;
 }
 
 $rect <610,200,810,240>
@@ -3697,8 +3678,8 @@ class Temperature : Core::Group
 
 
     Device::Device.Temperature=aNum;
+    */
 
-      */
     Text.String=string(Device::Device.Temperature)+"°C";
 
   }
@@ -3854,7 +3835,7 @@ class Config : Core::Group
     preset Caption = "OK";
   }
 
-  $rect <940,370,1140,410>
+  $rect <870,290,1070,330>
   slot onBtn_Ok
   {
     /*if(TextEditor.String.parse_int32(6)>6||TextEditor.String.parse_int32(6)<1){
@@ -3894,10 +3875,10 @@ class Config : Core::Group
     preset Font = Flat::FontL;
   }
 
-  $rect <940,240,1140,280>
+  $rect <870,160,1070,200>
   property Application::ControllMenu ControllMenue = null;
 
-  $rect <940,280,1140,320>
+  $rect <870,200,1070,240>
   onset ControllMenue
   {
     // The value doesn't change - nothing to do.
@@ -3912,7 +3893,7 @@ class Config : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <940,320,1140,360>
+  $rect <870,240,1070,280>
   onget ControllMenue
   {
     return pure ControllMenue;
@@ -3953,6 +3934,7 @@ class Config : Core::Group
     preset Bounds = <0,0,800,480>;
     preset onNext = onNextTop;
     preset Title = "Bewegen sie den Schlauch so hoch, damit er die Kühlvorrichtung nicht berührt";
+    preset Help = Application::ConfigTop;
   }
 
   $rect <20,20,160,60>
@@ -3961,6 +3943,7 @@ class Config : Core::Group
     preset Bounds = <0,0,800,480>;
     preset onNext = onNextTR;
     preset Title = "Bewegen Sie den Schluch über die Well Öffnung rechts hinten";
+    preset Help = Application::ConfigTR;
   }
 
   $rect <20,20,160,60>
@@ -3969,6 +3952,7 @@ class Config : Core::Group
     preset Bounds = <0,0,800,480>;
     preset onNext = onNextBL;
     preset Title = "Bewegen Sie den Schluch über die Well Öffnung links vorne";
+    preset Help = Application::ConfigBL;
   }
 
   $rect <20,20,160,60>
@@ -3978,6 +3962,7 @@ class Config : Core::Group
     preset Visible = true;
     preset onNext = onNextWaste;
     preset Title = "Bewegen Sie den Schlauch über den Waste Behälter";
+    preset Help = Application::ConfigWaste;
   }
 
   $rect <850,660,1050,700>
@@ -4153,7 +4138,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Flat::HorzSlider XSlider
   {
-    preset Bounds = <60,170,780,240>;
+    preset Bounds = <60,240,780,310>;
     preset CurrentValue = 0;
     preset OnChange = OnChangePos;
   }
@@ -4161,7 +4146,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Flat::HorzSlider YSlider
   {
-    preset Bounds = <60,240,780,300>;
+    preset Bounds = <60,310,780,370>;
     preset CurrentValue = 0;
     preset OnChange = OnChangePos;
   }
@@ -4177,7 +4162,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Flat::HorzSlider ZSlider
   {
-    preset Bounds = <60,300,780,360>;
+    preset Bounds = <60,370,780,430>;
     preset CurrentValue = 0;
     preset OnChange = OnChangePos;
   }
@@ -4241,7 +4226,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Views::Text TextX
   {
-    preset Bounds = <10,180,50,230>;
+    preset Bounds = <10,250,50,300>;
     preset WrapText = true;
     preset String = "X";
     preset Font = Flat::FontL;
@@ -4250,7 +4235,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Views::Text TextY
   {
-    preset Bounds = <10,240,50,290>;
+    preset Bounds = <10,310,50,360>;
     preset WrapText = true;
     preset String = "Y";
     preset Font = Flat::FontL;
@@ -4259,10 +4244,60 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Views::Text TextZ
   {
-    preset Bounds = <10,300,50,350>;
+    preset Bounds = <10,370,50,420>;
     preset WrapText = true;
     preset String = "Z";
     preset Font = Flat::FontL;
+  }
+
+  $rect <1070,30,1270,70>
+  property Resources::Bitmap Help = null;
+
+  $rect <1070,70,1270,110>
+  onset Help
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Help == value )
+      return;
+    Img_Help.Bitmap=value;
+    // Remember the property's new value.
+    pure Help = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <1070,110,1270,150>
+  onget Help
+  {
+    return pure Help;
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ToggleButton Btn_Help
+  {
+    preset Bounds = <550,440,650,470>;
+    preset OnChange = onBtn_Help;
+    preset Caption = "Help";
+  }
+
+  $rect <1100,240,1300,280>
+  slot onBtn_Help
+  {
+    if(Btn_Help.Active){
+      Img_Help.Visible=true;
+    }else{
+      Img_Help.Visible=false;
+    }
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Img_Help
+  {
+    preset Bounds = <10,10,790,430>;
+    preset Bitmap = null;
+    preset Visible = false;
   }
 }
 
@@ -4643,4 +4678,454 @@ note arrow Note7
 {
   attr Point1 = <610,90>;
   attr Point2 = <550,50>;
+}
+
+// Horizontal bar widget with a flat design. The widget is used to illustrate a value \
+// by using a colored horizontal bar, e.g. like a progress bar.
+$rect <940,360,1120,400>
+$output false
+class AHorzBar : Core::Group
+{
+  $rect <0,220,180,260>
+  inherited method UpdateViewState()
+  {
+    aState;
+    var int32 pos = 0;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxValue > MinValue ) && ( CurrentValue >= MinValue ) && ( CurrentValue <= MaxValue ))
+    {
+      /* calculate the center position of the thumb within the slider area */
+      pos = Bounds.w * ( CurrentValue - MinValue ) / ( MaxValue - MinValue );
+    }
+
+    /* update the text item for current value */
+    if ( pure ShowCurrent )
+      BarText.String = formatValueString( pure CurrentValue )+"min";
+    BarText.Visible = pure ShowCurrent;
+
+    /* arrange the bar and text item according bar width */
+    Rectangle.Bounds.h = pure BarSize;
+    Bar.Bounds.h = pure BarSize;
+    BarText.Bounds.origin.y = pure BarSize + 2;
+
+    /* if calculated position is different from the current bar, let's start an animation to move the bar smooth */
+    if ( pos != Bar.Bounds.w )
+    {
+      /* stop currently running animation */
+      MoveBarEffect.Enabled = false;
+
+      /* calculate a start value that is 1/10 into the final direction */
+      Bar.Bounds.w = ( Bar.Bounds.w * 9 + pos ) / 10;
+
+      /* start animation of bar */
+      MoveBarEffect.Value1  = Bar.Bounds.w;
+      MoveBarEffect.Value2  = pos;
+      MoveBarEffect.Enabled = true;
+    }
+
+
+
+
+  }
+
+  $rect <0,180,180,220>
+  inherited property Bounds = <0,0,160,50>;
+
+  // The property 'MinValue' defines the lower boundary of the widgets value range.
+  $rect <370,0,550,40>
+  property int32 MinValue = 0;
+
+  $rect <370,40,550,80>
+  onset MinValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinValue == value )
+      return;
+
+    /* store the new value */
+    pure MinValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'MaxValue' defines the upper boundary of the widgets value range.
+  $rect <550,0,730,40>
+  property int32 MaxValue = 100;
+
+  $rect <550,40,730,80>
+  onset MaxValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxValue == value )
+      return;
+
+    /* store the new value */
+    pure MaxValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range from @MinValue to @MaxValue.
+  $rect <190,0,370,40>
+  property int32 CurrentValue = 50;
+
+  $rect <190,40,370,80>
+  onset CurrentValue
+  {
+    /* limit the given value to the range between MinValue and MaxValue */
+    if ( value < MinValue )
+      value = MinValue;
+    if ( value > MaxValue )
+      value = MaxValue;
+
+    /* check if the given value differs from the current value */
+    if ( pure CurrentValue == value )
+      return;
+
+    /* store the new value */
+    pure CurrentValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <190,180,370,220>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <190,130,370,170>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containing several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <190,90,370,130>
+  property ^int32 Outlet = null;
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToRight, AlignToTop, ResizeHorz];
+    preset Bounds = <0,0,160,20>;
+    preset Color = Flat::ColorOfBody;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Bar
+  {
+    preset Layout = Core::Layout[AlignToLeft, AlignToRight, AlignToTop, ResizeHorz];
+    preset Bounds = <0,0,90,20>;
+    preset Color = Flat::ColorOfTheme;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text BarText
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToTop];
+    preset Bounds = <80,20,98,40>;
+    preset AutoSize = true;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
+    preset String = "50";
+    preset Font = Flat::FontS;
+    preset Color = Flat::ColorOfTheme;
+  }
+
+  $rect <190,300,370,340>
+  object Effects::Int32Effect MoveBarEffect
+  {
+    preset NoOfCycles = 1;
+    preset Timing = Effects::Timing.FastIn_EaseOut;
+    preset CycleDuration = 500;
+    preset Outlet = ^barPos;
+  }
+
+  $rect <190,340,370,380>
+  property int32 barPos = 0;
+
+  $rect <190,380,370,420>
+  onset barPos
+  {
+    pure barPos = value;
+
+    /* set position of bar */
+    Bar.Bounds.w = value;
+
+    /* calculate position of bar text item */
+    BarText.Bounds.origin.x = value - BarText.Bounds.w / 2;
+
+    if ( BarText.Bounds.origin.x < 0 )
+      BarText.Bounds.origin.x = 0;
+
+    if ( BarText.Bounds.x2 > Bounds.w )
+      BarText.Bounds.origin.x = Bounds.w - BarText.Bounds.w;
+
+
+  }
+
+  // The property 'ShowCurrent' controls the visibility of the text items displaying \
+  // the current value.
+  $rect <730,90,910,130>
+  property bool ShowCurrent = true;
+
+  $rect <730,130,910,170>
+  onset ShowCurrent
+  {
+    /* store the new value */
+    pure ShowCurrent = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'DotPosition' stores the index of the digit where the dot is shown. \
+  // In case that 'DotPosition' is zero, the dot disappears.
+  $rect <370,90,550,130>
+  property int32 DotPosition = 0;
+
+  $rect <370,130,550,170>
+  onset DotPosition
+  {
+    /* check if the given value differs from the current value */
+    if ( pure DotPosition == value )
+      return;
+
+    /* check limits of the given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 3 )
+      value = 3;
+
+    /* store the new value */
+    pure DotPosition = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'Divisor' stores the ratio for the display value.
+  $rect <550,90,730,130>
+  property int32 Divisor = 1;
+
+  $rect <550,130,730,170>
+  onset Divisor
+  {
+    /* check if the given value differs from the current value */
+    if ( pure Divisor == value )
+      return;
+
+    /* check limits of the given value */
+    if ( value < 1 )
+      value = 1;
+    if ( value > 1000 )
+      value = 1000;
+
+    /* store the new value */
+    pure Divisor = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // Method to format a string based on the given aValue and the current @DotPosition \
+  // and @Divisor.
+  $rect <0,260,180,300>
+  method string formatValueString( arg int32 aValue )
+  {
+    /* calculate the value to display */
+    var int32 val = aValue / pure Divisor;
+    var int32 abs = val;
+    if ( val < 0 )
+      abs = -val;
+
+    /* format a string with decimal point if needed */
+    if ( pure DotPosition == 1 )
+      return string( val / 10, 1 ) + "." + string( abs % 10, 1 );
+    else if ( pure DotPosition == 2 )
+      return string( val / 100, 1 ) + "." + string( abs % 100, 2 );
+    else if ( pure DotPosition == 3 )
+      return string( val / 1000, 1 ) + "." + string( abs % 1000, 3 );
+
+    return string( val );
+  }
+
+  // The property 'BarSize' defines the height of the bar in pixel.
+  $rect <730,0,910,40>
+  property int32 BarSize = Flat::BarSize;
+
+  $rect <730,40,910,80>
+  onset BarSize
+  {
+    /* check if the given value differs from the current value */
+    if ( pure BarSize == value )
+      return;
+
+    /* check limits of the given value */
+    if ( value < 0 )
+      value = 0;
+
+    /* store the new value */
+    pure BarSize = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The class 'HorzBar' implements a widget to illustrate a value by using an animated \
+  // colored horizontal bar.
+  // The property 'CurrentValue' represents the momentary value of the widget and \
+  // corresponds to the position of the bar. The supported value range of the horizontal \
+  // bar can be defined by setting the properties 'MinValue' and 'MaxValue'.
+  // Optionally, the widget displays the current value as text. The properties 'DotPosition' \
+  // and 'Divisor' can be used to configure the value text display.
+  // A horizontal bar can be connected with an Int32 'Outlet' property to show the \
+  // current value of this property.
+  // The height of the horizontal bar can be configured via the property 'BarSize'.
+  // Additionally, the colors of the widget can be configured individually by setting \
+  // the properties 'BackColor', 'BarColor' and 'TextColor'.
+  note legend Note
+  {
+    attr Bounds = <10,430,950,590>;
+  }
+
+  // The property 'BackColor' defines the background color of the widget. The property \
+  // is used to assign a color independent from the current theme color.
+  $rect <370,180,550,220>
+  property color BackColor = Flat::ColorOfBody;
+
+  $rect <370,220,550,260>
+  onset BackColor
+  {
+    /* store the new value */
+    pure BackColor = value;
+
+    /* ...and colorize the affected members of the widget */
+    Rectangle.Color  = value;
+
+
+
+  }
+
+  // The property 'BarColor' defines the color of the widgets indicator bar. The \
+  // property is used to assign a color independent from the current theme color.
+  $rect <550,180,730,220>
+  property color BarColor = Flat::ColorOfTheme;
+
+  $rect <550,220,730,260>
+  onset BarColor
+  {
+    /* store the new value */
+    pure BarColor = value;
+
+    /* ...and colorize the affected members of the widget */
+    Bar.Color   = value;
+
+  }
+
+  // The property 'TextColor' defines the color of the widgets text members. The \
+  // property is used to assign a color independent from the current theme color.
+  $rect <730,180,910,220>
+  property color TextColor = Flat::ColorOfTheme;
+
+  $rect <730,220,910,260>
+  onset TextColor
+  {
+    /* store the new value */
+    pure TextColor = value;
+
+    /* ...and colorize the affected members of the widget */
+    BarText.Color = value;
+
+  }
+
+  $reorder UpdateViewState 44
+}
+
+$rect <570,690,770,730>
+$output false
+resource Resources::Bitmap Coordinates
+{
+  attr bitmapfile FileName = .\Resources\coordinates.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+$rect <570,730,770,770>
+$output false
+resource Resources::Bitmap ConfigTR
+{
+  attr bitmapfile FileName = .\Resources\ConfigTR.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+$rect <570,770,770,810>
+$output false
+resource Resources::Bitmap ConfigBL
+{
+  attr bitmapfile FileName = .\Resources\ConfigBL.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+$rect <570,810,770,850>
+$output false
+resource Resources::Bitmap ConfigTop
+{
+  attr bitmapfile FileName = .\Resources\ConfigTop.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
+}
+
+$rect <570,850,770,890>
+$output false
+resource Resources::Bitmap ConfigWaste
+{
+  attr bitmapfile FileName = .\Resources\ConfigWaste.png;
+  attr alphafile AlphaName;
+  attr framesize FrameSize;
+  attr framedelay FrameDelay;
 }
