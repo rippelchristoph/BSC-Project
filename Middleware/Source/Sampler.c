@@ -64,17 +64,8 @@
  * SECTION: typedef
  ****************************************************************************/
  /****************************************************************************
- *	_TYPE: TSampler
+ *	_ENUM: ESamplerStates
  ****************************************************************************/
-typedef struct Sampler {
-	TListHeader* Queue;
-	ESamplerStates State;
-	TWellData** Well;
-	char* ErrorMessage;
-}TSampler;
-/****************************************************************************
-*	_ENUM: ESamplerStates
-****************************************************************************/
 typedef enum SamplerStates {
 	Wait,
 	Home,
@@ -87,8 +78,20 @@ typedef enum SamplerStates {
 	BackOut,
 	DrawerClose,
 
-	ERROR
+	Sampler_ERROR
 }ESamplerStates;
+ 
+ /****************************************************************************
+ *	_TYPE: TSampler
+ ****************************************************************************/
+typedef struct Sampler {
+	TBSCConfig* Config;
+	TListHeader* Queue;
+	ESamplerStates State;
+	TWellData** Well;
+	char* ErrorMessage;
+}TSampler;
+
 #endif
 
 /*

@@ -43,7 +43,7 @@
 ****************************************************************************/
 typedef struct ListNode {
 	void* Data;
-	struct ListNode* Next
+	struct ListNode* Next;
 } TListNode;
 
 /****************************************************************************
@@ -196,11 +196,12 @@ ListRemoveByDataPointer (
 /****************************************************************************
  * FUNCTION: ListIsNotEmty
  *
- *   DESCRIPTION:
- *     PARAMETER: aList - The Adress of the List Header
- *
- *   RETURN:
- *     Returns TRUE if the List is not empty, FALSE if the List is empty
+ * DESCRIPTION:
+ *   Function checks if the List is Empty
+ * PARAMETER:
+ *   aList - The Adress of the List Header
+ * RETURN:
+ *   Returns TRUE if the List is not empty, FALSE if the List is empty
  ****************************************************************************/
 
 PUBLIC TBoolean

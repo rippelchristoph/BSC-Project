@@ -53,7 +53,7 @@
 ****************************************************************************/
 typedef struct ListNode {
 	void* Data;
-	struct ListNode* Next
+	struct ListNode* Next;
 } TListNode;
 
 /****************************************************************************
@@ -350,7 +350,7 @@ ListRemoveByDataPointer (
  *   Returns TRUE if the List is not empty, FALSE if the List is empty
  ****************************************************************************/
 PUBLIC TBoolean
-ListNotEmty (
+ListIsNotEmty (
   TListHeader * aList )
 {
 	if (aList->Len == 0) {

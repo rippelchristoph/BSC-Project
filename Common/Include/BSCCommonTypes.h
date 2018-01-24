@@ -31,4 +31,34 @@ typedef struct WellData {
 	int Origin;
 } TWellData;
 
+/****************************************************************************
+* TYPE: BSCConfig
+*
+* DESCRIPTION:
+*   Configruation type that keeps all values that the BSCController and some
+*   classes beneath need. To add another value, you have to add it in the
+*   BSCConfig type, the array and the #define with the corresponding index
+*   and the switch/case statement
+****************************************************************************/
+
+typedef struct BSCConfig {
+	int NWellX;
+	int NWellY;
+
+	double ZDown;
+	double ZUp;
+
+	double WellZeroX;
+	double WellZeroY;
+
+	double WellEndX;
+	double WellEndY;
+
+	double WaistPosX;
+	double WaistPosY;
+	double WaistPosZ;
+
+	int NOrigins;
+} TBSCConfig;
+
 #endif // !BSCCOMMONTYPES_H

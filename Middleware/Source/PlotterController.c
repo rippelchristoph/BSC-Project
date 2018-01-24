@@ -23,7 +23,6 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "BSCController.h"
 
 /** HEADER ******************************************************************
  */
@@ -34,6 +33,7 @@
  ****************************************************************************/
 #include "HtlStdDef.h"
 #include "SerialConnection.h"
+#include "BSCCommonTypes.h"
 
 /****************************************************************************
 * SECTION: #define
