@@ -54,7 +54,7 @@
 
 
 
-#include "BSCController.h"
+//#include "BSCController.h"
 
 /* real values from touch */
 #define Y_MIN    0 //!!!!!!!!!!!!
@@ -468,7 +468,7 @@ int main( int argc, char** argv )
   pthread_attr_destroy( &threadAttr );
   sleep( 1 );
 
-  TBSCController* BSCController = newBSCController();
+  //TBSCController* BSCController = newBSCController();
 
   /* start the EmWi main loop and process all user inputs, timers and signals */
   EwPrint( "Start EmWi Main Loop...                      " );
@@ -480,7 +480,7 @@ int main( int argc, char** argv )
     int events  = 0;
     XPoint lastPos = {0,0};
 
-	ProcessBSCController(BSCController);
+	//ProcessBSCController(BSCController);
 
     /* receive keyboard events and provide it to the application */
     cmd = GetKeyCommand();
