@@ -11,13 +11,13 @@ APP_FILE           = EmWiApplication
 ###############################################################################
 # GENERAL SETTINGS & PATHS
 ###############################################################################
-BUILD_PATH        = ./BuildEnvironment/RaspberryPi/Build
+BUILD_PATH        = ../Build
 
-EMWI_APP_PATH     = ./BuildEnvironment/RaspberryPi/Template/GeneratedCode
-EMWI_RTE_PATH     = ./BuildEnvironment/RaspberryPi/PlatformPackage/RTE
-EMWI_GFX_PATH     = ./BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888
-OBJ_PATH          = ./BuildEnvironment/RaspberryPi/Template/obj
-BIN_PATH          = ./BuildEnvironment/RaspberryPi/Template
+EMWI_APP_PATH     = ./GeneratedCode
+EMWI_RTE_PATH     = ../PlatformPackage/RTE
+EMWI_GFX_PATH     = ../PlatformPackage/RGBA8888
+OBJ_PATH          = ./obj
+BIN_PATH          = .
 
 SDK_PATH          = /opt/vc
 LIB_PATH          = $(SDK_PATH)/lib
@@ -44,10 +44,9 @@ include $(EMWI_RTE_PATH)/ewrte.inc
 vpath %.c           $(EMWI_APP_PATH)                                           \
                     $(EMWI_RTE_PATH)                                           \
                     $(EMWI_GFX_PATH)                                           \
-		    ./Common/Source/					       \
-		    ./Middleware/Source/				       \
-		    ./Platforms/RaspberryPi/Source			       \
-
+		    ../../../Common/Source/				\
+		    ../../../Middleware/Source/				       \
+		    ../../../Platforms/RaspberryPi/Source			\
 
 ##############################################################################
 # EMBEDDED WIZARD - APPLICATION DEMO
@@ -87,6 +86,9 @@ INCLUDES =                                                                     \
             -I$(EMWI_RTE_PATH)                                                 \
             -I$(EMWI_GFX_PATH)                                                 \
             -I$(SDK_PATH)/include                                              \
+	    -I../../../Common/Include/				\
+	    -I../../../Middleware/Include/				       \
+	    -I../../../Platforms/RaspberryPi/Include/			\
 
 
 ###############################################################################
