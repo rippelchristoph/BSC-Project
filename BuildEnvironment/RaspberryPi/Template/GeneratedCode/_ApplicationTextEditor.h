@@ -115,6 +115,7 @@ EW_DEFINE_FIELDS( ApplicationTextEditor, TemplatesTextEditor )
   EW_OBJECT  ( Caret,           ViewsLine )
   EW_PROPERTY( OnChange,        XSlot )
   EW_PROPERTY( String,          XString )
+  EW_PROPERTY( Color,           XColor )
   EW_PROPERTY( Font,            ResourcesFont )
   EW_PROPERTY( WrapText,        XBool )
   EW_VARIABLE( autoScroll,      XBool )
@@ -237,6 +238,9 @@ XString ApplicationTextEditor_OnGetString( ApplicationTextEditor _this );
 
 /* 'C' function for method : 'Application::TextEditor.OnSetString()' */
 void ApplicationTextEditor_OnSetString( ApplicationTextEditor _this, XString value );
+
+/* 'C' function for method : 'Application::TextEditor.OnSetColor()' */
+void ApplicationTextEditor_OnSetColor( ApplicationTextEditor _this, XColor value );
 
 /* 'C' function for method : 'Application::TextEditor.OnSetFont()' */
 void ApplicationTextEditor_OnSetFont( ApplicationTextEditor _this, ResourcesFont 

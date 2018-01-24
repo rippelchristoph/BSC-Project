@@ -41,6 +41,7 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
+#include "_ApplicationAActionButton.h"
 #include "_ApplicationClock.h"
 #include "_ApplicationNumKeyboard.h"
 #include "_ApplicationSampleController.h"
@@ -48,7 +49,6 @@
 #include "_CoreGroup.h"
 #include "_CorePropertyObserver.h"
 #include "_CoreSystemEventHandler.h"
-#include "_FlatActionButton.h"
 #include "_ViewsRectangle.h"
 #include "_ViewsWarpImage.h"
 
@@ -104,10 +104,10 @@ EW_DEFINE_FIELDS( ApplicationControllMenu, CoreGroup )
   EW_OBJECT  ( Temperature,     ApplicationTemperature )
   EW_OBJECT  ( NuOfCircuitsObserver, CorePropertyObserver )
   EW_ARRAY   ( SampleController, ApplicationSampleController, [6])
-  EW_OBJECT  ( Btn_Config,      FlatActionButton )
-  EW_OBJECT  ( Btn_NewWell,     FlatActionButton )
+  EW_OBJECT  ( Btn_Config,      ApplicationAActionButton )
+  EW_OBJECT  ( Btn_NewWell,     ApplicationAActionButton )
   EW_PROPERTY( Config,          ApplicationConfig )
-  EW_OBJECT  ( Btn_StopAll,     FlatActionButton )
+  EW_OBJECT  ( Btn_StopAll,     ApplicationAActionButton )
   EW_OBJECT  ( RemainingTime,   CoreSystemEventHandler )
 EW_END_OF_FIELDS( ApplicationControllMenu )
 

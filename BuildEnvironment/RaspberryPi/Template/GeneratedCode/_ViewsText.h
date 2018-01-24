@@ -241,9 +241,6 @@ void ViewsText_OnSetString( ViewsText _this, XString value );
 /* 'C' function for method : 'Views::Text.OnSetFont()' */
 void ViewsText_OnSetFont( ViewsText _this, ResourcesFont value );
 
-/* 'C' function for method : 'Views::Text.OnGetColor()' */
-XColor ViewsText_OnGetColor( ViewsText _this );
-
 /* 'C' function for method : 'Views::Text.OnSetColor()' */
 void ViewsText_OnSetColor( ViewsText _this, XColor value );
 

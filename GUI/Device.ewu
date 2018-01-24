@@ -346,7 +346,7 @@ class DeviceClass : Templates::DeviceClass
   }
 
   $rect <240,130,440,170>
-  property float Temperature = 0;
+  property float Temperature = 0.0;
 
   $rect <440,130,640,170>
   onset Temperature
@@ -388,7 +388,7 @@ class DeviceClass : Templates::DeviceClass
   // about an alternation of its setting or state value.
   $rect <40,130,240,170>
   $output true
-  method void UpdateTemperature( arg string aNewArgument, arg int32 aCircuitNumber )
+  method void UpdateTemperature( arg float aNewArgument )
   {
     // Only if the reported value does differ from the one stored currently in the property.
     if ( aNewArgument != pure Temperature )
@@ -413,9 +413,9 @@ class DeviceClass : Templates::DeviceClass
   {
     switch ( aCircuitNumber )
     {
-      case 0  : return #000000FF;   //schwarz 
-      case 1  : return #FFFFFFFF;  //weiß
-      case 2  : return #FFFF00FF;  //gelb
+      case 0  : return #F38900FF;   //schwarz 
+      case 1  : return #32CE00FF;  //weiß
+      case 2  : return #0736A3FF;  //gelb
       case 3  : return #0000FFFF;  //blau
       case 4  : return #00FFFFFF; //türkis
       case 5  : return #FF00FFFF;  //lila

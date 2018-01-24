@@ -23,8 +23,8 @@
 *
 *******************************************************************************/
 
-#ifndef _ApplicationConfig_H
-#define _ApplicationConfig_H
+#ifndef _ApplicationAToggleButton_H
+#define _ApplicationAToggleButton_H
 
 #ifdef __cplusplus
   extern "C"
@@ -41,24 +41,16 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
-#include "_ApplicationAActionButton.h"
-#include "_ApplicationConfigPosition.h"
-#include "_ApplicationNumKeyboard.h"
-#include "_ApplicationTextEditor.h"
 #include "_CoreGroup.h"
-#include "_ViewsRectangle.h"
+#include "_CoreSimpleTouchHandler.h"
+#include "_ViewsFrame.h"
+#include "_ViewsImage.h"
 #include "_ViewsText.h"
 
-/* Forward declaration of the class Application::Config */
-#ifndef _ApplicationConfig_
-  EW_DECLARE_CLASS( ApplicationConfig )
-#define _ApplicationConfig_
-#endif
-
-/* Forward declaration of the class Application::ControllMenu */
-#ifndef _ApplicationControllMenu_
-  EW_DECLARE_CLASS( ApplicationControllMenu )
-#define _ApplicationControllMenu_
+/* Forward declaration of the class Application::AToggleButton */
+#ifndef _ApplicationAToggleButton_
+  EW_DECLARE_CLASS( ApplicationAToggleButton )
+#define _ApplicationAToggleButton_
 #endif
 
 /* Forward declaration of the class Core::KeyPressHandler */
@@ -85,23 +77,36 @@
 #define _GraphicsCanvas_
 #endif
 
+/* Forward declaration of the class Resources::Bitmap */
+#ifndef _ResourcesBitmap_
+  EW_DECLARE_CLASS( ResourcesBitmap )
+#define _ResourcesBitmap_
+#endif
 
-/* Deklaration of class : 'Application::Config' */
-EW_DEFINE_FIELDS( ApplicationConfig, CoreGroup )
-  EW_OBJECT  ( Rectangle,       ViewsRectangle )
-  EW_OBJECT  ( Btn_Ok,          ApplicationAActionButton )
-  EW_OBJECT  ( TextEditor,      ApplicationTextEditor )
-  EW_OBJECT  ( NumKeyboard,     ApplicationNumKeyboard )
-  EW_OBJECT  ( Text,            ViewsText )
-  EW_PROPERTY( ControllMenue,   ApplicationControllMenu )
-  EW_OBJECT  ( ConfigTop,       ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigTR,        ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigBL,        ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigWaste,     ApplicationConfigPosition )
-EW_END_OF_FIELDS( ApplicationConfig )
 
-/* Virtual Method Table (VMT) for the class : 'Application::Config' */
-EW_DEFINE_METHODS( ApplicationConfig, CoreGroup )
+/* Toggle button widget with a flat design. The widget is used to switch a boolean 
+   value on and off. */
+EW_DEFINE_FIELDS( ApplicationAToggleButton, CoreGroup )
+  EW_PROPERTY( OnSwitchOff,     XSlot )
+  EW_PROPERTY( OnSwitchOn,      XSlot )
+  EW_PROPERTY( OnChange,        XSlot )
+  EW_PROPERTY( Outlet,          XRef )
+  EW_OBJECT  ( TouchHandler,    CoreSimpleTouchHandler )
+  EW_OBJECT  ( Frame,           ViewsFrame )
+  EW_OBJECT  ( Image,           ViewsImage )
+  EW_OBJECT  ( CaptionText,     ViewsText )
+  EW_PROPERTY( Icon,            ResourcesBitmap )
+  EW_PROPERTY( Caption,         XString )
+  EW_PROPERTY( ItemColor,       XColor )
+  EW_PROPERTY( ItemColorActive, XColor )
+  EW_PROPERTY( IconColorActive, XColor )
+  EW_PROPERTY( IconColor,       XColor )
+  EW_PROPERTY( Active,          XBool )
+  EW_RESERVED( 3 )
+EW_END_OF_FIELDS( ApplicationAToggleButton )
+
+/* Virtual Method Table (VMT) for the class : 'Application::AToggleButton' */
+EW_DEFINE_METHODS( ApplicationAToggleButton, CoreGroup )
   EW_METHOD( initLayoutContext, void )( CoreRectView _this, XRect aBounds, CoreOutline 
     aOutline )
   EW_METHOD( GetRoot,           CoreRoot )( CoreView _this )
@@ -121,14 +126,14 @@ EW_DEFINE_METHODS( ApplicationConfig, CoreGroup )
   EW_METHOD( DispatchEvent,     XObject )( CoreGroup _this, CoreEvent aEvent )
   EW_METHOD( BroadcastEvent,    XObject )( CoreGroup _this, CoreEvent aEvent, XSet 
     aFilter )
-  EW_METHOD( UpdateLayout,      void )( ApplicationConfig _this, XPoint aSize )
-  EW_METHOD( UpdateViewState,   void )( ApplicationConfig _this, XSet aState )
+  EW_METHOD( UpdateLayout,      void )( ApplicationAToggleButton _this, XPoint aSize )
+  EW_METHOD( UpdateViewState,   void )( ApplicationAToggleButton _this, XSet aState )
   EW_METHOD( InvalidateArea,    void )( CoreGroup _this, XRect aArea )
   EW_METHOD( Restack,           void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
   EW_METHOD( Add,               void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
-EW_END_OF_METHODS( ApplicationConfig )
+EW_END_OF_METHODS( ApplicationAToggleButton )
 
 /* The method UpdateLayout() is invoked automatically after the size of the component 
    has been changed. This method can be overridden and filled with logic to perform 
@@ -137,7 +142,8 @@ EW_END_OF_METHODS( ApplicationConfig )
    Usually, all enclosed views are arranged automatically accordingly to their @Layout 
    property. UpdateLayout() gives the derived components a chance to extend this 
    automatism by a user defined algorithm. */
-void ApplicationConfig_UpdateLayout( ApplicationConfig _this, XPoint aSize );
+void ApplicationAToggleButton_UpdateLayout( ApplicationAToggleButton _this, XPoint 
+  aSize );
 
 /* The method UpdateViewState() is invoked automatically after the state of the 
    component has been changed. This method can be overridden and filled with logic 
@@ -153,31 +159,31 @@ void ApplicationConfig_UpdateLayout( ApplicationConfig _this, XPoint aSize );
    state 'on' or 'off' and change accordingly the location of the slider, etc.
    Usually, this method will be invoked automatically by the framework. Optionally 
    you can request its invocation by using the method @InvalidateViewState(). */
-void ApplicationConfig_UpdateViewState( ApplicationConfig _this, XSet aState );
+void ApplicationAToggleButton_UpdateViewState( ApplicationAToggleButton _this, XSet 
+  aState );
 
-/* 'C' function for method : 'Application::Config.onBtn_Ok()' */
-void ApplicationConfig_onBtn_Ok( ApplicationConfig _this, XObject sender );
+/* This internal slot method is used to receive the corresponding signals form the 
+   touch handler. */
+void ApplicationAToggleButton_enterLeaveSlot( ApplicationAToggleButton _this, XObject 
+  sender );
 
-/* 'C' function for method : 'Application::Config.OnSetControllMenue()' */
-void ApplicationConfig_OnSetControllMenue( ApplicationConfig _this, ApplicationControllMenu 
+/* This internal slot method is used to receive the corresponding signals form the 
+   touch handler. */
+void ApplicationAToggleButton_pressReleaseSlot( ApplicationAToggleButton _this, 
+  XObject sender );
+
+/* 'C' function for method : 'Application::AToggleButton.OnSetActive()' */
+void ApplicationAToggleButton_OnSetActive( ApplicationAToggleButton _this, XBool 
   value );
 
-/* 'C' function for method : 'Application::Config.onNextWaste()' */
-void ApplicationConfig_onNextWaste( ApplicationConfig _this, XObject sender );
-
-/* 'C' function for method : 'Application::Config.onNextTR()' */
-void ApplicationConfig_onNextTR( ApplicationConfig _this, XObject sender );
-
-/* 'C' function for method : 'Application::Config.onNextBL()' */
-void ApplicationConfig_onNextBL( ApplicationConfig _this, XObject sender );
-
-/* 'C' function for method : 'Application::Config.onNextTop()' */
-void ApplicationConfig_onNextTop( ApplicationConfig _this, XObject sender );
+/* 'C' function for method : 'Application::AToggleButton.OnSetCaption()' */
+void ApplicationAToggleButton_OnSetCaption( ApplicationAToggleButton _this, XString 
+  value );
 
 #ifdef __cplusplus
   }
 #endif
 
-#endif /* _ApplicationConfig_H */
+#endif /* _ApplicationAToggleButton_H */
 
 /* Embedded Wizard */

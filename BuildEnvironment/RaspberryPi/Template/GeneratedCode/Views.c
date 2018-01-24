@@ -2200,12 +2200,6 @@ void ViewsText_OnSetFont( ViewsText _this, ResourcesFont value )
   EwPostSignal( EwNewSlot( _this, ViewsText_preReparseSlot ), ((XObject)_this ));
 }
 
-/* 'C' function for method : 'Views::Text.OnGetColor()' */
-XColor ViewsText_OnGetColor( ViewsText _this )
-{
-  return _this->ColorTL;
-}
-
 /* 'C' function for method : 'Views::Text.OnSetColor()' */
 void ViewsText_OnSetColor( ViewsText _this, XColor value )
 {

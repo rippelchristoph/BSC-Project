@@ -78,6 +78,7 @@
 /* Label widget with a flat design. The simple widget is used to place some text. */
 EW_DEFINE_FIELDS( FlatLabel, CoreGroup )
   EW_OBJECT  ( Label,           ViewsText )
+  EW_PROPERTY( String,          XString )
   EW_PROPERTY( TextColor,       XColor )
 EW_END_OF_FIELDS( FlatLabel )
 
@@ -110,6 +111,12 @@ EW_DEFINE_METHODS( FlatLabel, CoreGroup )
   EW_METHOD( Add,               void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
 EW_END_OF_METHODS( FlatLabel )
+
+/* 'C' function for method : 'Flat::Label.OnSetString()' */
+void FlatLabel_OnSetString( FlatLabel _this, XString value );
+
+/* 'C' function for method : 'Flat::Label.OnSetTextColor()' */
+void FlatLabel_OnSetTextColor( FlatLabel _this, XColor value );
 
 #ifdef __cplusplus
   }

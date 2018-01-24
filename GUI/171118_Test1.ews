@@ -1,11 +1,12 @@
 $version 1.0
 
+attr active = Application;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Device::I2CHeader;
-attr codeSelEnd = <19,5>;
-attr codeSelStart = <19,5>;
+attr codeInspector = Application::I2CHeader;
+attr codeSelEnd = <0,0>;
+attr codeSelStart = <0,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -40,7 +41,7 @@ view unit Application
 {
   attr enableGrid = true;
   attr grid = 10;
-  attr scrollTo = <-7,552>;
+  attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
@@ -57,15 +58,68 @@ view unit Device
   attr zoom = 1.0;
 }
 
+view class Application::Well
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::SampleController
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::ConfigPosition
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::Config
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::Clock
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = Slot;
+  attr codeSelEnd = <74,0>;
+  attr codeSelStart = <74,0>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
   attr codeInspector = getColor;
-  attr codeSelEnd = <55,2>;
-  attr codeSelStart = <55,2>;
+  attr codeSelEnd = <41,2>;
+  attr codeSelStart = <34,2>;
   attr enableGrid = true;
   attr grid = 10;
-  attr scrollTo = <-7,224>;
+  attr scrollTo = <-7,89>;
   attr zoom = 1.0;
+}
+
+view class Application::WellPart
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 8.0;
 }

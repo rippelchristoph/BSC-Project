@@ -41,12 +41,13 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
+#include "_ApplicationAActionButton.h"
+#include "_ApplicationAHorzBar.h"
+#include "_ApplicationAIndicator.h"
 #include "_ApplicationTextEditor.h"
 #include "_CoreGroup.h"
 #include "_CorePropertyObserver.h"
-#include "_FlatActionButton.h"
-#include "_FlatHorzBar.h"
-#include "_FlatIndicator.h"
+#include "_FlatLabel.h"
 #include "_ViewsBorder.h"
 #include "_ViewsLine.h"
 #include "_ViewsText.h"
@@ -86,14 +87,15 @@
 EW_DEFINE_FIELDS( ApplicationSampleController, CoreGroup )
   EW_OBJECT  ( Border,          ViewsBorder )
   EW_OBJECT  ( NameText,        ViewsText )
-  EW_OBJECT  ( BtnStart,        FlatActionButton )
-  EW_OBJECT  ( BtnStop,         FlatActionButton )
-  EW_OBJECT  ( HorzBar,         FlatHorzBar )
-  EW_OBJECT  ( Indicator,       FlatIndicator )
+  EW_OBJECT  ( BtnStart,        ApplicationAActionButton )
+  EW_OBJECT  ( BtnStop,         ApplicationAActionButton )
+  EW_OBJECT  ( Indicator,       ApplicationAIndicator )
   EW_OBJECT  ( TextEditor,      ApplicationTextEditor )
   EW_OBJECT  ( Line,            ViewsLine )
   EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
   EW_PROPERTY( RemainingTime,   XInt32 )
+  EW_OBJECT  ( HorzBar,         ApplicationAHorzBar )
+  EW_OBJECT  ( Label,           FlatLabel )
   EW_PROPERTY( NameProperty,    XChar )
   EW_PROPERTY( EnabledProperty, XBool )
   EW_RESERVED( 1 )

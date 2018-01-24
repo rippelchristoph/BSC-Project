@@ -24,58 +24,28 @@
 *******************************************************************************/
 
 #include "ewlocale.h"
-#include "_CoreSimpleTouchHandler.h"
 #include "_CoreView.h"
-#include "_EffectsInt32Effect.h"
-#include "_FlatActionButton.h"
-#include "_FlatHorzBar.h"
-#include "_FlatHorzSlider.h"
-#include "_FlatIndicator.h"
+#include "_FlatLabel.h"
 #include "_FlatMinMaxText.h"
-#include "_ResourcesBitmap.h"
 #include "_ResourcesFont.h"
-#include "_ViewsFrame.h"
-#include "_ViewsImage.h"
-#include "_ViewsRectangle.h"
 #include "_ViewsText.h"
 #include "Core.h"
-#include "Effects.h"
 #include "Flat.h"
 #include "Views.h"
 
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x00000040, /* ratio 81.25 % */
-  0xB8001500, 0x00000452, 0x00EA0021, 0xC010B3A0, 0x0C6E001B, 0xB0303002, 0x001A8020,
-  0x502C4860, 0x890BA0D1, 0x04663A09, 0x49A351F0, 0x02032889, 0x00000000
+  0x00000028, /* ratio 100.00 % */
+  0xB8001300, 0x00000452, 0x00C20026, 0x0CA00310, 0x01063600, 0x10682408, 0x00170006,
+  0xC88C6A2C, 0x00002031, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
-static const XRect _Const0000 = {{ 0, 0 }, { 120, 30 }};
-static const XPoint _Const0001 = { 0, 30 };
-static const XPoint _Const0002 = { 120, 30 };
-static const XPoint _Const0003 = { 120, 0 };
-static const XPoint _Const0004 = { 0, 0 };
-static const XStringRes _Const0005 = { _StringsDefault0, 0x0003 };
-static const XRect _Const0006 = {{ 0, 0 }, { 30, 30 }};
-static const XRect _Const0007 = {{ 0, 0 }, { 160, 70 }};
-static const XPoint _Const0008 = { 60, 72 };
-static const XPoint _Const0009 = { 126, 72 };
-static const XPoint _Const000A = { 126, 40 };
-static const XPoint _Const000B = { 60, 40 };
-static const XRect _Const000C = {{ 0, 34 }, { 160, 40 }};
-static const XRect _Const000D = {{ 70, 20 }, { 90, 40 }};
-static const XRect _Const000E = {{ 60, 0 }, { 100, 30 }};
-static const XStringRes _Const000F = { _StringsDefault0, 0x000D };
-static const XRect _Const0010 = {{ 0, 0 }, { 100, 34 }};
-static const XStringRes _Const0011 = { _StringsDefault0, 0x0013 };
-static const XRect _Const0012 = {{ 0, 0 }, { 160, 50 }};
-static const XRect _Const0013 = {{ 0, 0 }, { 160, 20 }};
-static const XRect _Const0014 = {{ 0, 0 }, { 90, 20 }};
-static const XRect _Const0015 = {{ 80, 20 }, { 98, 40 }};
-static const XRect _Const0016 = {{ 0, 0 }, { 50, 20 }};
-static const XStringRes _Const0017 = { _StringsDefault0, 0x0018 };
+static const XRect _Const0000 = {{ 0, 0 }, { 140, 30 }};
+static const XStringRes _Const0001 = { _StringsDefault0, 0x0003 };
+static const XRect _Const0002 = {{ 0, 0 }, { 50, 20 }};
+static const XStringRes _Const0003 = { _StringsDefault0, 0x000C };
 
 /* Color constant representing the main theme color of the widget kit. If you want 
    to change this color within your project, just create a variant of this color 
@@ -2950,186 +2920,6 @@ EW_END_OF_FONT_RES( FlatFontXL )
 /* Table with links to derived variants of the font resource : 'Flat::FontXL' */
 EW_RES_WITHOUT_VARIANTS( FlatFontXL )
 
-/* Initializer for the class 'Flat::ActionButton' */
-void FlatActionButton__Init( FlatActionButton _this, XObject aLink, XHandle aArg )
-{
-  /* At first initialize the super class ... */
-  CoreGroup__Init( &_this->_Super, aLink, aArg );
-
-  /* ... then construct all embedded objects */
-  CoreSimpleTouchHandler__Init( &_this->TouchHandler, &_this->_XObject, 0 );
-  ViewsFrame__Init( &_this->Frame, &_this->_XObject, 0 );
-  ViewsText__Init( &_this->CaptionText, &_this->_XObject, 0 );
-
-  /* Setup the VMT pointer */
-  _this->_VMT = EW_CLASS( FlatActionButton );
-
-  /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0000 );
-  CoreView_OnSetLayout((CoreView)&_this->TouchHandler, CoreLayoutAlignToBottom | 
-  CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
-  | CoreLayoutResizeVert );
-  CoreQuadView__OnSetPoint4( &_this->TouchHandler, _Const0001 );
-  CoreQuadView__OnSetPoint3( &_this->TouchHandler, _Const0002 );
-  CoreQuadView__OnSetPoint2( &_this->TouchHandler, _Const0003 );
-  CoreQuadView__OnSetPoint1( &_this->TouchHandler, _Const0004 );
-  CoreView_OnSetLayout((CoreView)&_this->Frame, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
-  | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
-  );
-  CoreRectView__OnSetBounds( &_this->Frame, _Const0000 );
-  ViewsFrame_OnSetColor( &_this->Frame, FlatColorOfTouch );
-  CoreView_OnSetLayout((CoreView)&_this->CaptionText, CoreLayoutAlignToBottom | 
-  CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
-  | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->CaptionText, _Const0000 );
-  ViewsText_OnSetString( &_this->CaptionText, EwLoadString( &_Const0005 ));
-  ViewsText_OnSetColor( &_this->CaptionText, FlatColorOfBackground );
-  EwRetainString( &_this->Caption, EwLoadString( &_Const0005 ));
-  _this->ItemColor = FlatColorOfTouch;
-  _this->TextColor = FlatColorOfBackground;
-  _this->ItemColorActive = FlatColorOfTheme;
-  CoreGroup__Add( _this, ((CoreView)&_this->TouchHandler ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->Frame ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->CaptionText ), 0 );
-  _this->TouchHandler.OnLeave = EwNewSlot( _this, FlatActionButton_enterLeaveSlot 
-  );
-  _this->TouchHandler.OnEnter = EwNewSlot( _this, FlatActionButton_enterLeaveSlot 
-  );
-  _this->TouchHandler.OnRelease = EwNewSlot( _this, FlatActionButton_pressReleaseSlot 
-  );
-  _this->TouchHandler.OnPress = EwNewSlot( _this, FlatActionButton_pressReleaseSlot 
-  );
-  ViewsFrame_OnSetBitmap( &_this->Frame, EwLoadResource( &FlatFlatFrame, ResourcesBitmap 
-  ));
-  ViewsText_OnSetFont( &_this->CaptionText, EwLoadResource( &FlatFontM, ResourcesFont 
-  ));
-}
-
-/* Re-Initializer for the class 'Flat::ActionButton' */
-void FlatActionButton__ReInit( FlatActionButton _this )
-{
-  /* At first re-initialize the super class ... */
-  CoreGroup__ReInit( &_this->_Super );
-
-  /* ... then re-construct all embedded objects */
-  CoreSimpleTouchHandler__ReInit( &_this->TouchHandler );
-  ViewsFrame__ReInit( &_this->Frame );
-  ViewsText__ReInit( &_this->CaptionText );
-}
-
-/* Finalizer method for the class 'Flat::ActionButton' */
-void FlatActionButton__Done( FlatActionButton _this )
-{
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( FlatActionButton );
-
-  /* Finalize all embedded objects */
-  CoreSimpleTouchHandler__Done( &_this->TouchHandler );
-  ViewsFrame__Done( &_this->Frame );
-  ViewsText__Done( &_this->CaptionText );
-
-  /* Release all used strings */
-  EwReleaseString( &_this->Caption );
-
-  /* Don't forget to deinitialize the super class ... */
-  CoreGroup__Done( &_this->_Super );
-}
-
-/* Garbage Collector method for the class 'Flat::ActionButton' */
-void FlatActionButton__Mark( FlatActionButton _this )
-{
-  EwMarkSlot( _this->OnAction );
-  EwMarkObject( &_this->TouchHandler );
-  EwMarkObject( &_this->Frame );
-  EwMarkObject( &_this->CaptionText );
-
-  /* Give the super class a chance to mark its objects and references */
-  CoreGroup__Mark( &_this->_Super );
-}
-
-/* The method UpdateViewState() is invoked automatically after the state of the 
-   component has been changed. This method can be overridden and filled with logic 
-   to ensure the visual aspect of the component does reflect its current state. 
-   For example, the 'enabled' state of the component can affect its colors (disabled 
-   components may appear pale). In this case the logic of the method should modify 
-   the respective color properties accordingly to the current 'enabled' state. 
-   The current state of the component is passed as a set in the parameter aState. 
-   It reflects the very basic component state like its visibility or the ability 
-   to react to user inputs. Beside this common state, the method can also involve 
-   any other variables used in the component as long as they reflect its current 
-   state. For example, the toggle switch component can take in account its toggle 
-   state 'on' or 'off' and change accordingly the location of the slider, etc.
-   Usually, this method will be invoked automatically by the framework. Optionally 
-   you can request its invocation by using the method @InvalidateViewState(). */
-void FlatActionButton_UpdateViewState( FlatActionButton _this, XSet aState )
-{
-  if ((( aState & CoreViewStateEnabled ) == CoreViewStateEnabled ))
-  {
-    if ( _this->TouchHandler.Down && _this->TouchHandler.Inside )
-      ViewsFrame_OnSetColor( &_this->Frame, _this->ItemColorActive );
-    else
-      ViewsFrame_OnSetColor( &_this->Frame, _this->ItemColor );
-  }
-  else
-    ViewsFrame_OnSetColor( &_this->Frame, FlatColorOfDisabled );
-}
-
-/* This internal slot method is used to receive the corresponding signals form the 
-   touch handler. */
-void FlatActionButton_enterLeaveSlot( FlatActionButton _this, XObject sender )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( sender );
-
-  CoreGroup_InvalidateViewState((CoreGroup)_this );
-}
-
-/* This internal slot method is used to receive the corresponding signals form the 
-   touch handler. */
-void FlatActionButton_pressReleaseSlot( FlatActionButton _this, XObject sender )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( sender );
-
-  if ( !_this->TouchHandler.Down && _this->TouchHandler.Inside )
-  {
-    EwIdleSignal( _this->OnAction, ((XObject)_this ));
-  }
-}
-
-/* 'C' function for method : 'Flat::ActionButton.OnSetCaption()' */
-void FlatActionButton_OnSetCaption( FlatActionButton _this, XString value )
-{
-  EwRetainString( &_this->Caption, value );
-  ViewsText_OnSetString( &_this->CaptionText, value );
-}
-
-/* Variants derived from the class : 'Flat::ActionButton' */
-EW_DEFINE_CLASS_VARIANTS( FlatActionButton )
-EW_END_OF_CLASS_VARIANTS( FlatActionButton )
-
-/* Virtual Method Table (VMT) for the class : 'Flat::ActionButton' */
-EW_DEFINE_CLASS( FlatActionButton, CoreGroup, "Flat::ActionButton" )
-  CoreRectView_initLayoutContext,
-  CoreView_GetRoot,
-  CoreGroup_Draw,
-  CoreView_HandleEvent,
-  CoreGroup_CursorHitTest,
-  CoreRectView_ArrangeView,
-  CoreRectView_MoveView,
-  CoreRectView_GetExtent,
-  CoreGroup_ChangeViewState,
-  CoreGroup_OnSetBounds,
-  CoreGroup_OnSetFocus,
-  CoreGroup_DispatchEvent,
-  CoreGroup_BroadcastEvent,
-  CoreGroup_UpdateLayout,
-  FlatActionButton_UpdateViewState,
-  CoreGroup_InvalidateArea,
-  CoreGroup_Restack,
-  CoreGroup_Add,
-EW_END_OF_CLASS( FlatActionButton )
-
 /* Bitmap resources used for the different widgets. If you want to change the bitmaps 
    within your project, just create a variant of these bitmap resources and define 
    the attributes of the bitmap resources according your design ideas. */
@@ -3374,758 +3164,90 @@ EW_END_OF_BITMAP_RES( FlatFlatKnobs )
 /* Table with links to derived variants of the bitmap resource : 'Flat::FlatKnobs' */
 EW_RES_WITHOUT_VARIANTS( FlatFlatKnobs )
 
-/* Initializer for the class 'Flat::Indicator' */
-void FlatIndicator__Init( FlatIndicator _this, XObject aLink, XHandle aArg )
+/* Initializer for the class 'Flat::Label' */
+void FlatLabel__Init( FlatLabel _this, XObject aLink, XHandle aArg )
 {
   /* At first initialize the super class ... */
   CoreGroup__Init( &_this->_Super, aLink, aArg );
 
   /* ... then construct all embedded objects */
-  ViewsRectangle__Init( &_this->Frame, &_this->_XObject, 0 );
-  ViewsImage__Init( &_this->Image, &_this->_XObject, 0 );
+  ViewsText__Init( &_this->Label, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
-  _this->_VMT = EW_CLASS( FlatIndicator );
+  _this->_VMT = EW_CLASS( FlatLabel );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0006 );
-  CoreView_OnSetLayout((CoreView)&_this->Frame, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
+  CoreRectView__OnSetBounds( _this, _Const0000 );
+  CoreView_OnSetLayout((CoreView)&_this->Label, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->Frame, _Const0006 );
-  ViewsRectangle_OnSetColor( &_this->Frame, FlatColorOfBody );
-  CoreView_OnSetLayout((CoreView)&_this->Image, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
-  | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
+  CoreRectView__OnSetBounds( &_this->Label, _Const0000 );
+  ViewsText_OnSetAlignment( &_this->Label, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter 
   );
-  CoreRectView__OnSetBounds( &_this->Image, _Const0006 );
-  ViewsImage_OnSetColor( &_this->Image, FlatColorOfBackground );
-  ViewsImage_OnSetFrameNumber( &_this->Image, 19 );
-  _this->BackColorActive = FlatColorOfTheme;
-  _this->BackColor = FlatColorOfBody;
-  _this->IconColorActive = FlatColorOfBody;
-  _this->IconColor = FlatColorOfDisabled;
-  CoreGroup__Add( _this, ((CoreView)&_this->Frame ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->Image ), 0 );
-  ViewsImage_OnSetBitmap( &_this->Image, EwLoadResource( &FlatFlatDemoIcons, ResourcesBitmap 
-  ));
-  _this->Icon = EwLoadResource( &FlatFlatDemoIcons, ResourcesBitmap );
-}
-
-/* Re-Initializer for the class 'Flat::Indicator' */
-void FlatIndicator__ReInit( FlatIndicator _this )
-{
-  /* At first re-initialize the super class ... */
-  CoreGroup__ReInit( &_this->_Super );
-
-  /* ... then re-construct all embedded objects */
-  ViewsRectangle__ReInit( &_this->Frame );
-  ViewsImage__ReInit( &_this->Image );
-}
-
-/* Finalizer method for the class 'Flat::Indicator' */
-void FlatIndicator__Done( FlatIndicator _this )
-{
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( FlatIndicator );
-
-  /* Finalize all embedded objects */
-  ViewsRectangle__Done( &_this->Frame );
-  ViewsImage__Done( &_this->Image );
-
-  /* Don't forget to deinitialize the super class ... */
-  CoreGroup__Done( &_this->_Super );
-}
-
-/* Garbage Collector method for the class 'Flat::Indicator' */
-void FlatIndicator__Mark( FlatIndicator _this )
-{
-  EwMarkObject( &_this->Frame );
-  EwMarkObject( &_this->Image );
-  EwMarkObject( _this->Icon );
-
-  /* Give the super class a chance to mark its objects and references */
-  CoreGroup__Mark( &_this->_Super );
-}
-
-/* The method UpdateViewState() is invoked automatically after the state of the 
-   component has been changed. This method can be overridden and filled with logic 
-   to ensure the visual aspect of the component does reflect its current state. 
-   For example, the 'enabled' state of the component can affect its colors (disabled 
-   components may appear pale). In this case the logic of the method should modify 
-   the respective color properties accordingly to the current 'enabled' state. 
-   The current state of the component is passed as a set in the parameter aState. 
-   It reflects the very basic component state like its visibility or the ability 
-   to react to user inputs. Beside this common state, the method can also involve 
-   any other variables used in the component as long as they reflect its current 
-   state. For example, the toggle switch component can take in account its toggle 
-   state 'on' or 'off' and change accordingly the location of the slider, etc.
-   Usually, this method will be invoked automatically by the framework. Optionally 
-   you can request its invocation by using the method @InvalidateViewState(). */
-void FlatIndicator_UpdateViewState( FlatIndicator _this, XSet aState )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( aState );
-
-  if ( _this->Active )
-  {
-    ViewsRectangle_OnSetColor( &_this->Frame, _this->BackColorActive );
-    ViewsImage_OnSetColor( &_this->Image, _this->IconColorActive );
-  }
-  else
-  {
-    ViewsRectangle_OnSetColor( &_this->Frame, _this->BackColor );
-    ViewsImage_OnSetColor( &_this->Image, _this->IconColor );
-  }
-}
-
-/* 'C' function for method : 'Flat::Indicator.OnSetActive()' */
-void FlatIndicator_OnSetActive( FlatIndicator _this, XBool value )
-{
-  if ( _this->Active == value )
-    return;
-
-  _this->Active = value;
-  CoreGroup_InvalidateViewState((CoreGroup)_this );
-}
-
-/* Variants derived from the class : 'Flat::Indicator' */
-EW_DEFINE_CLASS_VARIANTS( FlatIndicator )
-EW_END_OF_CLASS_VARIANTS( FlatIndicator )
-
-/* Virtual Method Table (VMT) for the class : 'Flat::Indicator' */
-EW_DEFINE_CLASS( FlatIndicator, CoreGroup, "Flat::Indicator" )
-  CoreRectView_initLayoutContext,
-  CoreView_GetRoot,
-  CoreGroup_Draw,
-  CoreView_HandleEvent,
-  CoreGroup_CursorHitTest,
-  CoreRectView_ArrangeView,
-  CoreRectView_MoveView,
-  CoreRectView_GetExtent,
-  CoreGroup_ChangeViewState,
-  CoreGroup_OnSetBounds,
-  CoreGroup_OnSetFocus,
-  CoreGroup_DispatchEvent,
-  CoreGroup_BroadcastEvent,
-  CoreGroup_UpdateLayout,
-  FlatIndicator_UpdateViewState,
-  CoreGroup_InvalidateArea,
-  CoreGroup_Restack,
-  CoreGroup_Add,
-EW_END_OF_CLASS( FlatIndicator )
-
-/* Initializer for the class 'Flat::HorzSlider' */
-void FlatHorzSlider__Init( FlatHorzSlider _this, XObject aLink, XHandle aArg )
-{
-  /* At first initialize the super class ... */
-  CoreGroup__Init( &_this->_Super, aLink, aArg );
-
-  /* ... then construct all embedded objects */
-  CoreSimpleTouchHandler__Init( &_this->SimpleTouchHandler, &_this->_XObject, 0 );
-  ViewsRectangle__Init( &_this->Rectangle, &_this->_XObject, 0 );
-  ViewsImage__Init( &_this->Thumb, &_this->_XObject, 0 );
-  ViewsText__Init( &_this->ThumbText, &_this->_XObject, 0 );
-  ViewsText__Init( &_this->MoveText, &_this->_XObject, 0 );
-
-  /* Setup the VMT pointer */
-  _this->_VMT = EW_CLASS( FlatHorzSlider );
-
-  /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0007 );
-  _this->MaxValue = 100;
-  _this->CurrentValue = 50;
-  CoreQuadView__OnSetPoint4( &_this->SimpleTouchHandler, _Const0008 );
-  CoreQuadView__OnSetPoint3( &_this->SimpleTouchHandler, _Const0009 );
-  CoreQuadView__OnSetPoint2( &_this->SimpleTouchHandler, _Const000A );
-  CoreQuadView__OnSetPoint1( &_this->SimpleTouchHandler, _Const000B );
-  CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
-  | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const000C );
-  ViewsRectangle_OnSetColor( &_this->Rectangle, FlatColorOfBody );
-  CoreView_OnSetLayout((CoreView)&_this->Thumb, 0 );
-  CoreRectView__OnSetBounds( &_this->Thumb, _Const000D );
-  ViewsImage_OnSetAutoSize( &_this->Thumb, 1 );
-  ViewsImage_OnSetColor( &_this->Thumb, FlatColorOfTouch );
-  ViewsImage_OnSetAlignment( &_this->Thumb, ViewsImageAlignmentAlignHorzCenter | 
-  ViewsImageAlignmentAlignVertCenter );
-  CoreView_OnSetLayout((CoreView)&_this->ThumbText, CoreLayoutAlignToBottom | CoreLayoutAlignToTop 
-  );
-  CoreRectView__OnSetBounds( &_this->ThumbText, _Const000E );
-  ViewsText_OnSetAutoSize( &_this->ThumbText, 1 );
-  ViewsText_OnSetAlignment( &_this->ThumbText, ViewsTextAlignmentAlignHorzCenter 
-  | ViewsTextAlignmentAlignVertBottom );
-  ViewsText_OnSetString( &_this->ThumbText, EwLoadString( &_Const000F ));
-  ViewsText_OnSetColor( &_this->ThumbText, FlatColorOfTouch );
-  CoreRectView__OnSetBounds( &_this->MoveText, _Const0010 );
-  ViewsText_OnSetAutoSize( &_this->MoveText, 1 );
-  ViewsText_OnSetString( &_this->MoveText, EwLoadString( &_Const000F ));
-  ViewsText_OnSetColor( &_this->MoveText, FlatColorOfTouch );
-  _this->ShowCurrent = 1;
-  _this->Divisor = 1;
-  _this->SliderSize = 5;
-  _this->BackColor = FlatColorOfBody;
-  _this->ItemColor = FlatColorOfTouch;
-  _this->TextColor = FlatColorOfTouch;
-  _this->ItemColorActive = FlatColorOfTheme;
-  CoreGroup__Add( _this, ((CoreView)&_this->SimpleTouchHandler ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->Rectangle ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->Thumb ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->ThumbText ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->MoveText ), 0 );
-  _this->SimpleTouchHandler.OnDrag = EwNewSlot( _this, FlatHorzSlider_onDragSlot 
-  );
-  _this->SimpleTouchHandler.OnRelease = EwNewSlot( _this, FlatHorzSlider_onReleaseSlot 
-  );
-  _this->SimpleTouchHandler.OnPress = EwNewSlot( _this, FlatHorzSlider_onPressSlot 
-  );
-  ViewsImage_OnSetBitmap( &_this->Thumb, EwLoadResource( &FlatFlatKnobs, ResourcesBitmap 
-  ));
-  ViewsText_OnSetFont( &_this->ThumbText, EwLoadResource( &FlatFontS, ResourcesFont 
-  ));
-  ViewsText_OnSetFont( &_this->MoveText, EwLoadResource( &FlatFontL, ResourcesFont 
-  ));
-}
-
-/* Re-Initializer for the class 'Flat::HorzSlider' */
-void FlatHorzSlider__ReInit( FlatHorzSlider _this )
-{
-  /* At first re-initialize the super class ... */
-  CoreGroup__ReInit( &_this->_Super );
-
-  /* ... then re-construct all embedded objects */
-  CoreSimpleTouchHandler__ReInit( &_this->SimpleTouchHandler );
-  ViewsRectangle__ReInit( &_this->Rectangle );
-  ViewsImage__ReInit( &_this->Thumb );
-  ViewsText__ReInit( &_this->ThumbText );
-  ViewsText__ReInit( &_this->MoveText );
-}
-
-/* Finalizer method for the class 'Flat::HorzSlider' */
-void FlatHorzSlider__Done( FlatHorzSlider _this )
-{
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( FlatHorzSlider );
-
-  /* Finalize all embedded objects */
-  CoreSimpleTouchHandler__Done( &_this->SimpleTouchHandler );
-  ViewsRectangle__Done( &_this->Rectangle );
-  ViewsImage__Done( &_this->Thumb );
-  ViewsText__Done( &_this->ThumbText );
-  ViewsText__Done( &_this->MoveText );
-
-  /* Don't forget to deinitialize the super class ... */
-  CoreGroup__Done( &_this->_Super );
-}
-
-/* Garbage Collector method for the class 'Flat::HorzSlider' */
-void FlatHorzSlider__Mark( FlatHorzSlider _this )
-{
-  EwMarkRef( _this->Outlet );
-  EwMarkSlot( _this->OnApply );
-  EwMarkSlot( _this->OnChange );
-  EwMarkObject( &_this->SimpleTouchHandler );
-  EwMarkObject( &_this->Rectangle );
-  EwMarkObject( &_this->Thumb );
-  EwMarkObject( &_this->ThumbText );
-  EwMarkObject( &_this->MoveText );
-  EwMarkObject( _this->MinText );
-  EwMarkObject( _this->MaxText );
-
-  /* Give the super class a chance to mark its objects and references */
-  CoreGroup__Mark( &_this->_Super );
-}
-
-/* The method UpdateViewState() is invoked automatically after the state of the 
-   component has been changed. This method can be overridden and filled with logic 
-   to ensure the visual aspect of the component does reflect its current state. 
-   For example, the 'enabled' state of the component can affect its colors (disabled 
-   components may appear pale). In this case the logic of the method should modify 
-   the respective color properties accordingly to the current 'enabled' state. 
-   The current state of the component is passed as a set in the parameter aState. 
-   It reflects the very basic component state like its visibility or the ability 
-   to react to user inputs. Beside this common state, the method can also involve 
-   any other variables used in the component as long as they reflect its current 
-   state. For example, the toggle switch component can take in account its toggle 
-   state 'on' or 'off' and change accordingly the location of the slider, etc.
-   Usually, this method will be invoked automatically by the framework. Optionally 
-   you can request its invocation by using the method @InvalidateViewState(). */
-void FlatHorzSlider_UpdateViewState( FlatHorzSlider _this, XSet aState )
-{
-  XInt32 pos = 0;
-  XInt32 textW = 0;
-
-  if ((( _this->MaxValue > _this->MinValue ) && ( _this->CurrentValue >= _this->MinValue 
-      )) && ( _this->CurrentValue <= _this->MaxValue ))
-  {
-    pos = ((( EwGetRectW( _this->Super2.Bounds ) - EwGetRectW( _this->Thumb.Super1.Bounds 
-    )) * ( _this->CurrentValue - _this->MinValue )) / ( _this->MaxValue - _this->MinValue 
-    )) + ( EwGetRectW( _this->Thumb.Super1.Bounds ) / 2 );
-  }
-
-  CoreRectView__OnSetBounds( &_this->Thumb, EwSetRectOrigin( _this->Thumb.Super1.Bounds, 
-  EwSetPointX( _this->Thumb.Super1.Bounds.Point1, pos - ( EwGetRectW( _this->Thumb.Super1.Bounds 
-  ) / 2 ))));
-  CoreRectView__OnSetBounds( &_this->Rectangle, EwNewRect( 0, _this->Thumb.Super1.Bounds.Point2.Y 
-  - _this->SliderSize, EwGetRectW( _this->Super2.Bounds ), _this->Thumb.Super1.Bounds.Point2.Y 
-  ));
-
-  if ( _this->ShowCurrent )
-  {
-    ViewsText_OnSetString( &_this->ThumbText, FlatHorzSlider_formatValueString( 
-    _this, _this->CurrentValue ));
-    ViewsText_OnSetString( &_this->MoveText, _this->ThumbText.String );
-  }
-
-  if ( _this->MinText != 0 )
-    FlatMinMaxText_OnSetString( _this->MinText, FlatHorzSlider_formatValueString( 
-    _this, _this->MinValue ));
-
-  if ( _this->MaxText != 0 )
-    FlatMinMaxText_OnSetString( _this->MaxText, FlatHorzSlider_formatValueString( 
-    _this, _this->MaxValue ));
-
-  textW = EwGetRectW( ViewsText_GetContentArea( &_this->ThumbText ));
-  CoreRectView__OnSetBounds( &_this->ThumbText, EwSetRectOrigin( _this->ThumbText.Super1.Bounds, 
-  EwSetPointX( _this->ThumbText.Super1.Bounds.Point1, pos - ( textW / 2 ))));
-
-  if ( _this->ThumbText.Super1.Bounds.Point1.X < 0 )
-    CoreRectView__OnSetBounds( &_this->ThumbText, EwSetRectOrigin( _this->ThumbText.Super1.Bounds, 
-    EwSetPointX( _this->ThumbText.Super1.Bounds.Point1, 0 )));
-  else
-    if ( _this->ThumbText.Super1.Bounds.Point1.X > ( EwGetRectW( _this->Super2.Bounds 
-        ) - textW ))
-      CoreRectView__OnSetBounds( &_this->ThumbText, EwSetRectOrigin( _this->ThumbText.Super1.Bounds, 
-      EwSetPointX( _this->ThumbText.Super1.Bounds.Point1, EwGetRectW( _this->Super2.Bounds 
-      ) - textW )));
-
-  textW = EwGetRectW( ViewsText_GetContentArea( &_this->MoveText ));
-
-  if ( pos < ( EwGetRectW( _this->Super2.Bounds ) / 2 ))
-    CoreRectView__OnSetBounds( &_this->MoveText, EwSetRectOrigin( _this->MoveText.Super1.Bounds, 
-    EwSetPointX( _this->MoveText.Super1.Bounds.Point1, ( pos + ( EwGetRectW( _this->Thumb.Super1.Bounds 
-    ) / 2 )) + 5 )));
-  else
-    CoreRectView__OnSetBounds( &_this->MoveText, EwSetRectOrigin( _this->MoveText.Super1.Bounds, 
-    EwSetPointX( _this->MoveText.Super1.Bounds.Point1, (( pos - ( EwGetRectW( _this->Thumb.Super1.Bounds 
-    ) / 2 )) - 5 ) - textW )));
-
-  CoreQuadView__OnSetPoint1( &_this->SimpleTouchHandler, EwNewPoint( _this->Thumb.Super1.Bounds.Point1.X 
-  - 10, _this->Thumb.Super1.Bounds.Point1.Y - 10 ));
-  CoreQuadView__OnSetPoint2( &_this->SimpleTouchHandler, EwNewPoint( _this->Thumb.Super1.Bounds.Point1.X 
-  - 10, _this->Thumb.Super1.Bounds.Point2.Y + 10 ));
-  CoreQuadView__OnSetPoint3( &_this->SimpleTouchHandler, EwNewPoint( _this->Thumb.Super1.Bounds.Point2.X 
-  + 10, _this->Thumb.Super1.Bounds.Point2.Y + 10 ));
-  CoreQuadView__OnSetPoint4( &_this->SimpleTouchHandler, EwNewPoint( _this->Thumb.Super1.Bounds.Point2.X 
-  + 10, _this->Thumb.Super1.Bounds.Point1.Y - 10 ));
-
-  if ((( aState & CoreViewStateEnabled ) == CoreViewStateEnabled ))
-  {
-    ViewsText_OnSetColor( &_this->ThumbText, _this->TextColor );
-
-    if ( _this->SimpleTouchHandler.Down )
-    {
-      ViewsText_OnSetVisible( &_this->ThumbText, 0 );
-      ViewsText_OnSetVisible( &_this->MoveText, _this->ShowCurrent );
-      ViewsImage_OnSetColor( &_this->Thumb, _this->ItemColorActive );
-    }
-    else
-    {
-      ViewsText_OnSetVisible( &_this->ThumbText, _this->ShowCurrent );
-      ViewsText_OnSetVisible( &_this->MoveText, 0 );
-      ViewsImage_OnSetColor( &_this->Thumb, _this->ItemColor );
-    }
-  }
-  else
-  {
-    ViewsText_OnSetVisible( &_this->ThumbText, 1 );
-    ViewsText_OnSetVisible( &_this->MoveText, 0 );
-    ViewsImage_OnSetColor( &_this->Thumb, FlatColorOfDisabled );
-    ViewsText_OnSetColor( &_this->ThumbText, FlatColorOfDisabled );
-  }
-}
-
-/* The method UpdateLayout() is invoked automatically after the size of the component 
-   has been changed. This method can be overridden and filled with logic to perform 
-   a sophisticated arrangement calculation for one or more enclosed views. In this 
-   case the parameter aSize can be used. It contains the current size of the component. 
-   Usually, all enclosed views are arranged automatically accordingly to their @Layout 
-   property. UpdateLayout() gives the derived components a chance to extend this 
-   automatism by a user defined algorithm. */
-void FlatHorzSlider_UpdateLayout( FlatHorzSlider _this, XPoint aSize )
-{
-  XInt32 s;
-
-  CoreGroup_UpdateLayout((CoreGroup)_this, aSize );
-  s = _this->Thumb.Bitmap->FrameSize.Y;
-  CoreRectView__OnSetBounds( &_this->Rectangle, EwNewRect( 0, ( aSize.Y - s ) - 
-  _this->SliderSize, aSize.X, aSize.Y - s ));
-  CoreRectView__OnSetBounds( &_this->Thumb, EwSetRectOrigin( _this->Thumb.Super1.Bounds, 
-  EwSetPointY( _this->Thumb.Super1.Bounds.Point1, aSize.Y - ( 2 * s ))));
-  CoreRectView__OnSetBounds( &_this->ThumbText, EwSetRectY1( _this->ThumbText.Super1.Bounds, 
-  ( aSize.Y - ( 3 * s )) - 2 ));
-  CoreRectView__OnSetBounds( &_this->ThumbText, EwSetRectY2( _this->ThumbText.Super1.Bounds, 
-  aSize.Y - ( 2 * s )));
-  CoreRectView__OnSetBounds( &_this->MoveText, EwSetRectY1( _this->MoveText.Super1.Bounds, 
-  0 ));
-  CoreRectView__OnSetBounds( &_this->MoveText, EwSetRectY2( _this->MoveText.Super1.Bounds, 
-  _this->Rectangle.Super1.Bounds.Point1.Y ));
-}
-
-/* 'C' function for method : 'Flat::HorzSlider.OnSetCurrentValue()' */
-void FlatHorzSlider_OnSetCurrentValue( FlatHorzSlider _this, XInt32 value )
-{
-  if ( value < _this->MinValue )
-    value = _this->MinValue;
-
-  if ( value > _this->MaxValue )
-    value = _this->MaxValue;
-
-  if ( _this->CurrentValue == value )
-    return;
-
-  _this->CurrentValue = value;
-  CoreGroup_InvalidateViewState((CoreGroup)_this );
-}
-
-/* This internal slot method is used to receive the corresponding signals form the 
-   touch handler. */
-void FlatHorzSlider_onPressSlot( FlatHorzSlider _this, XObject sender )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( sender );
-
-  CoreGroup_InvalidateViewState((CoreGroup)_this );
-  _this->startValue = _this->CurrentValue;
-}
-
-/* This internal slot method is used to receive the corresponding signals form the 
-   touch handler. */
-void FlatHorzSlider_onDragSlot( FlatHorzSlider _this, XObject sender )
-{
-  XInt32 oldValue;
-  XInt32 ofs;
-
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( sender );
-
-  oldValue = _this->CurrentValue;
-  ofs = _this->SimpleTouchHandler.CurrentPos.X - _this->SimpleTouchHandler.HittingPos.X;
-
-  if ((( _this->MaxValue > _this->MinValue ) && ( _this->CurrentValue >= _this->MinValue 
-      )) && ( _this->CurrentValue <= _this->MaxValue ))
-  {
-    ofs = ( ofs * ( _this->MaxValue - _this->MinValue )) / ( EwGetRectW( _this->Super2.Bounds 
-    ) - EwGetRectW( _this->Thumb.Super1.Bounds ));
-  }
-  else
-    ofs = 0;
-
-  FlatHorzSlider_OnSetCurrentValue( _this, _this->startValue + ofs );
-
-  if ( _this->CurrentValue != oldValue )
-  {
-    if ( _this->Outlet.Object != 0 )
-      EwOnSetInt32( _this->Outlet, _this->CurrentValue );
-
-    EwNotifyRefObservers( _this->Outlet, 0 );
-    EwIdleSignal( _this->OnChange, ((XObject)_this ));
-  }
-}
-
-/* This internal slot method is used to receive the corresponding signals form the 
-   touch handler. */
-void FlatHorzSlider_onReleaseSlot( FlatHorzSlider _this, XObject sender )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( sender );
-
-  CoreGroup_InvalidateViewState((CoreGroup)_this );
-  EwPostSignal( _this->OnApply, ((XObject)_this ));
-}
-
-/* Method to format a string based on the given aValue and the current @DotPosition 
-   and @Divisor. */
-XString FlatHorzSlider_formatValueString( FlatHorzSlider _this, XInt32 aValue )
-{
-  XInt32 val = aValue / _this->Divisor;
-  XInt32 abs = val;
-
-  if ( val < 0 )
-    abs = -val;
-
-  if ( _this->DotPosition == 1 )
-    return EwConcatString( EwConcatString( EwNewStringInt( val / 10, 1, 10 ), EwLoadString( 
-      &_Const0011 )), EwNewStringInt( abs % 10, 1, 10 ));
-  else
-    if ( _this->DotPosition == 2 )
-      return EwConcatString( EwConcatString( EwNewStringInt( val / 100, 1, 10 ), 
-        EwLoadString( &_Const0011 )), EwNewStringInt( abs % 100, 2, 10 ));
-    else
-      if ( _this->DotPosition == 3 )
-        return EwConcatString( EwConcatString( EwNewStringInt( val / 1000, 1, 10 
-          ), EwLoadString( &_Const0011 )), EwNewStringInt( abs % 1000, 3, 10 ));
-
-  return EwNewStringInt( val, 0, 10 );
-}
-
-/* Variants derived from the class : 'Flat::HorzSlider' */
-EW_DEFINE_CLASS_VARIANTS( FlatHorzSlider )
-EW_END_OF_CLASS_VARIANTS( FlatHorzSlider )
-
-/* Virtual Method Table (VMT) for the class : 'Flat::HorzSlider' */
-EW_DEFINE_CLASS( FlatHorzSlider, CoreGroup, "Flat::HorzSlider" )
-  CoreRectView_initLayoutContext,
-  CoreView_GetRoot,
-  CoreGroup_Draw,
-  CoreView_HandleEvent,
-  CoreGroup_CursorHitTest,
-  CoreRectView_ArrangeView,
-  CoreRectView_MoveView,
-  CoreRectView_GetExtent,
-  CoreGroup_ChangeViewState,
-  CoreGroup_OnSetBounds,
-  CoreGroup_OnSetFocus,
-  CoreGroup_DispatchEvent,
-  CoreGroup_BroadcastEvent,
-  FlatHorzSlider_UpdateLayout,
-  FlatHorzSlider_UpdateViewState,
-  CoreGroup_InvalidateArea,
-  CoreGroup_Restack,
-  CoreGroup_Add,
-EW_END_OF_CLASS( FlatHorzSlider )
-
-/* Initializer for the class 'Flat::HorzBar' */
-void FlatHorzBar__Init( FlatHorzBar _this, XObject aLink, XHandle aArg )
-{
-  /* At first initialize the super class ... */
-  CoreGroup__Init( &_this->_Super, aLink, aArg );
-
-  /* ... then construct all embedded objects */
-  ViewsRectangle__Init( &_this->Rectangle, &_this->_XObject, 0 );
-  ViewsRectangle__Init( &_this->Bar, &_this->_XObject, 0 );
-  ViewsText__Init( &_this->BarText, &_this->_XObject, 0 );
-  EffectsInt32Effect__Init( &_this->MoveBarEffect, &_this->_XObject, 0 );
-
-  /* Setup the VMT pointer */
-  _this->_VMT = EW_CLASS( FlatHorzBar );
-
-  /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0012 );
-  _this->MaxValue = 100;
-  _this->CurrentValue = 50;
-  CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToLeft | CoreLayoutAlignToRight 
-  | CoreLayoutAlignToTop | CoreLayoutResizeHorz );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const0013 );
-  ViewsRectangle_OnSetColor( &_this->Rectangle, FlatColorOfBody );
-  CoreView_OnSetLayout((CoreView)&_this->Bar, CoreLayoutAlignToLeft | CoreLayoutAlignToRight 
-  | CoreLayoutAlignToTop | CoreLayoutResizeHorz );
-  CoreRectView__OnSetBounds( &_this->Bar, _Const0014 );
-  ViewsRectangle_OnSetColor( &_this->Bar, FlatColorOfTheme );
-  CoreView_OnSetLayout((CoreView)&_this->BarText, CoreLayoutAlignToBottom | CoreLayoutAlignToTop 
-  );
-  CoreRectView__OnSetBounds( &_this->BarText, _Const0015 );
-  ViewsText_OnSetAutoSize( &_this->BarText, 1 );
-  ViewsText_OnSetAlignment( &_this->BarText, ViewsTextAlignmentAlignHorzCenter | 
-  ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->BarText, EwLoadString( &_Const000F ));
-  ViewsText_OnSetColor( &_this->BarText, FlatColorOfTheme );
-  EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->MoveBarEffect, 1 );
-  EffectsEffect_OnSetTiming((EffectsEffect)&_this->MoveBarEffect, EffectsTimingFastIn_EaseOut 
-  );
-  EffectsEffect_OnSetCycleDuration((EffectsEffect)&_this->MoveBarEffect, 500 );
-  _this->ShowCurrent = 1;
-  _this->Divisor = 1;
-  _this->BarSize = 20;
-  _this->BackColor = FlatColorOfBody;
-  _this->BarColor = FlatColorOfTheme;
+  ViewsText_OnSetString( &_this->Label, EwLoadString( &_Const0001 ));
+  ViewsText_OnSetColor( &_this->Label, FlatColorOfTheme );
+  EwRetainString( &_this->String, EwLoadString( &_Const0001 ));
   _this->TextColor = FlatColorOfTheme;
-  CoreGroup__Add( _this, ((CoreView)&_this->Rectangle ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->Bar ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->BarText ), 0 );
-  ViewsText_OnSetFont( &_this->BarText, EwLoadResource( &FlatFontS, ResourcesFont 
+  CoreGroup__Add( _this, ((CoreView)&_this->Label ), 0 );
+  ViewsText_OnSetFont( &_this->Label, EwLoadResource( &FlatFontM, ResourcesFont 
   ));
-  _this->MoveBarEffect.Outlet = EwNewRef( _this, FlatHorzBar_OnGetbarPos, FlatHorzBar_OnSetbarPos 
-  );
 }
 
-/* Re-Initializer for the class 'Flat::HorzBar' */
-void FlatHorzBar__ReInit( FlatHorzBar _this )
+/* Re-Initializer for the class 'Flat::Label' */
+void FlatLabel__ReInit( FlatLabel _this )
 {
   /* At first re-initialize the super class ... */
   CoreGroup__ReInit( &_this->_Super );
 
   /* ... then re-construct all embedded objects */
-  ViewsRectangle__ReInit( &_this->Rectangle );
-  ViewsRectangle__ReInit( &_this->Bar );
-  ViewsText__ReInit( &_this->BarText );
-  EffectsInt32Effect__ReInit( &_this->MoveBarEffect );
+  ViewsText__ReInit( &_this->Label );
 }
 
-/* Finalizer method for the class 'Flat::HorzBar' */
-void FlatHorzBar__Done( FlatHorzBar _this )
+/* Finalizer method for the class 'Flat::Label' */
+void FlatLabel__Done( FlatLabel _this )
 {
   /* Finalize this class */
-  _this->_VMT = EW_CLASS( FlatHorzBar );
+  _this->_VMT = EW_CLASS( FlatLabel );
 
   /* Finalize all embedded objects */
-  ViewsRectangle__Done( &_this->Rectangle );
-  ViewsRectangle__Done( &_this->Bar );
-  ViewsText__Done( &_this->BarText );
-  EffectsInt32Effect__Done( &_this->MoveBarEffect );
+  ViewsText__Done( &_this->Label );
+
+  /* Release all used strings */
+  EwReleaseString( &_this->String );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
 }
 
-/* Garbage Collector method for the class 'Flat::HorzBar' */
-void FlatHorzBar__Mark( FlatHorzBar _this )
+/* Garbage Collector method for the class 'Flat::Label' */
+void FlatLabel__Mark( FlatLabel _this )
 {
-  EwMarkObject( &_this->Rectangle );
-  EwMarkObject( &_this->Bar );
-  EwMarkObject( &_this->BarText );
-  EwMarkObject( &_this->MoveBarEffect );
+  EwMarkObject( &_this->Label );
 
   /* Give the super class a chance to mark its objects and references */
   CoreGroup__Mark( &_this->_Super );
 }
 
-/* The method UpdateViewState() is invoked automatically after the state of the 
-   component has been changed. This method can be overridden and filled with logic 
-   to ensure the visual aspect of the component does reflect its current state. 
-   For example, the 'enabled' state of the component can affect its colors (disabled 
-   components may appear pale). In this case the logic of the method should modify 
-   the respective color properties accordingly to the current 'enabled' state. 
-   The current state of the component is passed as a set in the parameter aState. 
-   It reflects the very basic component state like its visibility or the ability 
-   to react to user inputs. Beside this common state, the method can also involve 
-   any other variables used in the component as long as they reflect its current 
-   state. For example, the toggle switch component can take in account its toggle 
-   state 'on' or 'off' and change accordingly the location of the slider, etc.
-   Usually, this method will be invoked automatically by the framework. Optionally 
-   you can request its invocation by using the method @InvalidateViewState(). */
-void FlatHorzBar_UpdateViewState( FlatHorzBar _this, XSet aState )
+/* 'C' function for method : 'Flat::Label.OnSetString()' */
+void FlatLabel_OnSetString( FlatLabel _this, XString value )
 {
-  XInt32 pos;
-
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( aState );
-
-  pos = 0;
-
-  if ((( _this->MaxValue > _this->MinValue ) && ( _this->CurrentValue >= _this->MinValue 
-      )) && ( _this->CurrentValue <= _this->MaxValue ))
-  {
-    pos = ( EwGetRectW( _this->Super2.Bounds ) * ( _this->CurrentValue - _this->MinValue 
-    )) / ( _this->MaxValue - _this->MinValue );
-  }
-
-  if ( _this->ShowCurrent )
-    ViewsText_OnSetString( &_this->BarText, FlatHorzBar_formatValueString( _this, 
-    _this->CurrentValue ));
-
-  ViewsText_OnSetVisible( &_this->BarText, _this->ShowCurrent );
-  CoreRectView__OnSetBounds( &_this->Rectangle, EwSetRectH( _this->Rectangle.Super1.Bounds, 
-  _this->BarSize ));
-  CoreRectView__OnSetBounds( &_this->Bar, EwSetRectH( _this->Bar.Super1.Bounds, 
-  _this->BarSize ));
-  CoreRectView__OnSetBounds( &_this->BarText, EwSetRectOrigin( _this->BarText.Super1.Bounds, 
-  EwSetPointY( _this->BarText.Super1.Bounds.Point1, _this->BarSize + 2 )));
-
-  if ( pos != EwGetRectW( _this->Bar.Super1.Bounds ))
-  {
-    EffectsEffect_OnSetEnabled((EffectsEffect)&_this->MoveBarEffect, 0 );
-    CoreRectView__OnSetBounds( &_this->Bar, EwSetRectW( _this->Bar.Super1.Bounds, 
-    (( EwGetRectW( _this->Bar.Super1.Bounds ) * 9 ) + pos ) / 10 ));
-    _this->MoveBarEffect.Value1 = EwGetRectW( _this->Bar.Super1.Bounds );
-    _this->MoveBarEffect.Value2 = pos;
-    EffectsEffect_OnSetEnabled((EffectsEffect)&_this->MoveBarEffect, 1 );
-  }
+  EwRetainString( &_this->String, value );
+  ViewsText_OnSetString( &_this->Label, value );
 }
 
-/* 'C' function for method : 'Flat::HorzBar.OnSetMaxValue()' */
-void FlatHorzBar_OnSetMaxValue( FlatHorzBar _this, XInt32 value )
+/* 'C' function for method : 'Flat::Label.OnSetTextColor()' */
+void FlatLabel_OnSetTextColor( FlatLabel _this, XColor value )
 {
-  if ( _this->MaxValue == value )
-    return;
-
-  _this->MaxValue = value;
-  CoreGroup_InvalidateViewState((CoreGroup)_this );
+  _this->TextColor = value;
+  ViewsText_OnSetColor( &_this->Label, value );
 }
 
-/* 'C' function for method : 'Flat::HorzBar.OnSetCurrentValue()' */
-void FlatHorzBar_OnSetCurrentValue( FlatHorzBar _this, XInt32 value )
-{
-  if ( value < _this->MinValue )
-    value = _this->MinValue;
+/* Variants derived from the class : 'Flat::Label' */
+EW_DEFINE_CLASS_VARIANTS( FlatLabel )
+EW_END_OF_CLASS_VARIANTS( FlatLabel )
 
-  if ( value > _this->MaxValue )
-    value = _this->MaxValue;
-
-  if ( _this->CurrentValue == value )
-    return;
-
-  _this->CurrentValue = value;
-  CoreGroup_InvalidateViewState((CoreGroup)_this );
-}
-
-/* 'C' function for method : 'Flat::HorzBar.OnSetbarPos()' */
-void FlatHorzBar_OnSetbarPos( FlatHorzBar _this, XInt32 value )
-{
-  _this->barPos = value;
-  CoreRectView__OnSetBounds( &_this->Bar, EwSetRectW( _this->Bar.Super1.Bounds, 
-  value ));
-  CoreRectView__OnSetBounds( &_this->BarText, EwSetRectOrigin( _this->BarText.Super1.Bounds, 
-  EwSetPointX( _this->BarText.Super1.Bounds.Point1, value - ( EwGetRectW( _this->BarText.Super1.Bounds 
-  ) / 2 ))));
-
-  if ( _this->BarText.Super1.Bounds.Point1.X < 0 )
-    CoreRectView__OnSetBounds( &_this->BarText, EwSetRectOrigin( _this->BarText.Super1.Bounds, 
-    EwSetPointX( _this->BarText.Super1.Bounds.Point1, 0 )));
-
-  if ( _this->BarText.Super1.Bounds.Point2.X > EwGetRectW( _this->Super2.Bounds 
-      ))
-    CoreRectView__OnSetBounds( &_this->BarText, EwSetRectOrigin( _this->BarText.Super1.Bounds, 
-    EwSetPointX( _this->BarText.Super1.Bounds.Point1, EwGetRectW( _this->Super2.Bounds 
-    ) - EwGetRectW( _this->BarText.Super1.Bounds ))));
-}
-
-/* Method to format a string based on the given aValue and the current @DotPosition 
-   and @Divisor. */
-XString FlatHorzBar_formatValueString( FlatHorzBar _this, XInt32 aValue )
-{
-  XInt32 val = aValue / _this->Divisor;
-  XInt32 abs = val;
-
-  if ( val < 0 )
-    abs = -val;
-
-  if ( _this->DotPosition == 1 )
-    return EwConcatString( EwConcatString( EwNewStringInt( val / 10, 1, 10 ), EwLoadString( 
-      &_Const0011 )), EwNewStringInt( abs % 10, 1, 10 ));
-  else
-    if ( _this->DotPosition == 2 )
-      return EwConcatString( EwConcatString( EwNewStringInt( val / 100, 1, 10 ), 
-        EwLoadString( &_Const0011 )), EwNewStringInt( abs % 100, 2, 10 ));
-    else
-      if ( _this->DotPosition == 3 )
-        return EwConcatString( EwConcatString( EwNewStringInt( val / 1000, 1, 10 
-          ), EwLoadString( &_Const0011 )), EwNewStringInt( abs % 1000, 3, 10 ));
-
-  return EwNewStringInt( val, 0, 10 );
-}
-
-/* Default onget method for the property 'barPos' */
-XInt32 FlatHorzBar_OnGetbarPos( FlatHorzBar _this )
-{
-  return _this->barPos;
-}
-
-/* Variants derived from the class : 'Flat::HorzBar' */
-EW_DEFINE_CLASS_VARIANTS( FlatHorzBar )
-EW_END_OF_CLASS_VARIANTS( FlatHorzBar )
-
-/* Virtual Method Table (VMT) for the class : 'Flat::HorzBar' */
-EW_DEFINE_CLASS( FlatHorzBar, CoreGroup, "Flat::HorzBar" )
+/* Virtual Method Table (VMT) for the class : 'Flat::Label' */
+EW_DEFINE_CLASS( FlatLabel, CoreGroup, "Flat::Label" )
   CoreRectView_initLayoutContext,
   CoreView_GetRoot,
   CoreGroup_Draw,
@@ -4140,11 +3262,11 @@ EW_DEFINE_CLASS( FlatHorzBar, CoreGroup, "Flat::HorzBar" )
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   CoreGroup_UpdateLayout,
-  FlatHorzBar_UpdateViewState,
+  CoreGroup_UpdateViewState,
   CoreGroup_InvalidateArea,
   CoreGroup_Restack,
   CoreGroup_Add,
-EW_END_OF_CLASS( FlatHorzBar )
+EW_END_OF_CLASS( FlatLabel )
 
 /* Initializer for the class 'Flat::MinMaxText' */
 void FlatMinMaxText__Init( FlatMinMaxText _this, XObject aLink, XHandle aArg )
@@ -4159,16 +3281,16 @@ void FlatMinMaxText__Init( FlatMinMaxText _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( FlatMinMaxText );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0016 );
+  CoreRectView__OnSetBounds( _this, _Const0002 );
   CoreView_OnSetLayout((CoreView)&_this->Label, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->Label, _Const0016 );
+  CoreRectView__OnSetBounds( &_this->Label, _Const0002 );
   ViewsText_OnSetAlignment( &_this->Label, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter 
   );
-  ViewsText_OnSetString( &_this->Label, EwLoadString( &_Const0017 ));
+  ViewsText_OnSetString( &_this->Label, EwLoadString( &_Const0003 ));
   ViewsText_OnSetColor( &_this->Label, FlatColorOfTheme );
-  EwRetainString( &_this->String, EwLoadString( &_Const0017 ));
+  EwRetainString( &_this->String, EwLoadString( &_Const0003 ));
   _this->TextColor = FlatColorOfTheme;
   CoreGroup__Add( _this, ((CoreView)&_this->Label ), 0 );
   ViewsText_OnSetFont( &_this->Label, EwLoadResource( &FlatFontS, ResourcesFont 

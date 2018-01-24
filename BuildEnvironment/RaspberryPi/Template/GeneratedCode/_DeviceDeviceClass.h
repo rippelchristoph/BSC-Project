@@ -147,13 +147,16 @@ void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value )
 
 /* This method is intended to be called by the device to notify the GUI application 
    about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewValue );
+void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewArgument );
 
 /* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateTemperature()' */
-void DeviceDeviceClass__UpdateTemperature( void* _this, XFloat aNewValue );
+void DeviceDeviceClass__UpdateTemperature( void* _this, XFloat aNewArgument );
 
 /* The following define announces the presence of the method Device::DeviceClass.UpdateTemperature(). */
 #define _DeviceDeviceClass__UpdateTemperature_
+
+/* 'C' function for method : 'Device::DeviceClass.getColor()' */
+XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumber );
 
 /* Default onget method for the property 'NuOfCircuits' */
 XInt32 DeviceDeviceClass_OnGetNuOfCircuits( DeviceDeviceClass _this );

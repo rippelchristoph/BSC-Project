@@ -234,7 +234,7 @@ class Well : Core::Group
   object Views::Rectangle Rectangle
   {
     preset Bounds = <0,0,800,480>;
-    preset Color = #747674FF;
+    preset Color = Application::BackgroundColor;
   }
 
   $rect <0,560,200,600>
@@ -1586,7 +1586,7 @@ class SampleController : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton BtnStart
+  object Application::AActionButton BtnStart
   {
     preset Bounds = <120,6,200,31>;
     preset OnAction = onStart;
@@ -1594,7 +1594,7 @@ class SampleController : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton BtnStop
+  object Application::AActionButton BtnStop
   {
     preset Bounds = <120,40,200,65>;
     preset Enabled = false;
@@ -1603,7 +1603,7 @@ class SampleController : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::Indicator Indicator
+  object Application::AIndicator Indicator
   {
     preset Bounds = <380,20,410,50>;
   }
@@ -3144,7 +3144,7 @@ class NumKeyboard : Templates::NumKeyboard
   {
     preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
     preset Bounds = <0,0,170,180>;
-    preset Color = #747674FF;
+    preset Color = Application::BackgroundColor;
   }
 
   // This is a border view.
@@ -3303,7 +3303,7 @@ class NumKeyboard : Templates::NumKeyboard
 // Resources
 note group Note
 {
-  attr Bounds = <460,530,860,1020>;
+  attr Bounds = <460,540,1150,990>;
 }
 
 $rect <610,200,810,240>
@@ -3823,11 +3823,11 @@ class Config : Core::Group
   object Views::Rectangle Rectangle
   {
     preset Bounds = <0,0,800,480>;
-    preset Color = #747674FF;
+    preset Color = Application::BackgroundColor;
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton Btn_Ok
+  object Application::AActionButton Btn_Ok
   {
     preset Bounds = <670,440,790,470>;
     preset Enabled = false;
@@ -4114,11 +4114,11 @@ class ConfigPosition : Core::Group
   object Views::Rectangle Rectangle
   {
     preset Bounds = <0,0,800,480>;
-    preset Color = #747674FF;
+    preset Color = Application::BackgroundColor;
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton Btn_Next
+  object Application::AActionButton Btn_Next
   {
     preset Bounds = <670,440,790,470>;
     preset Enabled = false;
@@ -4136,7 +4136,7 @@ class ConfigPosition : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::HorzSlider XSlider
+  object Application::AHorzSlider XSlider
   {
     preset Bounds = <60,240,780,310>;
     preset CurrentValue = 0;
@@ -4144,7 +4144,7 @@ class ConfigPosition : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::HorzSlider YSlider
+  object Application::AHorzSlider YSlider
   {
     preset Bounds = <60,310,780,370>;
     preset CurrentValue = 0;
@@ -4160,7 +4160,7 @@ class ConfigPosition : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::HorzSlider ZSlider
+  object Application::AHorzSlider ZSlider
   {
     preset Bounds = <60,370,780,430>;
     preset CurrentValue = 0;
@@ -4275,7 +4275,7 @@ class ConfigPosition : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::ToggleButton Btn_Help
+  object Application::AToggleButton Btn_Help
   {
     preset Bounds = <550,440,650,470>;
     preset OnChange = onBtn_Help;
@@ -4439,7 +4439,7 @@ class ControllMenu : Core::Group
   object Views::Rectangle Rectangle
   {
     preset Bounds = <0,0,800,480>;
-    preset Color = #747674FF;
+    preset Color = Application::BackgroundColor;
   }
 
   $rect <20,20,160,60>
@@ -4549,7 +4549,7 @@ class ControllMenu : Core::Group
   );
 
   $rect <20,20,160,60>
-  object Flat::ActionButton Btn_Config
+  object Application::AActionButton Btn_Config
   {
     preset Bounds = <480,140,600,170>;
     preset OnAction = onBtn_Config;
@@ -4576,7 +4576,7 @@ class ControllMenu : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton Btn_NewWell
+  object Application::AActionButton Btn_NewWell
   {
     preset Bounds = <480,180,600,210>;
     preset OnAction = onBtn_NewWell;
@@ -4614,7 +4614,7 @@ class ControllMenu : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton Btn_StopAll
+  object Application::AActionButton Btn_StopAll
   {
     preset Bounds = <480,220,600,250>;
     preset Caption = "StopAll";
@@ -4641,7 +4641,7 @@ class ControllMenu : Core::Group
 // Tab1: MainMenu
 note group Note2
 {
-  attr Bounds = <20,90,430,690>;
+  attr Bounds = <20,90,420,530>;
 }
 
 // ControllMenu
@@ -4653,7 +4653,7 @@ note group Note3
 // Config
 note group Note4
 {
-  attr Bounds = <100,360,360,640>;
+  attr Bounds = <100,360,360,510>;
 }
 
 // Tab2: Well
@@ -4665,7 +4665,7 @@ note group Note5
 // Other Components
 note group Note6
 {
-  attr Bounds = <460,310,870,520>;
+  attr Bounds = <460,310,1150,530>;
 }
 
 note arrow Note1
@@ -4682,7 +4682,7 @@ note arrow Note7
 
 // Horizontal bar widget with a flat design. The widget is used to illustrate a value \
 // by using a colored horizontal bar, e.g. like a progress bar.
-$rect <940,360,1120,400>
+$rect <560,480,760,520>
 $output false
 class AHorzBar : Core::Group
 {
@@ -4854,7 +4854,7 @@ class AHorzBar : Core::Group
   {
     preset Layout = Core::Layout[AlignToLeft, AlignToRight, AlignToTop, ResizeHorz];
     preset Bounds = <0,0,90,20>;
-    preset Color = Flat::ColorOfTheme;
+    preset Color = Application::WidgetColor;
   }
 
   $rect <20,20,160,60>
@@ -4866,7 +4866,7 @@ class AHorzBar : Core::Group
     preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
     preset String = "50";
     preset Font = Flat::FontS;
-    preset Color = Flat::ColorOfTheme;
+    preset Color = Application::WidgetColor;
   }
 
   $rect <190,300,370,340>
@@ -5048,7 +5048,7 @@ class AHorzBar : Core::Group
   // The property 'BarColor' defines the color of the widgets indicator bar. The \
   // property is used to assign a color independent from the current theme color.
   $rect <550,180,730,220>
-  property color BarColor = Flat::ColorOfTheme;
+  property color BarColor = Application::WidgetColor;
 
   $rect <550,220,730,260>
   onset BarColor
@@ -5064,7 +5064,7 @@ class AHorzBar : Core::Group
   // The property 'TextColor' defines the color of the widgets text members. The \
   // property is used to assign a color independent from the current theme color.
   $rect <730,180,910,220>
-  property color TextColor = Flat::ColorOfTheme;
+  property color TextColor = Application::WidgetColor;
 
   $rect <730,220,910,260>
   onset TextColor
@@ -5128,4 +5128,1318 @@ resource Resources::Bitmap ConfigWaste
   attr alphafile AlphaName;
   attr framesize FrameSize;
   attr framedelay FrameDelay;
+}
+
+$rect <860,570,1070,610>
+$output false
+const color BackgroundColor = #8D8D8DFF;
+
+$rect <860,610,1070,650>
+$output false
+const color WidgetColor = #FF9601FF;
+
+// Action button widget with a flat design. The widget is used as a simple push button \
+// with a text.
+$rect <800,360,980,400>
+$output false
+class AActionButton : Core::Group
+{
+  $rect <0,90,180,130>
+  inherited property Bounds = <0,0,120,30>;
+
+  $rect <0,130,180,170>
+  inherited method UpdateViewState()
+  {
+    /* colorize frame and text, depending on current state of the view */
+    if ( aState.contains( Core::ViewState[ Enabled ]))
+    {
+      if ( TouchHandler.Down && TouchHandler.Inside )
+        Frame.Color = ItemColorActive;
+      else
+        Frame.Color = ItemColor;
+    }
+    else
+      Frame.Color = Flat::ColorOfDisabled;
+
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <0,180,180,220>
+  slot enterLeaveSlot
+  {
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <0,220,180,260>
+  slot pressReleaseSlot
+  {
+    /* releasing the finger outside the button area is ignored */
+    if ( !TouchHandler.Down && TouchHandler.Inside )
+    {
+      /* inform the connected slot method */
+      idlesignal OnAction;
+    }
+  }
+
+  // The property 'OnAction' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <190,90,370,130>
+  property slot OnAction = null;
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,30>;
+    preset Point3 = <120,30>;
+    preset Point2 = <120,0>;
+    preset Point1 = <0,0>;
+    preset OnLeave = enterLeaveSlot;
+    preset OnEnter = enterLeaveSlot;
+    preset OnRelease = pressReleaseSlot;
+    preset OnPress = pressReleaseSlot;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Frame Frame
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,120,30>;
+    preset Color = Flat::ColorOfTouch;
+    preset Bitmap = Flat::FlatFrame;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text CaptionText
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,120,30>;
+    preset String = "Button";
+    preset Font = Flat::FontM;
+    preset Color = Flat::ColorOfBackground;
+  }
+
+  $rect <190,40,370,80>
+  onset Caption
+  {
+    pure Caption = value;
+    CaptionText.String  = value;
+  }
+
+  // The property 'Caption' stores the text to display within the item.
+  $rect <190,0,370,40>
+  property string Caption = "Button";
+
+  // The class 'ActionButton' implements a simple push button to start a certain \
+  // action.
+  // The button contains a text item that can be set with the property 'Caption'.
+  // Each time the user has pressed the button a signal is sent to the slot method \
+  // 'OnAction'.
+  // The colors of the widget can be changed by using the properties 'ItemColor', \
+  // 'ItemColorActive' and 'TextColor'.
+  note legend Note
+  {
+    attr Bounds = <10,280,700,380>;
+  }
+
+  // The property 'ItemColor' defines the color of the widgets touchable member (knob). \
+  // The property is used to assign a color independent from the current theme color.
+  $rect <370,0,550,40>
+  property color ItemColor = Flat::ColorOfTouch;
+
+  $rect <370,40,550,80>
+  onset ItemColor
+  {
+    /* store the new value */
+    pure ItemColor = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'TextColor' defines the color of the widgets text members. The \
+  // property is used to assign a color independent from the current theme color.
+  $rect <550,0,730,40>
+  property color TextColor = Flat::ColorOfBackground;
+
+  $rect <550,40,730,80>
+  onset TextColor
+  {
+    /* store the new value */
+    pure TextColor = value;
+
+    /* ...and colorize the affected members of the widget */
+    CaptionText.Color = value;
+
+  }
+
+  // The property 'ItemColorActive' defines the color of the widgets touchable member \
+  // (knob) while it is touched by the user. The property is used to assign a color \
+  // independent from the current theme color.
+  $rect <370,90,550,130>
+  property color ItemColorActive = Application::WidgetColor;
+
+  $rect <370,130,550,170>
+  onset ItemColorActive
+  {
+    /* store the new value */
+    pure ItemColorActive = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+}
+
+// Toggle button widget with a flat design. The widget is used to switch a boolean \
+// value on and off.
+$rect <800,400,980,440>
+$output false
+class AToggleButton : Core::Group
+{
+  $rect <0,180,180,220>
+  inherited property Bounds = <0,0,140,30>;
+
+  $rect <0,260,180,300>
+  inherited method UpdateLayout()
+  {
+    /* first make the super call to get the regular layouting */
+    super( aSize );
+
+    /* the arrangement of the components member depends on the height of the component */
+    var int32 s = aSize.y;
+
+    /* the button frame is always a square */
+    Frame.Bounds = rect( 0, 0, s, s );
+
+    /* the icon is lying on top of the frame */
+    Image.Bounds = Frame.Bounds;
+
+    /* the text item is on the right side */
+    CaptionText.Bounds = rect( s + 10, 0, aSize.x, aSize.y );
+
+  }
+
+  $rect <0,220,180,260>
+  inherited method UpdateViewState()
+  {
+    /* colorize frame and text, depending on current state of the view */
+    if ( aState.contains( Core::ViewState[ Enabled ]))
+    {
+      if (( TouchHandler.Down && TouchHandler.Inside ) || pure Active )
+      {
+        Frame.Color = ItemColorActive;
+        CaptionText.Color = ItemColorActive;
+        Image.Color = IconColorActive;
+      }
+      else
+      {
+        Frame.Color = ItemColor;
+        CaptionText.Color = ItemColor;
+        Image.Color = IconColor;
+      }
+    }
+    else
+    {
+      Frame.Color = Flat::ColorOfDisabled;
+      CaptionText.Color = Flat::ColorOfDisabled;
+      if ( pure Active )
+        Image.Color = IconColorActive;
+      else
+        Image.Color = IconColor;
+    }
+
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <190,180,370,220>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      Active = Outlet^;
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <190,220,370,260>
+  slot enterLeaveSlot
+  {
+    InvalidateViewState();
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <190,260,370,300>
+  slot pressReleaseSlot
+  {
+    /* releasing the finger outside the button area is ignored */
+    if ( !TouchHandler.Down && TouchHandler.Inside )
+    {
+      Active = !Active;
+
+      /* update the attached outlet */
+      if ( Outlet != null )
+        Outlet^ = Active;
+
+      /* and inform other observers, that the outlet has changed its value */
+      notifyobservers Outlet;
+
+      /* inform the OnChange slot method */
+      idlesignal OnChange;
+
+      /* inform about the state change with the corresponding slot method */
+      if ( Active )
+        postsignal OnSwitchOn;
+      else
+        postsignal OnSwitchOff;
+    }
+  }
+
+  $rect <190,130,370,170>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure Outlet != null )
+      detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  $rect <190,40,370,80>
+  onset Active
+  {
+    /* check if the given value differs from the current value */
+    if ( pure Active == value )
+      return;
+
+    /* store the new value */
+    pure Active = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'OnSwitchOff' can refer to a slot method, which will receive a \
+  // signal as soon the button has changed its state to 'switched-off' (bistable \
+  // buttons only). Thereupon the method's logic will be executed.
+  $rect <370,220,550,260>
+  property slot OnSwitchOff = null;
+
+  // The property 'OnSwitchOn' can refer to a slot method, which will receive a signal \
+  // as soon the button has changed its state to 'switched-on' (bistable buttons \
+  // only). Thereupon the method's logic will be executed.
+  $rect <370,180,550,220>
+  property slot OnSwitchOn = null;
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // as soon the user has pressed the button. Thereupon the method's logic will be \
+  // executed.
+  $rect <370,260,550,300>
+  property slot OnChange = null;
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containing several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <190,90,370,130>
+  property ^bool Outlet = null;
+
+  // The property 'Active' stores the current state of the button. As long as the \
+  // property is 'false', the widget represents the status switched-off and should \
+  // appear released. As long as the property is 'true', the widget represents the \
+  // status switched-on and should appear pressed.
+  $rect <190,0,370,40>
+  property bool Active = false;
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler TouchHandler
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Point4 = <0,30>;
+    preset Point3 = <140,30>;
+    preset Point2 = <140,0>;
+    preset Point1 = <0,0>;
+    preset OnLeave = enterLeaveSlot;
+    preset OnEnter = enterLeaveSlot;
+    preset OnRelease = pressReleaseSlot;
+    preset OnPress = pressReleaseSlot;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Frame Frame
+  {
+    preset Bounds = <0,0,30,30>;
+    preset Color = Flat::ColorOfTouch;
+    preset Bitmap = Flat::FlatFrame;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Bounds = <0,0,30,30>;
+    preset Color = Flat::ColorOfBackground;
+    preset FrameNumber = 19;
+    preset Bitmap = Flat::FlatDemoIcons;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text CaptionText
+  {
+    preset Bounds = <40,0,140,30>;
+    preset Alignment = Views::TextAlignment[AlignHorzLeft, AlignVertCenter];
+    preset String = "Button";
+    preset Font = Flat::FontM;
+    preset Color = Flat::ColorOfTouch;
+  }
+
+  $rect <550,40,730,80>
+  onset Icon
+  {
+    pure Icon    = value;
+    Image.Bitmap = value;
+  }
+
+  // The property 'Icon' stores the bitmap to show in the left part of the button.
+  $rect <550,0,730,40>
+  property Resources::Bitmap Icon = Flat::FlatDemoIcons;
+
+  // The property 'IconIndex' stores the frame number of the @Icon.
+  $rect <370,90,550,130>
+  property int32 IconIndex = 19;
+
+  $rect <370,130,550,170>
+  onset IconIndex
+  {
+    pure IconIndex = value;
+    Image.FrameNumber = value;
+  }
+
+  $rect <370,40,550,80>
+  onset Caption
+  {
+    pure Caption = value;
+    CaptionText.String  = value;
+  }
+
+  // The property 'Caption' stores the text to display within the item.
+  $rect <370,0,550,40>
+  property string Caption = "Button";
+
+  // The class 'ToggleButton' implements a switch widget with two states: 'on' or \
+  // 'off'.
+  // The property 'Active' represents the momentary state of the widget. A toggle \
+  // button can be connected with a boolean 'Outlet' property to show the current \
+  // value of the property and to change it.
+  // The button contains a text item that can be set with the property 'Caption' \
+  // and it can display an icon by using the properties 'Icon' and 'IconIndex'.
+  // Additionally, a toggle button can trigger the slot methods 'OnChange', 'OnSwitchOn' \
+  // and 'OnSwitchOff', whenever the user has changed the state of the widget.
+  // The colors of the widget can be changed by using the properties 'ItemColor', \
+  // 'ItemColorActive', 'IconColor' and 'IconColorActive'.
+  note legend Note
+  {
+    attr Bounds = <10,320,830,500>;
+  }
+
+  // The property 'ItemColor' defines the color of the widgets touchable member (knob). \
+  // The property is used to assign a color independent from the current theme color.
+  $rect <730,0,910,40>
+  property color ItemColor = Flat::ColorOfTouch;
+
+  $rect <730,40,910,80>
+  onset ItemColor
+  {
+    /* store the new value */
+    pure ItemColor = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'ItemColorActive' defines the color of the widgets touchable member \
+  // (knob) while it is touched by the user. The property is used to assign a color \
+  // independent from the current theme color.
+  $rect <730,90,910,130>
+  property color ItemColorActive = Application::WidgetColor;
+
+  $rect <730,130,910,170>
+  onset ItemColorActive
+  {
+    /* store the new value */
+    pure ItemColorActive = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'IconColorActive' defines the color of the widgets icon when it \
+  // is activated. The property is used to assign a color independent from the current \
+  // theme color.
+  $rect <550,180,730,220>
+  property color IconColorActive = Flat::ColorOfBackground;
+
+  $rect <550,220,730,260>
+  onset IconColorActive
+  {
+    /* store the new value */
+    pure IconColorActive = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'IconColor' defines the color of the widgets icon when it is not \
+  // activated. The property is used to assign a color independent from the current \
+  // theme color.
+  $rect <550,90,730,130>
+  property color IconColor = Flat::ColorOfBackground;
+
+  $rect <550,130,730,170>
+  onset IconColor
+  {
+    /* store the new value */
+    pure IconColor = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+}
+
+// Horizontal slider widget with a flat design. The widget allows the user to change \
+// a value by moving a thumb in horizontal direction.
+$rect <800,440,980,480>
+$output false
+class AHorzSlider : Core::Group
+{
+  $rect <0,220,180,260>
+  inherited method UpdateViewState()
+  {
+    var int32 pos = 0;
+    var int32 textW = 0;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxValue > MinValue ) && ( CurrentValue >= MinValue ) && ( CurrentValue <= MaxValue ))
+    {
+      /* calculate the center position of the thumb within the slider area */
+      pos = ( Bounds.w - Thumb.Bounds.w ) * ( CurrentValue - MinValue ) / ( MaxValue - MinValue ) + Thumb.Bounds.w / 2;
+    }
+
+    /* calculate position of thumb */
+    Thumb.Bounds.origin.x = pos - Thumb.Bounds.w / 2;
+
+    /* arrange the rectangle according bar width */
+    Rectangle.Bounds = rect( 0, Thumb.Bounds.y2 - pure SliderSize, Bounds.w, Thumb.Bounds.y2 );
+
+    /* update the text items for current value */
+    if ( pure ShowCurrent )
+    {
+      ThumbText.String = formatValueString( pure CurrentValue );
+      MoveText.String = ThumbText.String;
+    }
+
+    /* update the text items for min/max values */
+    if ( pure MinText != null )
+      MinText.String = formatValueString( pure MinValue );
+    if ( pure MaxText != null )
+      MaxText.String = formatValueString( pure MaxValue );
+
+    /* calculate position of thumb text item */
+    textW = ThumbText.GetContentArea().w;
+    ThumbText.Bounds.origin.x = pos - textW / 2;
+
+    if ( ThumbText.Bounds.origin.x < 0 )
+      ThumbText.Bounds.origin.x = 0;
+    else if ( ThumbText.Bounds.origin.x > Bounds.w - textW )
+      ThumbText.Bounds.origin.x = Bounds.w - textW;
+
+    /* calculate position of move text item */
+    textW = MoveText.GetContentArea().w;
+    if ( pos < Bounds.w / 2 )
+      MoveText.Bounds.origin.x = pos + Thumb.Bounds.w / 2 + 5;
+    else
+      MoveText.Bounds.origin.x = pos - Thumb.Bounds.w / 2 - 5 - textW;
+
+    /* calculate position of touch handler a bit larger than the thumb */
+    SimpleTouchHandler.Point1 = point( Thumb.Bounds.x1 - 10, Thumb.Bounds.y1 - 10 );
+    SimpleTouchHandler.Point2 = point( Thumb.Bounds.x1 - 10, Thumb.Bounds.y2 + 10 );
+    SimpleTouchHandler.Point3 = point( Thumb.Bounds.x2 + 10, Thumb.Bounds.y2 + 10 );
+    SimpleTouchHandler.Point4 = point( Thumb.Bounds.x2 + 10, Thumb.Bounds.y1 - 10 );
+
+    /* colorize thumb and text, depending on current state of the view */
+    if ( aState.contains( Core::ViewState[ Enabled ]))
+    {
+      ThumbText.Color = TextColor;
+      if ( SimpleTouchHandler.Down )
+      {
+        ThumbText.Visible = false;
+        MoveText.Visible = pure ShowCurrent;
+        Thumb.Color = ItemColorActive;
+      }
+      else
+      {
+        ThumbText.Visible = pure ShowCurrent;
+        MoveText.Visible = false;
+        Thumb.Color = ItemColor;
+      }
+    }
+    else
+    {
+      ThumbText.Visible = true;
+      MoveText.Visible = false;
+      Thumb.Color = Flat::ColorOfDisabled;
+      ThumbText.Color = Flat::ColorOfDisabled;
+    }
+
+  }
+
+  $rect <0,180,180,220>
+  inherited property Bounds = <0,0,160,70>;
+
+  $rect <0,260,180,300>
+  inherited method UpdateLayout()
+  {
+    /* first make the super call to get the regular layouting */
+    super( aSize );
+
+    /* the arrangement of the components member depends on the size of the thumb */
+    var int32 s = Thumb.Bitmap.FrameSize.y;
+
+    /* arrange the rectangle */
+    Rectangle.Bounds = rect( 0, aSize.y - s - pure SliderSize, aSize.x, aSize.y - s );
+
+    /* arrange the thumb */
+    Thumb.Bounds.origin.y = aSize.y - 2 * s;
+
+    /* arrange the thumb text and the move text */
+    ThumbText.Bounds.y1 = aSize.y - 3 * s - 2;
+    ThumbText.Bounds.y2 = aSize.y - 2 * s;
+    MoveText.Bounds.y1 = 0;
+    MoveText.Bounds.y2 = Rectangle.Bounds.origin.y;
+
+
+
+
+  }
+
+  // The property 'MinValue' defines the lower boundary of the widgets value range.
+  $rect <370,0,550,40>
+  property int32 MinValue = 0;
+
+  $rect <370,40,550,80>
+  onset MinValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MinValue == value )
+      return;
+
+    /* store the new value */
+    pure MinValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'MaxValue' defines the upper boundary of the widgets value range.
+  $rect <550,0,730,40>
+  property int32 MaxValue = 100;
+
+  $rect <550,40,730,80>
+  onset MaxValue
+  {
+    /* check if the given value differs from the current value */
+    if ( pure MaxValue == value )
+      return;
+
+    /* store the new value */
+    pure MaxValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'CurrentValue' stores the momentary value of the widget. The value \
+  // is limited automatically to the range from @MinValue to @MaxValue.
+  $rect <190,0,370,40>
+  property int32 CurrentValue = 50;
+
+  $rect <190,40,370,80>
+  onset CurrentValue
+  {
+    /* limit the given value to the range between MinValue and MaxValue */
+    if ( value < MinValue )
+      value = MinValue;
+    if ( value > MaxValue )
+      value = MaxValue;
+
+    /* check if the given value differs from the current value */
+    if ( pure CurrentValue == value )
+      return;
+
+    /* store the new value */
+    pure CurrentValue = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // This variable stores the Value at the beginning of the user interaction.
+  $rect <190,340,370,380>
+  var int32 startValue = 0;
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <190,220,370,260>
+  slot onPressSlot
+  {
+    /* The user interaction begins. Force the widget to highlight itself. */
+    InvalidateViewState();
+    startValue = CurrentValue;
+  }
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <190,260,370,300>
+  slot onDragSlot
+  {
+    var int32 oldValue = CurrentValue;
+    var int32 ofs = SimpleTouchHandler.CurrentPos.x - SimpleTouchHandler.HittingPos.x;
+
+    /* ensure that the current set value and the given minimum and maximum values are valid */
+    if (( MaxValue > MinValue ) && ( CurrentValue >= MinValue ) && ( CurrentValue <= MaxValue ))
+    {
+      /* calculate the center position of the thumb within the slider area */
+      ofs = ofs * ( MaxValue - MinValue ) / ( Bounds.w - Thumb.Bounds.w );
+    }
+    else
+      ofs = 0;
+
+    /* change the value */
+    CurrentValue = startValue + ofs;
+
+    /* inform others about the changed value */
+    if ( CurrentValue != oldValue )
+    {
+      /* update the attached outlet, if there is one... */
+      if (  Outlet != null )
+        Outlet^ = CurrentValue;
+
+      /* ... and inform other observers, that the outlet has changed its value */
+      notifyobservers Outlet;
+
+      /* inform the OnChange slot method */
+      idlesignal OnChange;
+    }
+
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <190,180,370,220>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      CurrentValue = Outlet^;
+  }
+
+  $rect <190,130,370,170>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containing several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <190,90,370,130>
+  property ^int32 Outlet = null;
+
+  // The property 'OnApply' can refer to a slot method, which will receive a signal \
+  // when the user has released the slider. Thereupon the method's logic will be \
+  // executed.
+  $rect <370,300,550,340>
+  property slot OnApply = null;
+
+  // The property 'OnChange' can refer to a slot method, which will receive a signal \
+  // each time the user has changed the value of the slider. Thereupon the method's \
+  // logic will be executed.
+  $rect <370,260,550,300>
+  property slot OnChange = null;
+
+  // This internal slot method is used to receive the corresponding signals form \
+  // the touch handler.
+  $rect <190,300,370,340>
+  slot onReleaseSlot
+  {
+    /* The user interaction terminates. Force the widget to de-highlight itself. */
+    InvalidateViewState();
+
+    /* inform about the new state */
+    postsignal OnApply;
+
+  }
+
+  $rect <20,20,160,60>
+  object Core::SimpleTouchHandler SimpleTouchHandler
+  {
+    preset Point4 = <60,72>;
+    preset Point3 = <126,72>;
+    preset Point2 = <126,40>;
+    preset Point1 = <60,40>;
+    preset OnDrag = onDragSlot;
+    preset OnRelease = onReleaseSlot;
+    preset OnPress = onPressSlot;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz];
+    preset Bounds = <0,34,160,40>;
+    preset Color = Flat::ColorOfBody;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Thumb
+  {
+    preset Layout = Core::Layout[];
+    preset Bounds = <70,20,90,40>;
+    preset AutoSize = true;
+    preset Color = Flat::ColorOfTouch;
+    preset Alignment = Views::ImageAlignment[AlignHorzCenter, AlignVertCenter];
+    preset Bitmap = Flat::FlatKnobs;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text ThumbText
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToTop];
+    preset Bounds = <60,0,100,30>;
+    preset AutoSize = true;
+    preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertBottom];
+    preset String = "50";
+    preset Font = Flat::FontS;
+    preset Color = Flat::ColorOfTouch;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text MoveText
+  {
+    preset Bounds = <0,0,100,34>;
+    preset AutoSize = true;
+    preset String = "50";
+    preset Font = Flat::FontL;
+    preset Color = Flat::ColorOfTouch;
+  }
+
+  // The property 'ShowCurrent' controls the visibility of the text items displaying \
+  // the current value.
+  $rect <370,180,550,220>
+  property bool ShowCurrent = true;
+
+  $rect <370,220,550,260>
+  onset ShowCurrent
+  {
+    /* store the new value */
+    pure ShowCurrent = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'DotPosition' stores the index of the digit where the dot is shown. \
+  // In case that 'DotPosition' is zero, the dot disappears.
+  $rect <370,90,550,130>
+  property int32 DotPosition = 0;
+
+  $rect <370,130,550,170>
+  onset DotPosition
+  {
+    /* check if the given value differs from the current value */
+    if ( pure DotPosition == value )
+      return;
+
+    /* check limits of the given value */
+    if ( value < 0 )
+      value = 0;
+    if ( value > 3 )
+      value = 3;
+
+    /* store the new value */
+    pure DotPosition = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'Divisor' stores the ratio for the display value.
+  $rect <550,90,730,130>
+  property int32 Divisor = 1;
+
+  $rect <550,130,730,170>
+  onset Divisor
+  {
+    /* check if the given value differs from the current value */
+    if ( pure Divisor == value )
+      return;
+
+    /* check limits of the given value */
+    if ( value < 1 )
+      value = 1;
+    if ( value > 1000 )
+      value = 1000;
+
+    /* store the new value */
+    pure Divisor = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // Method to format a string based on the given aValue and the current @DotPosition \
+  // and @Divisor.
+  $rect <0,300,180,340>
+  method string formatValueString( arg int32 aValue )
+  {
+    /* calculate the value to display */
+    var int32 val = aValue / pure Divisor;
+    var int32 abs = val;
+    if ( val < 0 )
+      abs = -val;
+
+    /* format a string with decimal point if needed */
+    if ( pure DotPosition == 1 )
+      return string( val / 10, 1 ) + "." + string( abs % 10, 1 );
+    else if ( pure DotPosition == 2 )
+      return string( val / 100, 1 ) + "." + string( abs % 100, 2 );
+    else if ( pure DotPosition == 3 )
+      return string( val / 1000, 1 ) + "." + string( abs % 1000, 3 );
+
+    return string( val );
+  }
+
+  // The property 'MinText' can refer to a Flat::MinMaxText item, which receives \
+  // the current @MinValue of the widget as formatted text.
+  $rect <730,90,910,130>
+  property Flat::MinMaxText MinText = null;
+
+  $rect <730,130,910,170>
+  onset MinText
+  {
+    /* store the new value */
+    pure MinText = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'MaxText' can refer to a Flat::MinMaxText item, which receives \
+  // the current @MaxValue of the widget as formatted text.
+  $rect <730,180,910,220>
+  property Flat::MinMaxText MaxText = null;
+
+  $rect <730,220,910,260>
+  onset MaxText
+  {
+    /* store the new value */
+    pure MaxText = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'SliderSize' defines the height of the filled rectangle in pixel.
+  $rect <550,180,730,220>
+  property int32 SliderSize = Flat::SliderSize;
+
+  $rect <550,220,730,260>
+  onset SliderSize
+  {
+    /* check if the given value differs from the current value */
+    if ( pure SliderSize == value )
+      return;
+
+    /* check limits of the given value */
+    if ( value < 0 )
+      value = 0;
+
+    /* store the new value */
+    pure SliderSize = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The class 'HorzSlider' implements a horizontal slider widget, that is used to \
+  // change a value by moving a thumb.
+  // The property 'CurrentValue' represents the momentary value of the widget and \
+  // corresponds to the position of the thumb. The supported value range of the slider \
+  // can be defined by setting the properties 'MinValue' and 'MaxValue'.
+  // A slider can be connected with an Int32 'Outlet' property to show the current \
+  // value of the property and to change it by moving the thumb.
+  // Additionally, a slider can trigger the slot methods 'OnChange' and 'OnApply' \
+  // as soon as the user has changed the thumb position or released the thumb.
+  // The current value of the slider is shown within a moving text item. The properties \
+  // 'DotPosition' and 'Divisor' can be used to configure the text display. If the \
+  // min/max values should be displayed within separate text items, the slider can \
+  // be connected with MinMaxText widgets via the properties 'MinText' and 'MaxText'.
+  // The colors of the widget can be changed by using the properties 'ItemColor', \
+  // 'ItemColorActive', 'BackColor' and 'TextColor'.
+  note legend Note
+  {
+    attr Bounds = <10,390,950,610>;
+  }
+
+  // The property 'BackColor' defines the background color of the widget. The property \
+  // is used to assign a color independent from the current theme color.
+  $rect <910,180,1090,220>
+  property color BackColor = Flat::ColorOfBody;
+
+  $rect <910,220,1090,260>
+  onset BackColor
+  {
+    /* store the new value */
+    pure BackColor = value;
+
+    /* ...and colorize the affected members of the widget */
+    Rectangle.Color = value;
+
+
+
+  }
+
+  // The property 'ItemColor' defines the color of the widgets touchable member (knob). \
+  // The property is used to assign a color independent from the current theme color.
+  $rect <910,0,1090,40>
+  property color ItemColor = Flat::ColorOfTouch;
+
+  $rect <910,40,1090,80>
+  onset ItemColor
+  {
+    /* store the new value */
+    pure ItemColor = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'TextColor' defines the color of the widgets text members. The \
+  // property is used to assign a color independent from the current theme color.
+  $rect <910,270,1090,310>
+  property color TextColor = Flat::ColorOfTouch;
+
+  $rect <910,310,1090,350>
+  onset TextColor
+  {
+    /* store the new value */
+    pure TextColor = value;
+
+    /* colorize part of the affected members of the widget */
+    MoveText.Color = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'ItemColorActive' defines the color of the widgets touchable member \
+  // (knob) while it is touched by the user. The property is used to assign a color \
+  // independent from the current theme color.
+  $rect <910,90,1090,130>
+  property color ItemColorActive = Application::WidgetColor;
+
+  $rect <910,130,1090,170>
+  onset ItemColorActive
+  {
+    /* store the new value */
+    pure ItemColorActive = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  $reorder UpdateViewState 44
+}
+
+// Indicator widget with a flat design. The widget is used to display a boolean value.
+$rect <800,480,980,520>
+$output false
+class AIndicator : Core::Group
+{
+  $rect <0,90,180,130>
+  inherited property Bounds = <0,0,30,30>;
+
+  $rect <0,130,180,170>
+  inherited method UpdateViewState()
+  {
+    aState;
+
+    /* colorize frame and icon, depending on current state of the view */
+    if ( Active )
+    {
+      Frame.Color = BackColorActive;
+      Image.Color = IconColorActive;
+    }
+    else
+    {
+      Frame.Color = BackColor;
+      Image.Color = IconColor;
+    }
+
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Frame
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,30,30>;
+    preset Color = Flat::ColorOfBody;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Image Image
+  {
+    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
+    preset Bounds = <0,0,30,30>;
+    preset Color = Flat::ColorOfBackground;
+    preset FrameNumber = 19;
+    preset Bitmap = Flat::FlatDemoIcons;
+  }
+
+  $rect <370,40,550,80>
+  onset Icon
+  {
+    /* store the new value */
+    pure Icon    = value;
+
+    /* and assign it to the image */
+    Image.Bitmap = value;
+  }
+
+  // The property 'Icon' stores the bitmap to show in the left part of the button.
+  $rect <370,0,550,40>
+  property Resources::Bitmap Icon = Flat::FlatDemoIcons;
+
+  // The property 'IconIndex' stores the frame number of the @Icon.
+  $rect <550,0,730,40>
+  property int32 IconIndex = 19;
+
+  $rect <550,40,730,80>
+  onset IconIndex
+  {
+    /* store the new value */
+    pure IconIndex = value;
+
+    /* and select the corresponding frame number */
+    Image.FrameNumber = value;
+  }
+
+  // This slot method will receive a signal, if the value of the property assigned \
+  // to @Outlet has been changed by another widget or by the application logic. In \
+  // response to this notification, the widget will update itself.
+  $rect <190,180,370,220>
+  slot outletSlot
+  {
+    /* update the current state of the widget */
+    if ( Outlet != null )
+      Active = Outlet^;
+  }
+
+  $rect <190,130,370,170>
+  onset Outlet
+  {
+    /* check if the new outlet differs from the currently used outlet */
+    if ( pure Outlet == value )
+      return;
+
+    /* detach from the previous outlet */
+    if ( pure Outlet != null )
+      detachobserver outletSlot, pure Outlet;
+
+    /* store the new outlet */
+    pure Outlet = value;
+
+    /* ... and attach to the new one */
+    if ( value != null )
+      attachobserver outletSlot, value;
+
+    /* finally, update the current state of the widget by posting a signal to the outlet slot */
+    if ( value != null )
+      postsignal outletSlot;
+  }
+
+  // The property 'Outlet' provides an interface for the Controller-View model. In \
+  // the Controller-View model, the widgets (views) and the application logic (controllers) \
+  // are always kept apart. An automatism behind this model ensures, that widgets \
+  // are notified automatically as soon as the affected controller has changed its \
+  // state. On the other hand, user interactions on a widget cause the affected controller \
+  // to execute the application logic. Usually, a controller is a simple Chora object \
+  // containing several properties and the implementation of onget/onset method.
+  // By assigning a property reference, Outlet establishes a connection between the \
+  // widget and the controller object, the affected property belongs to. After this, \
+  // the widget is able to read and modify the referred property in response to the \
+  // user interactions. It is also able to adapt the widget appearance, if the value \
+  // of the referred property has been modified by another widget or by the application \
+  // logic itself.
+  $rect <190,90,370,130>
+  property ^bool Outlet = null;
+
+  $rect <190,40,370,80>
+  onset Active
+  {
+    /* check if the given value differs from the current value */
+    if ( pure Active == value )
+      return;
+
+    /* store the new value */
+    pure Active = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'Active' stores the current state of the indicator. As long as \
+  // the property is 'false', the widget should appear 'dark'. As long as the property \
+  // is 'true', the widget should appear illuminated.
+  $rect <190,0,370,40>
+  property bool Active = false;
+
+  // The class 'Indicator' implements a widget to display a boolean value.
+  // The widget can be connected with a boolean 'Outlet' property in order to illustrate \
+  // the current state.
+  // The displayed icon can be configured via the properties 'Icon' and 'IconIndex'.
+  // Additionally, the used colors can be configured individually: for the state \
+  // 'inactive' the colors 'BackColor' and 'IconColor' are used, for the state 'active' \
+  // the colors 'BackColorActive' and 'IconColorActive' are used.
+  note legend Note
+  {
+    attr Bounds = <10,270,720,390>;
+  }
+
+  // The property 'BackColorActive' defines the color of the widget when it is activated. \
+  // The property is used to assign a color independent from the current theme color.
+  $rect <370,180,550,220>
+  property color BackColorActive = Application::WidgetColor;
+
+  $rect <370,220,550,260>
+  onset BackColorActive
+  {
+    /* store the new value */
+    pure BackColorActive = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'BackColor' defines the color of the widget when it is not activated. \
+  // The property is used to assign a color independent from the current theme color.
+  $rect <370,90,550,130>
+  property color BackColor = Flat::ColorOfBody;
+
+  $rect <370,130,550,170>
+  onset BackColor
+  {
+    /* store the new value */
+    pure BackColor = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
+
+  // The property 'IconColorActive' defines the color of the widgets icon when it \
+  // is activated. The property is used to assign a color independent from the current \
+  // theme color.
+  $rect <550,180,730,220>
+  property color IconColorActive = Flat::ColorOfBody;
+
+  $rect <550,220,730,260>
+  onset IconColorActive
+  {
+    /* store the new value */
+    pure IconColorActive = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+
+  }
+
+  // The property 'IconColor' defines the color of the widgets icon when it is not \
+  // activated. The property is used to assign a color independent from the current \
+  // theme color.
+  $rect <550,90,730,130>
+  property color IconColor = Flat::ColorOfDisabled;
+
+  $rect <550,130,730,170>
+  onset IconColor
+  {
+    /* store the new value */
+    pure IconColor = value;
+
+    /* ...and finally, force an update */
+    InvalidateViewState();
+  }
 }

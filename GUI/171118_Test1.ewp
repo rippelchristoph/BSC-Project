@@ -83,7 +83,7 @@ note group Note3
 // Project Units
 note group Note5
 {
-  attr Bounds = <270,170,760,310>;
+  attr Bounds = <270,170,780,420>;
 }
 
 $rect <40,270,240,310>

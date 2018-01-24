@@ -41,9 +41,11 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
+#include "_ApplicationAActionButton.h"
+#include "_ApplicationAHorzSlider.h"
+#include "_ApplicationAToggleButton.h"
 #include "_CoreGroup.h"
-#include "_FlatActionButton.h"
-#include "_FlatHorzSlider.h"
+#include "_ViewsImage.h"
 #include "_ViewsRectangle.h"
 #include "_ViewsText.h"
 
@@ -77,20 +79,29 @@
 #define _GraphicsCanvas_
 #endif
 
+/* Forward declaration of the class Resources::Bitmap */
+#ifndef _ResourcesBitmap_
+  EW_DECLARE_CLASS( ResourcesBitmap )
+#define _ResourcesBitmap_
+#endif
+
 
 /* Deklaration of class : 'Application::ConfigPosition' */
 EW_DEFINE_FIELDS( ApplicationConfigPosition, CoreGroup )
   EW_OBJECT  ( Rectangle,       ViewsRectangle )
-  EW_OBJECT  ( Btn_Next,        FlatActionButton )
+  EW_OBJECT  ( Btn_Next,        ApplicationAActionButton )
   EW_OBJECT  ( TextTitle,       ViewsText )
-  EW_OBJECT  ( XSlider,         FlatHorzSlider )
-  EW_OBJECT  ( YSlider,         FlatHorzSlider )
-  EW_OBJECT  ( ZSlider,         FlatHorzSlider )
+  EW_OBJECT  ( XSlider,         ApplicationAHorzSlider )
+  EW_OBJECT  ( YSlider,         ApplicationAHorzSlider )
+  EW_OBJECT  ( ZSlider,         ApplicationAHorzSlider )
   EW_PROPERTY( onNext,          XSlot )
   EW_PROPERTY( Title,           XString )
   EW_OBJECT  ( TextX,           ViewsText )
   EW_OBJECT  ( TextY,           ViewsText )
   EW_OBJECT  ( TextZ,           ViewsText )
+  EW_PROPERTY( Help,            ResourcesBitmap )
+  EW_OBJECT  ( Btn_Help,        ApplicationAToggleButton )
+  EW_OBJECT  ( Img_Help,        ViewsImage )
 EW_END_OF_FIELDS( ApplicationConfigPosition )
 
 /* Virtual Method Table (VMT) for the class : 'Application::ConfigPosition' */
@@ -165,6 +176,14 @@ void ApplicationConfigPosition_OnSetTitle( ApplicationConfigPosition _this, XStr
 
 /* 'C' function for method : 'Application::ConfigPosition.onBtnNext()' */
 void ApplicationConfigPosition_onBtnNext( ApplicationConfigPosition _this, XObject 
+  sender );
+
+/* 'C' function for method : 'Application::ConfigPosition.OnSetHelp()' */
+void ApplicationConfigPosition_OnSetHelp( ApplicationConfigPosition _this, ResourcesBitmap 
+  value );
+
+/* 'C' function for method : 'Application::ConfigPosition.onBtn_Help()' */
+void ApplicationConfigPosition_onBtn_Help( ApplicationConfigPosition _this, XObject 
   sender );
 
 #ifdef __cplusplus

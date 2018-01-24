@@ -44,9 +44,6 @@ include $(EMWI_RTE_PATH)/ewrte.inc
 vpath %.c           $(EMWI_APP_PATH)                                           \
                     $(EMWI_RTE_PATH)                                           \
                     $(EMWI_GFX_PATH)                                           \
-		    ../../../Common/Source/				\
-		    ../../../Middleware/Source/				       \
-		    ../../../Platforms/RaspberryPi/Source			\
 
 ##############################################################################
 # EMBEDDED WIZARD - APPLICATION DEMO
@@ -72,7 +69,7 @@ LIBS :=     m                                                                 \
             GLESv2                                                            \
             EGL                                                               \
             pthread 																													\
-	    wiringPi                                                          \
+						wiringPi                                                          \
             $(EMWI_RTE_LIB)                                                   \
             $(EMWI_GFX_LIB)                                                   \
 
@@ -86,9 +83,6 @@ INCLUDES =                                                                     \
             -I$(EMWI_RTE_PATH)                                                 \
             -I$(EMWI_GFX_PATH)                                                 \
             -I$(SDK_PATH)/include                                              \
-	    -I../../../Common/Include/				\
-	    -I../../../Middleware/Include/				       \
-	    -I../../../Platforms/RaspberryPi/Include/			\
 
 
 ###############################################################################

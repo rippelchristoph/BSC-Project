@@ -41,10 +41,7 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
-#include "_FlatActionButton.h"
-#include "_FlatHorzBar.h"
-#include "_FlatHorzSlider.h"
-#include "_FlatIndicator.h"
+#include "_FlatLabel.h"
 #include "_FlatMinMaxText.h"
 
 /* Font resources used for the different widgets. If you want to change the fonts 

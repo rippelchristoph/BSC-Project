@@ -70,6 +70,13 @@ static const XStringRes _Const000F = { _StringsDefault0, 0x0128 };
 static const XStringRes _Const0010 = { _StringsDefault0, 0x013E };
 static const XStringRes _Const0011 = { _StringsDefault0, 0x0156 };
 static const XStringRes _Const0012 = { _StringsDefault0, 0x016A };
+static const XColor _Const0013 = { 0xF3, 0x89, 0x00, 0xFF };
+static const XColor _Const0014 = { 0x32, 0xCE, 0x00, 0xFF };
+static const XColor _Const0015 = { 0x07, 0x36, 0xA3, 0xFF };
+static const XColor _Const0016 = { 0x00, 0x00, 0xFF, 0xFF };
+static const XColor _Const0017 = { 0x00, 0xFF, 0xFF, 0xFF };
+static const XColor _Const0018 = { 0xFF, 0x00, 0xFF, 0xFF };
+static const XColor _Const0019 = { 0xFF, 0x00, 0x00, 0xFF };
 
 /* User defined inline code: 'Device::I2CHeader' */
 #include <unistd.h>				//Needed for I2C port
@@ -410,11 +417,11 @@ void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value )
 
 /* This method is intended to be called by the device to notify the GUI application 
    about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewValue )
+void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewArgument )
 {
-  if ( aNewValue != _this->Temperature )
+  if ( aNewArgument != _this->Temperature )
   {
-    _this->Temperature = aNewValue;
+    _this->Temperature = aNewArgument;
     EwTrace( "%s", EwConcatString( EwLoadString( &_Const0012 ), EwNewStringFloat( 
       _this->Temperature, 0, 6 )));
     EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetTemperature, DeviceDeviceClass_OnSetTemperature 
@@ -423,9 +430,40 @@ void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewVa
 }
 
 /* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateTemperature()' */
-void DeviceDeviceClass__UpdateTemperature( void* _this, XFloat aNewValue )
+void DeviceDeviceClass__UpdateTemperature( void* _this, XFloat aNewArgument )
 {
-  DeviceDeviceClass_UpdateTemperature((DeviceDeviceClass)_this, aNewValue );
+  DeviceDeviceClass_UpdateTemperature((DeviceDeviceClass)_this, aNewArgument );
+}
+
+/* 'C' function for method : 'Device::DeviceClass.getColor()' */
+XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumber )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+
+  switch ( aCircuitNumber )
+  {
+    case 0 :
+      return _Const0013;
+
+    case 1 :
+      return _Const0014;
+
+    case 2 :
+      return _Const0015;
+
+    case 3 :
+      return _Const0016;
+
+    case 4 :
+      return _Const0017;
+
+    case 5 :
+      return _Const0018;
+
+    default : 
+      return _Const0019;
+  }
 }
 
 /* Default onget method for the property 'NuOfCircuits' */

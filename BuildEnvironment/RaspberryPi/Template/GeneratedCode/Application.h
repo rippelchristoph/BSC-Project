@@ -41,6 +41,11 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
+#include "_ApplicationAActionButton.h"
+#include "_ApplicationAHorzBar.h"
+#include "_ApplicationAHorzSlider.h"
+#include "_ApplicationAIndicator.h"
+#include "_ApplicationAToggleButton.h"
 #include "_ApplicationApplication.h"
 #include "_ApplicationClock.h"
 #include "_ApplicationConfig.h"
@@ -63,6 +68,24 @@ EW_DECLARE_BITMAP_RES( ApplicationLogo )
 
 /* Font resource : 'Application::FontArial17' */
 EW_DECLARE_FONT_RES( ApplicationFontArial17 )
+
+/* Bitmap resource : 'Application::ConfigTR' */
+EW_DECLARE_BITMAP_RES( ApplicationConfigTR )
+
+/* Bitmap resource : 'Application::ConfigBL' */
+EW_DECLARE_BITMAP_RES( ApplicationConfigBL )
+
+/* Bitmap resource : 'Application::ConfigTop' */
+EW_DECLARE_BITMAP_RES( ApplicationConfigTop )
+
+/* Bitmap resource : 'Application::ConfigWaste' */
+EW_DECLARE_BITMAP_RES( ApplicationConfigWaste )
+
+/* User defined constant: 'Application::BackgroundColor' */
+extern const XColor ApplicationBackgroundColor;
+
+/* User defined constant: 'Application::WidgetColor' */
+extern const XColor ApplicationWidgetColor;
 
 #ifdef __cplusplus
   }

@@ -98,7 +98,7 @@ static void* TouchEventThread( void* aArg )
 
   /* get access to touch events from input device */
   EwPrint( "Open Touch Driver...                         " );
-  touchDev = open( "/dev/input/event1", O_RDONLY );  //!!!!!!!!!!
+  touchDev = open( "/dev/input/event0", O_RDONLY );  //!!!!!!!!!!
   if ( touchDev < 0 )
     return 0;
   EwPrint( "[OK]\n" );

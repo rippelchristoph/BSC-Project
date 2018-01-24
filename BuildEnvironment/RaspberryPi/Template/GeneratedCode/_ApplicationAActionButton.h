@@ -23,8 +23,8 @@
 *
 *******************************************************************************/
 
-#ifndef _ApplicationConfig_H
-#define _ApplicationConfig_H
+#ifndef _ApplicationAActionButton_H
+#define _ApplicationAActionButton_H
 
 #ifdef __cplusplus
   extern "C"
@@ -41,24 +41,15 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
-#include "_ApplicationAActionButton.h"
-#include "_ApplicationConfigPosition.h"
-#include "_ApplicationNumKeyboard.h"
-#include "_ApplicationTextEditor.h"
 #include "_CoreGroup.h"
-#include "_ViewsRectangle.h"
+#include "_CoreSimpleTouchHandler.h"
+#include "_ViewsFrame.h"
 #include "_ViewsText.h"
 
-/* Forward declaration of the class Application::Config */
-#ifndef _ApplicationConfig_
-  EW_DECLARE_CLASS( ApplicationConfig )
-#define _ApplicationConfig_
-#endif
-
-/* Forward declaration of the class Application::ControllMenu */
-#ifndef _ApplicationControllMenu_
-  EW_DECLARE_CLASS( ApplicationControllMenu )
-#define _ApplicationControllMenu_
+/* Forward declaration of the class Application::AActionButton */
+#ifndef _ApplicationAActionButton_
+  EW_DECLARE_CLASS( ApplicationAActionButton )
+#define _ApplicationAActionButton_
 #endif
 
 /* Forward declaration of the class Core::KeyPressHandler */
@@ -86,22 +77,21 @@
 #endif
 
 
-/* Deklaration of class : 'Application::Config' */
-EW_DEFINE_FIELDS( ApplicationConfig, CoreGroup )
-  EW_OBJECT  ( Rectangle,       ViewsRectangle )
-  EW_OBJECT  ( Btn_Ok,          ApplicationAActionButton )
-  EW_OBJECT  ( TextEditor,      ApplicationTextEditor )
-  EW_OBJECT  ( NumKeyboard,     ApplicationNumKeyboard )
-  EW_OBJECT  ( Text,            ViewsText )
-  EW_PROPERTY( ControllMenue,   ApplicationControllMenu )
-  EW_OBJECT  ( ConfigTop,       ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigTR,        ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigBL,        ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigWaste,     ApplicationConfigPosition )
-EW_END_OF_FIELDS( ApplicationConfig )
+/* Action button widget with a flat design. The widget is used as a simple push 
+   button with a text. */
+EW_DEFINE_FIELDS( ApplicationAActionButton, CoreGroup )
+  EW_PROPERTY( OnAction,        XSlot )
+  EW_OBJECT  ( TouchHandler,    CoreSimpleTouchHandler )
+  EW_OBJECT  ( Frame,           ViewsFrame )
+  EW_OBJECT  ( CaptionText,     ViewsText )
+  EW_PROPERTY( Caption,         XString )
+  EW_PROPERTY( ItemColor,       XColor )
+  EW_PROPERTY( TextColor,       XColor )
+  EW_PROPERTY( ItemColorActive, XColor )
+EW_END_OF_FIELDS( ApplicationAActionButton )
 
-/* Virtual Method Table (VMT) for the class : 'Application::Config' */
-EW_DEFINE_METHODS( ApplicationConfig, CoreGroup )
+/* Virtual Method Table (VMT) for the class : 'Application::AActionButton' */
+EW_DEFINE_METHODS( ApplicationAActionButton, CoreGroup )
   EW_METHOD( initLayoutContext, void )( CoreRectView _this, XRect aBounds, CoreOutline 
     aOutline )
   EW_METHOD( GetRoot,           CoreRoot )( CoreView _this )
@@ -121,23 +111,14 @@ EW_DEFINE_METHODS( ApplicationConfig, CoreGroup )
   EW_METHOD( DispatchEvent,     XObject )( CoreGroup _this, CoreEvent aEvent )
   EW_METHOD( BroadcastEvent,    XObject )( CoreGroup _this, CoreEvent aEvent, XSet 
     aFilter )
-  EW_METHOD( UpdateLayout,      void )( ApplicationConfig _this, XPoint aSize )
-  EW_METHOD( UpdateViewState,   void )( ApplicationConfig _this, XSet aState )
+  EW_METHOD( UpdateLayout,      void )( CoreGroup _this, XPoint aSize )
+  EW_METHOD( UpdateViewState,   void )( ApplicationAActionButton _this, XSet aState )
   EW_METHOD( InvalidateArea,    void )( CoreGroup _this, XRect aArea )
   EW_METHOD( Restack,           void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
   EW_METHOD( Add,               void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
-EW_END_OF_METHODS( ApplicationConfig )
-
-/* The method UpdateLayout() is invoked automatically after the size of the component 
-   has been changed. This method can be overridden and filled with logic to perform 
-   a sophisticated arrangement calculation for one or more enclosed views. In this 
-   case the parameter aSize can be used. It contains the current size of the component. 
-   Usually, all enclosed views are arranged automatically accordingly to their @Layout 
-   property. UpdateLayout() gives the derived components a chance to extend this 
-   automatism by a user defined algorithm. */
-void ApplicationConfig_UpdateLayout( ApplicationConfig _this, XPoint aSize );
+EW_END_OF_METHODS( ApplicationAActionButton )
 
 /* The method UpdateViewState() is invoked automatically after the state of the 
    component has been changed. This method can be overridden and filled with logic 
@@ -153,31 +134,27 @@ void ApplicationConfig_UpdateLayout( ApplicationConfig _this, XPoint aSize );
    state 'on' or 'off' and change accordingly the location of the slider, etc.
    Usually, this method will be invoked automatically by the framework. Optionally 
    you can request its invocation by using the method @InvalidateViewState(). */
-void ApplicationConfig_UpdateViewState( ApplicationConfig _this, XSet aState );
+void ApplicationAActionButton_UpdateViewState( ApplicationAActionButton _this, XSet 
+  aState );
 
-/* 'C' function for method : 'Application::Config.onBtn_Ok()' */
-void ApplicationConfig_onBtn_Ok( ApplicationConfig _this, XObject sender );
+/* This internal slot method is used to receive the corresponding signals form the 
+   touch handler. */
+void ApplicationAActionButton_enterLeaveSlot( ApplicationAActionButton _this, XObject 
+  sender );
 
-/* 'C' function for method : 'Application::Config.OnSetControllMenue()' */
-void ApplicationConfig_OnSetControllMenue( ApplicationConfig _this, ApplicationControllMenu 
+/* This internal slot method is used to receive the corresponding signals form the 
+   touch handler. */
+void ApplicationAActionButton_pressReleaseSlot( ApplicationAActionButton _this, 
+  XObject sender );
+
+/* 'C' function for method : 'Application::AActionButton.OnSetCaption()' */
+void ApplicationAActionButton_OnSetCaption( ApplicationAActionButton _this, XString 
   value );
-
-/* 'C' function for method : 'Application::Config.onNextWaste()' */
-void ApplicationConfig_onNextWaste( ApplicationConfig _this, XObject sender );
-
-/* 'C' function for method : 'Application::Config.onNextTR()' */
-void ApplicationConfig_onNextTR( ApplicationConfig _this, XObject sender );
-
-/* 'C' function for method : 'Application::Config.onNextBL()' */
-void ApplicationConfig_onNextBL( ApplicationConfig _this, XObject sender );
-
-/* 'C' function for method : 'Application::Config.onNextTop()' */
-void ApplicationConfig_onNextTop( ApplicationConfig _this, XObject sender );
 
 #ifdef __cplusplus
   }
 #endif
 
-#endif /* _ApplicationConfig_H */
+#endif /* _ApplicationAActionButton_H */
 
 /* Embedded Wizard */
