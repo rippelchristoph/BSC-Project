@@ -11,13 +11,13 @@ APP_FILE           = EmWiApplication
 ###############################################################################
 # GENERAL SETTINGS & PATHS
 ###############################################################################
-BUILD_PATH        = ../Build
+BUILD_PATH        = ./BuildEnvironment/RaspberryPi/Build
 
-EMWI_APP_PATH     = ./GeneratedCode
-EMWI_RTE_PATH     = ../PlatformPackage/RTE
-EMWI_GFX_PATH     = ../PlatformPackage/RGBA8888
-OBJ_PATH          = ./obj
-BIN_PATH          = .
+EMWI_APP_PATH     = ./BuildEnvironment/RaspberryPi/Template/GeneratedCode
+EMWI_RTE_PATH     = ./BuildEnvironment/RaspberryPi/PlatformPackage/RTE
+EMWI_GFX_PATH     = ./BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888
+OBJ_PATH          = ./BuildEnvironment/RaspberryPi/Template/obj
+BIN_PATH          = ./BuildEnvironment/RaspberryPi/Template
 
 SDK_PATH          = /opt/vc
 LIB_PATH          = $(SDK_PATH)/lib
@@ -44,6 +44,10 @@ include $(EMWI_RTE_PATH)/ewrte.inc
 vpath %.c           $(EMWI_APP_PATH)                                           \
                     $(EMWI_RTE_PATH)                                           \
                     $(EMWI_GFX_PATH)                                           \
+		    ./Common/Source/					       \
+		    ./Middleware/Source/				       \
+		    ./Platforms/RaspberryPi/Source			       \
+
 
 ##############################################################################
 # EMBEDDED WIZARD - APPLICATION DEMO
@@ -69,7 +73,7 @@ LIBS :=     m                                                                 \
             GLESv2                                                            \
             EGL                                                               \
             pthread 																													\
-						wiringPi                                                          \
+	    wiringPi                                                          \
             $(EMWI_RTE_LIB)                                                   \
             $(EMWI_GFX_LIB)                                                   \
 

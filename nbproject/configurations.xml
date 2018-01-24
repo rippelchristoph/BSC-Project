@@ -1,0 +1,854 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="Application">
+        <df name="Source">
+          <in>main.c</in>
+        </df>
+      </df>
+      <df name="BuildEnvironment">
+        <df name="RaspberryPi">
+          <df name="PlatformPackage">
+            <df name="RGBA8888">
+              <in>ewextbmp.h</in>
+              <in>ewextfnt.h</in>
+              <in>ewextgfx.h</in>
+              <in>ewextpxl_RGBA8888.h</in>
+              <in>ewgfx.h</in>
+              <in>ewgfxcore.h</in>
+              <in>ewgfxdefs.h</in>
+              <in>ewgfxdriver.h</in>
+              <in>ewgfxlinks.h</in>
+              <in>ewgfxres.h</in>
+              <in>ewgfxtasks.h</in>
+            </df>
+            <df name="RTE">
+              <in>ewextrte.h</in>
+              <in>ewrte.h</in>
+            </df>
+          </df>
+          <df name="Template">
+            <df name="GeneratedCode">
+              <in>Application.c</in>
+              <in>Application.h</in>
+              <in>Charts.c</in>
+              <in>Charts.h</in>
+              <in>Core.c</in>
+              <in>Core.h</in>
+              <in>Device.c</in>
+              <in>Device.h</in>
+              <in>Effects.c</in>
+              <in>Effects.h</in>
+              <in>Flat.c</in>
+              <in>Flat.h</in>
+              <in>Graphics.c</in>
+              <in>Graphics.h</in>
+              <in>Resources.c</in>
+              <in>Resources.h</in>
+              <in>Steel.c</in>
+              <in>Steel.h</in>
+              <in>Templates.c</in>
+              <in>Templates.h</in>
+              <in>Views.c</in>
+              <in>Views.h</in>
+              <in>XFlat.c</in>
+              <in>XFlat.h</in>
+              <in>_ApplicationApplication.h</in>
+              <in>_ApplicationClock.h</in>
+              <in>_ApplicationConfig.h</in>
+              <in>_ApplicationConfigPosition.h</in>
+              <in>_ApplicationControllMenu.h</in>
+              <in>_ApplicationMainMenu.h</in>
+              <in>_ApplicationMainMenue.h</in>
+              <in>_ApplicationNumKeyboard.h</in>
+              <in>_ApplicationSampleController.h</in>
+              <in>_ApplicationTemperature.h</in>
+              <in>_ApplicationTextEditor.h</in>
+              <in>_ApplicationWell.h</in>
+              <in>_ApplicationWellLabel.h</in>
+              <in>_ApplicationWellPart.h</in>
+              <in>_CoreCursorEvent.h</in>
+              <in>_CoreCursorGrabEvent.h</in>
+              <in>_CoreCursorHit.h</in>
+              <in>_CoreDragEvent.h</in>
+              <in>_CoreEvent.h</in>
+              <in>_CoreGroup.h</in>
+              <in>_CoreKeyEvent.h</in>
+              <in>_CoreKeyPressHandler.h</in>
+              <in>_CoreLayoutContext.h</in>
+              <in>_CoreLayoutLineContext.h</in>
+              <in>_CoreLayoutQuadContext.h</in>
+              <in>_CoreLineView.h</in>
+              <in>_CoreModalContext.h</in>
+              <in>_CoreOutline.h</in>
+              <in>_CorePropertyObserver.h</in>
+              <in>_CoreQuadView.h</in>
+              <in>_CoreRectView.h</in>
+              <in>_CoreResource.h</in>
+              <in>_CoreRoot.h</in>
+              <in>_CoreSimpleTouchHandler.h</in>
+              <in>_CoreSlideTouchHandler.h</in>
+              <in>_CoreSystemEvent.h</in>
+              <in>_CoreSystemEventHandler.h</in>
+              <in>_CoreSystemEventTask.h</in>
+              <in>_CoreTask.h</in>
+              <in>_CoreTaskQueue.h</in>
+              <in>_CoreTime.h</in>
+              <in>_CoreTimer.h</in>
+              <in>_CoreView.h</in>
+              <in>_DeviceDeviceClass.h</in>
+              <in>_DeviceRemainingTimeContext.h</in>
+              <in>_DeviceSampleCollectedContext.h</in>
+              <in>_EffectsBoolEffect.h</in>
+              <in>_EffectsEffect.h</in>
+              <in>_EffectsEffectTimerClass.h</in>
+              <in>_EffectsInt32Effect.h</in>
+              <in>_EffectsPointEffect.h</in>
+              <in>_EffectsTimingList.h</in>
+              <in>_FlatActionButton.h</in>
+              <in>_FlatDigitalDisplay.h</in>
+              <in>_FlatHorzBar.h</in>
+              <in>_FlatHorzSlider.h</in>
+              <in>_FlatIndicator.h</in>
+              <in>_FlatLabel.h</in>
+              <in>_FlatMinMaxText.h</in>
+              <in>_FlatSwitch.h</in>
+              <in>_GraphicsCanvas.h</in>
+              <in>_GraphicsWarpMatrix.h</in>
+              <in>_ResourcesBitmap.h</in>
+              <in>_ResourcesFont.h</in>
+              <in>_TemplatesDeviceClass.h</in>
+              <in>_TemplatesNumKeyboard.h</in>
+              <in>_TemplatesTextEditor.h</in>
+              <in>_ViewsBorder.h</in>
+              <in>_ViewsFrame.h</in>
+              <in>_ViewsImage.h</in>
+              <in>_ViewsLine.h</in>
+              <in>_ViewsRectangle.h</in>
+              <in>_ViewsText.h</in>
+              <in>_ViewsWarpGroup.h</in>
+              <in>_ViewsWarpImage.h</in>
+              <in>_ViewsWarpView.h</in>
+              <in>ewlocale.h</in>
+            </df>
+            <in>._main.c</in>
+            <in>main.c</in>
+          </df>
+        </df>
+      </df>
+      <df name="Common">
+        <df name="Include">
+          <in>BSCCommonTypes.h</in>
+          <in>HtlStdDef.h</in>
+          <in>List.h</in>
+        </df>
+        <df name="Source">
+          <in>List.c</in>
+        </df>
+      </df>
+      <df name="Middleware">
+        <df name="Include">
+          <in>BSCController.h</in>
+          <in>Order.h</in>
+          <in>OrderController.h</in>
+          <in>PlotterController.h</in>
+          <in>Sampler.h</in>
+        </df>
+        <df name="Source">
+          <in>BSCController.c</in>
+          <in>Order.c</in>
+          <in>OrderController.c</in>
+          <in>PlotterController.c</in>
+          <in>Sampler.c</in>
+        </df>
+      </df>
+      <df name="Platforms">
+        <df name="RaspberryPi">
+          <df name="Include">
+            <in>SerialConnection.h</in>
+            <in>i2c.h</in>
+          </df>
+          <df name="Source">
+            <in>SerialConnection.c</in>
+            <in>i2c.c</in>
+          </df>
+        </df>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+      <itemPath>nbproject/private/launcher.properties</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+        <preBuild>
+          <preBuildCommandWorkingDir>.</preBuildCommandWorkingDir>
+          <preBuildCommand></preBuildCommand>
+        </preBuild>
+      </makefileType>
+      <item path="Application/Source/main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewextbmp.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewextfnt.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewextgfx.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewextpxl_RGBA8888.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewgfx.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewgfxcore.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewgfxdefs.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewgfxdriver.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewgfxlinks.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewgfxres.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RGBA8888/ewgfxtasks.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RTE/ewextrte.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/PlatformPackage/RTE/ewrte.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/._main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Application.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Application.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Charts.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Charts.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Core.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Core.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Device.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Device.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Effects.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Effects.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Flat.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Flat.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Graphics.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Graphics.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Resources.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Resources.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Steel.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Steel.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Templates.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Templates.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Views.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/Views.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/XFlat.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/XFlat.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationApplication.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationClock.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationConfig.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationConfigPosition.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationControllMenu.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationMainMenu.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationMainMenue.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationNumKeyboard.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationSampleController.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationTemperature.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationTextEditor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationWell.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationWellLabel.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ApplicationWellPart.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreCursorEvent.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreCursorGrabEvent.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreCursorHit.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreDragEvent.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreEvent.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreGroup.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreKeyEvent.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreKeyPressHandler.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreLayoutContext.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreLayoutLineContext.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreLayoutQuadContext.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreLineView.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreModalContext.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreOutline.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CorePropertyObserver.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreQuadView.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreRectView.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreResource.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreRoot.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreSimpleTouchHandler.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreSlideTouchHandler.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreSystemEvent.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreSystemEventHandler.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreSystemEventTask.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreTask.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreTaskQueue.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreTime.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreTimer.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_CoreView.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_DeviceDeviceClass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_DeviceRemainingTimeContext.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_DeviceSampleCollectedContext.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_EffectsBoolEffect.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_EffectsEffect.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_EffectsEffectTimerClass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_EffectsInt32Effect.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_EffectsPointEffect.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_EffectsTimingList.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_FlatActionButton.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_FlatDigitalDisplay.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_FlatHorzBar.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_FlatHorzSlider.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_FlatIndicator.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_FlatLabel.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_FlatMinMaxText.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_FlatSwitch.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_GraphicsCanvas.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_GraphicsWarpMatrix.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ResourcesBitmap.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ResourcesFont.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_TemplatesDeviceClass.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_TemplatesNumKeyboard.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_TemplatesTextEditor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ViewsBorder.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ViewsFrame.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ViewsImage.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ViewsLine.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ViewsRectangle.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ViewsText.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ViewsWarpGroup.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ViewsWarpImage.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/_ViewsWarpView.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/GeneratedCode/ewlocale.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="BuildEnvironment/RaspberryPi/Template/main.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="Common/Include/BSCCommonTypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Common/Include/HtlStdDef.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Common/Include/List.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Common/Source/List.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Middleware/Include/BSCController.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Middleware/Include/Order.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Middleware/Include/OrderController.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Middleware/Include/PlotterController.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Middleware/Include/Sampler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Middleware/Source/BSCController.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Middleware/Source/Order.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Middleware/Source/OrderController.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="Middleware/Source/PlotterController.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="Middleware/Source/Sampler.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Platforms/RaspberryPi/Include/SerialConnection.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Platforms/RaspberryPi/Include/i2c.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="Platforms/RaspberryPi/Source/SerialConnection.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="Platforms/RaspberryPi/Source/i2c.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
