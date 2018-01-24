@@ -18,6 +18,7 @@ EMWI_RTE_PATH     = ../PlatformPackage/RTE
 EMWI_GFX_PATH     = ../PlatformPackage/RGBA8888
 OBJ_PATH          = ./obj
 BIN_PATH          = .
+BSC_C_PATH	  = .
 
 SDK_PATH          = /opt/vc
 LIB_PATH          = $(SDK_PATH)/lib
@@ -37,13 +38,17 @@ endif
 include $(EMWI_APP_PATH)/ewfiles.inc
 include $(EMWI_GFX_PATH)/ewgfx.inc
 include $(EMWI_RTE_PATH)/ewrte.inc
+include $(BSC_C_PATH)/BSCFiles.inc
 
 ###############################################################################
 # Standard directories for C files
 ###############################################################################
-vpath %.c           $(EMWI_APP_PATH)                                           \
-                    $(EMWI_RTE_PATH)                                           \
-                    $(EMWI_GFX_PATH)                                           \
+vpath %.c           $(EMWI_APP_PATH)                                        \
+                    $(EMWI_RTE_PATH)                                        \
+                    $(EMWI_GFX_PATH)                                        \
+		    ../../../Middleware/Source				    \
+		    ../../../Common/Source				    \
+		    ../../../Platform/RaspberryPi/Source		    \
 
 ##############################################################################
 # EMBEDDED WIZARD - APPLICATION DEMO
@@ -60,6 +65,10 @@ RTE_EMWI_C =        $(EMWI_RTE_FILES)
 # compile all files for the Embedded Wizard Graphics Engine (GFX)
 GFX_EMWI_C =        $(EMWI_GFX_FILES)
 
+# compile all Common C Files
+COMMON_C = $(COMMONFILES)
+PLATFORM_C = $(PLATFORMFILES)
+MIDDLEWARE_C = $(MIDDLEWAREFILES)
 
 ###############################################################################
 # LIBRARIES
@@ -69,7 +78,7 @@ LIBS :=     m                                                                 \
             GLESv2                                                            \
             EGL                                                               \
             pthread 																													\
-						wiringPi                                                          \
+	    wiringPi                                                          \
             $(EMWI_RTE_LIB)                                                   \
             $(EMWI_GFX_LIB)                                                   \
 
@@ -83,6 +92,9 @@ INCLUDES =                                                                     \
             -I$(EMWI_RTE_PATH)                                                 \
             -I$(EMWI_GFX_PATH)                                                 \
             -I$(SDK_PATH)/include                                              \
+	    -I../../../Middleware/Include				       \
+	    -I../../../Common/Include					       \
+	    -I../../../Platform/RaspberryPi/Include			       \
 
 
 ###############################################################################
@@ -99,8 +111,12 @@ APP_OBJ           := $(foreach file,$(APP_C),             $(OBJ_PATH)/$(strip $(
 APP_EMWI_OBJ      := $(foreach file,$(APP_EMWI_C),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
 RTE_EMWI_OBJ      := $(foreach file,$(RTE_EMWI_C),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
 GFX_EMWI_OBJ      := $(foreach file,$(GFX_EMWI_C),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
+COMMON_OBJ	  := $(foreach file,$(COMMONFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
+PLATFORM_OBJ	  := $(foreach file,$(PLATFORMFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
+MIDDLEWARE_OBJ	  := $(foreach file,$(MIDDLEWAREFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
 
-OBJS := $(APP_OBJ) $(APP_EMWI_OBJ) $(RTE_EMWI_OBJ) $(GFX_EMWI_OBJ)
+
+OBJS := $(APP_OBJ) $(APP_EMWI_OBJ) $(RTE_EMWI_OBJ) $(GFX_EMWI_OBJ) $(COMMON_OBJ) $(PLATFORM_OBJ) $(MIDDLEWARE_OBJ)
 
 LINKING   = $(LD) $(addprefix -L,$(LIB_PATH)) $(OBJS)                          \
             $(addprefix -L,$(EMWI_RTE_PATH))                                   \

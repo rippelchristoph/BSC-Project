@@ -480,7 +480,9 @@ int main( int argc, char** argv )
     int events  = 0;
     XPoint lastPos = {0,0};
 
-	ProcessBSCController(BSCController);
+    
+    
+    ProcessBSCController(BSCController);
 
     /* receive keyboard events and provide it to the application */
     cmd = GetKeyCommand();

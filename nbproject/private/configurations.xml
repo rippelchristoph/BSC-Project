@@ -56,6 +56,11 @@
               <in>Views.h</in>
               <in>XFlat.c</in>
               <in>XFlat.h</in>
+              <in>_ApplicationAActionButton.h</in>
+              <in>_ApplicationAHorzBar.h</in>
+              <in>_ApplicationAHorzSlider.h</in>
+              <in>_ApplicationAIndicator.h</in>
+              <in>_ApplicationAToggleButton.h</in>
               <in>_ApplicationApplication.h</in>
               <in>_ApplicationClock.h</in>
               <in>_ApplicationConfig.h</in>
@@ -180,64 +185,6 @@
           <df name="Source">
             <in>SerialConnection.c</in>
             <in>i2c.c</in>
-          </df>
-        </df>
-      </df>
-      <df name="Project">
-        <df name="RaspberryPi">
-          <df name="BSC">
-            <df name=".vs">
-              <df name="BSC">
-                <df name="v15">
-                  <df name="ipch">
-                    <df name="AutoPCH">
-                      <df name="3eb4e3e75617a090">
-                      </df>
-                    </df>
-                  </df>
-                </df>
-              </df>
-            </df>
-            <df name="BSC">
-              <df name=".vs">
-                <df name="BSC">
-                  <df name="v15">
-                    <df name="ipch">
-                      <df name="AutoPCH">
-                        <df name="1ab286ded228b2c3">
-                        </df>
-                        <df name="5124e6944886aa15">
-                        </df>
-                        <df name="88970fb46efce7">
-                        </df>
-                        <df name="913e22f819bb9729">
-                        </df>
-                        <df name="a59a8d7b3d5f1dd9">
-                        </df>
-                        <df name="dc3d28afd2b54de5">
-                        </df>
-                        <df name="ffde7918d4998bc8">
-                        </df>
-                      </df>
-                    </df>
-                  </df>
-                </df>
-              </df>
-              <df name="BSC">
-                <df name="Debug">
-                  <df name="BSC.tlog">
-                  </df>
-                </df>
-              </df>
-              <df name="Debug">
-              </df>
-              <df name="UART-Test">
-                <df name="Debug">
-                  <df name="UART-Test.tlog">
-                  </df>
-                </df>
-              </df>
-            </df>
           </df>
         </df>
       </df>
