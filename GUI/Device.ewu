@@ -388,18 +388,44 @@ class DeviceClass : Templates::DeviceClass
   // about an alternation of its setting or state value.
   $rect <40,130,240,170>
   $output true
-  method void UpdateTemperature( arg float aNewValue )
+  method void UpdateTemperature( arg string aNewArgument, arg int32 aCircuitNumber )
   {
     // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure Temperature )
+    if ( aNewArgument != pure Temperature )
     {
       // Remember the new value in the internal memory of the property.
-      pure Temperature = aNewValue;
+      pure Temperature = aNewArgument;
       trace "Temperature: "+string(Temperature);
 
       // Notify all associated property observers.
       notifyobservers ^Temperature;
     }
+  }
+
+  // Software
+  note group Note2
+  {
+    attr Bounds = <20,450,530,730>;
+  }
+
+  $rect <40,540,240,580>
+  method color getColor( arg int32 aCircuitNumber )
+  {
+    switch ( aCircuitNumber )
+    {
+      case 0  : return #000000FF;   //schwarz 
+      case 1  : return #FFFFFFFF;  //weiß
+      case 2  : return #FFFF00FF;  //gelb
+      case 3  : return #0000FFFF;  //blau
+      case 4  : return #00FFFFFF; //türkis
+      case 5  : return #FF00FFFF;  //lila
+      default : return #FF0000FF; //rot=ERROR
+    }
+
+      
+
+      
+
   }
 }
 

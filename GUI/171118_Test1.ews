@@ -1,11 +1,11 @@
 $version 1.0
 
-attr active = Application::MainMenu;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,28>;
-attr codeSelEnd = <30,41>;
-attr codeSelStart = <30,41>;
+attr codeFirstPos = <0,0>;
+attr codeInspector = Device::I2CHeader;
+attr codeSelEnd = <19,5>;
+attr codeSelStart = <19,5>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -40,7 +40,7 @@ view unit Application
 {
   attr enableGrid = true;
   attr grid = 10;
-  attr scrollTo = <-7,57>;
+  attr scrollTo = <-7,552>;
   attr zoom = 1.0;
 }
 
@@ -61,126 +61,11 @@ view class Device::DeviceClass
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = UpdateTemperature;
-  attr codeSelEnd = <87,3>;
-  attr codeSelStart = <87,3>;
+  attr codeInspector = getColor;
+  attr codeSelEnd = <55,2>;
+  attr codeSelStart = <55,2>;
   attr enableGrid = true;
   attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Config
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onNextTop;
-  attr codeSelEnd = <20,4>;
-  attr codeSelStart = <20,4>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::SampleController
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onNewWell;
-  attr codeSelEnd = <24,1>;
-  attr codeSelStart = <24,1>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::ControllMenu
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onNuOfCircuits;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Device::SampleCollectedContext
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = OnGetCircuitNumber;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::MainMenu
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Temperature
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,28>;
-  attr codeInspector = onEvent;
-  attr codeSelEnd = <30,41>;
-  attr codeSelStart = <30,41>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Well
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = timeToWellPart;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::WellPart
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Clock
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,2>;
-  attr codeInspector = OnSetTimeProperty;
-  attr codeSelEnd = <0,7>;
-  attr codeSelStart = <0,7>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::TextEditor
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
+  attr scrollTo = <-7,224>;
   attr zoom = 1.0;
 }
