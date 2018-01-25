@@ -46,9 +46,9 @@ include $(BSC_C_PATH)/BSCFiles.inc
 vpath %.c           $(EMWI_APP_PATH)                                        \
                     $(EMWI_RTE_PATH)                                        \
                     $(EMWI_GFX_PATH)                                        \
-		    ../../../Middleware/Source				    \
-		    ../../../Common/Source				    \
-		    ../../../Platform/RaspberryPi/Source		    \
+					../../../Middleware/Source				    \
+					../../../Common/Source				    \
+					../../../Platforms/RaspberryPi/Source		    \
 
 ##############################################################################
 # EMBEDDED WIZARD - APPLICATION DEMO
@@ -86,15 +86,15 @@ LIBS :=     m                                                                 \
 ###############################################################################
 # INCLUDES
 ###############################################################################
-INCLUDES =                                                                     \
-            -I.                                                                \
-            -I$(EMWI_APP_PATH)                                                 \
-            -I$(EMWI_RTE_PATH)                                                 \
+INCLUDES =                                                           \
+            -I.                                                               \
+            -I$(EMWI_APP_PATH)                                 \
+            -I$(EMWI_RTE_PATH)                                  \
             -I$(EMWI_GFX_PATH)                                                 \
             -I$(SDK_PATH)/include                                              \
-	    -I../../../Middleware/Include				       \
-	    -I../../../Common/Include					       \
-	    -I../../../Platform/RaspberryPi/Include			       \
+			-I../../../Middleware/Include				       \
+			-I../../../Common/Include					       \
+			-I../../../Platforms/RaspberryPi/Include			       \
 
 
 ###############################################################################
@@ -112,11 +112,10 @@ APP_EMWI_OBJ      := $(foreach file,$(APP_EMWI_C),        $(OBJ_PATH)/$(strip $(
 RTE_EMWI_OBJ      := $(foreach file,$(RTE_EMWI_C),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
 GFX_EMWI_OBJ      := $(foreach file,$(GFX_EMWI_C),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
 COMMON_OBJ	  := $(foreach file,$(COMMONFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
-PLATFORM_OBJ	  := $(foreach file,$(PLATFORMFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
 MIDDLEWARE_OBJ	  := $(foreach file,$(MIDDLEWAREFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
+PLATFORM_OBJ	  := $(foreach file,$(PLATFORMFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
 
-
-OBJS := $(APP_OBJ) $(APP_EMWI_OBJ) $(RTE_EMWI_OBJ) $(GFX_EMWI_OBJ) $(COMMON_OBJ) $(PLATFORM_OBJ) $(MIDDLEWARE_OBJ)
+OBJS := $(APP_OBJ) $(APP_EMWI_OBJ) $(RTE_EMWI_OBJ) $(GFX_EMWI_OBJ) $(COMMON_OBJ) $(MIDDLEWARE_OBJ) $(PLATFORM_OBJ) 
 
 LINKING   = $(LD) $(addprefix -L,$(LIB_PATH)) $(OBJS)                          \
             $(addprefix -L,$(EMWI_RTE_PATH))                                   \

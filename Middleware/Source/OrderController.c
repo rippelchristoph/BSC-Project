@@ -78,6 +78,8 @@ newOrderController ( void )
 	TOrderController* retPtr;
 	retPtr = (TOrderController*)malloc(sizeof(TOrderController));
 	retPtr->OrderList = newList();
+
+	return retPtr;
 }
 
 /****************************************************************************
@@ -122,7 +124,13 @@ addOrder (
   int                aInterval )
 {
 	TOrder* aOrder = newOrder(aOrigin, aInterval);
-	ListAdd(aOrderController->OrderList, aOrder);
+	if (ListAdd(aOrderController->OrderList, aOrder) != NULL) {
+		return ETRUE;
+	}
+	else {
+		return EFALSE;
+	}
+
 }
 
 /****************************************************************************
@@ -190,10 +198,10 @@ OrderControllerRemoveOrder (
 	TOrder* testOrder;
 	ListSetReadPointer(aOrderController->OrderList, 0);
 
-	while (testOrder = ListGetNext(aOrderController->OrderList))
+	while ((testOrder = ListGetNext(aOrderController->OrderList))!=NULL)
 	{
 		if (testOrder->Origin == aOrigin) {
-			destroyOrder(ListRemove(testOrder));
+			destroyOrder(ListRemoveByDataPointer(aOrderController->OrderList, testOrder));
 		}
 	}
 }

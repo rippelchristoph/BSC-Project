@@ -75,7 +75,7 @@ typedef struct I2C {
 /****************************************************************************
  * FUNCTION: newI2C
  ****************************************************************************/
-PUBLIC TBoolean
+PUBLIC TI2C *
 newI2C (
   unsigned char aAddr )
 {
@@ -86,17 +86,19 @@ newI2C (
 	if ((retPtr->file = open(filename, O_RDWR)) < 0)
 	{
 		//ERROR HANDLING: you can check errno to see what went wrong
-		printf("Failed to open the i2c bus");
-		return;
+
+		return NULL;
 	}
 
 	        //<<<<<The I2C address of the slave
 	if (ioctl(retPtr->file, I2C_SLAVE, aAddr) < 0)
 	{
-		printf("Failed to acquire bus access and/or talk to slave.\n");
+		
 		//ERROR HANDLING; you can check errno to see what went wrong
-		return;
+		return NULL;
 	}
+
+	return retPtr;
 }
 
 /****************************************************************************
@@ -112,13 +114,13 @@ I2CReadBytes (
 	//----- READ BYTES -----
 	if (read(aI2C->file, aBuffer, aLength) != aLength)		//read() returns the number of bytes actually read, if it doesn't match then an error occurred (e.g. no response from the device)
 	{
-		//ERROR HANDLING: i2c transaction failed
-		//printf("Failed to read from the i2c bus.\n");
+		return EFALSE;
 	}
 	else
 	{
-		//printf("Data read: %s\n", aBuffer);
+		return ETRUE;
 	}
+
 }
 
 /****************************************************************************
@@ -134,9 +136,10 @@ I2CWriteBytes (
 
 	if (write(aI2C->file, aBuffer, aLength) != aLength)		//write() returns the number of bytes actually written, if it doesn't match then an error occurred (e.g. no response from the device)
 	{
-		/* ERROR HANDLING: i2c transaction failed */
-		//printf("Failed to write to the i2c bus.\n");
+		return EFALSE;
 	}
+
+	return ETRUE;
 }
 
 

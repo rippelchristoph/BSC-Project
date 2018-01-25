@@ -105,7 +105,7 @@ PUBLIC TPlotter *
 newPlotter ( void )
 {
 	TPlotter* retPlot = malloc(sizeof(TPlotter));
-	retPlot->filestream = newUART();
+	//retPlot->filestream = newUART();
 
 	PLTSendCommand(retPlot, SET_UNIT_MM);
 
@@ -127,7 +127,7 @@ PLTSendCommand (
 	strcpy(sendString, aCommand);
 	strcat(sendString, "\r\n");
 
-	UARTSendBytes(aPlotter->filestream, sendString, strlen(sendString));
+	//UARTSendBytes(aPlotter->filestream, sendString, strlen(sendString));
 }
 
 /****************************************************************************
@@ -143,9 +143,9 @@ PLTSendCommandAndOK (
   TPlotter * aPlotter,
   char *     aCommand )
 {
-	char aString[30];
+	/*char aString[30];*/
 	PLTSendCommand(aPlotter, aCommand);
-	UARTReceiveBytes(aPlotter->filestream, aString);
+	//UARTReceiveBytes(aPlotter->filestream, aString);
 
 }
 
@@ -160,13 +160,14 @@ PLTSendCommandAndOK (
  *     Relay of the Hydroport should have after function. e.g.
  *     IEMiddlewareRelayStateON
  ****************************************************************************/
-PUBLIC TBoolean
+PUBLIC void
 PLTHomeAxis (
   TPlotter * aPlotter )
 {
 	PLTSendCommandAndOK(aPlotter, HOMEX);
 	PLTSendCommandAndOK(aPlotter, HOMEY);
 	PLTSendCommandAndOK(aPlotter, HOMEZ);
+
 }
 
 

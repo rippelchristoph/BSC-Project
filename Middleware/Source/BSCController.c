@@ -31,7 +31,6 @@
 #include <string.h>
 #include <stdio.h>
 #include "i2c.h"
-#include "Device.h"
 
 
 /** HEADER ******************************************************************
@@ -67,26 +66,18 @@
 #define WAISTPOSX 9
 #define WAISTPOSZ 10
 
-const char * const ConfigSyntaxWords[] = { "NWELLX", "NWELLY", "ZDOWN",
-"ZUP", "WELLZEROX", "WELLZEROY", "WELLENDX",
-"WELLENDY", "NORIGINS", "WAISTPOSX",  "WAISTPOSZ", NULL };
 
 /****************************************************************************
 * SECTION: typedef
 ****************************************************************************/
-
-
-
-
 
 typedef struct BSCController {
 	TBSCConfig* Configuration;
 	TWellData** Well;
 	TOrderController* Orders;
 	TSampler* Sampler;
-	DeviceDeviceClass* EwDeviceObject;
+	DeviceDeviceClass EwDeviceObject;
 } TBSCController;
-
 
 #endif
 
@@ -98,7 +89,9 @@ typedef struct BSCController {
 /****************************************************************************
 * SECTION: #define
 ****************************************************************************/
-
+const char * const ConfigSyntaxWords[] = { "NWELLX", "NWELLY", "ZDOWN",
+"ZUP", "WELLZEROX", "WELLZEROY", "WELLENDX",
+"WELLENDY", "NORIGINS", "WAISTPOSX",  "WAISTPOSZ", NULL };
 
 /****************************************************************************
 * SECTION: typedef
@@ -136,24 +129,26 @@ Returns the new Address of the BSController
 PUBLIC TBSCController *
 newBSCController ( void )
 {
+	int i = 0;
+	int j = 0;
 	TBSCController* retPtr;
 	retPtr = malloc(sizeof(TBSCController));
 	retPtr->Orders = newOrderController();
-	retPtr->Sampler = newSampler();
+	retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well);
 	
 	BSCReadConfiguration(retPtr->Configuration, NULL); //TODO: Configuration Path
 	
 	//Allocate Storage for multidimensional array
 	retPtr->Well = malloc(retPtr->Configuration->NWellX * sizeof(TWellData*));
-	for (int i = 0; i < retPtr->Configuration->NWellX; i++) {
+	for (i = 0; i < retPtr->Configuration->NWellX; i++) {
 		retPtr->Well[i] = malloc(retPtr->Configuration->NWellY * sizeof(TWellData));
-		for (int j = 0; j < retPtr->Configuration->NWellY) {
+		for (j = 0; j < retPtr->Configuration->NWellY; j++) {
 			retPtr->Well[i][j].Status = EMPTY;
 		}
 	}
 
 	//TODO: EwDeviceObject Initialisieren
-	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, _DeviceDeviceClass_);
+	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, DeviceDeviceClass);
 
 
 	return retPtr;
@@ -182,8 +177,7 @@ BSCReadConfiguration (
 
 	if (fp == NULL)
 	{
-		//TODO: Give Some Kind of Error Message to GUI
-		return NULL;
+		
 	}
 
 	while (1)
@@ -266,6 +260,7 @@ ProcessBSCController (
 	GetFormattedTime(time(NULL), line);*/
 	//TODO: UpdateTime - EwDevice Function call
 	UpdateTemperature(aBSCController);
+	
 
 
 	
@@ -296,12 +291,11 @@ BSCWriteConfiguration (
 		{
 			//TODO: Give Some Kind of Error Message to GUI
 			fclose(fp);
-			return NULL;
 		}
 
 		while (ConfigSyntaxWords[i])
 		{
-			sprintf(line, "%s=%f", ConfigSyntaxWords[i], *getConfigByIndex(i));
+			sprintf(line, "%s=%f", ConfigSyntaxWords[i], *((float*)getConfigByIndex(aConfiguration, i)));
 			fputs(line, fp);
 		}
 		
@@ -323,8 +317,8 @@ BSCWriteConfiguration (
 
 PUBLIC void
 GetFormattedTime (
-  time_t aTimeStamp,
-  char * aBuffer )
+  time_t * aTimeStamp,
+  char *   aBuffer )
 {
 	struct tm * timeinfo = localtime(aTimeStamp);
 	strcpy(aBuffer, "");
@@ -374,19 +368,19 @@ UpdateTemperature (
   TBSCController * aController )
 {
 	unsigned char byteAdd[] = { 0x00 };
-	char buffer[2];
+	unsigned char buffer[2];
 	float updateVal = 0;
 	TI2C* dataStream = newI2C(0x4F);
 	I2CWriteBytes(dataStream, byteAdd, 1);
 	I2CReadBytes(dataStream, buffer, 2);
 
-	unsigned char buffer[2] = { 0x01, 0xEF };
+	
 
 	char num = buffer[0] << 7 | buffer[1] >> 1;
 	updateVal = num;
 	updateVal += (float)(buffer[1] & 0x01) / (float)2;
 
-	_DeviceDeviceClass__UpdateTemperature_(aController->EwDeviceObject, updateVal);
+	DeviceDeviceClass__UpdateTemperature(aController->EwDeviceObject,(XFloat) updateVal);
 	
 }
 
@@ -439,6 +433,6 @@ getConfigByIndex (
 		return &(aConfiguration->WaistPosZ);
 		break;
 	default:
-		return;
+		return NULL;
 	}
 }

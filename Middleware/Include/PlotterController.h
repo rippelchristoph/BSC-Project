@@ -120,7 +120,7 @@ PLTSendCommandAndOK (
  *     IEMiddlewareRelayStateON
  ****************************************************************************/
 
-PUBLIC TBoolean
+PUBLIC void
 PLTHomeAxis (
   TPlotter * aPlotter );
 

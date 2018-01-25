@@ -37,47 +37,6 @@ typedef int UARTFilestream;
 
 
 
-/****************************************************************************
-* FUNCTION: newUART
-*
-* DESCRIPTION:
-*   Initializes the UART interface
-*
-* PARAMETER:
-*   
-****************************************************************************/
-
-PUBLIC UARTFilestream newUART();
-
-
-/****************************************************************************
-* FUNCTION: UARTSendBytes
-*
-* DESCRIPTION:
-*   Sends an Array of Bytes
-****************************************************************************/
-
-PUBLIC void
-UARTSendBytes(UARTFilestream aStream, char* aCharArra, int aLength);
-
-
-/****************************************************************************
-* FUNCTION: UARTReceiveBytes
-*
-* DESCRIPTION:
-*   Reads up to 255 characters into the Buffer array if there are any
-*	RX Bytes in the Stream
-*
-* PARAMETER:
-*   aStream	- The Stream the Receive 
-*   aRelayState - The State that the Relay of the Hydroport should have
-*                 after function. e.g. IEMiddlewareRelayStateON
-****************************************************************************/
-
-PUBLIC void
-UARTReceiveBytes(UARTFilestream aStream, unsigned char* aBuffer);
-
-
 
 #ifdef __cplusplus
   }

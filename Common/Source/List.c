@@ -122,7 +122,7 @@ PUBLIC void
 destroyList (
   TListHeader * aList )
 {
-	if (aList->Len!=NULL)
+	if (aList->Len != 0)
 	{
 		//TODO: Mimimi
 	}
@@ -185,7 +185,7 @@ ListSetReadPointer (
 	int i = 0;
 	aList->ReadPointer = aList->First;
 
-	for (int i = 0; i < aIndex; i++) {
+	for (i = 0; i < aIndex; i++) {
 		if (i >= aList->Len) {
 			return NULL;
 		}
@@ -325,7 +325,7 @@ ListRemoveByDataPointer (
   void *        aDataPointer )
 {
 	TListNode* retPtr;
-	if (aDataPointer == NULL | aList == NULL) {
+	if ((aDataPointer == NULL) | (aList == NULL)) {
 		return NULL;
 	}
 
@@ -337,6 +337,7 @@ ListRemoveByDataPointer (
 			return freeNode(retPtr);
 		}
 	}
+	return NULL;
 }
 
 /****************************************************************************
@@ -383,7 +384,7 @@ makeNode (
 {
 	TListNode *newPtr = NULL;    /* Zeiger auf zugewiesenen Speicher */
 
-	if ((newPtr = (TListHeader *)malloc(sizeof(TListNode))) != NULL) {
+	if ((newPtr = (TListNode *)malloc(sizeof(TListNode))) != NULL) {
 		newPtr->Next = aNext;
 	}
 

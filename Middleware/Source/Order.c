@@ -74,6 +74,8 @@ newOrder (
 	retPtr->Origin = aOrigin;
 	retPtr->interval = aInterval;
 	time(&retPtr->lastExe);	//No Probe at Beginning
+
+	return retPtr;
 }
 
 /****************************************************************************
@@ -96,9 +98,25 @@ destroyOrder (
 		free(aOrder);
 		return retVal;
 	} else {
-		return NULL;
+		return 0;
 	}
-	
+}
+
+/****************************************************************************
+ * FUNCTION: OrderGetNextExecution
+ *
+ * DESCRIPTION:
+ *   Returns the timestamp of the Next time the Order will be executed
+ * PARAMETER:
+ *   aOrder - The Adress of Order
+ * RETURN:
+ *   Returns the absolute Time stamp of the Next Execution in seconds
+ ****************************************************************************/
+PUBLIC time_t
+OrderGetNextExecution (
+  TOrder * aOrder )
+{
+	return aOrder->lastExe + aOrder->interval;
 }
 
 /****************************************************************************
@@ -119,23 +137,6 @@ OrderGetRemainingTime (
 	time_t now = time(NULL);
 
 	return OrderGetNextExecution(aOrder) - now;
-}
-
-/****************************************************************************
- * FUNCTION: OrderGetNextExecution
- *
- * DESCRIPTION:
- *   Returns the timestamp of the Next time the Order will be executed
- * PARAMETER:
- *   aOrder - The Adress of Order
- * RETURN:
- *   Returns the absolute Time stamp of the Next Execution in seconds
- ****************************************************************************/
-PUBLIC time_t
-OrderGetNextExecution (
-  TOrder * aOrder )
-{
-	return aOrder->lastExe + aOrder->interval;
 }
 
 /****************************************************************************

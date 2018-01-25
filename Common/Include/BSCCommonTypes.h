@@ -61,4 +61,7 @@ typedef struct BSCConfig {
 	int NOrigins;
 } TBSCConfig;
 
+
+
+
 #endif // !BSCCOMMONTYPES_H

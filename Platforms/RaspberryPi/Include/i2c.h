@@ -48,7 +48,7 @@ typedef struct I2C {
  * FUNCTION: newI2C
  ****************************************************************************/
 
-PUBLIC TBoolean
+PUBLIC TI2C *
 newI2C (
   unsigned char aAddr );
 

@@ -229,7 +229,7 @@ destroySampler (
 		return;
 
 	int* retInt;
-	while (retInt = ListRemoveByIndex(aSampler->Queue, 0)!=NULL)
+	while ((retInt = (int*) ListRemoveByIndex(aSampler->Queue, 0))!=NULL)
 	{
 		free(retInt);
 	}
@@ -301,10 +301,13 @@ ProcessSampler (
 	case DrawerClose:
 		StateDrawerClose(aSampler);
 		break;
-	case ERROR:
+	case Sampler_ERROR:
+		StateERROR(aSampler);
+		break;
 	default:
 		break;
 	}
+	return ETRUE;
 }
 
 /****************************************************************************

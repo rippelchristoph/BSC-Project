@@ -50,26 +50,18 @@
 #define WAISTPOSX 9
 #define WAISTPOSZ 10
 
-const char * const ConfigSyntaxWords[] = { "NWELLX", "NWELLY", "ZDOWN",
-"ZUP", "WELLZEROX", "WELLZEROY", "WELLENDX",
-"WELLENDY", "NORIGINS", "WAISTPOSX",  "WAISTPOSZ", NULL };
 
 /****************************************************************************
 * SECTION: typedef
 ****************************************************************************/
-
-
-
-
 
 typedef struct BSCController {
 	TBSCConfig* Configuration;
 	TWellData** Well;
 	TOrderController* Orders;
 	TSampler* Sampler;
-	DeviceDeviceClass* EwDeviceObject;
+	DeviceDeviceClass EwDeviceObject;
 } TBSCController;
-
 
 
 
@@ -144,8 +136,8 @@ BSCWriteConfiguration (
 
 PUBLIC void
 GetFormattedTime (
-  time_t aTimeStamp,
-  char * aBuffer );
+  time_t * aTimeStamp,
+  char *   aBuffer );
 
 
 
