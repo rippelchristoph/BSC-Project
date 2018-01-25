@@ -3424,6 +3424,24 @@ void ViewsWarpImage_OnSetAnimated( ViewsWarpImage _this, XBool value )
     CoreGroup__InvalidateArea( _this->Super3.Owner, CoreView__GetExtent( _this ));
 }
 
+/* 'C' function for method : 'Views::WarpImage.OnSetColor()' */
+void ViewsWarpImage_OnSetColor( ViewsWarpImage _this, XColor value )
+{
+  if ((( !EwCompColor( value, _this->Color1 ) && !EwCompColor( value, _this->Color2 
+      )) && !EwCompColor( value, _this->Color3 )) && !EwCompColor( value, _this->Color4 
+      ))
+    return;
+
+  _this->Color1 = value;
+  _this->Color2 = value;
+  _this->Color3 = value;
+  _this->Color4 = value;
+
+  if (( _this->Super3.Owner != 0 ) && (( _this->Super3.viewState & CoreViewStateVisible 
+      ) == CoreViewStateVisible ))
+    CoreGroup__InvalidateArea( _this->Super3.Owner, CoreView__GetExtent( _this ));
+}
+
 /* 'C' function for method : 'Views::WarpImage.OnSetBitmap()' */
 void ViewsWarpImage_OnSetBitmap( ViewsWarpImage _this, ResourcesBitmap value )
 {

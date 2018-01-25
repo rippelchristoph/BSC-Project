@@ -42,7 +42,6 @@
 #endif
 
 #include "_CoreGroup.h"
-#include "_ViewsImage.h"
 #include "_ViewsRectangle.h"
 
 /* Forward declaration of the class Application::AIndicator */
@@ -86,7 +85,6 @@
    value. */
 EW_DEFINE_FIELDS( ApplicationAIndicator, CoreGroup )
   EW_OBJECT  ( Frame,           ViewsRectangle )
-  EW_OBJECT  ( Image,           ViewsImage )
   EW_PROPERTY( Icon,            ResourcesBitmap )
   EW_PROPERTY( BackColorActive, XColor )
   EW_PROPERTY( BackColor,       XColor )

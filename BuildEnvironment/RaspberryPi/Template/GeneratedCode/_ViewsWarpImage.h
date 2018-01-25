@@ -201,6 +201,9 @@ void ViewsWarpImage_timerSlot( ViewsWarpImage _this, XObject sender );
 /* 'C' function for method : 'Views::WarpImage.OnSetAnimated()' */
 void ViewsWarpImage_OnSetAnimated( ViewsWarpImage _this, XBool value );
 
+/* 'C' function for method : 'Views::WarpImage.OnSetColor()' */
+void ViewsWarpImage_OnSetColor( ViewsWarpImage _this, XColor value );
+
 /* 'C' function for method : 'Views::WarpImage.OnSetBitmap()' */
 void ViewsWarpImage_OnSetBitmap( ViewsWarpImage _this, ResourcesBitmap value );
 

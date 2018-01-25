@@ -57,6 +57,8 @@ EW_DEFINE_FIELDS( DeviceDeviceClass, TemplatesDeviceClass )
   EW_OBJECT  ( SampleCollectedEvent, CoreSystemEvent )
   EW_OBJECT  ( RemainingTimeEvent, CoreSystemEvent )
   EW_PROPERTY( Temperature,     XFloat )
+  EW_OBJECT  ( CurrentTimeEvent, CoreSystemEvent )
+  EW_OBJECT  ( TimeTillFullEvent, CoreSystemEvent )
   EW_PROPERTY( NewWell,         XBool )
   EW_RESERVED( 3 )
 EW_END_OF_FIELDS( DeviceDeviceClass )
@@ -157,6 +159,26 @@ void DeviceDeviceClass__UpdateTemperature( void* _this, XFloat aNewArgument );
 
 /* 'C' function for method : 'Device::DeviceClass.getColor()' */
 XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumber );
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void DeviceDeviceClass_onCurrentTime( DeviceDeviceClass _this, XString aCurrentTime );
+
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.onCurrentTime()' */
+void DeviceDeviceClass__onCurrentTime( void* _this, XString aCurrentTime );
+
+/* The following define announces the presence of the method Device::DeviceClass.onCurrentTime(). */
+#define _DeviceDeviceClass__onCurrentTime_
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void DeviceDeviceClass_onTimeTillFull( DeviceDeviceClass _this, XString aTimeTillFull );
+
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.onTimeTillFull()' */
+void DeviceDeviceClass__onTimeTillFull( void* _this, XString aTimeTillFull );
+
+/* The following define announces the presence of the method Device::DeviceClass.onTimeTillFull(). */
+#define _DeviceDeviceClass__onTimeTillFull_
 
 /* Default onget method for the property 'NuOfCircuits' */
 XInt32 DeviceDeviceClass_OnGetNuOfCircuits( DeviceDeviceClass _this );

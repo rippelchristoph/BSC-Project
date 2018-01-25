@@ -25,15 +25,17 @@
 
 #include "ewlocale.h"
 #include "_CoreSystemEvent.h"
+#include "_DeviceCurrentTimeContext.h"
 #include "_DeviceDeviceClass.h"
 #include "_DeviceRemainingTimeContext.h"
 #include "_DeviceSampleCollectedContext.h"
+#include "_DeviceTimeTillFullContext.h"
 #include "Device.h"
 
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x000002F4, /* ratio 50.26 % */
+  0x00000322, /* ratio 50.37 % */
   0xB8002B00, 0x00000452, 0x00EA0027, 0x0C400368, 0xE4003280, 0xC0027800, 0x0021800C,
   0x300444D2, 0x00466126, 0x01CC0074, 0x8020C3A0, 0x1E0B0305, 0xCEE0087C, 0x006C9640,
   0x21E834C4, 0x2029C1A5, 0x18D98401, 0x864EE712, 0x747E6470, 0x000CE003, 0x1C5A0010,
@@ -47,7 +49,8 @@ static const unsigned int _StringsDefault0[] =
   0x9006DC0E, 0xF47EBF05, 0xDF816948, 0xE6E52A79, 0xE5F07B96, 0x787BDF34, 0x499B362D,
   0xD7556816, 0x84B1F14E, 0x660A48A0, 0xF8839F58, 0x461E866D, 0x1124490A, 0x585D9344,
   0x2E1B82E1, 0x1441A0F5, 0x759B9568, 0xA27831ED, 0x88AA0D86, 0xB22E045F, 0x3B59DD94,
-  0x4B221485, 0x5264998B, 0x00000040, 0x00000000
+  0x4B221485, 0x8174198B, 0x50003056, 0x26460BA4, 0x4C916489, 0x93548926, 0x64994125,
+  0x14992691, 0x00000010, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -77,6 +80,7 @@ static const XColor _Const0016 = { 0x00, 0x00, 0xFF, 0xFF };
 static const XColor _Const0017 = { 0x00, 0xFF, 0xFF, 0xFF };
 static const XColor _Const0018 = { 0xFF, 0x00, 0xFF, 0xFF };
 static const XColor _Const0019 = { 0xFF, 0x00, 0x00, 0xFF };
+static const XStringRes _Const001A = { _StringsDefault0, 0x017B };
 
 /* User defined inline code: 'Device::I2CHeader' */
 #include <unistd.h>				//Needed for I2C port
@@ -95,6 +99,8 @@ void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aA
   /* ... then construct all embedded objects */
   CoreSystemEvent__Init( &_this->SampleCollectedEvent, &_this->_XObject, 0 );
   CoreSystemEvent__Init( &_this->RemainingTimeEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->CurrentTimeEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->TimeTillFullEvent, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( DeviceDeviceClass );
@@ -113,6 +119,8 @@ void DeviceDeviceClass__ReInit( DeviceDeviceClass _this )
   /* ... then re-construct all embedded objects */
   CoreSystemEvent__ReInit( &_this->SampleCollectedEvent );
   CoreSystemEvent__ReInit( &_this->RemainingTimeEvent );
+  CoreSystemEvent__ReInit( &_this->CurrentTimeEvent );
+  CoreSystemEvent__ReInit( &_this->TimeTillFullEvent );
 }
 
 /* Finalizer method for the class 'Device::DeviceClass' */
@@ -124,6 +132,8 @@ void DeviceDeviceClass__Done( DeviceDeviceClass _this )
   /* Finalize all embedded objects */
   CoreSystemEvent__Done( &_this->SampleCollectedEvent );
   CoreSystemEvent__Done( &_this->RemainingTimeEvent );
+  CoreSystemEvent__Done( &_this->CurrentTimeEvent );
+  CoreSystemEvent__Done( &_this->TimeTillFullEvent );
 
   /* Don't forget to deinitialize the super class ... */
   TemplatesDeviceClass__Done( &_this->_Super );
@@ -134,6 +144,8 @@ void DeviceDeviceClass__Mark( DeviceDeviceClass _this )
 {
   EwMarkObject( &_this->SampleCollectedEvent );
   EwMarkObject( &_this->RemainingTimeEvent );
+  EwMarkObject( &_this->CurrentTimeEvent );
+  EwMarkObject( &_this->TimeTillFullEvent );
 
   /* Give the super class a chance to mark its objects and references */
   TemplatesDeviceClass__Mark( &_this->_Super );
@@ -466,6 +478,39 @@ XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumbe
   }
 }
 
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void DeviceDeviceClass_onCurrentTime( DeviceDeviceClass _this, XString aCurrentTime )
+{
+  DeviceCurrentTimeContext context = EwNewObject( DeviceCurrentTimeContext, 0 );
+
+  DeviceCurrentTimeContext_OnSetCurrentTime( context, aCurrentTime );
+  CoreSystemEvent_Trigger( &_this->CurrentTimeEvent, ((XObject)context ), 0 );
+}
+
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.onCurrentTime()' */
+void DeviceDeviceClass__onCurrentTime( void* _this, XString aCurrentTime )
+{
+  DeviceDeviceClass_onCurrentTime((DeviceDeviceClass)_this, aCurrentTime );
+}
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void DeviceDeviceClass_onTimeTillFull( DeviceDeviceClass _this, XString aTimeTillFull )
+{
+  DeviceTimeTillFullContext context = EwNewObject( DeviceTimeTillFullContext, 0 
+    );
+
+  DeviceTimeTillFullContext_OnSetTimeTillFull( context, aTimeTillFull );
+  CoreSystemEvent_Trigger( &_this->TimeTillFullEvent, ((XObject)context ), 0 );
+}
+
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.onTimeTillFull()' */
+void DeviceDeviceClass__onTimeTillFull( void* _this, XString aTimeTillFull )
+{
+  DeviceDeviceClass_onTimeTillFull((DeviceDeviceClass)_this, aTimeTillFull );
+}
+
 /* Default onget method for the property 'NuOfCircuits' */
 XInt32 DeviceDeviceClass_OnGetNuOfCircuits( DeviceDeviceClass _this )
 {
@@ -641,5 +686,121 @@ EW_END_OF_CLASS_VARIANTS( DeviceRemainingTimeContext )
 /* Virtual Method Table (VMT) for the class : 'Device::RemainingTimeContext' */
 EW_DEFINE_CLASS( DeviceRemainingTimeContext, XObject, "Device::RemainingTimeContext" )
 EW_END_OF_CLASS( DeviceRemainingTimeContext )
+
+/* Initializer for the class 'Device::CurrentTimeContext' */
+void DeviceCurrentTimeContext__Init( DeviceCurrentTimeContext _this, XObject aLink, XHandle aArg )
+{
+  /* At first initialize the super class ... */
+  XObject__Init( &_this->_Super, aLink, aArg );
+
+  /* Setup the VMT pointer */
+  _this->_VMT = EW_CLASS( DeviceCurrentTimeContext );
+
+  /* ... and initialize objects, variables, properties, etc. */
+  EwRetainString( &_this->CurrentTime, EwLoadString( &_Const001A ));
+}
+
+/* Re-Initializer for the class 'Device::CurrentTimeContext' */
+void DeviceCurrentTimeContext__ReInit( DeviceCurrentTimeContext _this )
+{
+  /* At first re-initialize the super class ... */
+  XObject__ReInit( &_this->_Super );
+}
+
+/* Finalizer method for the class 'Device::CurrentTimeContext' */
+void DeviceCurrentTimeContext__Done( DeviceCurrentTimeContext _this )
+{
+  /* Finalize this class */
+  _this->_VMT = EW_CLASS( DeviceCurrentTimeContext );
+
+  /* Release all used strings */
+  EwReleaseString( &_this->CurrentTime );
+
+  /* Don't forget to deinitialize the super class ... */
+  XObject__Done( &_this->_Super );
+}
+
+/* Garbage Collector method for the class 'Device::CurrentTimeContext' */
+void DeviceCurrentTimeContext__Mark( DeviceCurrentTimeContext _this )
+{
+  /* Give the super class a chance to mark its objects and references */
+  XObject__Mark( &_this->_Super );
+}
+
+/* 'C' function for method : 'Device::CurrentTimeContext.OnSetCurrentTime()' */
+void DeviceCurrentTimeContext_OnSetCurrentTime( DeviceCurrentTimeContext _this, 
+  XString value )
+{
+  if ( !EwCompString( _this->CurrentTime, value ))
+    return;
+
+  EwRetainString( &_this->CurrentTime, value );
+}
+
+/* Variants derived from the class : 'Device::CurrentTimeContext' */
+EW_DEFINE_CLASS_VARIANTS( DeviceCurrentTimeContext )
+EW_END_OF_CLASS_VARIANTS( DeviceCurrentTimeContext )
+
+/* Virtual Method Table (VMT) for the class : 'Device::CurrentTimeContext' */
+EW_DEFINE_CLASS( DeviceCurrentTimeContext, XObject, "Device::CurrentTimeContext" )
+EW_END_OF_CLASS( DeviceCurrentTimeContext )
+
+/* Initializer for the class 'Device::TimeTillFullContext' */
+void DeviceTimeTillFullContext__Init( DeviceTimeTillFullContext _this, XObject aLink, XHandle aArg )
+{
+  /* At first initialize the super class ... */
+  XObject__Init( &_this->_Super, aLink, aArg );
+
+  /* Setup the VMT pointer */
+  _this->_VMT = EW_CLASS( DeviceTimeTillFullContext );
+
+  /* ... and initialize objects, variables, properties, etc. */
+  EwRetainString( &_this->TimeTillFull, EwLoadString( &_Const001A ));
+}
+
+/* Re-Initializer for the class 'Device::TimeTillFullContext' */
+void DeviceTimeTillFullContext__ReInit( DeviceTimeTillFullContext _this )
+{
+  /* At first re-initialize the super class ... */
+  XObject__ReInit( &_this->_Super );
+}
+
+/* Finalizer method for the class 'Device::TimeTillFullContext' */
+void DeviceTimeTillFullContext__Done( DeviceTimeTillFullContext _this )
+{
+  /* Finalize this class */
+  _this->_VMT = EW_CLASS( DeviceTimeTillFullContext );
+
+  /* Release all used strings */
+  EwReleaseString( &_this->TimeTillFull );
+
+  /* Don't forget to deinitialize the super class ... */
+  XObject__Done( &_this->_Super );
+}
+
+/* Garbage Collector method for the class 'Device::TimeTillFullContext' */
+void DeviceTimeTillFullContext__Mark( DeviceTimeTillFullContext _this )
+{
+  /* Give the super class a chance to mark its objects and references */
+  XObject__Mark( &_this->_Super );
+}
+
+/* 'C' function for method : 'Device::TimeTillFullContext.OnSetTimeTillFull()' */
+void DeviceTimeTillFullContext_OnSetTimeTillFull( DeviceTimeTillFullContext _this, 
+  XString value )
+{
+  if ( !EwCompString( _this->TimeTillFull, value ))
+    return;
+
+  EwRetainString( &_this->TimeTillFull, value );
+}
+
+/* Variants derived from the class : 'Device::TimeTillFullContext' */
+EW_DEFINE_CLASS_VARIANTS( DeviceTimeTillFullContext )
+EW_END_OF_CLASS_VARIANTS( DeviceTimeTillFullContext )
+
+/* Virtual Method Table (VMT) for the class : 'Device::TimeTillFullContext' */
+EW_DEFINE_CLASS( DeviceTimeTillFullContext, XObject, "Device::TimeTillFullContext" )
+EW_END_OF_CLASS( DeviceTimeTillFullContext )
 
 /* Embedded Wizard */

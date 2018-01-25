@@ -744,10 +744,10 @@ class Well : Core::Group
   $rect <20,20,160,60>
   object Views::WarpImage Logo
   {
-    preset Point4 = <700,110>;
-    preset Point3 = <800,110>;
-    preset Point2 = <800,10>;
-    preset Point1 = <700,10>;
+    preset Point4 = <700,100>;
+    preset Point3 = <800,100>;
+    preset Point2 = <800,0>;
+    preset Point1 = <700,0>;
     preset Bitmap = Application::Logo;
   }
 
@@ -1079,13 +1079,14 @@ class WellPart : Core::Group
     preset Point3 = <70,70>;
     preset Point2 = <70,0>;
     preset Point1 = <0,0>;
+    preset Color = #FFFFFFFF;
     preset Bitmap = Application::Oval;
   }
 
   $rect <20,20,160,60>
   object Views::Text Text
   {
-    preset Bounds = <0,20,70,50>;
+    preset Bounds = <0,22,70,52>;
     preset RowDistance = 14;
     preset AutoSize = false;
     preset WrapWidth = 0;
@@ -1351,22 +1352,6 @@ class Clock : Core::Group
     attr Bounds = <220,230,1000,550>;
   }
 
-  $rect <250,60,450,100>
-  slot Slot
-  {
-    var Core::Time currentT= Time.CurrentTime;
-    TimeProperty=string(currentT.Day)+"."+string(currentT.Month)+"."+string(currentT.Year)[2]+string(currentT.Year)[3]+" "+string(currentT.Hour)+":"+string(currentT.Minute)+":"+string(currentT.Second);
-  }
-
-  $rect <250,0,450,40>
-  object Core::Timer Timer
-  {
-    preset OnTrigger = Slot;
-    preset Period = 500;
-    preset Begin = 0;
-    preset Enabled = true;
-  }
-
   $rect <20,20,160,60>
   object Views::Text TimeText
   {
@@ -1376,9 +1361,6 @@ class Clock : Core::Group
     preset String = "00.00.0000 00:00:00";
     preset Font = Flat::FontM;
   }
-
-  $rect <250,100,450,140>
-  object Core::Time Time;
 
   $rect <500,20,700,60>
   property string TimeProperty = "00.00.0000 00:00:00";
@@ -1404,6 +1386,55 @@ class Clock : Core::Group
   onget TimeProperty
   {
     return pure TimeProperty;
+  }
+
+  $rect <240,10,440,50>
+  object Core::SystemEventHandler CurrentTimeHandler
+  {
+    preset OnEvent = onCurrentTime;
+    preset Event = Device::Device.CurrentTimeEvent;
+  }
+
+  // This slot method is executed when the associated system event handler 'SystemEventHandler' \
+  // receives an event.
+  $rect <240,50,440,90>
+  slot onCurrentTime
+  {
+    /*
+       HINT 1:
+
+       You can evaluate the 'sender' parameter. It refers to the handler 
+       this method has been called from. This is very useful if multiple
+       system event handlers are connected to one and the same 'onEvent'
+       method:
+
+       if ( sender == Handler1 )
+         trace "The event comes from the Handler1";
+
+       if ( sender == Handler2 )
+         trace "... or from the Handler2";
+    */
+
+    /*
+       HINT 2:
+
+       From this 'onEvent' slot method you can evaluate the optional
+       'context' data dispatched together with the system event:
+
+       // First get the context data. You need to cast from the generic 'object'
+       // to your own specific context class:
+       
+
+       // Any context data passed and the cast was successful?
+       if ( context != null )
+       {
+         // Evaluate the context data:
+         someTarget1 = context.SomeData1;
+         someTarget2 = context.SomeData2;
+       }
+    */
+    var Device::CurrentTimeContext context = (Device::CurrentTimeContext)CurrentTimeHandler.Context;
+    TimeProperty=context.CurrentTime;
   }
 }
 
@@ -1589,6 +1620,7 @@ class SampleController : Core::Group
   object Application::AActionButton BtnStart
   {
     preset Bounds = <120,6,200,31>;
+    preset Enabled = false;
     preset OnAction = onStart;
     preset Caption = "Start";
   }
@@ -1749,6 +1781,8 @@ class SampleController : Core::Group
   object Application::AHorzBar HorzBar
   {
     preset Bounds = <210,10,370,60>;
+    preset MaxValue = 10;
+    preset CurrentValue = 5;
   }
 
   $rect <20,20,160,60>
@@ -3685,7 +3719,7 @@ class Temperature : Core::Group
   }
 }
 
-$rect <120,400,320,440>
+$rect <120,540,320,580>
 $output false
 class Config : Core::Group
 {
@@ -3848,6 +3882,14 @@ class Config : Core::Group
     this.Visible=false;
     ControllMenue.Enabled=true;
 
+    var int32 i;
+
+    for(i=0;i<Device::Device.NuOfCircuits;i=i+1){
+      if(ControllMenue.SampleController[i].EnabledProperty==false){
+        ControllMenue.SampleController[i].BtnStart.Enabled=true;
+      }
+    }
+
 
 
   }
@@ -3976,7 +4018,7 @@ class Config : Core::Group
   }
 }
 
-$rect <150,440,350,480>
+$rect <150,580,350,620>
 $output false
 class ConfigPosition : Core::Group
 {
@@ -4641,19 +4683,19 @@ class ControllMenu : Core::Group
 // Tab1: MainMenu
 note group Note2
 {
-  attr Bounds = <20,90,420,530>;
+  attr Bounds = <20,90,420,730>;
 }
 
 // ControllMenu
 note group Note3
 {
-  attr Bounds = <100,170,360,350>;
+  attr Bounds = <100,170,360,420>;
 }
 
 // Config
 note group Note4
 {
-  attr Bounds = <100,360,360,510>;
+  attr Bounds = <100,500,360,650>;
 }
 
 // Tab2: Well
@@ -4866,7 +4908,7 @@ class AHorzBar : Core::Group
     preset Alignment = Views::TextAlignment[AlignHorzCenter, AlignVertCenter];
     preset String = "50";
     preset Font = Flat::FontS;
-    preset Color = Application::WidgetColor;
+    preset Color = #000000FF;
   }
 
   $rect <190,300,370,340>
@@ -5064,7 +5106,7 @@ class AHorzBar : Core::Group
   // The property 'TextColor' defines the color of the widgets text members. The \
   // property is used to assign a color independent from the current theme color.
   $rect <730,180,910,220>
-  property color TextColor = Application::WidgetColor;
+  property color TextColor = #000000FF;
 
   $rect <730,220,910,260>
   onset TextColor
@@ -5318,7 +5360,7 @@ class AToggleButton : Core::Group
     Frame.Bounds = rect( 0, 0, s, s );
 
     /* the icon is lying on top of the frame */
-    Image.Bounds = Frame.Bounds;
+    //Image.Bounds = Frame.Bounds;
 
     /* the text item is on the right side */
     CaptionText.Bounds = rect( s + 10, 0, aSize.x, aSize.y );
@@ -5335,23 +5377,23 @@ class AToggleButton : Core::Group
       {
         Frame.Color = ItemColorActive;
         CaptionText.Color = ItemColorActive;
-        Image.Color = IconColorActive;
+        //Image.Color = IconColorActive;
       }
       else
       {
         Frame.Color = ItemColor;
         CaptionText.Color = ItemColor;
-        Image.Color = IconColor;
+        //Image.Color = IconColor;
       }
     }
     else
     {
       Frame.Color = Flat::ColorOfDisabled;
       CaptionText.Color = Flat::ColorOfDisabled;
-      if ( pure Active )
-        Image.Color = IconColorActive;
-      else
-        Image.Color = IconColor;
+      //if ( pure Active )
+        //Image.Color = IconColorActive;
+      //else
+        //Image.Color = IconColor;
     }
 
   }
@@ -5504,15 +5546,6 @@ class AToggleButton : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Views::Image Image
-  {
-    preset Bounds = <0,0,30,30>;
-    preset Color = Flat::ColorOfBackground;
-    preset FrameNumber = 19;
-    preset Bitmap = Flat::FlatDemoIcons;
-  }
-
-  $rect <20,20,160,60>
   object Views::Text CaptionText
   {
     preset Bounds = <40,0,140,30>;
@@ -5526,7 +5559,7 @@ class AToggleButton : Core::Group
   onset Icon
   {
     pure Icon    = value;
-    Image.Bitmap = value;
+    //Image.Bitmap = value;
   }
 
   // The property 'Icon' stores the bitmap to show in the left part of the button.
@@ -5541,7 +5574,7 @@ class AToggleButton : Core::Group
   onset IconIndex
   {
     pure IconIndex = value;
-    Image.FrameNumber = value;
+    //Image.FrameNumber = value;
   }
 
   $rect <370,40,550,80>
@@ -6242,12 +6275,12 @@ class AIndicator : Core::Group
     if ( Active )
     {
       Frame.Color = BackColorActive;
-      Image.Color = IconColorActive;
+      //Image.Color = IconColorActive;
     }
     else
     {
       Frame.Color = BackColor;
-      Image.Color = IconColor;
+      //Image.Color = IconColor;
     }
 
   }
@@ -6260,16 +6293,6 @@ class AIndicator : Core::Group
     preset Color = Flat::ColorOfBody;
   }
 
-  $rect <20,20,160,60>
-  object Views::Image Image
-  {
-    preset Layout = Core::Layout[AlignToBottom, AlignToLeft, AlignToRight, AlignToTop, ResizeHorz, ResizeVert];
-    preset Bounds = <0,0,30,30>;
-    preset Color = Flat::ColorOfBackground;
-    preset FrameNumber = 19;
-    preset Bitmap = Flat::FlatDemoIcons;
-  }
-
   $rect <370,40,550,80>
   onset Icon
   {
@@ -6277,7 +6300,7 @@ class AIndicator : Core::Group
     pure Icon    = value;
 
     /* and assign it to the image */
-    Image.Bitmap = value;
+    //WarpImage.Bitmap = value;
   }
 
   // The property 'Icon' stores the bitmap to show in the left part of the button.
@@ -6295,7 +6318,7 @@ class AIndicator : Core::Group
     pure IconIndex = value;
 
     /* and select the corresponding frame number */
-    Image.FrameNumber = value;
+    //WarpImage.FrameNumber = value;
   }
 
   // This slot method will receive a signal, if the value of the property assigned \
@@ -6441,5 +6464,257 @@ class AIndicator : Core::Group
 
     /* ...and finally, force an update */
     InvalidateViewState();
+  }
+}
+
+$rect <150,330,350,370>
+$output false
+class TimeTillFull : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,120,60>;
+
+  $rect <10,390,210,430>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,350,210,390>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  // To do:
+  // 
+  // - Adjust the visible size of your component (the thick blue border).
+  // 
+  // - The simplest way to compose the appearance of the component is to use the \
+  // 'Views' and 'Widget Sets' from the Gallery.
+  // 
+  // - To react to touch or keyboard events use the templates from the Gallery folder \
+  // 'Event Handlers'.
+  // 
+  // - To perform transitions (animations) use the templates from the Gallery folder \
+  // 'Effects'.
+  // 
+  // - To implement the interface of the component use the 'Property' template from \
+  // the Gallery folder 'Chora'.
+  // 
+  // - To store values use the 'Variable' and 'Array' templates available in the \
+  // Gallery folder 'Chora'.
+  // 
+  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
+  // in the Gallery folder 'Chora'.
+  // 
+  // - In the method 'UpdateViewState()' you can put code to update the state of \
+  // views enclosed in your component.
+  // 
+  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
+  // calculation for enclosed views.
+  note legend Note1
+  {
+    attr Bounds = <220,230,1000,550>;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TimeText
+  {
+    preset Bounds = <0,0,120,60>;
+    preset AutoSize = false;
+    preset WrapText = true;
+    preset String = "00.00.0000 00:00:00";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <500,20,700,60>
+  property string TimeProperty = "00.00.0000 00:00:00";
+
+  $rect <500,60,700,100>
+  onset TimeProperty
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure TimeProperty == value )
+      return;
+    TimeText.String=TimeProperty;
+
+    // Remember the property's new value.
+    pure TimeProperty = value;
+
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <500,100,700,140>
+  onget TimeProperty
+  {
+    return pure TimeProperty;
+  }
+
+  $rect <240,10,440,50>
+  object Core::SystemEventHandler TimeTillFullHandler
+  {
+    preset OnEvent = onTimeTillFull;
+    preset Event = Device::Device.TimeTillFullEvent;
+  }
+
+  // This slot method is executed when the associated system event handler 'SystemEventHandler' \
+  // receives an event.
+  $rect <240,50,440,90>
+  slot onTimeTillFull
+  {
+    /*
+       HINT 1:
+
+       You can evaluate the 'sender' parameter. It refers to the handler 
+       this method has been called from. This is very useful if multiple
+       system event handlers are connected to one and the same 'onEvent'
+       method:
+
+       if ( sender == Handler1 )
+         trace "The event comes from the Handler1";
+
+       if ( sender == Handler2 )
+         trace "... or from the Handler2";
+    */
+
+    /*
+       HINT 2:
+
+       From this 'onEvent' slot method you can evaluate the optional
+       'context' data dispatched together with the system event:
+
+       // First get the context data. You need to cast from the generic 'object'
+       // to your own specific context class:
+       
+
+       // Any context data passed and the cast was successful?
+       if ( context != null )
+       {
+         // Evaluate the context data:
+         someTarget1 = context.SomeData1;
+         someTarget2 = context.SomeData2;
+       }
+    */
+    var Device::CurrentTimeContext context = (Device::CurrentTimeContext)TimeTillFullHandler.Context;
+    TimeProperty=context.CurrentTime;
   }
 }

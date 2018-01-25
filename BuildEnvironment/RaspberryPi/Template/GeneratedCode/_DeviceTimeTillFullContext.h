@@ -23,8 +23,8 @@
 *
 *******************************************************************************/
 
-#ifndef Device_H
-#define Device_H
+#ifndef _DeviceTimeTillFullContext_H
+#define _DeviceTimeTillFullContext_H
 
 #ifdef __cplusplus
   extern "C"
@@ -41,19 +41,30 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
-#include "_DeviceCurrentTimeContext.h"
-#include "_DeviceDeviceClass.h"
-#include "_DeviceRemainingTimeContext.h"
-#include "_DeviceSampleCollectedContext.h"
-#include "_DeviceTimeTillFullContext.h"
+/* Forward declaration of the class Device::TimeTillFullContext */
+#ifndef _DeviceTimeTillFullContext_
+  EW_DECLARE_CLASS( DeviceTimeTillFullContext )
+#define _DeviceTimeTillFullContext_
+#endif
 
-/* User defined auto object: 'Device::Device' */
-EW_DECLARE_AUTOOBJECT( DeviceDevice, DeviceDeviceClass )
+
+/* Deklaration of class : 'Device::TimeTillFullContext' */
+EW_DEFINE_FIELDS( DeviceTimeTillFullContext, XObject )
+  EW_PROPERTY( TimeTillFull,    XString )
+EW_END_OF_FIELDS( DeviceTimeTillFullContext )
+
+/* Virtual Method Table (VMT) for the class : 'Device::TimeTillFullContext' */
+EW_DEFINE_METHODS( DeviceTimeTillFullContext, XObject )
+EW_END_OF_METHODS( DeviceTimeTillFullContext )
+
+/* 'C' function for method : 'Device::TimeTillFullContext.OnSetTimeTillFull()' */
+void DeviceTimeTillFullContext_OnSetTimeTillFull( DeviceTimeTillFullContext _this, 
+  XString value );
 
 #ifdef __cplusplus
   }
 #endif
 
-#endif /* Device_H */
+#endif /* _DeviceTimeTillFullContext_H */
 
 /* Embedded Wizard */

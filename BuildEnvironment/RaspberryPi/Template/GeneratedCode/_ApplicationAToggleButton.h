@@ -44,7 +44,6 @@
 #include "_CoreGroup.h"
 #include "_CoreSimpleTouchHandler.h"
 #include "_ViewsFrame.h"
-#include "_ViewsImage.h"
 #include "_ViewsText.h"
 
 /* Forward declaration of the class Application::AToggleButton */
@@ -93,7 +92,6 @@ EW_DEFINE_FIELDS( ApplicationAToggleButton, CoreGroup )
   EW_PROPERTY( Outlet,          XRef )
   EW_OBJECT  ( TouchHandler,    CoreSimpleTouchHandler )
   EW_OBJECT  ( Frame,           ViewsFrame )
-  EW_OBJECT  ( Image,           ViewsImage )
   EW_OBJECT  ( CaptionText,     ViewsText )
   EW_PROPERTY( Icon,            ResourcesBitmap )
   EW_PROPERTY( Caption,         XString )

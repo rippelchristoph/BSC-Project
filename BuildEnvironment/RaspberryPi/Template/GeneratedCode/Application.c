@@ -50,9 +50,9 @@
 #include "_CoreSimpleTouchHandler.h"
 #include "_CoreSlideTouchHandler.h"
 #include "_CoreSystemEventHandler.h"
-#include "_CoreTime.h"
 #include "_CoreTimer.h"
 #include "_CoreView.h"
+#include "_DeviceCurrentTimeContext.h"
 #include "_DeviceDeviceClass.h"
 #include "_DeviceRemainingTimeContext.h"
 #include "_DeviceSampleCollectedContext.h"
@@ -81,39 +81,39 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x00000434, /* ratio 48.33 % */
+  0x00000416, /* ratio 49.33 % */
   0xB8002F00, 0x80000452, 0x00720018, 0xC6000170, 0x640085C1, 0x03887C34, 0x34878800,
   0x3000E800, 0x8DC54003, 0xA41A2508, 0x43E0B030, 0x221D0C85, 0xA5512864, 0x35188B47,
   0xD1D8C802, 0x06928160, 0x19C4DA11, 0x9B8020D1, 0xFCD60D04, 0xCEE333C9, 0xF86A00A0,
   0xC6D26A04, 0x9E379E52, 0xD478AD22, 0x26A91064, 0x38356085, 0x22002B64, 0x45124D5E,
-  0x40A7C46A, 0xA61D0EA4, 0xED36B89C, 0x376E8BC4, 0xB0E89DC6, 0x768641AA, 0x68DDE661,
-  0x29CF0130, 0x0800E800, 0x604E4003, 0x1EFE089F, 0x8E00037E, 0x113C034F, 0x807005D6,
-  0x69001B67, 0xE9F1B800, 0x00152917, 0x39E00065, 0xCF3100AC, 0x0B47A1CF, 0x6F3A5BCE,
-  0x413CC789, 0x95E2F001, 0x0AAF6B36, 0x8C4E4EF3, 0x5852A254, 0x841ABA00, 0x70B8148C,
-  0x3E4DC400, 0xA7C4B001, 0x40479E13, 0x7D231003, 0x99C045F3, 0x83245F43, 0xABC5FA59,
-  0x060CF59B, 0x1B000680, 0x1B43DC98, 0x0EBE28BE, 0x0DD23B4C, 0x200EA9DF, 0xF4FAE6BD,
-  0x1C37362F, 0xF31CF33A, 0x80039000, 0x2778667B, 0x01D6665D, 0x5A000280, 0x79DE578C,
-  0x58C7C117, 0x445D0882, 0x39307F9D, 0x504F8295, 0x6855A4F0, 0x467685F3, 0x97FC007E,
-  0x02247A1D, 0x00790636, 0x8ADEE612, 0x1FF45DE5, 0xC7951763, 0xB0008C18, 0x97612280,
-  0x45D82665, 0xA278A1EA, 0xC3F0007E, 0x161279E2, 0x386664A6, 0x66DEE60A, 0x19B45E23,
-  0x38FE2C93, 0xB2457C5D, 0x006AD868, 0x74A1E0FC, 0x62300221, 0x67620968, 0x02657DA0,
-  0x2F79E380, 0x919178B2, 0x5DB905D4, 0x240DDA77, 0x021079DD, 0x05000D60, 0x93D9B816,
-  0x9FC4C262, 0x0896559A, 0x1E087953, 0x3D4FA646, 0x74A2097C, 0x1D77DE63, 0x3A2E289D,
-  0x12039AE9, 0x7196631A, 0x90E7392A, 0x27868676, 0x79F67B4C, 0x0251A01F, 0x861AE898,
-  0x63000846, 0x9A166D86, 0x04053E4F, 0x00000000
+  0x40A7C46A, 0xA61D0EA4, 0xED36B89C, 0x376E8BC4, 0xD0E89DC6, 0x539E0260, 0x1001D000,
+  0xBD1C8006, 0x05E0113E, 0x1C0006FC, 0x2278069F, 0x00E00BAC, 0xD20036CF, 0xF3E37000,
+  0x002A522E, 0x03C000CA, 0x9E604158, 0xDE733598, 0xE7A0D55B, 0x204A00D2, 0x800A09E6,
+  0x51AFAF17, 0x526B1E9F, 0x82C66A21, 0x0A544A91, 0x8357400B, 0xFEF69189, 0xC9B8200D,
+  0xF8960027, 0x48F3C274, 0x9E620066, 0x5798BE53, 0x648BE6B2, 0x78BF3F22, 0xBE1EB295,
+  0x6000D000, 0xE6BB3303, 0xD7BF17BF, 0xF9E76981, 0x01D23BDF, 0x3F2C9F98, 0x7FE545FE,
+  0x339E4B35, 0x0039001E, 0xDDB199EB, 0x074D9273, 0x68000A00, 0xE4789E01, 0x615ED45D,
+  0x51742206, 0xE4C1FB74, 0x413E0A54, 0x9A5693C1, 0x19D9A7C1, 0x9FC001F6, 0x9885E575,
+  0xF5E118D7, 0x287AD7D7, 0x7F11778A, 0x5E245D85, 0xC0022D61, 0x417D8942, 0x175ED926,
+  0x8922579D, 0x4FC001F7, 0xE83DE48A, 0xD59291D7, 0x947AD7B8, 0x65117881, 0x23C8A649,
+  0x9909EE74, 0x01A45FE2, 0xCF86C3F0, 0x88000879, 0xDD58199A, 0x0989F380, 0xB1E48D40,
+  0x4345E298, 0x7623E746, 0xD0375DDA, 0x0835E473, 0x08003580, 0x4C652028, 0x7E53097E,
+  0x22294A67, 0x0815E24C, 0xF53E9858, 0xCF8765C0, 0x751F4981, 0x28889671, 0x180268A4,
+  0xBA568BA8, 0x409C2479, 0x9D59A9CE, 0x27A9E130, 0xD93A7D7D, 0x0C6BA19F, 0x850020EA,
+  0x669945FD, 0x1014F93E, 0x00000000
 };
 
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault1[] =
 {
-  0x0000012C, /* ratio 61.33 % */
+  0x00000136, /* ratio 60.65 % */
   0xB8006900, 0x00000452, 0x00CA0021, 0xC01093B8, 0x006E8699, 0x05300080, 0x13869A40,
   0x489440C9, 0x0018C011, 0x01B00068, 0x1D400610, 0xF239208F, 0xA1A62003, 0x151A8E1C,
   0x85789C46, 0x00398024, 0xD83C60E8, 0x91392430, 0x041A5D39, 0x41606080, 0xE21A4E00,
   0x82306A09, 0x15088351, 0xC709C45E, 0x1391C362, 0x0A6528A9, 0x0053C0A0, 0x257A8658,
   0xD88B3068, 0x16865AAF, 0xC9000B25, 0x0D550055, 0x043AF82A, 0x11001BC0, 0x687D58CD,
-  0xA4D7C170, 0x54D6190A, 0xDF647238, 0xDE7515AF, 0xA8041AAD, 0xBE060061, 0x630000D6,
-  0x08B65CE8, 0x8C54EA4F, 0x80E7A877, 0x00000000
+  0xA4D7C170, 0x54D6190A, 0xDF647238, 0xDE7515AF, 0xA8041AAD, 0xBE060061, 0xE30000D6,
+  0x43175B2C, 0x7845B2E7, 0xBC62A752, 0x04074343, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -173,139 +173,139 @@ static const XRect _Const0034 = {{ 560, 260 }, { 630, 330 }};
 static const XRect _Const0035 = {{ 560, 330 }, { 630, 400 }};
 static const XRect _Const0036 = {{ 560, 400 }, { 630, 470 }};
 static const XRect _Const0037 = {{ 670, 400 }, { 790, 470 }};
-static const XPoint _Const0038 = { 700, 110 };
-static const XPoint _Const0039 = { 800, 110 };
-static const XPoint _Const003A = { 800, 10 };
-static const XPoint _Const003B = { 700, 10 };
-static const XRect _Const003C = {{ 70, 10 }, { 140, 50 }};
-static const XStringRes _Const003D = { _StringsDefault0, 0x002E };
-static const XRect _Const003E = {{ 140, 10 }, { 210, 50 }};
-static const XStringRes _Const003F = { _StringsDefault0, 0x0033 };
-static const XRect _Const0040 = {{ 210, 10 }, { 280, 50 }};
-static const XStringRes _Const0041 = { _StringsDefault0, 0x0038 };
-static const XRect _Const0042 = {{ 280, 10 }, { 350, 50 }};
-static const XStringRes _Const0043 = { _StringsDefault0, 0x003D };
-static const XRect _Const0044 = {{ 350, 10 }, { 420, 50 }};
-static const XStringRes _Const0045 = { _StringsDefault0, 0x0042 };
-static const XRect _Const0046 = {{ 420, 10 }, { 490, 50 }};
-static const XStringRes _Const0047 = { _StringsDefault0, 0x0047 };
-static const XRect _Const0048 = {{ 490, 10 }, { 560, 50 }};
-static const XStringRes _Const0049 = { _StringsDefault0, 0x004C };
-static const XRect _Const004A = {{ 560, 10 }, { 630, 50 }};
-static const XStringRes _Const004B = { _StringsDefault0, 0x0051 };
-static const XRect _Const004C = {{ 0, 60 }, { 70, 100 }};
-static const XStringRes _Const004D = { _StringsDefault0, 0x0056 };
-static const XRect _Const004E = {{ 0, 130 }, { 70, 170 }};
-static const XStringRes _Const004F = { _StringsDefault0, 0x005B };
-static const XRect _Const0050 = {{ 0, 200 }, { 70, 240 }};
-static const XStringRes _Const0051 = { _StringsDefault0, 0x0060 };
-static const XRect _Const0052 = {{ 0, 270 }, { 70, 310 }};
-static const XStringRes _Const0053 = { _StringsDefault0, 0x0065 };
-static const XRect _Const0054 = {{ 0, 340 }, { 70, 380 }};
-static const XStringRes _Const0055 = { _StringsDefault0, 0x006A };
-static const XRect _Const0056 = {{ 0, 410 }, { 70, 450 }};
-static const XStringRes _Const0057 = { _StringsDefault0, 0x006F };
-static const XRect _Const0058 = {{ 0, 0 }, { 70, 70 }};
-static const XPoint _Const0059 = { 0, 70 };
-static const XPoint _Const005A = { 70, 70 };
-static const XPoint _Const005B = { 70, 0 };
-static const XPoint _Const005C = { 0, 0 };
-static const XRect _Const005D = {{ 0, 20 }, { 70, 50 }};
-static const XColor _Const005E = { 0xFF, 0xFF, 0xFF, 0xFF };
-static const XRect _Const005F = {{ 0, 0 }, { 120, 60 }};
-static const XStringRes _Const0060 = { _StringsDefault0, 0x0074 };
-static const XStringRes _Const0061 = { _StringsDefault0, 0x008B };
-static const XStringRes _Const0062 = { _StringsDefault0, 0x0090 };
-static const XStringRes _Const0063 = { _StringsDefault0, 0x0095 };
-static const XRect _Const0064 = {{ 0, 0 }, { 420, 70 }};
-static const XRect _Const0065 = {{ 0, 1 }, { 418, 69 }};
-static const XColor _Const0066 = { 0x00, 0x00, 0x00, 0xFF };
-static const XRect _Const0067 = {{ 0, 1 }, { 30, 31 }};
-static const XRect _Const0068 = {{ 120, 6 }, { 200, 31 }};
-static const XStringRes _Const0069 = { _StringsDefault0, 0x009A };
-static const XRect _Const006A = {{ 120, 40 }, { 200, 65 }};
-static const XStringRes _Const006B = { _StringsDefault0, 0x00A3 };
-static const XRect _Const006C = {{ 380, 20 }, { 410, 50 }};
-static const XRect _Const006D = {{ 30, 20 }, { 70, 60 }};
-static const XStringRes _Const006E = { _StringsDefault0, 0x00AB };
-static const XPoint _Const006F = { 110, 45 };
-static const XPoint _Const0070 = { 30, 45 };
-static const XRect _Const0071 = {{ 210, 10 }, { 370, 60 }};
-static const XRect _Const0072 = {{ 70, 20 }, { 110, 50 }};
-static const XStringRes _Const0073 = { _StringsDefault0, 0x00B1 };
-static const XRect _Const0074 = {{ 0, 0 }, { 160, 130 }};
-static const XRect _Const0075 = {{ 0, 0 }, { 160, 120 }};
-static const XPoint _Const0076 = { 0, 120 };
-static const XPoint _Const0077 = { 160, 120 };
-static const XPoint _Const0078 = { 160, 0 };
-static const XRect _Const0079 = {{ 2, 2 }, { 157, 117 }};
-static const XStringRes _Const007A = { _StringsDefault0, 0x00B8 };
-static const XPoint _Const007B = { 50, 70 };
-static const XPoint _Const007C = { 50, 50 };
-static const XStringRes _Const007D = { _StringsDefault0, 0x00C1 };
-static const XPoint _Const007E = { 20, 20 };
-static const XPoint _Const007F = { -10, -10 };
-static const XColor _Const0080 = { 0xEE, 0xEE, 0xEE, 0xCC };
-static const XStringRes _Const0081 = { _StringsDefault0, 0x00C9 };
-static const XStringRes _Const0082 = { _StringsDefault0, 0x00CE };
-static const XStringRes _Const0083 = { _StringsDefault0, 0x00D3 };
-static const XStringRes _Const0084 = { _StringsDefault0, 0x00D9 };
-static const XStringRes _Const0085 = { _StringsDefault0, 0x00DE };
-static const XRect _Const0086 = {{ 0, 0 }, { 170, 180 }};
-static const XPoint _Const0087 = { 10, 170 };
-static const XPoint _Const0088 = { 160, 170 };
-static const XPoint _Const0089 = { 160, 10 };
-static const XPoint _Const008A = { 10, 10 };
-static const XRect _Const008B = {{ 10, 10 }, { 60, 50 }};
-static const XColor _Const008C = { 0x4C, 0x4C, 0x4A, 0xFF };
-static const XRect _Const008D = {{ 60, 10 }, { 110, 50 }};
-static const XRect _Const008E = {{ 110, 10 }, { 160, 50 }};
-static const XRect _Const008F = {{ 10, 50 }, { 60, 90 }};
-static const XRect _Const0090 = {{ 60, 50 }, { 110, 90 }};
-static const XRect _Const0091 = {{ 110, 50 }, { 160, 90 }};
-static const XRect _Const0092 = {{ 10, 90 }, { 60, 130 }};
-static const XRect _Const0093 = {{ 60, 90 }, { 110, 130 }};
-static const XRect _Const0094 = {{ 110, 90 }, { 160, 130 }};
-static const XStringRes _Const0095 = { _StringsDefault0, 0x00E3 };
-static const XRect _Const0096 = {{ 60, 130 }, { 110, 170 }};
-static const XStringRes _Const0097 = { _StringsDefault0, 0x00E8 };
-static const XRect _Const0098 = {{ 10, 130 }, { 60, 170 }};
-static const XRect _Const0099 = {{ 110, 130 }, { 160, 170 }};
-static const XRect _Const009A = {{ 0, 0 }, { 70, 40 }};
-static const XRect _Const009B = {{ 0, 0 }, { 130, 60 }};
-static const XStringRes _Const009C = { _StringsDefault0, 0x00ED };
-static const XStringRes _Const009D = { _StringsDefault0, 0x00F5 };
-static const XRect _Const009E = {{ 670, 440 }, { 790, 470 }};
-static const XStringRes _Const009F = { _StringsDefault0, 0x00FB };
-static const XRect _Const00A0 = {{ 330, 110 }, { 470, 170 }};
-static const XRect _Const00A1 = {{ 610, 230 }, { 780, 410 }};
-static const XRect _Const00A2 = {{ 60, 10 }, { 690, 120 }};
-static const XStringRes _Const00A3 = { _StringsDefault0, 0x0101 };
-static const XStringRes _Const00A4 = { _StringsDefault0, 0x014F };
-static const XStringRes _Const00A5 = { _StringsDefault0, 0x019F };
-static const XStringRes _Const00A6 = { _StringsDefault0, 0x01DE };
-static const XStringRes _Const00A7 = { _StringsDefault1, 0x0003 };
-static const XStringRes _Const00A8 = { _StringsDefault1, 0x0037 };
-static const XStringRes _Const00A9 = { _StringsDefault1, 0x003F };
-static const XRect _Const00AA = {{ 60, 240 }, { 780, 310 }};
-static const XRect _Const00AB = {{ 60, 310 }, { 780, 370 }};
-static const XRect _Const00AC = {{ 60, 370 }, { 780, 430 }};
-static const XRect _Const00AD = {{ 10, 250 }, { 50, 300 }};
-static const XStringRes _Const00AE = { _StringsDefault1, 0x0050 };
-static const XRect _Const00AF = {{ 10, 310 }, { 50, 360 }};
-static const XStringRes _Const00B0 = { _StringsDefault1, 0x0055 };
-static const XRect _Const00B1 = {{ 10, 370 }, { 50, 420 }};
-static const XStringRes _Const00B2 = { _StringsDefault1, 0x005A };
-static const XRect _Const00B3 = {{ 550, 440 }, { 650, 470 }};
-static const XStringRes _Const00B4 = { _StringsDefault1, 0x005F };
-static const XRect _Const00B5 = {{ 10, 10 }, { 790, 430 }};
-static const XRect _Const00B6 = {{ 10, 50 }, { 450, 120 }};
-static const XRect _Const00B7 = {{ 10, 120 }, { 450, 190 }};
-static const XRect _Const00B8 = {{ 10, 190 }, { 450, 260 }};
-static const XRect _Const00B9 = {{ 10, 260 }, { 450, 330 }};
-static const XRect _Const00BA = {{ 10, 330 }, { 450, 400 }};
-static const XRect _Const00BB = {{ 10, 400 }, { 450, 470 }};
-static const XRect _Const00BC = {{ 670, 410 }, { 790, 470 }};
+static const XPoint _Const0038 = { 700, 100 };
+static const XPoint _Const0039 = { 800, 100 };
+static const XPoint _Const003A = { 700, 0 };
+static const XRect _Const003B = {{ 70, 10 }, { 140, 50 }};
+static const XStringRes _Const003C = { _StringsDefault0, 0x002E };
+static const XRect _Const003D = {{ 140, 10 }, { 210, 50 }};
+static const XStringRes _Const003E = { _StringsDefault0, 0x0033 };
+static const XRect _Const003F = {{ 210, 10 }, { 280, 50 }};
+static const XStringRes _Const0040 = { _StringsDefault0, 0x0038 };
+static const XRect _Const0041 = {{ 280, 10 }, { 350, 50 }};
+static const XStringRes _Const0042 = { _StringsDefault0, 0x003D };
+static const XRect _Const0043 = {{ 350, 10 }, { 420, 50 }};
+static const XStringRes _Const0044 = { _StringsDefault0, 0x0042 };
+static const XRect _Const0045 = {{ 420, 10 }, { 490, 50 }};
+static const XStringRes _Const0046 = { _StringsDefault0, 0x0047 };
+static const XRect _Const0047 = {{ 490, 10 }, { 560, 50 }};
+static const XStringRes _Const0048 = { _StringsDefault0, 0x004C };
+static const XRect _Const0049 = {{ 560, 10 }, { 630, 50 }};
+static const XStringRes _Const004A = { _StringsDefault0, 0x0051 };
+static const XRect _Const004B = {{ 0, 60 }, { 70, 100 }};
+static const XStringRes _Const004C = { _StringsDefault0, 0x0056 };
+static const XRect _Const004D = {{ 0, 130 }, { 70, 170 }};
+static const XStringRes _Const004E = { _StringsDefault0, 0x005B };
+static const XRect _Const004F = {{ 0, 200 }, { 70, 240 }};
+static const XStringRes _Const0050 = { _StringsDefault0, 0x0060 };
+static const XRect _Const0051 = {{ 0, 270 }, { 70, 310 }};
+static const XStringRes _Const0052 = { _StringsDefault0, 0x0065 };
+static const XRect _Const0053 = {{ 0, 340 }, { 70, 380 }};
+static const XStringRes _Const0054 = { _StringsDefault0, 0x006A };
+static const XRect _Const0055 = {{ 0, 410 }, { 70, 450 }};
+static const XStringRes _Const0056 = { _StringsDefault0, 0x006F };
+static const XRect _Const0057 = {{ 0, 0 }, { 70, 70 }};
+static const XPoint _Const0058 = { 0, 70 };
+static const XPoint _Const0059 = { 70, 70 };
+static const XPoint _Const005A = { 70, 0 };
+static const XPoint _Const005B = { 0, 0 };
+static const XColor _Const005C = { 0xFF, 0xFF, 0xFF, 0xFF };
+static const XRect _Const005D = {{ 0, 22 }, { 70, 52 }};
+static const XRect _Const005E = {{ 0, 0 }, { 120, 60 }};
+static const XStringRes _Const005F = { _StringsDefault0, 0x0074 };
+static const XRect _Const0060 = {{ 0, 0 }, { 420, 70 }};
+static const XRect _Const0061 = {{ 0, 1 }, { 418, 69 }};
+static const XColor _Const0062 = { 0x00, 0x00, 0x00, 0xFF };
+static const XRect _Const0063 = {{ 0, 1 }, { 30, 31 }};
+static const XRect _Const0064 = {{ 120, 6 }, { 200, 31 }};
+static const XStringRes _Const0065 = { _StringsDefault0, 0x008B };
+static const XRect _Const0066 = {{ 120, 40 }, { 200, 65 }};
+static const XStringRes _Const0067 = { _StringsDefault0, 0x0094 };
+static const XRect _Const0068 = {{ 380, 20 }, { 410, 50 }};
+static const XRect _Const0069 = {{ 30, 20 }, { 70, 60 }};
+static const XStringRes _Const006A = { _StringsDefault0, 0x009C };
+static const XPoint _Const006B = { 110, 45 };
+static const XPoint _Const006C = { 30, 45 };
+static const XRect _Const006D = {{ 210, 10 }, { 370, 60 }};
+static const XRect _Const006E = {{ 70, 20 }, { 110, 50 }};
+static const XStringRes _Const006F = { _StringsDefault0, 0x00A2 };
+static const XRect _Const0070 = {{ 0, 0 }, { 160, 130 }};
+static const XRect _Const0071 = {{ 0, 0 }, { 160, 120 }};
+static const XPoint _Const0072 = { 0, 120 };
+static const XPoint _Const0073 = { 160, 120 };
+static const XPoint _Const0074 = { 160, 0 };
+static const XRect _Const0075 = {{ 2, 2 }, { 157, 117 }};
+static const XStringRes _Const0076 = { _StringsDefault0, 0x00A9 };
+static const XPoint _Const0077 = { 50, 70 };
+static const XPoint _Const0078 = { 50, 50 };
+static const XStringRes _Const0079 = { _StringsDefault0, 0x00B2 };
+static const XPoint _Const007A = { 20, 20 };
+static const XPoint _Const007B = { -10, -10 };
+static const XColor _Const007C = { 0xEE, 0xEE, 0xEE, 0xCC };
+static const XStringRes _Const007D = { _StringsDefault0, 0x00BA };
+static const XStringRes _Const007E = { _StringsDefault0, 0x00BF };
+static const XStringRes _Const007F = { _StringsDefault0, 0x00C4 };
+static const XStringRes _Const0080 = { _StringsDefault0, 0x00CA };
+static const XStringRes _Const0081 = { _StringsDefault0, 0x00CF };
+static const XRect _Const0082 = {{ 0, 0 }, { 170, 180 }};
+static const XPoint _Const0083 = { 10, 170 };
+static const XPoint _Const0084 = { 160, 170 };
+static const XPoint _Const0085 = { 160, 10 };
+static const XPoint _Const0086 = { 10, 10 };
+static const XRect _Const0087 = {{ 10, 10 }, { 60, 50 }};
+static const XColor _Const0088 = { 0x4C, 0x4C, 0x4A, 0xFF };
+static const XRect _Const0089 = {{ 60, 10 }, { 110, 50 }};
+static const XRect _Const008A = {{ 110, 10 }, { 160, 50 }};
+static const XRect _Const008B = {{ 10, 50 }, { 60, 90 }};
+static const XRect _Const008C = {{ 60, 50 }, { 110, 90 }};
+static const XRect _Const008D = {{ 110, 50 }, { 160, 90 }};
+static const XRect _Const008E = {{ 10, 90 }, { 60, 130 }};
+static const XRect _Const008F = {{ 60, 90 }, { 110, 130 }};
+static const XRect _Const0090 = {{ 110, 90 }, { 160, 130 }};
+static const XStringRes _Const0091 = { _StringsDefault0, 0x00D4 };
+static const XRect _Const0092 = {{ 60, 130 }, { 110, 170 }};
+static const XStringRes _Const0093 = { _StringsDefault0, 0x00D9 };
+static const XRect _Const0094 = {{ 10, 130 }, { 60, 170 }};
+static const XRect _Const0095 = {{ 110, 130 }, { 160, 170 }};
+static const XRect _Const0096 = {{ 0, 0 }, { 70, 40 }};
+static const XRect _Const0097 = {{ 0, 0 }, { 130, 60 }};
+static const XStringRes _Const0098 = { _StringsDefault0, 0x00DE };
+static const XStringRes _Const0099 = { _StringsDefault0, 0x00E6 };
+static const XRect _Const009A = {{ 670, 440 }, { 790, 470 }};
+static const XStringRes _Const009B = { _StringsDefault0, 0x00EC };
+static const XRect _Const009C = {{ 330, 110 }, { 470, 170 }};
+static const XRect _Const009D = {{ 610, 230 }, { 780, 410 }};
+static const XRect _Const009E = {{ 60, 10 }, { 690, 120 }};
+static const XStringRes _Const009F = { _StringsDefault0, 0x00F2 };
+static const XStringRes _Const00A0 = { _StringsDefault0, 0x0140 };
+static const XStringRes _Const00A1 = { _StringsDefault0, 0x0190 };
+static const XStringRes _Const00A2 = { _StringsDefault0, 0x01CF };
+static const XStringRes _Const00A3 = { _StringsDefault1, 0x0003 };
+static const XStringRes _Const00A4 = { _StringsDefault1, 0x0037 };
+static const XStringRes _Const00A5 = { _StringsDefault1, 0x003F };
+static const XRect _Const00A6 = {{ 60, 240 }, { 780, 310 }};
+static const XRect _Const00A7 = {{ 60, 310 }, { 780, 370 }};
+static const XRect _Const00A8 = {{ 60, 370 }, { 780, 430 }};
+static const XRect _Const00A9 = {{ 10, 250 }, { 50, 300 }};
+static const XStringRes _Const00AA = { _StringsDefault1, 0x0050 };
+static const XRect _Const00AB = {{ 10, 310 }, { 50, 360 }};
+static const XStringRes _Const00AC = { _StringsDefault1, 0x0055 };
+static const XRect _Const00AD = {{ 10, 370 }, { 50, 420 }};
+static const XStringRes _Const00AE = { _StringsDefault1, 0x005A };
+static const XRect _Const00AF = {{ 550, 440 }, { 650, 470 }};
+static const XStringRes _Const00B0 = { _StringsDefault1, 0x005F };
+static const XRect _Const00B1 = {{ 10, 10 }, { 790, 430 }};
+static const XRect _Const00B2 = {{ 10, 50 }, { 450, 120 }};
+static const XRect _Const00B3 = {{ 10, 120 }, { 450, 190 }};
+static const XRect _Const00B4 = {{ 10, 190 }, { 450, 260 }};
+static const XRect _Const00B5 = {{ 10, 260 }, { 450, 330 }};
+static const XRect _Const00B6 = {{ 10, 330 }, { 450, 400 }};
+static const XRect _Const00B7 = {{ 10, 400 }, { 450, 470 }};
+static const XRect _Const00B8 = {{ 670, 410 }, { 790, 470 }};
+static const XPoint _Const00B9 = { 700, 110 };
+static const XPoint _Const00BA = { 800, 110 };
+static const XPoint _Const00BB = { 800, 10 };
+static const XPoint _Const00BC = { 700, 10 };
 static const XRect _Const00BD = {{ 460, 290 }, { 660, 470 }};
 static const XRect _Const00BE = {{ 660, 330 }, { 800, 390 }};
 static const XRect _Const00BF = {{ 480, 140 }, { 600, 170 }};
@@ -319,25 +319,26 @@ static const XRect _Const00C6 = {{ 0, 0 }, { 160, 20 }};
 static const XRect _Const00C7 = {{ 0, 0 }, { 90, 20 }};
 static const XRect _Const00C8 = {{ 80, 20 }, { 98, 40 }};
 static const XStringRes _Const00C9 = { _StringsDefault1, 0x0087 };
-static const XRect _Const00CA = {{ 0, 0 }, { 120, 30 }};
-static const XPoint _Const00CB = { 0, 30 };
-static const XPoint _Const00CC = { 120, 30 };
-static const XPoint _Const00CD = { 120, 0 };
-static const XStringRes _Const00CE = { _StringsDefault1, 0x008D };
-static const XRect _Const00CF = {{ 0, 0 }, { 140, 30 }};
-static const XPoint _Const00D0 = { 140, 30 };
-static const XPoint _Const00D1 = { 140, 0 };
-static const XRect _Const00D2 = {{ 0, 0 }, { 30, 30 }};
-static const XRect _Const00D3 = {{ 40, 0 }, { 140, 30 }};
-static const XRect _Const00D4 = {{ 0, 0 }, { 160, 70 }};
-static const XPoint _Const00D5 = { 60, 72 };
-static const XPoint _Const00D6 = { 126, 72 };
-static const XPoint _Const00D7 = { 126, 40 };
-static const XPoint _Const00D8 = { 60, 40 };
-static const XRect _Const00D9 = {{ 0, 34 }, { 160, 40 }};
-static const XRect _Const00DA = {{ 70, 20 }, { 90, 40 }};
-static const XRect _Const00DB = {{ 60, 0 }, { 100, 30 }};
-static const XRect _Const00DC = {{ 0, 0 }, { 100, 34 }};
+static const XStringRes _Const00CA = { _StringsDefault1, 0x008D };
+static const XRect _Const00CB = {{ 0, 0 }, { 120, 30 }};
+static const XPoint _Const00CC = { 0, 30 };
+static const XPoint _Const00CD = { 120, 30 };
+static const XPoint _Const00CE = { 120, 0 };
+static const XStringRes _Const00CF = { _StringsDefault1, 0x0092 };
+static const XRect _Const00D0 = {{ 0, 0 }, { 140, 30 }};
+static const XPoint _Const00D1 = { 140, 30 };
+static const XPoint _Const00D2 = { 140, 0 };
+static const XRect _Const00D3 = {{ 0, 0 }, { 30, 30 }};
+static const XRect _Const00D4 = {{ 40, 0 }, { 140, 30 }};
+static const XRect _Const00D5 = {{ 0, 0 }, { 160, 70 }};
+static const XPoint _Const00D6 = { 60, 72 };
+static const XPoint _Const00D7 = { 126, 72 };
+static const XPoint _Const00D8 = { 126, 40 };
+static const XPoint _Const00D9 = { 60, 40 };
+static const XRect _Const00DA = {{ 0, 34 }, { 160, 40 }};
+static const XRect _Const00DB = {{ 70, 20 }, { 90, 40 }};
+static const XRect _Const00DC = {{ 60, 0 }, { 100, 30 }};
+static const XRect _Const00DD = {{ 0, 0 }, { 100, 34 }};
 
 #ifndef EW_DONT_CHECK_INDEX
   /* This function is used to check the indices when accessing an array.
@@ -736,49 +737,49 @@ void ApplicationWell__Init( ApplicationWell _this, XObject aLink, XHandle aArg )
   CoreRectView__OnSetBounds( &_this->Time, _Const0037 );
   CoreQuadView__OnSetPoint4( &_this->Logo, _Const0038 );
   CoreQuadView__OnSetPoint3( &_this->Logo, _Const0039 );
-  CoreQuadView__OnSetPoint2( &_this->Logo, _Const003A );
-  CoreQuadView__OnSetPoint1( &_this->Logo, _Const003B );
-  CoreRectView__OnSetBounds( &_this->WellLabel, _Const003C );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabel, EwLoadString( &_Const003D 
+  CoreQuadView__OnSetPoint2( &_this->Logo, _Const0001 );
+  CoreQuadView__OnSetPoint1( &_this->Logo, _Const003A );
+  CoreRectView__OnSetBounds( &_this->WellLabel, _Const003B );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabel, EwLoadString( &_Const003C 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabel1, _Const003E );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabel1, EwLoadString( &_Const003F 
+  CoreRectView__OnSetBounds( &_this->WellLabel1, _Const003D );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabel1, EwLoadString( &_Const003E 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabel2, _Const0040 );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabel2, EwLoadString( &_Const0041 
+  CoreRectView__OnSetBounds( &_this->WellLabel2, _Const003F );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabel2, EwLoadString( &_Const0040 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabel3, _Const0042 );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabel3, EwLoadString( &_Const0043 
+  CoreRectView__OnSetBounds( &_this->WellLabel3, _Const0041 );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabel3, EwLoadString( &_Const0042 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabel4, _Const0044 );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabel4, EwLoadString( &_Const0045 
+  CoreRectView__OnSetBounds( &_this->WellLabel4, _Const0043 );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabel4, EwLoadString( &_Const0044 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabel5, _Const0046 );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabel5, EwLoadString( &_Const0047 
+  CoreRectView__OnSetBounds( &_this->WellLabel5, _Const0045 );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabel5, EwLoadString( &_Const0046 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabel6, _Const0048 );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabel6, EwLoadString( &_Const0049 
+  CoreRectView__OnSetBounds( &_this->WellLabel6, _Const0047 );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabel6, EwLoadString( &_Const0048 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabel7, _Const004A );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabel7, EwLoadString( &_Const004B 
+  CoreRectView__OnSetBounds( &_this->WellLabel7, _Const0049 );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabel7, EwLoadString( &_Const004A 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabelA, _Const004C );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabelA, EwLoadString( &_Const004D 
+  CoreRectView__OnSetBounds( &_this->WellLabelA, _Const004B );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabelA, EwLoadString( &_Const004C 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabelB, _Const004E );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabelB, EwLoadString( &_Const004F 
+  CoreRectView__OnSetBounds( &_this->WellLabelB, _Const004D );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabelB, EwLoadString( &_Const004E 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabelC, _Const0050 );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabelC, EwLoadString( &_Const0051 
+  CoreRectView__OnSetBounds( &_this->WellLabelC, _Const004F );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabelC, EwLoadString( &_Const0050 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabelD, _Const0052 );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabelD, EwLoadString( &_Const0053 
+  CoreRectView__OnSetBounds( &_this->WellLabelD, _Const0051 );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabelD, EwLoadString( &_Const0052 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabelE, _Const0054 );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabelE, EwLoadString( &_Const0055 
+  CoreRectView__OnSetBounds( &_this->WellLabelE, _Const0053 );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabelE, EwLoadString( &_Const0054 
   ));
-  CoreRectView__OnSetBounds( &_this->WellLabelF, _Const0056 );
-  ApplicationWellLabel_OnSetTextString( &_this->WellLabelF, EwLoadString( &_Const0057 
+  CoreRectView__OnSetBounds( &_this->WellLabelF, _Const0055 );
+  ApplicationWellLabel_OnSetTextString( &_this->WellLabelF, EwLoadString( &_Const0056 
   ));
   CoreGroup__Add( _this, ((CoreView)&_this->Rectangle ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->A1 ), 0 );
@@ -1259,18 +1260,19 @@ void ApplicationWellPart__Init( ApplicationWellPart _this, XObject aLink, XHandl
   _this->_VMT = EW_CLASS( ApplicationWellPart );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0058 );
-  CoreQuadView__OnSetPoint4( &_this->WarpImage, _Const0059 );
-  CoreQuadView__OnSetPoint3( &_this->WarpImage, _Const005A );
-  CoreQuadView__OnSetPoint2( &_this->WarpImage, _Const005B );
-  CoreQuadView__OnSetPoint1( &_this->WarpImage, _Const005C );
+  CoreRectView__OnSetBounds( _this, _Const0057 );
+  CoreQuadView__OnSetPoint4( &_this->WarpImage, _Const0058 );
+  CoreQuadView__OnSetPoint3( &_this->WarpImage, _Const0059 );
+  CoreQuadView__OnSetPoint2( &_this->WarpImage, _Const005A );
+  CoreQuadView__OnSetPoint1( &_this->WarpImage, _Const005B );
+  ViewsWarpImage_OnSetColor( &_this->WarpImage, _Const005C );
   CoreRectView__OnSetBounds( &_this->Text, _Const005D );
   ViewsText_OnSetRowDistance( &_this->Text, 14 );
   ViewsText_OnSetAutoSize( &_this->Text, 0 );
   ViewsText_OnSetWrapWidth( &_this->Text, 0 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetString( &_this->Text, 0 );
-  ViewsText_OnSetColor( &_this->Text, _Const005E );
+  ViewsText_OnSetColor( &_this->Text, _Const005C );
   CoreGroup__Add( _this, ((CoreView)&_this->WarpImage ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
   ViewsWarpImage_OnSetBitmap( &_this->WarpImage, EwLoadResource( &ApplicationOval, 
@@ -1504,27 +1506,26 @@ void ApplicationClock__Init( ApplicationClock _this, XObject aLink, XHandle aArg
   CoreGroup__Init( &_this->_Super, aLink, aArg );
 
   /* ... then construct all embedded objects */
-  CoreTimer__Init( &_this->Timer, &_this->_XObject, 0 );
   ViewsText__Init( &_this->TimeText, &_this->_XObject, 0 );
-  CoreTime__Init( &_this->Time, &_this->_XObject, 0 );
+  CoreSystemEventHandler__Init( &_this->CurrentTimeHandler, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ApplicationClock );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const005F );
-  CoreTimer_OnSetPeriod( &_this->Timer, 500 );
-  CoreTimer_OnSetBegin( &_this->Timer, 0 );
-  CoreTimer_OnSetEnabled( &_this->Timer, 1 );
-  CoreRectView__OnSetBounds( &_this->TimeText, _Const005F );
+  CoreRectView__OnSetBounds( _this, _Const005E );
+  CoreRectView__OnSetBounds( &_this->TimeText, _Const005E );
   ViewsText_OnSetAutoSize( &_this->TimeText, 0 );
   ViewsText_OnSetWrapText( &_this->TimeText, 1 );
-  ViewsText_OnSetString( &_this->TimeText, EwLoadString( &_Const0060 ));
-  EwRetainString( &_this->TimeProperty, EwLoadString( &_Const0060 ));
+  ViewsText_OnSetString( &_this->TimeText, EwLoadString( &_Const005F ));
+  EwRetainString( &_this->TimeProperty, EwLoadString( &_Const005F ));
   CoreGroup__Add( _this, ((CoreView)&_this->TimeText ), 0 );
-  _this->Timer.OnTrigger = EwNewSlot( _this, ApplicationClock_Slot );
   ViewsText_OnSetFont( &_this->TimeText, EwLoadResource( &FlatFontM, ResourcesFont 
   ));
+  _this->CurrentTimeHandler.OnEvent = EwNewSlot( _this, ApplicationClock_onCurrentTime 
+  );
+  CoreSystemEventHandler_OnSetEvent( &_this->CurrentTimeHandler, &EwGetAutoObject( 
+  &DeviceDevice, DeviceDeviceClass )->CurrentTimeEvent );
 }
 
 /* Re-Initializer for the class 'Application::Clock' */
@@ -1534,9 +1535,8 @@ void ApplicationClock__ReInit( ApplicationClock _this )
   CoreGroup__ReInit( &_this->_Super );
 
   /* ... then re-construct all embedded objects */
-  CoreTimer__ReInit( &_this->Timer );
   ViewsText__ReInit( &_this->TimeText );
-  CoreTime__ReInit( &_this->Time );
+  CoreSystemEventHandler__ReInit( &_this->CurrentTimeHandler );
 }
 
 /* Finalizer method for the class 'Application::Clock' */
@@ -1546,9 +1546,8 @@ void ApplicationClock__Done( ApplicationClock _this )
   _this->_VMT = EW_CLASS( ApplicationClock );
 
   /* Finalize all embedded objects */
-  CoreTimer__Done( &_this->Timer );
   ViewsText__Done( &_this->TimeText );
-  CoreTime__Done( &_this->Time );
+  CoreSystemEventHandler__Done( &_this->CurrentTimeHandler );
 
   /* Release all used strings */
   EwReleaseString( &_this->TimeProperty );
@@ -1560,9 +1559,8 @@ void ApplicationClock__Done( ApplicationClock _this )
 /* Garbage Collector method for the class 'Application::Clock' */
 void ApplicationClock__Mark( ApplicationClock _this )
 {
-  EwMarkObject( &_this->Timer );
   EwMarkObject( &_this->TimeText );
-  EwMarkObject( &_this->Time );
+  EwMarkObject( &_this->CurrentTimeHandler );
 
   /* Give the super class a chance to mark its objects and references */
   CoreGroup__Mark( &_this->_Super );
@@ -1599,26 +1597,6 @@ void ApplicationClock_UpdateViewState( ApplicationClock _this, XSet aState )
   CoreGroup_UpdateViewState((CoreGroup)_this, aState );
 }
 
-/* 'C' function for method : 'Application::Clock.Slot()' */
-void ApplicationClock_Slot( ApplicationClock _this, XObject sender )
-{
-  CoreTime currentT;
-
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( sender );
-
-  currentT = CoreTime_OnGetCurrentTime( &_this->Time );
-  ApplicationClock_OnSetTimeProperty( _this, EwConcatString( EwConcatString( EwConcatString( 
-  EwConcatString( EwConcatString( EwConcatString( EwConcatStringChar( EwConcatStringChar( 
-  EwConcatString( EwConcatString( EwConcatString( EwNewStringInt( currentT->Day, 
-  0, 10 ), EwLoadString( &_Const0061 )), EwNewStringInt( currentT->Month, 0, 10 
-  )), EwLoadString( &_Const0061 )), EwGetStringChar( EwNewStringInt( currentT->Year, 
-  0, 10 ), 2 )), EwGetStringChar( EwNewStringInt( currentT->Year, 0, 10 ), 3 )), 
-  EwLoadString( &_Const0062 )), EwNewStringInt( currentT->Hour, 0, 10 )), EwLoadString( 
-  &_Const0063 )), EwNewStringInt( currentT->Minute, 0, 10 )), EwLoadString( &_Const0063 
-  )), EwNewStringInt( currentT->Second, 0, 10 )));
-}
-
 /* 'C' function for method : 'Application::Clock.OnSetTimeProperty()' */
 void ApplicationClock_OnSetTimeProperty( ApplicationClock _this, XString value )
 {
@@ -1627,6 +1605,20 @@ void ApplicationClock_OnSetTimeProperty( ApplicationClock _this, XString value )
 
   ViewsText_OnSetString( &_this->TimeText, _this->TimeProperty );
   EwRetainString( &_this->TimeProperty, value );
+}
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void ApplicationClock_onCurrentTime( ApplicationClock _this, XObject sender )
+{
+  DeviceCurrentTimeContext context;
+
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  context = EwCastObject( _this->CurrentTimeHandler.Context, DeviceCurrentTimeContext 
+  );
+  ApplicationClock_OnSetTimeProperty( _this, context->CurrentTime );
 }
 
 /* Variants derived from the class : 'Application::Clock' */
@@ -1677,35 +1669,38 @@ void ApplicationSampleController__Init( ApplicationSampleController _this, XObje
   _this->_VMT = EW_CLASS( ApplicationSampleController );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0064 );
+  CoreRectView__OnSetBounds( _this, _Const0060 );
   _this->NameProperty = 0x0000;
-  CoreRectView__OnSetBounds( &_this->Border, _Const0065 );
+  CoreRectView__OnSetBounds( &_this->Border, _Const0061 );
   ViewsBorder_OnSetWidth( &_this->Border, 3 );
-  ViewsBorder_OnSetColor( &_this->Border, _Const0066 );
-  CoreRectView__OnSetBounds( &_this->NameText, _Const0067 );
-  ViewsText_OnSetString( &_this->NameText, EwLoadString( &_Const003D ));
-  ViewsText_OnSetColor( &_this->NameText, _Const0066 );
-  CoreRectView__OnSetBounds( &_this->BtnStart, _Const0068 );
-  ApplicationAActionButton_OnSetCaption( &_this->BtnStart, EwLoadString( &_Const0069 
+  ViewsBorder_OnSetColor( &_this->Border, _Const0062 );
+  CoreRectView__OnSetBounds( &_this->NameText, _Const0063 );
+  ViewsText_OnSetString( &_this->NameText, EwLoadString( &_Const003C ));
+  ViewsText_OnSetColor( &_this->NameText, _Const0062 );
+  CoreRectView__OnSetBounds( &_this->BtnStart, _Const0064 );
+  CoreGroup_OnSetEnabled((CoreGroup)&_this->BtnStart, 0 );
+  ApplicationAActionButton_OnSetCaption( &_this->BtnStart, EwLoadString( &_Const0065 
   ));
-  CoreRectView__OnSetBounds( &_this->BtnStop, _Const006A );
+  CoreRectView__OnSetBounds( &_this->BtnStop, _Const0066 );
   CoreGroup_OnSetEnabled((CoreGroup)&_this->BtnStop, 0 );
-  ApplicationAActionButton_OnSetCaption( &_this->BtnStop, EwLoadString( &_Const006B 
+  ApplicationAActionButton_OnSetCaption( &_this->BtnStop, EwLoadString( &_Const0067 
   ));
-  CoreRectView__OnSetBounds( &_this->Indicator, _Const006C );
-  CoreRectView__OnSetBounds( &_this->TextEditor, _Const006D );
+  CoreRectView__OnSetBounds( &_this->Indicator, _Const0068 );
+  CoreRectView__OnSetBounds( &_this->TextEditor, _Const0069 );
   ApplicationTextEditor_OnSetWrapText( &_this->TextEditor, 0 );
-  ApplicationTextEditor_OnSetString( &_this->TextEditor, EwLoadString( &_Const006E 
+  ApplicationTextEditor_OnSetString( &_this->TextEditor, EwLoadString( &_Const006A 
   ));
-  ApplicationTextEditor_OnSetColor( &_this->TextEditor, _Const0066 );
-  CoreLineView_OnSetPoint2((CoreLineView)&_this->Line, _Const006F );
-  CoreLineView_OnSetPoint1((CoreLineView)&_this->Line, _Const0070 );
+  ApplicationTextEditor_OnSetColor( &_this->TextEditor, _Const0062 );
+  CoreLineView_OnSetPoint2((CoreLineView)&_this->Line, _Const006B );
+  CoreLineView_OnSetPoint1((CoreLineView)&_this->Line, _Const006C );
   ViewsLine_OnSetWidth( &_this->Line, 2 );
-  ViewsLine_OnSetColor( &_this->Line, _Const0066 );
-  CoreRectView__OnSetBounds( &_this->HorzBar, _Const0071 );
-  CoreRectView__OnSetBounds( &_this->Label, _Const0072 );
-  FlatLabel_OnSetString( &_this->Label, EwLoadString( &_Const0073 ));
-  FlatLabel_OnSetTextColor( &_this->Label, _Const0066 );
+  ViewsLine_OnSetColor( &_this->Line, _Const0062 );
+  CoreRectView__OnSetBounds( &_this->HorzBar, _Const006D );
+  ApplicationAHorzBar_OnSetMaxValue( &_this->HorzBar, 10 );
+  ApplicationAHorzBar_OnSetCurrentValue( &_this->HorzBar, 5 );
+  CoreRectView__OnSetBounds( &_this->Label, _Const006E );
+  FlatLabel_OnSetString( &_this->Label, EwLoadString( &_Const006F ));
+  FlatLabel_OnSetTextColor( &_this->Label, _Const0062 );
   CoreGroup__Add( _this, ((CoreView)&_this->Border ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->NameText ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->BtnStart ), 0 );
@@ -4206,7 +4201,7 @@ void ApplicationTextEditor__Init( ApplicationTextEditor _this, XObject aLink, XH
   _this->_VMT = EW_CLASS( ApplicationTextEditor );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0074 );
+  CoreRectView__OnSetBounds( _this, _Const0070 );
   _this->blinkEffect.Value2 = 0;
   _this->blinkEffect.Value1 = 1;
   EffectsBoolEffect_OnSetCycleDuration( &_this->blinkEffect, 500 );
@@ -4220,35 +4215,35 @@ void ApplicationTextEditor__Init( ApplicationTextEditor _this, XObject aLink, XH
   CoreView_OnSetLayout((CoreView)&_this->SlideTouchHandler, CoreLayoutAlignToBottom 
   | CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const0075 );
+  CoreRectView__OnSetBounds( &_this->SlideTouchHandler, _Const0071 );
   _this->SlideTouchHandler.SlideHorz = 0;
   CoreSlideTouchHandler_OnSetFriction( &_this->SlideTouchHandler, 0.050000f );
   CoreView_OnSetLayout((CoreView)&_this->SimpleTouchHandler, CoreLayoutAlignToBottom 
   | CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreQuadView__OnSetPoint4( &_this->SimpleTouchHandler, _Const0076 );
-  CoreQuadView__OnSetPoint3( &_this->SimpleTouchHandler, _Const0077 );
-  CoreQuadView__OnSetPoint2( &_this->SimpleTouchHandler, _Const0078 );
-  CoreQuadView__OnSetPoint1( &_this->SimpleTouchHandler, _Const005C );
+  CoreQuadView__OnSetPoint4( &_this->SimpleTouchHandler, _Const0072 );
+  CoreQuadView__OnSetPoint3( &_this->SimpleTouchHandler, _Const0073 );
+  CoreQuadView__OnSetPoint2( &_this->SimpleTouchHandler, _Const0074 );
+  CoreQuadView__OnSetPoint1( &_this->SimpleTouchHandler, _Const005B );
   CoreSimpleTouchHandler_OnSetMaxStrikeCount( &_this->SimpleTouchHandler, 3 );
   CoreView_OnSetLayout((CoreView)&_this->Text, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->Text, _Const0079 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0075 );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
   ViewsText_OnSetAlignment( &_this->Text, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter 
   );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const007A ));
-  ViewsText_OnSetColor( &_this->Text, _Const0066 );
-  CoreLineView_OnSetPoint2((CoreLineView)&_this->Caret, _Const007B );
-  CoreLineView_OnSetPoint1((CoreLineView)&_this->Caret, _Const007C );
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0076 ));
+  ViewsText_OnSetColor( &_this->Text, _Const0062 );
+  CoreLineView_OnSetPoint2((CoreLineView)&_this->Caret, _Const0077 );
+  CoreLineView_OnSetPoint1((CoreLineView)&_this->Caret, _Const0078 );
   ViewsLine_OnSetWidth2( &_this->Caret, 2 );
   ViewsLine_OnSetWidth1( &_this->Caret, 2 );
-  ViewsLine_OnSetColor( &_this->Caret, _Const0066 );
+  ViewsLine_OnSetColor( &_this->Caret, _Const0062 );
   ViewsLine_OnSetVisible( &_this->Caret, 0 );
   _this->WrapText = 1;
-  EwRetainString( &_this->String, EwLoadString( &_Const007D ));
-  _this->Color = _Const0066;
+  EwRetainString( &_this->String, EwLoadString( &_Const0079 ));
+  _this->Color = _Const0062;
   CoreGroup__Add( _this, ((CoreView)&_this->SlideTouchHandler ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->SimpleTouchHandler ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
@@ -4559,7 +4554,7 @@ void ApplicationTextEditor_onDragTouch( ApplicationTextEditor _this, XObject sen
     if (((( ofs.X < -limit ) || ( ofs.X > limit )) || ( ofs.Y < -limit )) || ( ofs.Y 
         > limit ))
       CoreRoot_DeflectCursor( CoreView__GetRoot( _this ), ((CoreView)&_this->SlideTouchHandler 
-      ), _Const005C );
+      ), _Const005B );
   }
 }
 
@@ -4602,10 +4597,10 @@ void ApplicationTextEditor_onHoldTouch( ApplicationTextEditor _this, XObject sen
     CoreQuadView__OnSetPoint4( _this->magnifyingView, EwSetPointY( _this->magnifyingView->Super2.Point4, 
     height * 2 ));
     CoreRectView__OnSetBounds( _this->magnifyingBack, EwSetRectSize( _this->magnifyingBack->Super1.Bounds, 
-    EwMovePointPos( EwNewPoint( width * 2, height * 2 ), _Const007E )));
+    EwMovePointPos( EwNewPoint( width * 2, height * 2 ), _Const007A )));
     CoreRectView__OnSetBounds( _this->magnifyingBack, EwSetRectOrigin( _this->magnifyingBack->Super1.Bounds, 
-    _Const007F ));
-    ViewsRectangle_OnSetColor( _this->magnifyingBack, _Const0080 );
+    _Const007B ));
+    ViewsRectangle_OnSetColor( _this->magnifyingBack, _Const007C );
     CoreGroup__Add( _this->Super4.Owner, ((CoreView)_this->magnifyingBack ), 0 );
     CoreGroup__Add( _this->Super4.Owner, ((CoreView)_this->magnifyingView ), 0 );
     EwPostSignal( EwNewSlot( _this, ApplicationTextEditor_updateMagnifyingView ), 
@@ -4776,7 +4771,7 @@ void ApplicationTextEditor_onNewlineKey( ApplicationTextEditor _this, XObject se
   EW_UNUSED_ARG( sender );
 
   ViewsText_OnSetString( &_this->Text, EwStringInsert( _this->Text.String, EwLoadString( 
-  &_Const0081 ), _this->caretIndex ));
+  &_Const007D ), _this->caretIndex ));
   _this->caretIndex = _this->caretIndex + 1;
   _this->autoScroll = 1;
   EwPostSignal( _this->OnChange, ((XObject)_this ));
@@ -4798,10 +4793,10 @@ void ApplicationTextEditor_onCharacterKey( ApplicationTextEditor _this, XObject
   str = EwNewStringChar( ch, 1 );
 
   if (((( ch == '^' ) || ( ch == '~' )) || ( ch == 0x00AD )) || ( ch == '%' ))
-    str = EwConcatStringChar( EwLoadString( &_Const0082 ), ch );
+    str = EwConcatStringChar( EwLoadString( &_Const007E ), ch );
   else
     if ( ch == 0x0020 )
-      str = EwLoadString( &_Const0083 );
+      str = EwLoadString( &_Const007F );
 
   ViewsText_OnSetString( &_this->Text, EwStringInsert( _this->Text.String, str, 
   _this->caretIndex ));
@@ -4820,7 +4815,7 @@ void ApplicationTextEditor_OnSetWrapText( ApplicationTextEditor _this, XBool val
   ViewsText_OnSetWrapText( &_this->Text, value );
   _this->SlideTouchHandler.SlideHorz = (XBool)!value;
   _this->autoScroll = 1;
-  ViewsText_OnSetScrollOffset( &_this->Text, _Const005C );
+  ViewsText_OnSetScrollOffset( &_this->Text, _Const005B );
 }
 
 /* 'C' function for method : 'Application::TextEditor.OnGetString()' */
@@ -4866,7 +4861,7 @@ void ApplicationTextEditor_OnSetString( ApplicationTextEditor _this, XString val
 
   while ( inx >= 0 )
   {
-    str = EwStringInsert( str, EwLoadString( &_Const0082 ), inx );
+    str = EwStringInsert( str, EwLoadString( &_Const007E ), inx );
     inx = EwStringFindChar( str, '%', inx + 2 );
   }
 
@@ -4874,7 +4869,7 @@ void ApplicationTextEditor_OnSetString( ApplicationTextEditor _this, XString val
 
   while ( inx >= 0 )
   {
-    str = EwStringInsert( str, EwLoadString( &_Const0082 ), inx );
+    str = EwStringInsert( str, EwLoadString( &_Const007E ), inx );
     inx = EwStringFindChar( str, '^', inx + 2 );
   }
 
@@ -4882,7 +4877,7 @@ void ApplicationTextEditor_OnSetString( ApplicationTextEditor _this, XString val
 
   while ( inx >= 0 )
   {
-    str = EwStringInsert( str, EwLoadString( &_Const0082 ), inx );
+    str = EwStringInsert( str, EwLoadString( &_Const007E ), inx );
     inx = EwStringFindChar( str, '~', inx + 2 );
   }
 
@@ -4890,7 +4885,7 @@ void ApplicationTextEditor_OnSetString( ApplicationTextEditor _this, XString val
 
   while ( inx >= 0 )
   {
-    str = EwStringInsert( str, EwLoadString( &_Const0082 ), inx );
+    str = EwStringInsert( str, EwLoadString( &_Const007E ), inx );
     inx = EwStringFindChar( str, 0x00AD, inx + 2 );
   }
 
@@ -4899,17 +4894,17 @@ void ApplicationTextEditor_OnSetString( ApplicationTextEditor _this, XString val
   while ( inx >= 0 )
   {
     str = EwSetStringChar( str, inx, 0x00A0 );
-    str = EwStringInsert( str, EwLoadString( &_Const0084 ), inx + 1 );
+    str = EwStringInsert( str, EwLoadString( &_Const0080 ), inx + 1 );
     inx = EwStringFindChar( str, 0x0020, inx + 2 );
   }
 
   if ( _this->caretIndex > EwGetStringLength( str ))
     _this->caretIndex = EwGetStringLength( str );
 
-  ViewsText_OnSetString( &_this->Text, EwConcatString( str, EwLoadString( &_Const0085 
+  ViewsText_OnSetString( &_this->Text, EwConcatString( str, EwLoadString( &_Const0081 
   )));
   _this->autoScroll = 1;
-  ViewsText_OnSetScrollOffset( &_this->Text, _Const005C );
+  ViewsText_OnSetScrollOffset( &_this->Text, _Const005B );
 }
 
 /* 'C' function for method : 'Application::TextEditor.OnSetColor()' */
@@ -4933,7 +4928,7 @@ void ApplicationTextEditor_OnSetFont( ApplicationTextEditor _this, ResourcesFont
   _this->Font = value;
   ViewsText_OnSetFont( &_this->Text, value );
   _this->autoScroll = 1;
-  ViewsText_OnSetScrollOffset( &_this->Text, _Const005C );
+  ViewsText_OnSetScrollOffset( &_this->Text, _Const005B );
 }
 
 /* Variants derived from the class : 'Application::TextEditor' */
@@ -4991,89 +4986,89 @@ void ApplicationNumKeyboard__Init( ApplicationNumKeyboard _this, XObject aLink, 
   _this->_VMT = EW_CLASS( ApplicationNumKeyboard );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0086 );
+  CoreRectView__OnSetBounds( _this, _Const0082 );
   CoreTimer_OnSetPeriod( &_this->FlashTimer, 0 );
   CoreTimer_OnSetBegin( &_this->FlashTimer, 50 );
   CoreView_OnSetLayout((CoreView)&_this->Background, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->Background, _Const0086 );
+  CoreRectView__OnSetBounds( &_this->Background, _Const0082 );
   ViewsRectangle_OnSetColor( &_this->Background, ApplicationBackgroundColor );
   CoreView_OnSetLayout((CoreView)&_this->Border, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->Border, _Const0086 );
+  CoreRectView__OnSetBounds( &_this->Border, _Const0082 );
   ViewsBorder_OnSetWidth( &_this->Border, 3 );
-  ViewsBorder_OnSetColor( &_this->Border, _Const0066 );
+  ViewsBorder_OnSetColor( &_this->Border, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TouchHandler, CoreLayoutAlignToBottom | 
   CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreQuadView__OnSetPoint4( &_this->TouchHandler, _Const0087 );
-  CoreQuadView__OnSetPoint3( &_this->TouchHandler, _Const0088 );
-  CoreQuadView__OnSetPoint2( &_this->TouchHandler, _Const0089 );
-  CoreQuadView__OnSetPoint1( &_this->TouchHandler, _Const008A );
+  CoreQuadView__OnSetPoint4( &_this->TouchHandler, _Const0083 );
+  CoreQuadView__OnSetPoint3( &_this->TouchHandler, _Const0084 );
+  CoreQuadView__OnSetPoint2( &_this->TouchHandler, _Const0085 );
+  CoreQuadView__OnSetPoint1( &_this->TouchHandler, _Const0086 );
   _this->TouchHandler.EnableMultiTouch = 1;
   CoreSimpleTouchHandler_OnSetMaxStrikeCount( &_this->TouchHandler, 100 );
-  CoreRectView__OnSetBounds( &_this->Highlight, _Const008B );
-  ViewsRectangle_OnSetColor( &_this->Highlight, _Const008C );
+  CoreRectView__OnSetBounds( &_this->Highlight, _Const0087 );
+  ViewsRectangle_OnSetColor( &_this->Highlight, _Const0088 );
   ViewsRectangle_OnSetVisible( &_this->Highlight, 0 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey1, CoreLayoutAlignToLeft | CoreLayoutAlignToTop 
   | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->TextKey1, _Const008B );
-  ViewsText_OnSetString( &_this->TextKey1, EwLoadString( &_Const003D ));
-  ViewsText_OnSetColor( &_this->TextKey1, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey1, _Const0087 );
+  ViewsText_OnSetString( &_this->TextKey1, EwLoadString( &_Const003C ));
+  ViewsText_OnSetColor( &_this->TextKey1, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey2, CoreLayoutAlignToTop | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->TextKey2, _Const008D );
-  ViewsText_OnSetString( &_this->TextKey2, EwLoadString( &_Const003F ));
-  ViewsText_OnSetColor( &_this->TextKey2, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey2, _Const0089 );
+  ViewsText_OnSetString( &_this->TextKey2, EwLoadString( &_Const003E ));
+  ViewsText_OnSetColor( &_this->TextKey2, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey3, CoreLayoutAlignToRight | CoreLayoutAlignToTop 
   | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->TextKey3, _Const008E );
-  ViewsText_OnSetString( &_this->TextKey3, EwLoadString( &_Const0041 ));
-  ViewsText_OnSetColor( &_this->TextKey3, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey3, _Const008A );
+  ViewsText_OnSetString( &_this->TextKey3, EwLoadString( &_Const0040 ));
+  ViewsText_OnSetColor( &_this->TextKey3, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey4, CoreLayoutAlignToLeft | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->TextKey4, _Const008F );
-  ViewsText_OnSetString( &_this->TextKey4, EwLoadString( &_Const0043 ));
-  ViewsText_OnSetColor( &_this->TextKey4, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey4, _Const008B );
+  ViewsText_OnSetString( &_this->TextKey4, EwLoadString( &_Const0042 ));
+  ViewsText_OnSetColor( &_this->TextKey4, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey5, CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->TextKey5, _Const0090 );
-  ViewsText_OnSetString( &_this->TextKey5, EwLoadString( &_Const0045 ));
-  ViewsText_OnSetColor( &_this->TextKey5, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey5, _Const008C );
+  ViewsText_OnSetString( &_this->TextKey5, EwLoadString( &_Const0044 ));
+  ViewsText_OnSetColor( &_this->TextKey5, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey6, CoreLayoutAlignToRight | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->TextKey6, _Const0091 );
-  ViewsText_OnSetString( &_this->TextKey6, EwLoadString( &_Const0047 ));
-  ViewsText_OnSetColor( &_this->TextKey6, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey6, _Const008D );
+  ViewsText_OnSetString( &_this->TextKey6, EwLoadString( &_Const0046 ));
+  ViewsText_OnSetColor( &_this->TextKey6, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey7, CoreLayoutAlignToLeft | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->TextKey7, _Const0092 );
-  ViewsText_OnSetString( &_this->TextKey7, EwLoadString( &_Const0049 ));
-  ViewsText_OnSetColor( &_this->TextKey7, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey7, _Const008E );
+  ViewsText_OnSetString( &_this->TextKey7, EwLoadString( &_Const0048 ));
+  ViewsText_OnSetColor( &_this->TextKey7, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey8, CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->TextKey8, _Const0093 );
-  ViewsText_OnSetString( &_this->TextKey8, EwLoadString( &_Const004B ));
-  ViewsText_OnSetColor( &_this->TextKey8, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey8, _Const008F );
+  ViewsText_OnSetString( &_this->TextKey8, EwLoadString( &_Const004A ));
+  ViewsText_OnSetColor( &_this->TextKey8, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey9, CoreLayoutAlignToRight | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->TextKey9, _Const0094 );
-  ViewsText_OnSetString( &_this->TextKey9, EwLoadString( &_Const0095 ));
-  ViewsText_OnSetColor( &_this->TextKey9, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey9, _Const0090 );
+  ViewsText_OnSetString( &_this->TextKey9, EwLoadString( &_Const0091 ));
+  ViewsText_OnSetColor( &_this->TextKey9, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->TextKey0, CoreLayoutAlignToBottom | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->TextKey0, _Const0096 );
-  ViewsText_OnSetString( &_this->TextKey0, EwLoadString( &_Const0097 ));
-  ViewsText_OnSetColor( &_this->TextKey0, _Const0066 );
+  CoreRectView__OnSetBounds( &_this->TextKey0, _Const0092 );
+  ViewsText_OnSetString( &_this->TextKey0, EwLoadString( &_Const0093 ));
+  ViewsText_OnSetColor( &_this->TextKey0, _Const0062 );
   CoreView_OnSetLayout((CoreView)&_this->ImageKeyClear, CoreLayoutAlignToBottom 
   | CoreLayoutAlignToLeft | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->ImageKeyClear, _Const0098 );
+  CoreRectView__OnSetBounds( &_this->ImageKeyClear, _Const0094 );
   ViewsImage_OnSetFrameNumber( &_this->ImageKeyClear, 1 );
   CoreView_OnSetLayout((CoreView)&_this->ImageKeyEnter, CoreLayoutAlignToBottom 
   | CoreLayoutAlignToRight | CoreLayoutResizeHorz | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->ImageKeyEnter, _Const0099 );
+  CoreRectView__OnSetBounds( &_this->ImageKeyEnter, _Const0095 );
   ViewsImage_OnSetFrameNumber( &_this->ImageKeyEnter, 1 );
   ViewsImage_OnSetVisible( &_this->ImageKeyEnter, 1 );
   CoreGroup__Add( _this, ((CoreView)&_this->Background ), 0 );
@@ -5256,10 +5251,10 @@ void ApplicationNumKeyboard_UpdateViewState( ApplicationNumKeyboard _this, XSet
       ViewsRectangle_OnSetVisible( &_this->Highlight, 0 );
 
     if ( isTextKeyView != 0 )
-      ViewsText_OnSetColor( isTextKeyView, _Const005E );
+      ViewsText_OnSetColor( isTextKeyView, _Const005C );
 
     if ( textKeyView != 0 )
-      ViewsText_OnSetColor( textKeyView, _Const0066 );
+      ViewsText_OnSetColor( textKeyView, _Const0062 );
   }
 
   _this->keyView = isKeyView;
@@ -5409,11 +5404,11 @@ void ApplicationWellLabel__Init( ApplicationWellLabel _this, XObject aLink, XHan
   _this->_VMT = EW_CLASS( ApplicationWellLabel );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const009A );
-  CoreRectView__OnSetBounds( &_this->Text, _Const009A );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const004D ));
-  ViewsText_OnSetColor( &_this->Text, _Const0066 );
-  EwRetainString( &_this->TextString, EwLoadString( &_Const004D ));
+  CoreRectView__OnSetBounds( _this, _Const0096 );
+  CoreRectView__OnSetBounds( &_this->Text, _Const0096 );
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const004C ));
+  ViewsText_OnSetColor( &_this->Text, _Const0062 );
+  EwRetainString( &_this->TextString, EwLoadString( &_Const004C ));
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
   ViewsText_OnSetFont( &_this->Text, EwLoadResource( &FlatFontL, ResourcesFont ));
 }
@@ -5535,11 +5530,11 @@ void ApplicationTemperature__Init( ApplicationTemperature _this, XObject aLink, 
   _this->_VMT = EW_CLASS( ApplicationTemperature );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const009B );
+  CoreRectView__OnSetBounds( _this, _Const0097 );
   CoreTimer_OnSetPeriod( &_this->Timer, 1000 );
   CoreTimer_OnSetEnabled( &_this->Timer, 1 );
-  CoreRectView__OnSetBounds( &_this->Text, _Const009B );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const009C ));
+  CoreRectView__OnSetBounds( &_this->Text, _Const0097 );
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const0098 ));
   CoreGroup__Add( _this, ((CoreView)&_this->Text ), 0 );
   _this->Timer.OnTrigger = EwNewSlot( _this, ApplicationTemperature_onEvent );
   ViewsText_OnSetFont( &_this->Text, EwLoadResource( &FlatFontXL, ResourcesFont 
@@ -5626,7 +5621,7 @@ void ApplicationTemperature_onEvent( ApplicationTemperature _this, XObject sende
   EW_UNUSED_ARG( sender );
 
   ViewsText_OnSetString( &_this->Text, EwConcatString( EwNewStringFloat( EwGetAutoObject( 
-  &DeviceDevice, DeviceDeviceClass )->Temperature, 0, 6 ), EwLoadString( &_Const009D 
+  &DeviceDevice, DeviceDeviceClass )->Temperature, 0, 6 ), EwLoadString( &_Const0099 
   )));
 }
 
@@ -5680,29 +5675,29 @@ void ApplicationConfig__Init( ApplicationConfig _this, XObject aLink, XHandle aA
   CoreRectView__OnSetBounds( _this, _Const0000 );
   CoreRectView__OnSetBounds( &_this->Rectangle, _Const0000 );
   ViewsRectangle_OnSetColor( &_this->Rectangle, ApplicationBackgroundColor );
-  CoreRectView__OnSetBounds( &_this->Btn_Ok, _Const009E );
+  CoreRectView__OnSetBounds( &_this->Btn_Ok, _Const009A );
   CoreGroup_OnSetEnabled((CoreGroup)&_this->Btn_Ok, 0 );
-  ApplicationAActionButton_OnSetCaption( &_this->Btn_Ok, EwLoadString( &_Const009F 
+  ApplicationAActionButton_OnSetCaption( &_this->Btn_Ok, EwLoadString( &_Const009B 
   ));
-  CoreRectView__OnSetBounds( &_this->TextEditor, _Const00A0 );
-  ApplicationTextEditor_OnSetString( &_this->TextEditor, EwLoadString( &_Const0047 
+  CoreRectView__OnSetBounds( &_this->TextEditor, _Const009C );
+  ApplicationTextEditor_OnSetString( &_this->TextEditor, EwLoadString( &_Const0046 
   ));
-  CoreRectView__OnSetBounds( &_this->NumKeyboard, _Const00A1 );
-  CoreRectView__OnSetBounds( &_this->Text, _Const00A2 );
+  CoreRectView__OnSetBounds( &_this->NumKeyboard, _Const009D );
+  CoreRectView__OnSetBounds( &_this->Text, _Const009E );
   ViewsText_OnSetWrapText( &_this->Text, 1 );
-  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const00A3 ));
+  ViewsText_OnSetString( &_this->Text, EwLoadString( &_Const009F ));
   CoreRectView__OnSetBounds( &_this->ConfigTop, _Const0000 );
-  ApplicationConfigPosition_OnSetTitle( &_this->ConfigTop, EwLoadString( &_Const00A4 
+  ApplicationConfigPosition_OnSetTitle( &_this->ConfigTop, EwLoadString( &_Const00A0 
   ));
   CoreRectView__OnSetBounds( &_this->ConfigTR, _Const0000 );
-  ApplicationConfigPosition_OnSetTitle( &_this->ConfigTR, EwLoadString( &_Const00A5 
+  ApplicationConfigPosition_OnSetTitle( &_this->ConfigTR, EwLoadString( &_Const00A1 
   ));
   CoreRectView__OnSetBounds( &_this->ConfigBL, _Const0000 );
-  ApplicationConfigPosition_OnSetTitle( &_this->ConfigBL, EwLoadString( &_Const00A6 
+  ApplicationConfigPosition_OnSetTitle( &_this->ConfigBL, EwLoadString( &_Const00A2 
   ));
   CoreRectView__OnSetBounds( &_this->ConfigWaste, _Const0000 );
   CoreGroup_OnSetVisible((CoreGroup)&_this->ConfigWaste, 1 );
-  ApplicationConfigPosition_OnSetTitle( &_this->ConfigWaste, EwLoadString( &_Const00A7 
+  ApplicationConfigPosition_OnSetTitle( &_this->ConfigWaste, EwLoadString( &_Const00A3 
   ));
   CoreGroup__Add( _this, ((CoreView)&_this->Rectangle ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Btn_Ok ), 0 );
@@ -5826,12 +5821,25 @@ void ApplicationConfig_UpdateViewState( ApplicationConfig _this, XSet aState )
 /* 'C' function for method : 'Application::Config.onBtn_Ok()' */
 void ApplicationConfig_onBtn_Ok( ApplicationConfig _this, XObject sender )
 {
+  XInt32 i;
+
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( sender );
 
   CoreGroup_OnSetEnabled((CoreGroup)_this, 0 );
   CoreGroup_OnSetVisible((CoreGroup)_this, 0 );
   CoreGroup_OnSetEnabled((CoreGroup)_this->ControllMenue, 1 );
+
+  for ( i = 0; i < EwGetAutoObject( &DeviceDevice, DeviceDeviceClass )->NuOfCircuits; 
+       i = i + 1 )
+  {
+    if ( _this->ControllMenue->SampleController[ EwCheckIndex( i, 6 )]->EnabledProperty 
+        == 0 )
+    {
+      CoreGroup_OnSetEnabled((CoreGroup)&_this->ControllMenue->SampleController[ 
+      EwCheckIndex( i, 6 )]->BtnStart, 1 );
+    }
+  }
 }
 
 /* 'C' function for method : 'Application::Config.OnSetControllMenue()' */
@@ -5949,32 +5957,32 @@ void ApplicationConfigPosition__Init( ApplicationConfigPosition _this, XObject a
   CoreRectView__OnSetBounds( _this, _Const0000 );
   CoreRectView__OnSetBounds( &_this->Rectangle, _Const0000 );
   ViewsRectangle_OnSetColor( &_this->Rectangle, ApplicationBackgroundColor );
-  CoreRectView__OnSetBounds( &_this->Btn_Next, _Const009E );
+  CoreRectView__OnSetBounds( &_this->Btn_Next, _Const009A );
   CoreGroup_OnSetEnabled((CoreGroup)&_this->Btn_Next, 0 );
-  ApplicationAActionButton_OnSetCaption( &_this->Btn_Next, EwLoadString( &_Const00A8 
+  ApplicationAActionButton_OnSetCaption( &_this->Btn_Next, EwLoadString( &_Const00A4 
   ));
-  CoreRectView__OnSetBounds( &_this->TextTitle, _Const00A2 );
+  CoreRectView__OnSetBounds( &_this->TextTitle, _Const009E );
   ViewsText_OnSetWrapText( &_this->TextTitle, 1 );
-  ViewsText_OnSetString( &_this->TextTitle, EwLoadString( &_Const00A9 ));
-  CoreRectView__OnSetBounds( &_this->XSlider, _Const00AA );
+  ViewsText_OnSetString( &_this->TextTitle, EwLoadString( &_Const00A5 ));
+  CoreRectView__OnSetBounds( &_this->XSlider, _Const00A6 );
   ApplicationAHorzSlider_OnSetCurrentValue( &_this->XSlider, 0 );
-  CoreRectView__OnSetBounds( &_this->YSlider, _Const00AB );
+  CoreRectView__OnSetBounds( &_this->YSlider, _Const00A7 );
   ApplicationAHorzSlider_OnSetCurrentValue( &_this->YSlider, 0 );
-  CoreRectView__OnSetBounds( &_this->ZSlider, _Const00AC );
+  CoreRectView__OnSetBounds( &_this->ZSlider, _Const00A8 );
   ApplicationAHorzSlider_OnSetCurrentValue( &_this->ZSlider, 0 );
-  CoreRectView__OnSetBounds( &_this->TextX, _Const00AD );
+  CoreRectView__OnSetBounds( &_this->TextX, _Const00A9 );
   ViewsText_OnSetWrapText( &_this->TextX, 1 );
-  ViewsText_OnSetString( &_this->TextX, EwLoadString( &_Const00AE ));
-  CoreRectView__OnSetBounds( &_this->TextY, _Const00AF );
+  ViewsText_OnSetString( &_this->TextX, EwLoadString( &_Const00AA ));
+  CoreRectView__OnSetBounds( &_this->TextY, _Const00AB );
   ViewsText_OnSetWrapText( &_this->TextY, 1 );
-  ViewsText_OnSetString( &_this->TextY, EwLoadString( &_Const00B0 ));
-  CoreRectView__OnSetBounds( &_this->TextZ, _Const00B1 );
+  ViewsText_OnSetString( &_this->TextY, EwLoadString( &_Const00AC ));
+  CoreRectView__OnSetBounds( &_this->TextZ, _Const00AD );
   ViewsText_OnSetWrapText( &_this->TextZ, 1 );
-  ViewsText_OnSetString( &_this->TextZ, EwLoadString( &_Const00B2 ));
-  CoreRectView__OnSetBounds( &_this->Btn_Help, _Const00B3 );
-  ApplicationAToggleButton_OnSetCaption( &_this->Btn_Help, EwLoadString( &_Const00B4 
+  ViewsText_OnSetString( &_this->TextZ, EwLoadString( &_Const00AE ));
+  CoreRectView__OnSetBounds( &_this->Btn_Help, _Const00AF );
+  ApplicationAToggleButton_OnSetCaption( &_this->Btn_Help, EwLoadString( &_Const00B0 
   ));
-  CoreRectView__OnSetBounds( &_this->Img_Help, _Const00B5 );
+  CoreRectView__OnSetBounds( &_this->Img_Help, _Const00B1 );
   ViewsImage_OnSetVisible( &_this->Img_Help, 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Rectangle ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Btn_Next ), 0 );
@@ -6237,23 +6245,23 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   CoreRectView__OnSetBounds( _this, _Const0000 );
   CoreRectView__OnSetBounds( &_this->Rectangle, _Const0000 );
   ViewsRectangle_OnSetColor( &_this->Rectangle, ApplicationBackgroundColor );
-  CoreRectView__OnSetBounds( &_this->SCA, _Const00B6 );
+  CoreRectView__OnSetBounds( &_this->SCA, _Const00B2 );
   ApplicationSampleController_OnSetNameProperty( &_this->SCA, '1' );
-  CoreRectView__OnSetBounds( &_this->SCA1, _Const00B7 );
+  CoreRectView__OnSetBounds( &_this->SCA1, _Const00B3 );
   ApplicationSampleController_OnSetNameProperty( &_this->SCA1, '2' );
-  CoreRectView__OnSetBounds( &_this->SCA2, _Const00B8 );
+  CoreRectView__OnSetBounds( &_this->SCA2, _Const00B4 );
   ApplicationSampleController_OnSetNameProperty( &_this->SCA2, '3' );
-  CoreRectView__OnSetBounds( &_this->SCA3, _Const00B9 );
+  CoreRectView__OnSetBounds( &_this->SCA3, _Const00B5 );
   ApplicationSampleController_OnSetNameProperty( &_this->SCA3, '4' );
-  CoreRectView__OnSetBounds( &_this->SCA4, _Const00BA );
+  CoreRectView__OnSetBounds( &_this->SCA4, _Const00B6 );
   ApplicationSampleController_OnSetNameProperty( &_this->SCA4, '5' );
-  CoreRectView__OnSetBounds( &_this->SCA5, _Const00BB );
+  CoreRectView__OnSetBounds( &_this->SCA5, _Const00B7 );
   ApplicationSampleController_OnSetNameProperty( &_this->SCA5, '6' );
-  CoreRectView__OnSetBounds( &_this->Clock, _Const00BC );
-  CoreQuadView__OnSetPoint4( &_this->Logo, _Const0038 );
-  CoreQuadView__OnSetPoint3( &_this->Logo, _Const0039 );
-  CoreQuadView__OnSetPoint2( &_this->Logo, _Const003A );
-  CoreQuadView__OnSetPoint1( &_this->Logo, _Const003B );
+  CoreRectView__OnSetBounds( &_this->Clock, _Const00B8 );
+  CoreQuadView__OnSetPoint4( &_this->Logo, _Const00B9 );
+  CoreQuadView__OnSetPoint3( &_this->Logo, _Const00BA );
+  CoreQuadView__OnSetPoint2( &_this->Logo, _Const00BB );
+  CoreQuadView__OnSetPoint1( &_this->Logo, _Const00BC );
   CoreRectView__OnSetBounds( &_this->NumKeyboard, _Const00BD );
   CoreRectView__OnSetBounds( &_this->Temperature, _Const00BE );
   CoreRectView__OnSetBounds( &_this->Btn_Config, _Const00BF );
@@ -6562,7 +6570,7 @@ void ApplicationAHorzBar__Init( ApplicationAHorzBar _this, XObject aLink, XHandl
   ViewsText_OnSetAlignment( &_this->BarText, ViewsTextAlignmentAlignHorzCenter | 
   ViewsTextAlignmentAlignVertCenter );
   ViewsText_OnSetString( &_this->BarText, EwLoadString( &_Const00C9 ));
-  ViewsText_OnSetColor( &_this->BarText, ApplicationWidgetColor );
+  ViewsText_OnSetColor( &_this->BarText, _Const0062 );
   EffectsEffect_OnSetNoOfCycles((EffectsEffect)&_this->MoveBarEffect, 1 );
   EffectsEffect_OnSetTiming((EffectsEffect)&_this->MoveBarEffect, EffectsTimingFastIn_EaseOut 
   );
@@ -6572,7 +6580,6 @@ void ApplicationAHorzBar__Init( ApplicationAHorzBar _this, XObject aLink, XHandl
   _this->BarSize = 20;
   _this->BackColor = FlatColorOfBody;
   _this->BarColor = ApplicationWidgetColor;
-  _this->TextColor = ApplicationWidgetColor;
   CoreGroup__Add( _this, ((CoreView)&_this->Rectangle ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Bar ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->BarText ), 0 );
@@ -6655,7 +6662,7 @@ void ApplicationAHorzBar_UpdateViewState( ApplicationAHorzBar _this, XSet aState
 
   if ( _this->ShowCurrent )
     ViewsText_OnSetString( &_this->BarText, EwConcatString( ApplicationAHorzBar_formatValueString( 
-    _this, _this->CurrentValue ), EwLoadString( &_Const0073 )));
+    _this, _this->CurrentValue ), EwLoadString( &_Const006F )));
 
   ViewsText_OnSetVisible( &_this->BarText, _this->ShowCurrent );
   CoreRectView__OnSetBounds( &_this->Rectangle, EwSetRectH( _this->Rectangle.Super1.Bounds, 
@@ -6736,15 +6743,15 @@ XString ApplicationAHorzBar_formatValueString( ApplicationAHorzBar _this, XInt32
 
   if ( _this->DotPosition == 1 )
     return EwConcatString( EwConcatString( EwNewStringInt( val / 10, 1, 10 ), EwLoadString( 
-      &_Const0061 )), EwNewStringInt( abs % 10, 1, 10 ));
+      &_Const00CA )), EwNewStringInt( abs % 10, 1, 10 ));
   else
     if ( _this->DotPosition == 2 )
       return EwConcatString( EwConcatString( EwNewStringInt( val / 100, 1, 10 ), 
-        EwLoadString( &_Const0061 )), EwNewStringInt( abs % 100, 2, 10 ));
+        EwLoadString( &_Const00CA )), EwNewStringInt( abs % 100, 2, 10 ));
     else
       if ( _this->DotPosition == 3 )
         return EwConcatString( EwConcatString( EwNewStringInt( val / 1000, 1, 10 
-          ), EwLoadString( &_Const0061 )), EwNewStringInt( abs % 1000, 3, 10 ));
+          ), EwLoadString( &_Const00CA )), EwNewStringInt( abs % 1000, 3, 10 ));
 
   return EwNewStringInt( val, 0, 10 );
 }
@@ -18552,26 +18559,26 @@ void ApplicationAActionButton__Init( ApplicationAActionButton _this, XObject aLi
   _this->_VMT = EW_CLASS( ApplicationAActionButton );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const00CA );
+  CoreRectView__OnSetBounds( _this, _Const00CB );
   CoreView_OnSetLayout((CoreView)&_this->TouchHandler, CoreLayoutAlignToBottom | 
   CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreQuadView__OnSetPoint4( &_this->TouchHandler, _Const00CB );
-  CoreQuadView__OnSetPoint3( &_this->TouchHandler, _Const00CC );
-  CoreQuadView__OnSetPoint2( &_this->TouchHandler, _Const00CD );
-  CoreQuadView__OnSetPoint1( &_this->TouchHandler, _Const005C );
+  CoreQuadView__OnSetPoint4( &_this->TouchHandler, _Const00CC );
+  CoreQuadView__OnSetPoint3( &_this->TouchHandler, _Const00CD );
+  CoreQuadView__OnSetPoint2( &_this->TouchHandler, _Const00CE );
+  CoreQuadView__OnSetPoint1( &_this->TouchHandler, _Const005B );
   CoreView_OnSetLayout((CoreView)&_this->Frame, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->Frame, _Const00CA );
+  CoreRectView__OnSetBounds( &_this->Frame, _Const00CB );
   ViewsFrame_OnSetColor( &_this->Frame, FlatColorOfTouch );
   CoreView_OnSetLayout((CoreView)&_this->CaptionText, CoreLayoutAlignToBottom | 
   CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->CaptionText, _Const00CA );
-  ViewsText_OnSetString( &_this->CaptionText, EwLoadString( &_Const00CE ));
+  CoreRectView__OnSetBounds( &_this->CaptionText, _Const00CB );
+  ViewsText_OnSetString( &_this->CaptionText, EwLoadString( &_Const00CF ));
   ViewsText_OnSetColor( &_this->CaptionText, FlatColorOfBackground );
-  EwRetainString( &_this->Caption, EwLoadString( &_Const00CE ));
+  EwRetainString( &_this->Caption, EwLoadString( &_Const00CF ));
   _this->ItemColor = FlatColorOfTouch;
   _this->TextColor = FlatColorOfBackground;
   _this->ItemColorActive = ApplicationWidgetColor;
@@ -18730,39 +18737,34 @@ void ApplicationAToggleButton__Init( ApplicationAToggleButton _this, XObject aLi
   /* ... then construct all embedded objects */
   CoreSimpleTouchHandler__Init( &_this->TouchHandler, &_this->_XObject, 0 );
   ViewsFrame__Init( &_this->Frame, &_this->_XObject, 0 );
-  ViewsImage__Init( &_this->Image, &_this->_XObject, 0 );
   ViewsText__Init( &_this->CaptionText, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ApplicationAToggleButton );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const00CF );
+  CoreRectView__OnSetBounds( _this, _Const00D0 );
   CoreView_OnSetLayout((CoreView)&_this->TouchHandler, CoreLayoutAlignToBottom | 
   CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
   | CoreLayoutResizeVert );
-  CoreQuadView__OnSetPoint4( &_this->TouchHandler, _Const00CB );
-  CoreQuadView__OnSetPoint3( &_this->TouchHandler, _Const00D0 );
-  CoreQuadView__OnSetPoint2( &_this->TouchHandler, _Const00D1 );
-  CoreQuadView__OnSetPoint1( &_this->TouchHandler, _Const005C );
-  CoreRectView__OnSetBounds( &_this->Frame, _Const00D2 );
+  CoreQuadView__OnSetPoint4( &_this->TouchHandler, _Const00CC );
+  CoreQuadView__OnSetPoint3( &_this->TouchHandler, _Const00D1 );
+  CoreQuadView__OnSetPoint2( &_this->TouchHandler, _Const00D2 );
+  CoreQuadView__OnSetPoint1( &_this->TouchHandler, _Const005B );
+  CoreRectView__OnSetBounds( &_this->Frame, _Const00D3 );
   ViewsFrame_OnSetColor( &_this->Frame, FlatColorOfTouch );
-  CoreRectView__OnSetBounds( &_this->Image, _Const00D2 );
-  ViewsImage_OnSetColor( &_this->Image, FlatColorOfBackground );
-  ViewsImage_OnSetFrameNumber( &_this->Image, 19 );
-  CoreRectView__OnSetBounds( &_this->CaptionText, _Const00D3 );
+  CoreRectView__OnSetBounds( &_this->CaptionText, _Const00D4 );
   ViewsText_OnSetAlignment( &_this->CaptionText, ViewsTextAlignmentAlignHorzLeft 
   | ViewsTextAlignmentAlignVertCenter );
-  ViewsText_OnSetString( &_this->CaptionText, EwLoadString( &_Const00CE ));
+  ViewsText_OnSetString( &_this->CaptionText, EwLoadString( &_Const00CF ));
   ViewsText_OnSetColor( &_this->CaptionText, FlatColorOfTouch );
-  EwRetainString( &_this->Caption, EwLoadString( &_Const00CE ));
+  EwRetainString( &_this->Caption, EwLoadString( &_Const00CF ));
   _this->ItemColor = FlatColorOfTouch;
   _this->ItemColorActive = ApplicationWidgetColor;
   _this->IconColorActive = FlatColorOfBackground;
   _this->IconColor = FlatColorOfBackground;
   CoreGroup__Add( _this, ((CoreView)&_this->TouchHandler ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Frame ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->Image ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->CaptionText ), 0 );
   _this->TouchHandler.OnLeave = EwNewSlot( _this, ApplicationAToggleButton_enterLeaveSlot 
   );
@@ -18773,8 +18775,6 @@ void ApplicationAToggleButton__Init( ApplicationAToggleButton _this, XObject aLi
   _this->TouchHandler.OnPress = EwNewSlot( _this, ApplicationAToggleButton_pressReleaseSlot 
   );
   ViewsFrame_OnSetBitmap( &_this->Frame, EwLoadResource( &FlatFlatFrame, ResourcesBitmap 
-  ));
-  ViewsImage_OnSetBitmap( &_this->Image, EwLoadResource( &FlatFlatDemoIcons, ResourcesBitmap 
   ));
   ViewsText_OnSetFont( &_this->CaptionText, EwLoadResource( &FlatFontM, ResourcesFont 
   ));
@@ -18790,7 +18790,6 @@ void ApplicationAToggleButton__ReInit( ApplicationAToggleButton _this )
   /* ... then re-construct all embedded objects */
   CoreSimpleTouchHandler__ReInit( &_this->TouchHandler );
   ViewsFrame__ReInit( &_this->Frame );
-  ViewsImage__ReInit( &_this->Image );
   ViewsText__ReInit( &_this->CaptionText );
 }
 
@@ -18803,7 +18802,6 @@ void ApplicationAToggleButton__Done( ApplicationAToggleButton _this )
   /* Finalize all embedded objects */
   CoreSimpleTouchHandler__Done( &_this->TouchHandler );
   ViewsFrame__Done( &_this->Frame );
-  ViewsImage__Done( &_this->Image );
   ViewsText__Done( &_this->CaptionText );
 
   /* Release all used strings */
@@ -18822,7 +18820,6 @@ void ApplicationAToggleButton__Mark( ApplicationAToggleButton _this )
   EwMarkRef( _this->Outlet );
   EwMarkObject( &_this->TouchHandler );
   EwMarkObject( &_this->Frame );
-  EwMarkObject( &_this->Image );
   EwMarkObject( &_this->CaptionText );
   EwMarkObject( _this->Icon );
 
@@ -18845,7 +18842,6 @@ void ApplicationAToggleButton_UpdateLayout( ApplicationAToggleButton _this, XPoi
   CoreGroup_UpdateLayout((CoreGroup)_this, aSize );
   s = aSize.Y;
   CoreRectView__OnSetBounds( &_this->Frame, EwNewRect( 0, 0, s, s ));
-  CoreRectView__OnSetBounds( &_this->Image, _this->Frame.Super1.Bounds );
   CoreRectView__OnSetBounds( &_this->CaptionText, EwNewRect( s + 10, 0, aSize.X, 
   aSize.Y ));
 }
@@ -18873,24 +18869,17 @@ void ApplicationAToggleButton_UpdateViewState( ApplicationAToggleButton _this, X
     {
       ViewsFrame_OnSetColor( &_this->Frame, _this->ItemColorActive );
       ViewsText_OnSetColor( &_this->CaptionText, _this->ItemColorActive );
-      ViewsImage_OnSetColor( &_this->Image, _this->IconColorActive );
     }
     else
     {
       ViewsFrame_OnSetColor( &_this->Frame, _this->ItemColor );
       ViewsText_OnSetColor( &_this->CaptionText, _this->ItemColor );
-      ViewsImage_OnSetColor( &_this->Image, _this->IconColor );
     }
   }
   else
   {
     ViewsFrame_OnSetColor( &_this->Frame, FlatColorOfDisabled );
     ViewsText_OnSetColor( &_this->CaptionText, FlatColorOfDisabled );
-
-    if ( _this->Active )
-      ViewsImage_OnSetColor( &_this->Image, _this->IconColorActive );
-    else
-      ViewsImage_OnSetColor( &_this->Image, _this->IconColor );
   }
 }
 
@@ -18992,32 +18981,32 @@ void ApplicationAHorzSlider__Init( ApplicationAHorzSlider _this, XObject aLink, 
   _this->_VMT = EW_CLASS( ApplicationAHorzSlider );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const00D4 );
+  CoreRectView__OnSetBounds( _this, _Const00D5 );
   _this->MaxValue = 100;
   _this->CurrentValue = 50;
-  CoreQuadView__OnSetPoint4( &_this->SimpleTouchHandler, _Const00D5 );
-  CoreQuadView__OnSetPoint3( &_this->SimpleTouchHandler, _Const00D6 );
-  CoreQuadView__OnSetPoint2( &_this->SimpleTouchHandler, _Const00D7 );
-  CoreQuadView__OnSetPoint1( &_this->SimpleTouchHandler, _Const00D8 );
+  CoreQuadView__OnSetPoint4( &_this->SimpleTouchHandler, _Const00D6 );
+  CoreQuadView__OnSetPoint3( &_this->SimpleTouchHandler, _Const00D7 );
+  CoreQuadView__OnSetPoint2( &_this->SimpleTouchHandler, _Const00D8 );
+  CoreQuadView__OnSetPoint1( &_this->SimpleTouchHandler, _Const00D9 );
   CoreView_OnSetLayout((CoreView)&_this->Rectangle, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz );
-  CoreRectView__OnSetBounds( &_this->Rectangle, _Const00D9 );
+  CoreRectView__OnSetBounds( &_this->Rectangle, _Const00DA );
   ViewsRectangle_OnSetColor( &_this->Rectangle, FlatColorOfBody );
   CoreView_OnSetLayout((CoreView)&_this->Thumb, 0 );
-  CoreRectView__OnSetBounds( &_this->Thumb, _Const00DA );
+  CoreRectView__OnSetBounds( &_this->Thumb, _Const00DB );
   ViewsImage_OnSetAutoSize( &_this->Thumb, 1 );
   ViewsImage_OnSetColor( &_this->Thumb, FlatColorOfTouch );
   ViewsImage_OnSetAlignment( &_this->Thumb, ViewsImageAlignmentAlignHorzCenter | 
   ViewsImageAlignmentAlignVertCenter );
   CoreView_OnSetLayout((CoreView)&_this->ThumbText, CoreLayoutAlignToBottom | CoreLayoutAlignToTop 
   );
-  CoreRectView__OnSetBounds( &_this->ThumbText, _Const00DB );
+  CoreRectView__OnSetBounds( &_this->ThumbText, _Const00DC );
   ViewsText_OnSetAutoSize( &_this->ThumbText, 1 );
   ViewsText_OnSetAlignment( &_this->ThumbText, ViewsTextAlignmentAlignHorzCenter 
   | ViewsTextAlignmentAlignVertBottom );
   ViewsText_OnSetString( &_this->ThumbText, EwLoadString( &_Const00C9 ));
   ViewsText_OnSetColor( &_this->ThumbText, FlatColorOfTouch );
-  CoreRectView__OnSetBounds( &_this->MoveText, _Const00DC );
+  CoreRectView__OnSetBounds( &_this->MoveText, _Const00DD );
   ViewsText_OnSetAutoSize( &_this->MoveText, 1 );
   ViewsText_OnSetString( &_this->MoveText, EwLoadString( &_Const00C9 ));
   ViewsText_OnSetColor( &_this->MoveText, FlatColorOfTouch );
@@ -19320,15 +19309,15 @@ XString ApplicationAHorzSlider_formatValueString( ApplicationAHorzSlider _this,
 
   if ( _this->DotPosition == 1 )
     return EwConcatString( EwConcatString( EwNewStringInt( val / 10, 1, 10 ), EwLoadString( 
-      &_Const0061 )), EwNewStringInt( abs % 10, 1, 10 ));
+      &_Const00CA )), EwNewStringInt( abs % 10, 1, 10 ));
   else
     if ( _this->DotPosition == 2 )
       return EwConcatString( EwConcatString( EwNewStringInt( val / 100, 1, 10 ), 
-        EwLoadString( &_Const0061 )), EwNewStringInt( abs % 100, 2, 10 ));
+        EwLoadString( &_Const00CA )), EwNewStringInt( abs % 100, 2, 10 ));
     else
       if ( _this->DotPosition == 3 )
         return EwConcatString( EwConcatString( EwNewStringInt( val / 1000, 1, 10 
-          ), EwLoadString( &_Const0061 )), EwNewStringInt( abs % 1000, 3, 10 ));
+          ), EwLoadString( &_Const00CA )), EwNewStringInt( abs % 1000, 3, 10 ));
 
   return EwNewStringInt( val, 0, 10 );
 }
@@ -19367,32 +19356,22 @@ void ApplicationAIndicator__Init( ApplicationAIndicator _this, XObject aLink, XH
 
   /* ... then construct all embedded objects */
   ViewsRectangle__Init( &_this->Frame, &_this->_XObject, 0 );
-  ViewsImage__Init( &_this->Image, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ApplicationAIndicator );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const00D2 );
+  CoreRectView__OnSetBounds( _this, _Const00D3 );
   CoreView_OnSetLayout((CoreView)&_this->Frame, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->Frame, _Const00D2 );
+  CoreRectView__OnSetBounds( &_this->Frame, _Const00D3 );
   ViewsRectangle_OnSetColor( &_this->Frame, FlatColorOfBody );
-  CoreView_OnSetLayout((CoreView)&_this->Image, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
-  | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
-  );
-  CoreRectView__OnSetBounds( &_this->Image, _Const00D2 );
-  ViewsImage_OnSetColor( &_this->Image, FlatColorOfBackground );
-  ViewsImage_OnSetFrameNumber( &_this->Image, 19 );
   _this->BackColorActive = ApplicationWidgetColor;
   _this->BackColor = FlatColorOfBody;
   _this->IconColorActive = FlatColorOfBody;
   _this->IconColor = FlatColorOfDisabled;
   CoreGroup__Add( _this, ((CoreView)&_this->Frame ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->Image ), 0 );
-  ViewsImage_OnSetBitmap( &_this->Image, EwLoadResource( &FlatFlatDemoIcons, ResourcesBitmap 
-  ));
   _this->Icon = EwLoadResource( &FlatFlatDemoIcons, ResourcesBitmap );
 }
 
@@ -19404,7 +19383,6 @@ void ApplicationAIndicator__ReInit( ApplicationAIndicator _this )
 
   /* ... then re-construct all embedded objects */
   ViewsRectangle__ReInit( &_this->Frame );
-  ViewsImage__ReInit( &_this->Image );
 }
 
 /* Finalizer method for the class 'Application::AIndicator' */
@@ -19415,7 +19393,6 @@ void ApplicationAIndicator__Done( ApplicationAIndicator _this )
 
   /* Finalize all embedded objects */
   ViewsRectangle__Done( &_this->Frame );
-  ViewsImage__Done( &_this->Image );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -19425,7 +19402,6 @@ void ApplicationAIndicator__Done( ApplicationAIndicator _this )
 void ApplicationAIndicator__Mark( ApplicationAIndicator _this )
 {
   EwMarkObject( &_this->Frame );
-  EwMarkObject( &_this->Image );
   EwMarkObject( _this->Icon );
 
   /* Give the super class a chance to mark its objects and references */
@@ -19454,12 +19430,10 @@ void ApplicationAIndicator_UpdateViewState( ApplicationAIndicator _this, XSet aS
   if ( _this->Active )
   {
     ViewsRectangle_OnSetColor( &_this->Frame, _this->BackColorActive );
-    ViewsImage_OnSetColor( &_this->Image, _this->IconColorActive );
   }
   else
   {
     ViewsRectangle_OnSetColor( &_this->Frame, _this->BackColor );
-    ViewsImage_OnSetColor( &_this->Image, _this->IconColor );
   }
 }
 

@@ -67,7 +67,6 @@
 #include "_CoreSystemEventTask.h"
 #include "_CoreTask.h"
 #include "_CoreTaskQueue.h"
-#include "_CoreTime.h"
 #include "_CoreTimer.h"
 #include "_CoreView.h"
 

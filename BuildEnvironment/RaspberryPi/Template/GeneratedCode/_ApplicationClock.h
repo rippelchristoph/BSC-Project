@@ -42,8 +42,7 @@
 #endif
 
 #include "_CoreGroup.h"
-#include "_CoreTime.h"
-#include "_CoreTimer.h"
+#include "_CoreSystemEventHandler.h"
 #include "_ViewsText.h"
 
 /* Forward declaration of the class Application::Clock */
@@ -79,10 +78,9 @@
 
 /* Deklaration of class : 'Application::Clock' */
 EW_DEFINE_FIELDS( ApplicationClock, CoreGroup )
-  EW_OBJECT  ( Timer,           CoreTimer )
   EW_OBJECT  ( TimeText,        ViewsText )
-  EW_OBJECT  ( Time,            CoreTime )
   EW_PROPERTY( TimeProperty,    XString )
+  EW_OBJECT  ( CurrentTimeHandler, CoreSystemEventHandler )
 EW_END_OF_FIELDS( ApplicationClock )
 
 /* Virtual Method Table (VMT) for the class : 'Application::Clock' */
@@ -140,11 +138,12 @@ void ApplicationClock_UpdateLayout( ApplicationClock _this, XPoint aSize );
    you can request its invocation by using the method @InvalidateViewState(). */
 void ApplicationClock_UpdateViewState( ApplicationClock _this, XSet aState );
 
-/* 'C' function for method : 'Application::Clock.Slot()' */
-void ApplicationClock_Slot( ApplicationClock _this, XObject sender );
-
 /* 'C' function for method : 'Application::Clock.OnSetTimeProperty()' */
 void ApplicationClock_OnSetTimeProperty( ApplicationClock _this, XString value );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void ApplicationClock_onCurrentTime( ApplicationClock _this, XObject sender );
 
 #ifdef __cplusplus
   }
