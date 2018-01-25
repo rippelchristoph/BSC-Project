@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::Temperature;
+attr active = Application::Clock;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,31>;
-attr codeInspector = Application::Temperature.onEvent;
-attr codeSelEnd = <49,44>;
-attr codeSelStart = <49,44>;
+attr codeFirstPos = <0,0>;
+attr codeInspector = Device::DeviceClass.UpdateTime;
+attr codeSelEnd = <39,7>;
+attr codeSelStart = <39,7>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -41,11 +41,40 @@ view unit Application
 {
   attr enableGrid = true;
   attr grid = 10;
+  attr scrollTo = <-7,281>;
+  attr zoom = 1.0;
+}
+
+view unit Device
+{
+  attr enableGrid = true;
+  attr grid = 10;
   attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
 view class Application::Temperature
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,31>;
+  attr codeInspector = onEvent;
+  attr codeSelEnd = <49,44>;
+  attr codeSelStart = <49,44>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Device::DeviceClass
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::Clock
 {
   attr enableGrid = true;
   attr grid = 10;

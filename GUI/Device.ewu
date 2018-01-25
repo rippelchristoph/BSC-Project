@@ -429,35 +429,58 @@ class DeviceClass : Templates::DeviceClass
   }
 
   $rect <240,380,440,420>
-  object Core::SystemEvent CurrentTimeEvent;
+  property string Time = "00.00.0000 00:00:00";
 
-  // This method is intended to be called by the device to notify the GUI application \
-  // about a particular system event.
-  $rect <40,380,240,420>
-  $output true
-  method void onCurrentTime( arg string aCurrentTime )
+  $rect <440,380,640,420>
+  onset Time
   {
-    var Device::CurrentTimeContext context = new Device::CurrentTimeContext;
+    // The property doesn't change -> nothing to do.
+    if ( pure Time == value )
+      return;
 
+    // Remember the new value in the internal memory of the property.
+    pure Time = value;
 
-    context.CurrentTime=aCurrentTime;
-    CurrentTimeEvent.Trigger( context, false );
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^Time;
   }
 
-  $rect <240,430,440,470>
-  object Core::SystemEvent TimeTillFullEvent;
-
   // This method is intended to be called by the device to notify the GUI application \
-  // about a particular system event.
-  $rect <40,430,240,470>
+  // about an alternation of its setting or state value.
+  $rect <40,380,240,420>
   $output true
-  method void onTimeTillFull( arg string aTimeTillFull )
+  method void UpdateTime( arg string aNewValue )
   {
-    var Device::TimeTillFullContext context = new Device::TimeTillFullContext;
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewValue != pure Time )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Time = aNewValue;
 
-
-    context.TimeTillFull=aTimeTillFull;
-    TimeTillFullEvent.Trigger( context, false );
+      // Notify all associated property observers.
+      notifyobservers ^Time;
+    }
   }
 }
 

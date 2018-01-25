@@ -52,7 +52,6 @@
 #include "_CoreSystemEventHandler.h"
 #include "_CoreTimer.h"
 #include "_CoreView.h"
-#include "_DeviceCurrentTimeContext.h"
 #include "_DeviceDeviceClass.h"
 #include "_DeviceRemainingTimeContext.h"
 #include "_DeviceSampleCollectedContext.h"
@@ -1507,7 +1506,7 @@ void ApplicationClock__Init( ApplicationClock _this, XObject aLink, XHandle aArg
 
   /* ... then construct all embedded objects */
   ViewsText__Init( &_this->TimeText, &_this->_XObject, 0 );
-  CoreSystemEventHandler__Init( &_this->CurrentTimeHandler, &_this->_XObject, 0 );
+  CorePropertyObserver__Init( &_this->TimeObserver, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ApplicationClock );
@@ -1522,10 +1521,10 @@ void ApplicationClock__Init( ApplicationClock _this, XObject aLink, XHandle aArg
   CoreGroup__Add( _this, ((CoreView)&_this->TimeText ), 0 );
   ViewsText_OnSetFont( &_this->TimeText, EwLoadResource( &FlatFontM, ResourcesFont 
   ));
-  _this->CurrentTimeHandler.OnEvent = EwNewSlot( _this, ApplicationClock_onCurrentTime 
-  );
-  CoreSystemEventHandler_OnSetEvent( &_this->CurrentTimeHandler, &EwGetAutoObject( 
-  &DeviceDevice, DeviceDeviceClass )->CurrentTimeEvent );
+  _this->TimeObserver.OnEvent = EwNewSlot( _this, ApplicationClock_onTime );
+  CorePropertyObserver_OnSetOutlet( &_this->TimeObserver, EwNewRef( EwGetAutoObject( 
+  &DeviceDevice, DeviceDeviceClass ), DeviceDeviceClass_OnGetTime, DeviceDeviceClass_OnSetTime 
+  ));
 }
 
 /* Re-Initializer for the class 'Application::Clock' */
@@ -1536,7 +1535,7 @@ void ApplicationClock__ReInit( ApplicationClock _this )
 
   /* ... then re-construct all embedded objects */
   ViewsText__ReInit( &_this->TimeText );
-  CoreSystemEventHandler__ReInit( &_this->CurrentTimeHandler );
+  CorePropertyObserver__ReInit( &_this->TimeObserver );
 }
 
 /* Finalizer method for the class 'Application::Clock' */
@@ -1547,7 +1546,7 @@ void ApplicationClock__Done( ApplicationClock _this )
 
   /* Finalize all embedded objects */
   ViewsText__Done( &_this->TimeText );
-  CoreSystemEventHandler__Done( &_this->CurrentTimeHandler );
+  CorePropertyObserver__Done( &_this->TimeObserver );
 
   /* Release all used strings */
   EwReleaseString( &_this->TimeProperty );
@@ -1560,7 +1559,7 @@ void ApplicationClock__Done( ApplicationClock _this )
 void ApplicationClock__Mark( ApplicationClock _this )
 {
   EwMarkObject( &_this->TimeText );
-  EwMarkObject( &_this->CurrentTimeHandler );
+  EwMarkObject( &_this->TimeObserver );
 
   /* Give the super class a chance to mark its objects and references */
   CoreGroup__Mark( &_this->_Super );
@@ -1607,18 +1606,15 @@ void ApplicationClock_OnSetTimeProperty( ApplicationClock _this, XString value )
   EwRetainString( &_this->TimeProperty, value );
 }
 
-/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
-   receives an event. */
-void ApplicationClock_onCurrentTime( ApplicationClock _this, XObject sender )
+/* This slot method is executed when the associated property observer 'PropertyObserver' 
+   is notified. */
+void ApplicationClock_onTime( ApplicationClock _this, XObject sender )
 {
-  DeviceCurrentTimeContext context;
-
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( sender );
 
-  context = EwCastObject( _this->CurrentTimeHandler.Context, DeviceCurrentTimeContext 
-  );
-  ApplicationClock_OnSetTimeProperty( _this, context->CurrentTime );
+  ApplicationClock_OnSetTimeProperty( _this, EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
+  )->Time );
 }
 
 /* Variants derived from the class : 'Application::Clock' */

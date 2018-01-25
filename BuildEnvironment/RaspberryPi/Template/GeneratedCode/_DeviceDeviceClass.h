@@ -57,8 +57,7 @@ EW_DEFINE_FIELDS( DeviceDeviceClass, TemplatesDeviceClass )
   EW_OBJECT  ( SampleCollectedEvent, CoreSystemEvent )
   EW_OBJECT  ( RemainingTimeEvent, CoreSystemEvent )
   EW_PROPERTY( Temperature,     XFloat )
-  EW_OBJECT  ( CurrentTimeEvent, CoreSystemEvent )
-  EW_OBJECT  ( TimeTillFullEvent, CoreSystemEvent )
+  EW_PROPERTY( Time,            XString )
   EW_PROPERTY( NewWell,         XBool )
   EW_RESERVED( 3 )
 EW_END_OF_FIELDS( DeviceDeviceClass )
@@ -160,25 +159,18 @@ void DeviceDeviceClass__UpdateTemperature( void* _this, XFloat aNewArgument );
 /* 'C' function for method : 'Device::DeviceClass.getColor()' */
 XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumber );
 
-/* This method is intended to be called by the device to notify the GUI application 
-   about a particular system event. */
-void DeviceDeviceClass_onCurrentTime( DeviceDeviceClass _this, XString aCurrentTime );
-
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.onCurrentTime()' */
-void DeviceDeviceClass__onCurrentTime( void* _this, XString aCurrentTime );
-
-/* The following define announces the presence of the method Device::DeviceClass.onCurrentTime(). */
-#define _DeviceDeviceClass__onCurrentTime_
+/* 'C' function for method : 'Device::DeviceClass.OnSetTime()' */
+void DeviceDeviceClass_OnSetTime( DeviceDeviceClass _this, XString value );
 
 /* This method is intended to be called by the device to notify the GUI application 
-   about a particular system event. */
-void DeviceDeviceClass_onTimeTillFull( DeviceDeviceClass _this, XString aTimeTillFull );
+   about an alternation of its setting or state value. */
+void DeviceDeviceClass_UpdateTime( DeviceDeviceClass _this, XString aNewValue );
 
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.onTimeTillFull()' */
-void DeviceDeviceClass__onTimeTillFull( void* _this, XString aTimeTillFull );
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateTime()' */
+void DeviceDeviceClass__UpdateTime( void* _this, XString aNewValue );
 
-/* The following define announces the presence of the method Device::DeviceClass.onTimeTillFull(). */
-#define _DeviceDeviceClass__onTimeTillFull_
+/* The following define announces the presence of the method Device::DeviceClass.UpdateTime(). */
+#define _DeviceDeviceClass__UpdateTime_
 
 /* Default onget method for the property 'NuOfCircuits' */
 XInt32 DeviceDeviceClass_OnGetNuOfCircuits( DeviceDeviceClass _this );
@@ -188,6 +180,9 @@ XBool DeviceDeviceClass_OnGetNewWell( DeviceDeviceClass _this );
 
 /* Default onget method for the property 'Temperature' */
 XFloat DeviceDeviceClass_OnGetTemperature( DeviceDeviceClass _this );
+
+/* Default onget method for the property 'Time' */
+XString DeviceDeviceClass_OnGetTime( DeviceDeviceClass _this );
 
 #ifdef __cplusplus
   }

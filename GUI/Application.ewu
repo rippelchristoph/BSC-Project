@@ -1388,53 +1388,34 @@ class Clock : Core::Group
     return pure TimeProperty;
   }
 
-  $rect <240,10,440,50>
-  object Core::SystemEventHandler CurrentTimeHandler
+  $rect <140,40,340,80>
+  object Core::PropertyObserver TimeObserver
   {
-    preset OnEvent = onCurrentTime;
-    preset Event = Device::Device.CurrentTimeEvent;
+    preset OnEvent = onTime;
+    preset Outlet = ^Device::Device.Time;
   }
 
-  // This slot method is executed when the associated system event handler 'SystemEventHandler' \
-  // receives an event.
-  $rect <240,50,440,90>
-  slot onCurrentTime
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <140,80,340,120>
+  slot onTime
   {
     /*
        HINT 1:
 
-       You can evaluate the 'sender' parameter. It refers to the handler 
+       You can evaluate the 'sender' parameter. It refers to the observer
        this method has been called from. This is very useful if multiple
-       system event handlers are connected to one and the same 'onEvent'
+       property observer are connected to one and the same 'onEvent'
        method:
 
-       if ( sender == Handler1 )
-         trace "The event comes from the Handler1";
+       if ( sender == Observer1 )
+         trace "The event comes from the Observer1";
 
-       if ( sender == Handler2 )
-         trace "... or from the Handler2";
+       if ( sender == Observer2 )
+         trace "... or from the Observer2";
     */
 
-    /*
-       HINT 2:
-
-       From this 'onEvent' slot method you can evaluate the optional
-       'context' data dispatched together with the system event:
-
-       // First get the context data. You need to cast from the generic 'object'
-       // to your own specific context class:
-       
-
-       // Any context data passed and the cast was successful?
-       if ( context != null )
-       {
-         // Evaluate the context data:
-         someTarget1 = context.SomeData1;
-         someTarget2 = context.SomeData2;
-       }
-    */
-    var Device::CurrentTimeContext context = (Device::CurrentTimeContext)CurrentTimeHandler.Context;
-    TimeProperty=context.CurrentTime;
+    TimeProperty=Device::Device.Time;
   }
 }
 
