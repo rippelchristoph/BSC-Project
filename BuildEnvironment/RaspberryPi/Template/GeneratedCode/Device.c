@@ -33,7 +33,7 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x00000322, /* ratio 49.38 % */
+  0x00000336, /* ratio 49.15 % */
   0xB8002F00, 0x00000452, 0xB8010718, 0x21708848, 0x410987C2, 0x63A00430, 0x06884562,
   0x082C0C2B, 0x3A8009C0, 0x1000DA00, 0x000CA003, 0x009E0039, 0x08600330, 0x01273480,
   0x12F8F98C, 0x73001D00, 0xB0041A28, 0x8F41A360, 0x2C0CEF26, 0xD14D8009, 0x027C1E9D,
@@ -47,8 +47,8 @@ static const unsigned int _StringsDefault0[] =
   0x021002FD, 0x28000980, 0xD3962800, 0x14C1DF4D, 0x09C04E9A, 0x59728077, 0x169CA828,
   0x11C7E5C2, 0x28018173, 0x06055360, 0xC66798B8, 0x528164ED, 0x20353D88, 0x84E21651,
   0x720789E1, 0xFA6B9C28, 0x4A1204B9, 0x5A649928, 0x98662389, 0x1A1D57A2, 0xCC528144,
-  0x869FF7A5, 0x21B8A235, 0xC045C28E, 0xE9EC5123, 0x2F4DD4F5, 0x4ED9E512, 0x0004053B,
-  0x00000000
+  0x869FF7A5, 0x21B8A235, 0xC045C28E, 0xE9EC5123, 0x2F4DD4F5, 0x4199E512, 0x1CC7E9C9,
+  0xB821CE4C, 0x010195D3, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -79,6 +79,7 @@ static const XColor _Const0017 = { 0x00, 0x00, 0xFF, 0xFF };
 static const XColor _Const0018 = { 0x00, 0xFF, 0xFF, 0xFF };
 static const XColor _Const0019 = { 0xFF, 0x00, 0xFF, 0xFF };
 static const XColor _Const001A = { 0xFF, 0x00, 0x00, 0xFF };
+static const XStringRes _Const001B = { _StringsDefault0, 0x0192 };
 
 /* User defined inline code: 'Device::I2CHeader' */
 #include <unistd.h>				//Needed for I2C port
@@ -508,6 +509,8 @@ void DeviceDeviceClass_UpdateTime( DeviceDeviceClass _this, XString aNewValue )
     EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetTime, DeviceDeviceClass_OnSetTime 
       ), 0 );
   }
+
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const001B ), aNewValue ));
 }
 
 /* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateTime()' */
