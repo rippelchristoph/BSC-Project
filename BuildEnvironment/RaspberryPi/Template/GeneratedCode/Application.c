@@ -5621,7 +5621,7 @@ void ApplicationTemperature_onEvent( ApplicationTemperature _this, XObject sende
   EW_UNUSED_ARG( sender );
 
   ViewsText_OnSetString( &_this->Text, EwConcatString( EwNewStringFloat( EwGetAutoObject( 
-  &DeviceDevice, DeviceDeviceClass )->Temperature, 0, 6 ), EwLoadString( &_Const0099 
+  &DeviceDevice, DeviceDeviceClass )->Temperature, 0, 1 ), EwLoadString( &_Const0099 
   )));
 }
 

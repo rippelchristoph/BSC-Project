@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::Clock;
+attr active = Application::Temperature;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,0>;
-attr codeInspector = Application::Clock.OnSetTimeProperty;
-attr codeSelEnd = <29,10>;
-attr codeSelStart = <29,10>;
+attr codeFirstPos = <0,31>;
+attr codeInspector = Application::Temperature.onEvent;
+attr codeSelEnd = <49,44>;
+attr codeSelStart = <49,44>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -39,76 +39,13 @@ view Project
 
 view unit Application
 {
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = I2CHeader;
-  attr codeSelEnd = <38,3>;
-  attr codeSelStart = <38,3>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,173>;
-  attr zoom = 1.0;
-}
-
-view unit Device
-{
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
-view class Device::DeviceClass
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onTimeTillFull;
-  attr codeSelEnd = <17,4>;
-  attr codeSelStart = <17,4>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Device::CurrentTimeContext
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Clock
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = UpdateLayout;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::WellPart
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Device::TimeTillFullContext
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::TimeTillFull
+view class Application::Temperature
 {
   attr enableGrid = true;
   attr grid = 10;

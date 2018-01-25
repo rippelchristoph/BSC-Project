@@ -3714,7 +3714,7 @@ class Temperature : Core::Group
     Device::Device.Temperature=aNum;
     */
 
-    Text.String=string(Device::Device.Temperature)+"°C";
+    Text.String=string(Device::Device.Temperature,0,1)+"°C";
 
   }
 }
