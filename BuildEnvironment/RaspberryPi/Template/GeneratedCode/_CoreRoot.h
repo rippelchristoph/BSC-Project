@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -32,12 +33,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x00080014
+#if EW_RTE_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x00080014
+#if EW_GFX_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -195,9 +196,10 @@ EW_DEFINE_METHODS( CoreRoot, CoreGroup )
   EW_METHOD( MoveView,          void )( CoreRectView _this, XPoint aOffset, XBool 
     aFastMove )
   EW_METHOD( GetExtent,         XRect )( CoreRectView _this )
-  EW_METHOD( ChangeViewState,   void )( CoreGroup _this, XSet aSetState, XSet aClearState )
+  EW_METHOD( ChangeViewState,   void )( CoreRoot _this, XSet aSetState, XSet aClearState )
   EW_METHOD( OnSetBounds,       void )( CoreGroup _this, XRect value )
   EW_METHOD( OnSetFocus,        void )( CoreRoot _this, CoreView value )
+  EW_METHOD( OnSetBuffered,     void )( CoreRoot _this, XBool value )
   EW_METHOD( DispatchEvent,     XObject )( CoreRoot _this, CoreEvent aEvent )
   EW_METHOD( BroadcastEvent,    XObject )( CoreRoot _this, CoreEvent aEvent, XSet 
     aFilter )
@@ -243,8 +245,25 @@ CoreRoot CoreRoot_GetRoot( CoreRoot _this );
 void CoreRoot_Draw( CoreRoot _this, GraphicsCanvas aCanvas, XRect aClip, XPoint 
   aOffset, XInt32 aOpacity, XBool aBlend );
 
+/* The method ChangeViewState() modifies the current state of the view. The state 
+   is a set of switches determining whether a view is visible, whether it can react 
+   to user inputs or whether it is just performing some update operations, etc.
+   The modification is controlled by the the both parameters. The first aSetState 
+   contains the switches to activate within the view state. The second aClearState 
+   determines all switches to disable.
+   Depending on the state alteration the method will perform different operations, 
+   e.g. in response to the clearing of the visible state, the method will request 
+   a screen redraw to make disappear the view from the screen.
+   ChangeViewState() is invoked automatically by the framework, so you never should 
+   need to invoke it directly. All relevant states are available as properties e.g. 
+   the property Visible in derived classes reflects the visible state of the view. */
+void CoreRoot_ChangeViewState( CoreRoot _this, XSet aSetState, XSet aClearState );
+
 /* 'C' function for method : 'Core::Root.OnSetFocus()' */
 void CoreRoot_OnSetFocus( CoreRoot _this, CoreView value );
+
+/* 'C' function for method : 'Core::Root.OnSetBuffered()' */
+void CoreRoot_OnSetBuffered( CoreRoot _this, XBool value );
 
 /* The method DispatchEvent() feeds the component with the event passed in the parameter 
    aEvent and propagates it along the so-called focus path. This focus path leads 

@@ -20,7 +20,7 @@
 *
 * DESCRIPTION:
 *   This file implements a generic main() function for running Embedded Wizard
-*   generated applications in the Linux OpenGL environment with ^^EGL API. The
+*   generated applications in the Linux OpenGL environment with EGL API. The
 *   main() function initializes the Runtime Environment, creates an instance
 *   of the application class and drives the message translation and screen
 *   updates.
@@ -52,15 +52,7 @@
 #include <pthread.h>
 #include <linux/input.h>
 
-
-
 #include "BSCController.h"
-
-/* real values from touch */
-#define Y_MIN    0 //!!!!!!!!!!!!
-#define Y_MAX 480
-#define X_MIN    0
-#define X_MAX 800
 
 /***************************1****************************************************
 * static variables
@@ -69,7 +61,6 @@ static int TouchEventXPos;
 static int TouchEventYPos;
 static int TouchState = 0; /* 0 - none, 1 - begin, 2 - move, 3 - end */
 static int ShutDown   = 0;
-
 
 
 /*******************************************************************************
@@ -98,7 +89,7 @@ static void* TouchEventThread( void* aArg )
 
   /* get access to touch events from input device */
   EwPrint( "Open Touch Driver...                         " );
-  touchDev = open( "/dev/input/event0", O_RDONLY );  //!!!!!!!!!!
+  touchDev = open( "/dev/input/event0", O_RDONLY );
   if ( touchDev < 0 )
     return 0;
   EwPrint( "[OK]\n" );
@@ -129,9 +120,9 @@ static void* TouchEventThread( void* aArg )
       if ( type == 3 )
       {
         if ( code == 0 )
-          TouchEventXPos = ( EwScreenSize.X * ( value - X_MIN ) ) / ( X_MAX - X_MIN );
+          TouchEventXPos = value;
         else if ( code == 1 )
-          TouchEventYPos = ( EwScreenSize.Y * ( value - Y_MIN ) ) / ( Y_MAX - Y_MIN );
+          TouchEventYPos = value;
       }
       else if ( type == 1 && code == 330 )
       {
@@ -468,8 +459,12 @@ int main( int argc, char** argv )
   pthread_attr_destroy( &threadAttr );
   sleep( 1 );
 
+  //Get Time from Server
+  system("sudo date -s \"$(wget -qSO- --max-redirect=0 google.com 2>&1 | grep Date: | cut -d' ' -f5-8)Z\"");
+  
   TBSCController* BSCController = newBSCController();
-
+  
+  
   /* start the EmWi main loop and process all user inputs, timers and signals */
   EwPrint( "Start EmWi Main Loop...                      " );
   EwPrint( "[OK]\n" );
@@ -479,10 +474,8 @@ int main( int argc, char** argv )
     int signals = 0;
     int events  = 0;
     XPoint lastPos = {0,0};
-
-    
-    
-    ProcessBSCController(BSCController);
+	
+	 ProcessBSCController(BSCController);
 
     /* receive keyboard events and provide it to the application */
     cmd = GetKeyCommand();
@@ -530,12 +523,11 @@ int main( int argc, char** argv )
     /* process the pending signals */
     signals = EwProcessSignals();
 
-	
-
     /* refresh the screen, if something has changed and draw its content */
     if ( timers || signals || events )
     {
-      Update( viewport, rootObject );
+      if ( CoreRoot__DoesNeedUpdate( rootObject ))
+        Update( viewport, rootObject );
 
       /* after each processed message start the garbage collection */
       EwReclaimMemory();

@@ -44,7 +44,8 @@ profile RasPi : RaspberryPi.OpenGL.RGBA8888
   attr Optimization = High;
   attr ApplicationClass = Application::Application;
   attr CleanOutputDirectories = false;
-  attr OutputDirectory = C:\Maturaprojekt\BSC-Project\BuildEnvironment\RaspberryPi\Template\GeneratedCode;
+  attr OutputDirectory = ../BuildEnvironment/RaspberryPi/Template/GeneratedCode;
+  attr Verbose = false;
 
   $rect <10,10,154,50>
   macro Author = "Oliver Peter";

@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -461,9 +462,10 @@ EW_DEFINE_CLASS( ApplicationApplication, CoreRoot, "Application::Application" )
   CoreRectView_ArrangeView,
   CoreRectView_MoveView,
   CoreRectView_GetExtent,
-  CoreGroup_ChangeViewState,
+  CoreRoot_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreRoot_OnSetFocus,
+  CoreRoot_OnSetBuffered,
   CoreRoot_DispatchEvent,
   CoreRoot_BroadcastEvent,
   CoreGroup_UpdateLayout,
@@ -580,6 +582,7 @@ EW_DEFINE_CLASS( ApplicationMainMenu, CoreGroup, "Application::MainMenu" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationMainMenu_UpdateLayout,
@@ -1236,6 +1239,7 @@ EW_DEFINE_CLASS( ApplicationWell, CoreGroup, "Application::Well" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationWell_UpdateLayout,
@@ -1388,6 +1392,7 @@ EW_DEFINE_CLASS( ApplicationWellPart, CoreGroup, "Application::WellPart" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationWellPart_UpdateLayout,
@@ -1634,6 +1639,7 @@ EW_DEFINE_CLASS( ApplicationClock, CoreGroup, "Application::Clock" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationClock_UpdateLayout,
@@ -1926,6 +1932,7 @@ EW_DEFINE_CLASS( ApplicationSampleController, CoreGroup, "Application::SampleCon
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationSampleController_UpdateLayout,
@@ -4516,7 +4523,7 @@ void ApplicationTextEditor_onReleaseTouch( ApplicationTextEditor _this, XObject
     CoreGroup_Remove( _this->Super4.Owner, ((CoreView)_this->magnifyingBack ));
     _this->magnifyingView = 0;
     _this->magnifyingBack = 0;
-    CoreGroup_OnSetBuffered((CoreGroup)_this, 0 );
+    CoreGroup__OnSetBuffered( _this, 0 );
   }
 }
 
@@ -4576,7 +4583,7 @@ void ApplicationTextEditor_onHoldTouch( ApplicationTextEditor _this, XObject sen
     if ( width > EwGetRectW( _this->Super3.Bounds ))
       width = EwGetRectW( _this->Super3.Bounds );
 
-    CoreGroup_OnSetBuffered((CoreGroup)_this, 1 );
+    CoreGroup__OnSetBuffered( _this, 1 );
     _this->magnifyingView = EwNewObject( ViewsWarpGroup, 0 );
     _this->magnifyingBack = EwNewObject( ViewsRectangle, 0 );
     ViewsWarpGroup_OnSetGroup( _this->magnifyingView, ((CoreGroup)_this ));
@@ -4944,6 +4951,7 @@ EW_DEFINE_CLASS( ApplicationTextEditor, TemplatesTextEditor, "Application::TextE
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   CoreGroup_UpdateLayout,
@@ -5378,6 +5386,7 @@ EW_DEFINE_CLASS( ApplicationNumKeyboard, TemplatesNumKeyboard, "Application::Num
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   CoreGroup_UpdateLayout,
@@ -5502,6 +5511,7 @@ EW_DEFINE_CLASS( ApplicationWellLabel, CoreGroup, "Application::WellLabel" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationWellLabel_UpdateLayout,
@@ -5638,6 +5648,7 @@ EW_DEFINE_CLASS( ApplicationTemperature, CoreGroup, "Application::Temperature" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationTemperature_UpdateLayout,
@@ -5918,6 +5929,7 @@ EW_DEFINE_CLASS( ApplicationConfig, CoreGroup, "Application::Config" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationConfig_UpdateLayout,
@@ -6201,6 +6213,7 @@ EW_DEFINE_CLASS( ApplicationConfigPosition, CoreGroup, "Application::ConfigPosit
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationConfigPosition_UpdateLayout,
@@ -6523,6 +6536,7 @@ EW_DEFINE_CLASS( ApplicationControllMenu, CoreGroup, "Application::ControllMenu"
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationControllMenu_UpdateLayout,
@@ -6775,6 +6789,7 @@ EW_DEFINE_CLASS( ApplicationAHorzBar, CoreGroup, "Application::AHorzBar" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   CoreGroup_UpdateLayout,
@@ -18715,6 +18730,7 @@ EW_DEFINE_CLASS( ApplicationAActionButton, CoreGroup, "Application::AActionButto
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   CoreGroup_UpdateLayout,
@@ -18951,6 +18967,7 @@ EW_DEFINE_CLASS( ApplicationAToggleButton, CoreGroup, "Application::AToggleButto
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationAToggleButton_UpdateLayout,
@@ -19335,6 +19352,7 @@ EW_DEFINE_CLASS( ApplicationAHorzSlider, CoreGroup, "Application::AHorzSlider" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   ApplicationAHorzSlider_UpdateLayout,
@@ -19460,6 +19478,7 @@ EW_DEFINE_CLASS( ApplicationAIndicator, CoreGroup, "Application::AIndicator" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   CoreGroup_UpdateLayout,

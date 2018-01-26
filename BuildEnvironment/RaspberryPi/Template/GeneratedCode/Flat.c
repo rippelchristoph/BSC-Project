@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -3259,6 +3260,7 @@ EW_DEFINE_CLASS( FlatLabel, CoreGroup, "Flat::Label" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   CoreGroup_UpdateLayout,
@@ -3356,6 +3358,7 @@ EW_DEFINE_CLASS( FlatMinMaxText, CoreGroup, "Flat::MinMaxText" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   CoreGroup_UpdateLayout,

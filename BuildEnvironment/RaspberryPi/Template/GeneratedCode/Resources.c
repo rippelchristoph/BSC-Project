@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -300,14 +301,7 @@ XPoint ResourcesFont_GetFlowTextSize( ResourcesFont _this, XString aFlowString )
       cc = cc - 1;
 
     if ( cc > 0 )
-    {
-      XRect r = ResourcesFont_GetTextExtent( _this, aFlowString, i + 2, cc );
-
-      if ( r.Point1.X > 0 )
-        tw = r.Point2.X;
-      else
-        tw = EwGetRectW( r );
-    }
+      tw = ResourcesFont_GetTextAdvance( _this, aFlowString, i + 2, cc );
 
     if ( tw > w )
       w = tw;
@@ -359,6 +353,49 @@ XInt32 ResourcesFont_GetGlyphAdvance( ResourcesFont _this, XChar aCharCode )
       advance = metrics.Advance;
   }
   return advance;
+}
+
+/* The method GetGlyphSize() determines the size in pixel of the glyph with the 
+   code aCharCode. This metric describes the size of the glyph 'ink box'. */
+XPoint ResourcesFont_GetGlyphSize( ResourcesFont _this, XChar aCharCode )
+{
+  XPoint size;
+  XHandle handle;
+
+  if (( _this->font == 0 ) || ( aCharCode == 0x0000 ))
+    return _Const0000;
+
+  size = _Const0000;
+  handle = _this->font;
+  {
+    XGlyphMetrics metrics;
+
+    if ( EwGetGlyphMetrics((XFont*)handle, aCharCode, &metrics ))
+      size = metrics.Size;
+  }
+  return size;
+}
+
+/* The method GetGlyphOrigin() determines the offset in pixel to the origin of the 
+   glyph with the code aCharCode. This metric describes the distance between the 
+   top-left corner of the glyph and the current printing position on the baseline. */
+XPoint ResourcesFont_GetGlyphOrigin( ResourcesFont _this, XChar aCharCode )
+{
+  XPoint origin;
+  XHandle handle;
+
+  if (( _this->font == 0 ) || ( aCharCode == 0x0000 ))
+    return _Const0000;
+
+  origin = _Const0000;
+  handle = _this->font;
+  {
+    XGlyphMetrics metrics;
+
+    if ( EwGetGlyphMetrics((XFont*)handle, aCharCode, &metrics ))
+      origin = metrics.Origin;
+  }
+  return origin;
 }
 
 /* The method GetTextAdvance() calculates the horizontal advance in pixel of a text 

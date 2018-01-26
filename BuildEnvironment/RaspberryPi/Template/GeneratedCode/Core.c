@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -2290,8 +2291,13 @@ void CoreGroup_updateBufferSlot( CoreGroup _this, XObject sender )
 
   if ( _this->buffer != 0 )
   {
-    GraphicsCanvas_FillRectangle( _this->buffer, _this->buffer->InvalidArea, _this->buffer->InvalidArea, 
-    _Const0002, _Const0002, _Const0002, _Const0002, 0 );
+    XBool fullOffScreenBufferUpdate = 0;
+    fullOffScreenBufferUpdate = (XBool)EwFullOffScreenBufferUpdate;
+
+    if ( !fullOffScreenBufferUpdate )
+      GraphicsCanvas_FillRectangle( _this->buffer, _this->buffer->InvalidArea, _this->buffer->InvalidArea, 
+      _Const0002, _Const0002, _Const0002, _Const0002, 0 );
+
     CoreGroup_drawContent( _this, _this->buffer, _this->buffer->InvalidArea, _Const0000, 
     255, 1 );
   }
@@ -2569,6 +2575,12 @@ void CoreGroup_OnSetBuffered( CoreGroup _this, XBool value )
     CoreGroup__InvalidateArea( _this->Super2.Owner, _this->Super1.Bounds );
 
   EwNotifyObjObservers((XObject)_this, 0 );
+}
+
+/* Wrapper function for the virtual method : 'Core::Group.OnSetBuffered()' */
+void CoreGroup__OnSetBuffered( void* _this, XBool value )
+{
+  ((CoreGroup)_this)->_VMT->OnSetBuffered((CoreGroup)_this, value );
 }
 
 /* 'C' function for method : 'Core::Group.OnSetEnabled()' */
@@ -2854,13 +2866,21 @@ void CoreGroup_InvalidateArea( CoreGroup _this, XRect aArea )
 
     if ( buf != 0 )
     {
+      XBool fullOffScreenBufferUpdate;
+
       if ( EwIsRectEmpty( buf->InvalidArea ))
       {
         EwNotifyObjObservers((XObject)grp, 0 );
         EwNotifyObjObservers((XObject)buf, 0 );
       }
 
-      buf->InvalidArea = EwUnionRect( buf->InvalidArea, aArea );
+      fullOffScreenBufferUpdate = 0;
+      fullOffScreenBufferUpdate = EwFullOffScreenBufferUpdate;
+
+      if ( fullOffScreenBufferUpdate )
+        buf->InvalidArea = EwGetRectORect( grp->Super1.Bounds );
+      else
+        buf->InvalidArea = EwUnionRect( buf->InvalidArea, aArea );
     }
 
     if ( !(( grp->Super2.viewState & CoreViewStateVisible ) == CoreViewStateVisible 
@@ -3235,6 +3255,7 @@ EW_DEFINE_CLASS( CoreGroup, CoreRectView, "Core::Group" )
   CoreGroup_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreGroup_OnSetFocus,
+  CoreGroup_OnSetBuffered,
   CoreGroup_DispatchEvent,
   CoreGroup_BroadcastEvent,
   CoreGroup_UpdateLayout,
@@ -3355,11 +3376,51 @@ void CoreRoot_Draw( CoreRoot _this, GraphicsCanvas aCanvas, XRect aClip, XPoint
   CoreGroup_Draw((CoreGroup)_this, aCanvas, aClip, aOffset, aOpacity, aBlend );
 }
 
+/* The method ChangeViewState() modifies the current state of the view. The state 
+   is a set of switches determining whether a view is visible, whether it can react 
+   to user inputs or whether it is just performing some update operations, etc.
+   The modification is controlled by the the both parameters. The first aSetState 
+   contains the switches to activate within the view state. The second aClearState 
+   determines all switches to disable.
+   Depending on the state alteration the method will perform different operations, 
+   e.g. in response to the clearing of the visible state, the method will request 
+   a screen redraw to make disappear the view from the screen.
+   ChangeViewState() is invoked automatically by the framework, so you never should 
+   need to invoke it directly. All relevant states are available as properties e.g. 
+   the property Visible in derived classes reflects the visible state of the view. */
+void CoreRoot_ChangeViewState( CoreRoot _this, XSet aSetState, XSet aClearState )
+{
+  CoreGroup_ChangeViewState((CoreGroup)_this, aSetState, aClearState );
+
+  if (( _this->Super3.Owner == 0 ) && ((( aSetState & CoreViewStateVisible ) == 
+      CoreViewStateVisible ) || (( aClearState & CoreViewStateVisible ) == CoreViewStateVisible 
+      )))
+    CoreGroup__InvalidateArea( _this, EwGetRectORect( _this->Super2.Bounds ));
+
+  if (( _this->Super3.Owner == 0 ) && ((( aSetState & CoreViewStateAlphaBlended 
+      ) == CoreViewStateAlphaBlended ) || (( aClearState & CoreViewStateAlphaBlended 
+      ) == CoreViewStateAlphaBlended )))
+    CoreGroup__InvalidateArea( _this, EwGetRectORect( _this->Super2.Bounds ));
+}
+
 /* 'C' function for method : 'Core::Root.OnSetFocus()' */
 void CoreRoot_OnSetFocus( CoreRoot _this, CoreView value )
 {
   if (( value != (CoreView)_this->VirtualKeyboard ) || ( value == 0 ))
     CoreGroup_OnSetFocus((CoreGroup)_this, value );
+}
+
+/* 'C' function for method : 'Core::Root.OnSetBuffered()' */
+void CoreRoot_OnSetBuffered( CoreRoot _this, XBool value )
+{
+  ResourcesBitmap oldBuffer = ((ResourcesBitmap)_this->Super1.buffer );
+
+  CoreGroup_OnSetBuffered((CoreGroup)_this, value );
+
+  if ((((GraphicsCanvas)oldBuffer != _this->Super1.buffer ) && ( _this->Super3.Owner 
+      == 0 )) && (( _this->Super3.viewState & CoreViewStateVisible ) == CoreViewStateVisible 
+      ))
+    CoreGroup__InvalidateArea( _this, EwGetRectORect( _this->Super2.Bounds ));
 }
 
 /* The method DispatchEvent() feeds the component with the event passed in the parameter 
@@ -3467,6 +3528,26 @@ void CoreRoot_InvalidateArea( CoreRoot _this, XRect aArea )
   {
     EwThrow( EwLoadString( &_Const0009 ));
     return;
+  }
+
+  if (( _this->Super1.buffer != 0 ) && ( _this->Super3.Owner == 0 ))
+  {
+    XBool fullOffScreenBufferUpdate;
+
+    if ( EwIsRectEmpty( _this->Super1.buffer->InvalidArea ))
+    {
+      EwNotifyObjObservers((XObject)_this, 0 );
+      EwNotifyObjObservers((XObject)_this->Super1.buffer, 0 );
+    }
+
+    fullOffScreenBufferUpdate = 0;
+    fullOffScreenBufferUpdate = EwFullOffScreenBufferUpdate;
+
+    if ( fullOffScreenBufferUpdate )
+      _this->Super1.buffer->InvalidArea = EwGetRectORect( _this->Super2.Bounds );
+    else
+      _this->Super1.buffer->InvalidArea = EwUnionRect( _this->Super1.buffer->InvalidArea, 
+      aArea );
   }
 
   fullScreenUpdate = 0;
@@ -3896,6 +3977,7 @@ XInt32 CoreRoot_BeginUpdate( CoreRoot _this )
   XBool fullScreenUpdate = 0;
   XInt32 i;
   XRect overlayArea;
+  XBool par1;
   XInt32 j;
   XInt32 k;
 
@@ -3904,12 +3986,14 @@ XInt32 CoreRoot_BeginUpdate( CoreRoot _this )
     fullScreenUpdate           = (XBool)EwFullScreenUpdate;
   }
   overlayArea = _Const0001;
-  overlayArea = EwGetOverlayArea( 1, 1 );
+  par1 = (XBool)( _this->noOfRegions > 0 );
+  overlayArea = EwGetOverlayArea( par1, 1 );
 
   if ( !EwIsRectEmpty( overlayArea ))
     CoreGroup__InvalidateArea( _this, overlayArea );
 
-  if ( !preserveFramebufferContent && !fullScreenUpdate )
+  if (( !preserveFramebufferContent && !fullScreenUpdate ) && ( _this->noOfRegions 
+      > 0 ))
   {
     XRect tmpRegions[ 3 ];
     XInt32 tmpNoOfRegions = _this->noOfRegions;
@@ -3969,7 +4053,7 @@ XBool CoreRoot_DoesNeedUpdate( CoreRoot _this )
     return 1;
 
   overlayArea = _Const0001;
-  overlayArea = EwGetOverlayArea( 0, 1 );
+  overlayArea = EwGetOverlayArea( 0, 0 );
 
   if ( !EwIsRectEmpty( overlayArea ))
     return 1;
@@ -4326,6 +4410,7 @@ XBool CoreRoot_DriveMultiTouchHitting( CoreRoot _this, XBool aDown, XInt32 aFing
 {
   XUInt32 ticksCount;
   XRect dragLimit;
+  XUInt32 savedCurrentEventTimestamp;
 
   if (( aFinger < 0 ) || ( aFinger > 9 ))
   {
@@ -4333,12 +4418,19 @@ XBool CoreRoot_DriveMultiTouchHitting( CoreRoot _this, XBool aDown, XInt32 aFing
     return 0;
   }
 
-  ticksCount = 0;
+  ticksCount = _this->currentEventTimestamp;
   dragLimit = EwNewRect2Point( EwNewPoint( -_this->CursorDragLimit, -_this->CursorDragLimit 
   ), EwNewPoint( _this->CursorDragLimit + 1, _this->CursorDragLimit + 1 ));
-  ticksCount = (XUInt32)EwGetTicks();
+
+  if ( ticksCount == 0 )
+  {
+    ticksCount = (XUInt32)EwGetTicks();
+  }
+
+  savedCurrentEventTimestamp = _this->currentEventTimestamp;
   CoreRoot_DriveMultiTouchMovement( _this, aFinger, aPos );
   aPos = _this->cursorLastPos[ EwCheckIndex( aFinger, 10 )];
+  _this->currentEventTimestamp = savedCurrentEventTimestamp;
 
   if ( aDown )
     _this->cursorFirstPos[ EwCheckIndex( aFinger, 10 )] = aPos;
@@ -4637,9 +4729,10 @@ EW_DEFINE_CLASS( CoreRoot, CoreGroup, "Core::Root" )
   CoreRectView_ArrangeView,
   CoreRectView_MoveView,
   CoreRectView_GetExtent,
-  CoreGroup_ChangeViewState,
+  CoreRoot_ChangeViewState,
   CoreGroup_OnSetBounds,
   CoreRoot_OnSetFocus,
+  CoreRoot_OnSetBuffered,
   CoreRoot_DispatchEvent,
   CoreRoot_BroadcastEvent,
   CoreGroup_UpdateLayout,
@@ -5976,6 +6069,8 @@ void CoreSlideTouchHandler__Init( CoreSlideTouchHandler _this, XObject aLink, XH
   _this->LimitToFinger = -1;
   _this->SlideHorz = 1;
   _this->SlideVert = 1;
+  _this->RubberBandEffectElasticity = 5.000000f;
+  _this->RubberBandEffectDuration = 500;
   _this->RubberBandScrolling = 1;
   _this->RetargetDelay = 1000;
   _this->RetargetOffset = 8;
@@ -6112,10 +6207,10 @@ XObject CoreSlideTouchHandler_HandleEvent( CoreSlideTouchHandler _this, CoreEven
   if (( event3 != 0 ) && event3->Down )
   {
     CoreSlideTouchHandler_stopAnimation( _this );
-    _this->speedX = (((XFloat)( CoreEvent_GetCurrentTime((CoreEvent)event3 ) - _this->startTimeX 
-    ) * 0.001000f ) * _this->accelerationX ) + _this->speedX;
-    _this->speedY = (((XFloat)( CoreEvent_GetCurrentTime((CoreEvent)event3 ) - _this->startTimeY 
-    ) * 0.001000f ) * _this->accelerationY ) + _this->speedY;
+    _this->speedX = (((XFloat)( event3->Super1.Time - _this->startTimeX ) * 0.001000f 
+    ) * _this->accelerationX ) + _this->speedX;
+    _this->speedY = (((XFloat)( event3->Super1.Time - _this->startTimeY ) * 0.001000f 
+    ) * _this->accelerationY ) + _this->speedY;
 
     if ( _this->parkingX )
       _this->speedX = 0.000000f;
@@ -6135,10 +6230,10 @@ XObject CoreSlideTouchHandler_HandleEvent( CoreSlideTouchHandler _this, CoreEven
   if ((( event1 != 0 ) && event1->Down ) && ( event1->HoldPeriod == 0 ))
   {
     CoreSlideTouchHandler_stopAnimation( _this );
-    _this->speedX = (((XFloat)( CoreEvent_GetCurrentTime((CoreEvent)event1 ) - _this->startTimeX 
-    ) * 0.001000f ) * _this->accelerationX ) + _this->speedX;
-    _this->speedY = (((XFloat)( CoreEvent_GetCurrentTime((CoreEvent)event1 ) - _this->startTimeY 
-    ) * 0.001000f ) * _this->accelerationY ) + _this->speedY;
+    _this->speedX = (((XFloat)( event1->Super1.Time - _this->startTimeX ) * 0.001000f 
+    ) * _this->accelerationX ) + _this->speedX;
+    _this->speedY = (((XFloat)( event1->Super1.Time - _this->startTimeY ) * 0.001000f 
+    ) * _this->accelerationY ) + _this->speedY;
 
     if ( _this->parkingX || !_this->Sliding )
       _this->speedX = 0.000000f;
@@ -6631,10 +6726,10 @@ XObject CoreSlideTouchHandler_HandleEvent( CoreSlideTouchHandler _this, CoreEven
     }
 
   if ( event1 != 0 )
-    _this->startTimeX = CoreEvent_GetCurrentTime((CoreEvent)event1 );
+    _this->startTimeX = event1->Super1.Time;
 
   if ( event3 != 0 )
-    _this->startTimeX = CoreEvent_GetCurrentTime((CoreEvent)event3 );
+    _this->startTimeX = event3->Super1.Time;
 
   _this->startTimeY = _this->startTimeX;
   _this->startX = (XFloat)_this->Offset.X;
@@ -6695,6 +6790,14 @@ CoreCursorHit CoreSlideTouchHandler_CursorHitTest( CoreSlideTouchHandler _this,
   if ( !!( aRetargetReason & _this->RetargetCondition ))
     return 0;
 
+  if ( !_this->SlideVert && !!( aRetargetReason & ( CoreRetargetReasonWipeDown | 
+      CoreRetargetReasonWipeUp )))
+    return 0;
+
+  if ( !_this->SlideHorz && !!( aRetargetReason & ( CoreRetargetReasonWipeLeft | 
+      CoreRetargetReasonWipeRight )))
+    return 0;
+
   r = EwIntersectRect( aArea, _this->Super1.Bounds );
 
   if ( !EwIsRectEmpty( r ))
@@ -6751,7 +6854,7 @@ void CoreSlideTouchHandler_timerSlot( CoreSlideTouchHandler _this, XObject sende
   XFloat newSpeedX;
   XFloat newSpeedY;
   XPoint newOffset;
-  XFloat rubberAccel;
+  XFloat parkingTime;
 
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( sender );
@@ -6768,7 +6871,41 @@ void CoreSlideTouchHandler_timerSlot( CoreSlideTouchHandler _this, XObject sende
   newOffset = EwNewPoint((XInt32)(((( _this->accelerationX * 0.500000f ) * timeX2 
   ) + ( _this->speedX * timeX )) + _this->startX ), (XInt32)(((( _this->accelerationY 
   * 0.500000f ) * timeY2 ) + ( _this->speedY * timeY )) + _this->startY ));
-  rubberAccel = 2000.000000f;
+  parkingTime = (XFloat)_this->RubberBandEffectDuration * 0.001000f;
+
+  if ( _this->parkingX && ( timeX >= parkingTime ))
+  {
+    newOffset.X = _this->endX;
+    _this->speedX = 0.000000f;
+    _this->accelerationX = 0.000000f;
+    _this->startX = (XFloat)newOffset.X;
+    _this->parkingX = 0;
+  }
+  else
+    if ( _this->parkingX )
+    {
+      XFloat f = 1.000000f - EwMathPow( 1.000000f - ( timeX / parkingTime ), _this->RubberBandEffectElasticity 
+        );
+      newOffset.X = (XInt32)( _this->startX + (((XFloat)_this->endX - _this->startX 
+      ) * f ));
+    }
+
+  if ( _this->parkingY && ( timeY >= parkingTime ))
+  {
+    newOffset.Y = _this->endY;
+    _this->speedY = 0.000000f;
+    _this->accelerationY = 0.000000f;
+    _this->startY = (XFloat)newOffset.Y;
+    _this->parkingY = 0;
+  }
+  else
+    if ( _this->parkingY )
+    {
+      XFloat f = 1.000000f - EwMathPow( 1.000000f - ( timeY / parkingTime ), _this->RubberBandEffectElasticity 
+        );
+      newOffset.Y = (XInt32)( _this->startY + (((XFloat)_this->endY - _this->startY 
+      ) * f ));
+    }
 
   if ((( _this->speedX > 0.000000f ) && ( newSpeedX < 0.000000f )) || (( _this->speedX 
       < 0.000000f ) && ( newSpeedX > 0.000000f )))
@@ -6784,82 +6921,34 @@ void CoreSlideTouchHandler_timerSlot( CoreSlideTouchHandler _this, XObject sende
     newOffset.Y = _this->Offset.Y;
   }
 
-  if (( _this->parkingX && (( newOffset.X >= _this->MinOffset.X ) || ( newSpeedX 
-      == 0.000000f ))) && ( _this->speedX > 0.000000f ))
-  {
-    newOffset.X = _this->MinOffset.X;
-    _this->speedX = 0.000000f;
-    _this->accelerationX = 0.000000f;
-    _this->startX = (XFloat)newOffset.X;
-    _this->parkingX = 0;
-  }
-  else
-    if (( _this->parkingX && (( newOffset.X <= _this->MaxOffset.X ) || ( newSpeedX 
-        == 0.000000f ))) && ( _this->speedX < 0.000000f ))
-    {
-      newOffset.X = _this->MaxOffset.X;
-      _this->speedX = 0.000000f;
-      _this->accelerationX = 0.000000f;
-      _this->startX = (XFloat)newOffset.X;
-      _this->parkingX = 0;
-    }
-
-  if (( _this->parkingY && (( newOffset.Y >= _this->MinOffset.Y ) || ( newSpeedY 
-      == 0.000000f ))) && ( _this->speedY > 0.000000f ))
-  {
-    newOffset.Y = _this->MinOffset.Y;
-    _this->speedY = 0.000000f;
-    _this->accelerationY = 0.000000f;
-    _this->startY = (XFloat)newOffset.Y;
-    _this->parkingY = 0;
-  }
-  else
-    if (( _this->parkingY && (( newOffset.Y <= _this->MaxOffset.Y ) || ( newSpeedY 
-        == 0.000000f ))) && ( _this->speedY < 0.000000f ))
-    {
-      newOffset.Y = _this->MaxOffset.Y;
-      _this->speedY = 0.000000f;
-      _this->accelerationY = 0.000000f;
-      _this->startY = (XFloat)newOffset.Y;
-      _this->parkingY = 0;
-    }
-
   if ( !_this->parkingX && ( newOffset.X < _this->MinOffset.X ))
   {
-    _this->accelerationX = -rubberAccel;
-    _this->speedX = EwMathSqrt(( -4.000000f * (XFloat)( _this->MinOffset.X - newOffset.X 
-    )) * _this->accelerationX );
     _this->startX = (XFloat)newOffset.X;
+    _this->endX = _this->MinOffset.X;
     _this->startTimeX = _this->timer->Time;
     _this->parkingX = 1;
   }
   else
     if ( !_this->parkingX && ( newOffset.X > _this->MaxOffset.X ))
     {
-      _this->accelerationX = rubberAccel;
-      _this->speedX = -EwMathSqrt(( 4.000000f * (XFloat)( newOffset.X - _this->MaxOffset.X 
-      )) * _this->accelerationX );
       _this->startX = (XFloat)newOffset.X;
+      _this->endX = _this->MaxOffset.X;
       _this->startTimeX = _this->timer->Time;
       _this->parkingX = 1;
     }
 
   if ( !_this->parkingY && ( newOffset.Y < _this->MinOffset.Y ))
   {
-    _this->accelerationY = -rubberAccel;
-    _this->speedY = EwMathSqrt(( -2.000000f * (XFloat)( _this->MinOffset.Y - newOffset.Y 
-    )) * _this->accelerationY );
     _this->startY = (XFloat)newOffset.Y;
+    _this->endY = _this->MinOffset.Y;
     _this->startTimeY = _this->timer->Time;
     _this->parkingY = 1;
   }
   else
     if ( !_this->parkingY && ( newOffset.Y > _this->MaxOffset.Y ))
     {
-      _this->accelerationY = rubberAccel;
-      _this->speedY = -EwMathSqrt(( 2.000000f * (XFloat)( newOffset.Y - _this->MaxOffset.Y 
-      )) * _this->accelerationY );
       _this->startY = (XFloat)newOffset.Y;
+      _this->endY = _this->MaxOffset.Y;
       _this->startTimeY = _this->timer->Time;
       _this->parkingY = 1;
     }
@@ -6882,22 +6971,6 @@ void CoreSlideTouchHandler_timerSlot( CoreSlideTouchHandler _this, XObject sende
     _this->startY = (XFloat)newOffset.Y;
   }
 
-  if ( newOffset.X < _this->MinOffset.X )
-    newOffset.X = ( _this->MinOffset.X + (( newOffset.X - _this->MinOffset.X ) / 
-    2 ));
-  else
-    if ( newOffset.X > _this->MaxOffset.X )
-      newOffset.X = ( _this->MaxOffset.X + (( newOffset.X - _this->MaxOffset.X ) 
-      / 2 ));
-
-  if ( newOffset.Y < _this->MinOffset.Y )
-    newOffset.Y = ( _this->MinOffset.Y + (( newOffset.Y - _this->MinOffset.Y ) / 
-    2 ));
-  else
-    if ( newOffset.Y > _this->MaxOffset.Y )
-      newOffset.Y = ( _this->MaxOffset.Y + (( newOffset.Y - _this->MaxOffset.Y ) 
-      / 2 ));
-
   if ( EwCompPoint( newOffset, _this->Offset ))
   {
     _this->Delta = EwMovePointNeg( newOffset, _this->Offset );
@@ -6906,7 +6979,8 @@ void CoreSlideTouchHandler_timerSlot( CoreSlideTouchHandler _this, XObject sende
     EwSignal( _this->OnSlide, ((XObject)_this ));
   }
 
-  if (( _this->speedX == 0.000000f ) && ( _this->speedY == 0.000000f ))
+  if (((( _this->speedX == 0.000000f ) && ( _this->speedY == 0.000000f )) && !_this->parkingX 
+      ) && !_this->parkingY )
   {
     CoreSlideTouchHandler_stopAnimation( _this );
     _this->Sliding = 0;
@@ -7025,13 +7099,15 @@ XBool CoreKeyPressHandler_HandleEvent( CoreKeyPressHandler _this, CoreKeyEvent a
     if ( aEvent->Down )
     {
       _this->RepetitionCount = _this->pressCounter;
-      _this->pressCounter = _this->pressCounter + 1;
-      _this->Repetition = (XBool)( _this->pressCounter > 1 );
+      _this->Repetition = (XBool)( _this->pressCounter > 0 );
 
       if ( _this->Repetition )
         EwSignal( _this->OnHold, ((XObject)_this ));
       else
         EwSignal( _this->OnPress, ((XObject)_this ));
+
+      if ( !_this->Continue )
+        _this->pressCounter = _this->pressCounter + 1;
 
       return (XBool)!_this->Continue;
     }
@@ -7617,7 +7693,7 @@ void CoreTask__OnStart( void* _this, CoreTaskQueue aQueue )
   ((CoreTask)_this)->_VMT->OnStart((CoreTask)_this, aQueue );
 }
 
-/* The method Complete() informs the task queue about the competition of this task. 
+/* The method Complete() informs the task queue about the completion of this task. 
    Thereupon the next available task in the queue can be executed. This method is 
    usually called in context of the @OnStart() or @OnContinue() method when the 
    task has finalized its work. Calling the method for a not current task has no 

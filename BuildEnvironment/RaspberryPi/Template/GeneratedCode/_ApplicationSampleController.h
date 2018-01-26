@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -32,12 +33,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x00080014
+#if EW_RTE_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x00080014
+#if EW_GFX_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -98,7 +99,6 @@ EW_DEFINE_FIELDS( ApplicationSampleController, CoreGroup )
   EW_OBJECT  ( Label,           FlatLabel )
   EW_PROPERTY( NameProperty,    XChar )
   EW_PROPERTY( EnabledProperty, XBool )
-  EW_RESERVED( 1 )
 EW_END_OF_FIELDS( ApplicationSampleController )
 
 /* Virtual Method Table (VMT) for the class : 'Application::SampleController' */
@@ -119,6 +119,7 @@ EW_DEFINE_METHODS( ApplicationSampleController, CoreGroup )
   EW_METHOD( ChangeViewState,   void )( CoreGroup _this, XSet aSetState, XSet aClearState )
   EW_METHOD( OnSetBounds,       void )( CoreGroup _this, XRect value )
   EW_METHOD( OnSetFocus,        void )( CoreGroup _this, CoreView value )
+  EW_METHOD( OnSetBuffered,     void )( CoreGroup _this, XBool value )
   EW_METHOD( DispatchEvent,     XObject )( CoreGroup _this, CoreEvent aEvent )
   EW_METHOD( BroadcastEvent,    XObject )( CoreGroup _this, CoreEvent aEvent, XSet 
     aFilter )

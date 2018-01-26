@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -32,12 +33,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x00080014
+#if EW_RTE_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x00080014
+#if EW_GFX_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -86,7 +87,7 @@ EW_DECLARE_AUTOOBJECT( CoreSystemEventQueue, CoreTaskQueue )
    can assume at its lifetime. These states are used internally by all GUI components. 
    They determine whether components are visible, able to react to user events, 
    etc. */
-enum
+typedef enum
 {
   CoreViewStateVisible                  = 0x00000001,
   CoreViewStateAlphaBlended             = 0x00000002,
@@ -104,7 +105,7 @@ enum
   CoreViewStateUpdatingLayout           = 0x00002000,
   CoreViewStatePendingLayout            = 0x00004000,
   CoreViewStatePendingViewState         = 0x00008000
-};
+} CoreViewState;
 
 /* The definition Core::Layout determines the set of available arrangement constraints 
    to apply on views during the automatic GUI arrangement. Each view can determine 
@@ -120,7 +121,7 @@ enum
    view within the corresponding row or column. The resize constraints in this case 
    enable the view to fill the entire height of a column or the entire width of 
    a row. */
-enum
+typedef enum
 {
   CoreLayoutResizeHorz                  = 0x00000001,
   CoreLayoutResizeVert                  = 0x00000002,
@@ -128,21 +129,21 @@ enum
   CoreLayoutAlignToRight                = 0x00000008,
   CoreLayoutAlignToTop                  = 0x00000010,
   CoreLayoutAlignToBottom               = 0x00000020
-};
+} CoreLayout;
 
 /* The definition Core::Formation determines the available arrangement modes to 
    apply on all views embedded within a Core::Outline view. Depending on the mode, 
    the embedded views can be arranged in rows or columns. If the mode == Core::Formation.None, 
    no automatic row/column arrangement is performed and the views are simply aligned 
    inside the outline boundary area. */
-enum
+typedef enum
 {
   CoreFormationNone                     = 0,
   CoreFormationTopToBottom              = 1,
   CoreFormationBottomToTop              = 2,
   CoreFormationLeftToRight              = 3,
   CoreFormationRightToLeft              = 4
-};
+} CoreFormation;
 
 /* The enumeration Core::KeyCode provides a set of predefined keyboard codes very 
    common to mobile and remote control devices, e.g. Menu, Left, Up, Ok, Exit, Play, 
@@ -152,7 +153,7 @@ enum
    Beside the key codes the enumeration also provides some few key categories like 
    AlphaKeys, DigitKeys or CursorKeys. They stand for an entire range of key codes 
    and are used when key codes are evaluated or filtered by the Core::KeyPressHandler. */
-enum
+typedef enum
 {
   CoreKeyCodeNoKey                      = 0,
   CoreKeyCodeOk                         = 1,
@@ -501,19 +502,19 @@ enum
   CoreKeyCodeShiftHome                  = 344,
   CoreKeyCodeShiftEnd                   = 345,
   CoreKeyCodeShiftTab                   = 346
-};
+} CoreKeyCode;
 
 /* The definition Core::RetargetReason determines the set of possible reasons for 
    a touch handler to resign and pass over the current event processing to another 
    handler. */
-enum
+typedef enum
 {
   CoreRetargetReasonWipeUp              = 0x00000001,
   CoreRetargetReasonWipeDown            = 0x00000002,
   CoreRetargetReasonWipeLeft            = 0x00000004,
   CoreRetargetReasonWipeRight           = 0x00000008,
   CoreRetargetReasonLongPress           = 0x00000010
-};
+} CoreRetargetReason;
 
 #ifdef __cplusplus
   }

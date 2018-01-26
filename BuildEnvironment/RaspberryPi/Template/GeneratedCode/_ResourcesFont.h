@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -32,12 +33,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x00080014
+#if EW_RTE_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x00080014
+#if EW_GFX_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -90,6 +91,15 @@ XString ResourcesFont_ParseFlowString( ResourcesFont _this, XString aString, XIn
    glyph with the code aCharCode. This metric describes the offset to the next following 
    glyph within a text row. */
 XInt32 ResourcesFont_GetGlyphAdvance( ResourcesFont _this, XChar aCharCode );
+
+/* The method GetGlyphSize() determines the size in pixel of the glyph with the 
+   code aCharCode. This metric describes the size of the glyph 'ink box'. */
+XPoint ResourcesFont_GetGlyphSize( ResourcesFont _this, XChar aCharCode );
+
+/* The method GetGlyphOrigin() determines the offset in pixel to the origin of the 
+   glyph with the code aCharCode. This metric describes the distance between the 
+   top-left corner of the glyph and the current printing position on the baseline. */
+XPoint ResourcesFont_GetGlyphOrigin( ResourcesFont _this, XChar aCharCode );
 
 /* The method GetTextAdvance() calculates the horizontal advance in pixel of a text 
    row to print with this font. This value is calculated by the sum of advance values 

@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -32,12 +33,12 @@
 #endif
 
 #include "ewrte.h"
-#if EW_RTE_VERSION != 0x00080014
+#if EW_RTE_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Runtime Environment.
 #endif
 
 #include "ewgfx.h"
-#if EW_GFX_VERSION != 0x00080014
+#if EW_GFX_VERSION != 0x0008001E
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
@@ -85,7 +86,6 @@ EW_DEFINE_FIELDS( EffectsBoolEffect, XObject )
   EW_PROPERTY( Enabled,         XBool )
   EW_PROPERTY( Value1,          XBool )
   EW_PROPERTY( Value2,          XBool )
-  EW_RESERVED( 1 )
 EW_END_OF_FIELDS( EffectsBoolEffect )
 
 /* Virtual Method Table (VMT) for the class : 'Effects::BoolEffect' */

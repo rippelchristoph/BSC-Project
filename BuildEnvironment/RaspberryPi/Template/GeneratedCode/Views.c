@@ -7,9 +7,10 @@
 *
 ********************************************************************************
 *
-* This file was generated automatically by Embedded Wizard. Please do not make 
-* any modifications of this file! The modifications are lost when the file is
-* generated again by Embedded Wizard!
+* This file was generated automatically by Embedded Wizard Studio.
+*
+* Please do not make any modifications of this file! The modifications are lost
+* when the file is generated again by Embedded Wizard Studio!
 *
 * The template of this heading text can be found in the file 'head.ewt' in the
 * directory 'Platforms' of your Embedded Wizard installation directory. If you
@@ -17,7 +18,7 @@
 * project directory and edit the copy only. Please avoid any modifications of
 * the original template file!
 *
-* Version  : 8.20
+* Version  : 8.30
 * Profile  : RasPi
 * Platform : RaspberryPi.OpenGL.RGBA8888
 *
@@ -1657,14 +1658,8 @@ void ViewsText_Draw( ViewsText _this, GraphicsCanvas aCanvas, XRect aClip, XPoin
         if ((( align & ViewsTextAlignmentAlignHorzRight ) == ViewsTextAlignmentAlignHorzRight 
             ))
         {
-          XRect r = ResourcesFont_GetTextExtent( font, _this->flowString, i + 2, 
-            cc );
-
-          if ( r.Point1.X > 0 )
-            ofs2.X = (( ofs2.X - EwGetRectW( area )) + r.Point2.X );
-          else
-            ofs2.X = (( ofs2.X - EwGetRectW( area )) + EwGetRectW( r ));
-
+          ofs2.X = (( ofs2.X - EwGetRectW( area )) + ResourcesFont_GetTextAdvance( 
+          font, _this->flowString, i + 2, cc ));
           GraphicsCanvas_DrawText( aCanvas, aClip, font, _this->flowString, i + 
           2, cc, rd, ofs2, 0, ctl, ctr, cbr, cbl, 1 );
         }
@@ -1672,15 +1667,8 @@ void ViewsText_Draw( ViewsText _this, GraphicsCanvas aCanvas, XRect aClip, XPoin
           if ((( align & ViewsTextAlignmentAlignHorzCenter ) == ViewsTextAlignmentAlignHorzCenter 
               ))
           {
-            XRect r = ResourcesFont_GetTextExtent( font, _this->flowString, i + 
-              2, cc );
-            XInt32 tw;
-
-            if ( r.Point1.X > 0 )
-              tw = r.Point2.X;
-            else
-              tw = EwGetRectW( r );
-
+            XInt32 tw = ResourcesFont_GetTextAdvance( font, _this->flowString, i 
+              + 2, cc );
             ofs2.X = ( ofs2.X - (( EwGetRectW( area ) - tw ) / 2 ));
             GraphicsCanvas_DrawText( aCanvas, aClip, font, _this->flowString, i 
             + 2, cc, rd, ofs2, 0, ctl, ctr, cbr, cbl, 1 );
@@ -1782,9 +1770,10 @@ void ViewsText_onStartSlideSlot( ViewsText _this, XObject sender )
     minOffset.Y = 0;
 
   _this->SlideHandler->Offset = _this->ScrollOffset;
-  _this->SlideHandler->MinOffset = EwMovePointNeg( EwMovePointPos( _this->ScrollOffset, 
-  minOffset ), offset );
-  _this->SlideHandler->MaxOffset = EwMovePointNeg( _this->ScrollOffset, offset );
+  _this->SlideHandler->MinOffset = EwMovePointNeg( EwMovePointNeg( EwMovePointPos( 
+  _this->ScrollOffset, minOffset ), offset ), EwNewPoint( _this->Padding, 0 ));
+  _this->SlideHandler->MaxOffset = EwMovePointPos( EwMovePointNeg( _this->ScrollOffset, 
+  offset ), EwNewPoint( _this->Padding, 0 ));
 }
 
 /* 'C' function for method : 'Views::Text.reparseSlot()' */
@@ -1805,7 +1794,13 @@ void ViewsText_reparseSlot( ViewsText _this, XObject sender )
     if ( _this->WrapWidth > 0 )
       area.X = _this->WrapWidth;
     else
-      area.X = EwGetRectW( _this->Super1.Bounds );
+      if ( !_this->AutoSize )
+        area.X = ( EwGetRectW( _this->Super1.Bounds ) - ( _this->Padding * 2 ));
+      else
+        area.X = EwGetRectW( _this->Super1.Bounds );
+
+    if ( area.X < 0 )
+      area.X = 1;
   }
 
   if (( EwCompString( _this->String, 0 ) != 0 ) && ( _this->Font != 0 ))
@@ -1819,8 +1814,8 @@ void ViewsText_reparseSlot( ViewsText _this, XObject sender )
   if ( _this->AutoSize && ( EwCompString( _this->flowString, 0 ) != 0 ))
   {
     _this->Super2.viewState = _this->Super2.viewState | CoreViewStateUpdatingLayout;
-    CoreRectView__OnSetBounds( _this, EwMoveRectNeg( ViewsText_GetContentArea( _this 
-    ), _this->ScrollOffset ));
+    CoreRectView__OnSetBounds( _this, EwMoveRectNeg( EwInflateRect( ViewsText_GetContentArea( 
+    _this ), EwNewPoint( _this->Padding, 0 )), _this->ScrollOffset ));
     _this->Super2.viewState = _this->Super2.viewState & ~CoreViewStateUpdatingLayout;
   }
 
@@ -1858,7 +1853,7 @@ void ViewsText_reparseSlot( ViewsText _this, XObject sender )
     {
       XInt32 rowF = 0;
       XInt32 rowL = noOfRows;
-      XInt32 row = 0;
+      XInt32 row2 = 0;
       XInt32 inxF;
       XInt32 inxL;
 
@@ -1878,10 +1873,10 @@ void ViewsText_reparseSlot( ViewsText _this, XObject sender )
       clipF = (XBool)( rowF > 0 );
       clipL = (XBool)( rowL < noOfRows );
 
-      for ( inxF = 1; row < rowF; row = row + 1 )
+      for ( inxF = 1; row2 < rowF; row2 = row2 + 1 )
         inxF = inxF + EwGetStringChar( tmp, inxF );
 
-      for ( inxL = inxF; row < rowL; row = row + 1 )
+      for ( inxL = inxF; row2 < rowL; row2 = row2 + 1 )
         inxL = inxL + EwGetStringChar( tmp, inxL );
 
       tmp = EwConcatCharString((XChar)maxNoOfRows, EwStringMiddle( tmp, inxF, inxL 
@@ -2458,6 +2453,10 @@ XPoint ViewsText_Position2RowCol( ViewsText _this, XPoint aPoint )
   newLine = (XBool)(( rowLength > 0 ) && ( EwGetStringChar( rowString, rowLength 
   - 1 ) == 0x000A ));
 
+  if ( rowLength > 0 )
+    rowArea.Point1.X = ( rowArea.Point1.X - ResourcesFont_GetGlyphOrigin( font, 
+    EwGetStringChar( rowString, 0 )).X );
+
   if (((( _this->Alignment & ViewsTextAlignmentAlignHorzJustified ) == ViewsTextAlignmentAlignHorzJustified 
       ) && ( row < ( noOfRows - 1 ))) && !newLine )
   {
@@ -2578,6 +2577,9 @@ XPoint ViewsText_RowCol2Position( ViewsText _this, XPoint aRowCol )
   x = rowArea.Point1.X + ResourcesFont_GetTextAdvance( font, rowString, 0, col );
   y = rowArea.Point1.Y + font->Ascent;
 
+  if ( rowLength > 0 )
+    x = x - ResourcesFont_GetGlyphOrigin( font, EwGetStringChar( rowString, 0 )).X;
+
   if ((( _this->Alignment & ViewsTextAlignmentAlignHorzJustified ) == ViewsTextAlignmentAlignHorzJustified 
       ))
   {
@@ -2639,7 +2641,6 @@ XRect ViewsText_GetRowArea( ViewsText _this, XInt32 aRow )
   XInt32 rowLength;
   XBool newLine;
   XInt32 leading;
-  XRect r;
   XInt32 rowWidth;
   XInt32 rowHeight;
   XInt32 textHeight;
@@ -2655,7 +2656,8 @@ XRect ViewsText_GetRowArea( ViewsText _this, XInt32 aRow )
   noOfRows = EwGetStringChar( _this->flowString, 0 );
   font = _this->Font;
   align = _this->Alignment;
-  size = EwGetRectSize( _this->Super1.Bounds );
+  size = EwMovePointNeg( EwGetRectSize( _this->Super1.Bounds ), EwNewPoint( _this->Padding 
+  * 2, 0 ));
 
   if ((( font == 0 ) || ( aRow < 0 )) || (( aRow >= noOfRows ) && ( aRow > 0 )))
     return _Const0003;
@@ -2673,13 +2675,9 @@ XRect ViewsText_GetRowArea( ViewsText _this, XInt32 aRow )
   if ( _this->RowDistance > 0 )
     leading = ( _this->RowDistance - font->Ascent ) - font->Descent;
 
-  r = ResourcesFont_GetTextExtent( font, rowString, 0, rowLength );
-  rowWidth = EwGetRectW( r );
+  rowWidth = ResourcesFont_GetTextAdvance( font, rowString, 0, rowLength );
   rowHeight = font->Ascent + font->Descent;
   textHeight = ( noOfRows * (( font->Ascent + font->Descent ) + leading )) - leading;
-
-  if ( r.Point1.X > 0 )
-    rowWidth = rowWidth + r.Point1.X;
 
   if ( noOfRows == 0 )
     textHeight = rowHeight;
@@ -2718,8 +2716,20 @@ XRect ViewsText_GetRowArea( ViewsText _this, XInt32 aRow )
         ))
       y = y + (( size.Y - textHeight ) / 2 );
 
-  return EwMoveRectPos( EwMoveRectPos( EwNewRect( x, y, x + rowWidth, y + rowHeight 
-    ), _this->Super1.Bounds.Point1 ), _this->ScrollOffset );
+  if ( rowLength > 0 )
+  {
+    XChar lc = EwGetStringChar( rowString, rowLength - 1 );
+    XInt32 fo = ResourcesFont_GetGlyphOrigin( font, EwGetStringChar( rowString, 
+      0 )).X;
+    x = x + fo;
+    rowWidth = ((( rowWidth - fo ) - ResourcesFont_GetGlyphAdvance( font, lc )) 
+    + ResourcesFont_GetGlyphOrigin( font, lc ).X ) + ResourcesFont_GetGlyphSize( 
+    font, lc ).X;
+  }
+
+  return EwMoveRectPos( EwMoveRectPos( EwMoveRectPos( EwNewRect( x, y, x + rowWidth, 
+    y + rowHeight ), _this->Super1.Bounds.Point1 ), _this->ScrollOffset ), EwNewPoint( 
+    _this->Padding, 0 ));
 }
 
 /* The method GetRowString() returns the content of the row with the number specified 
@@ -2785,7 +2795,7 @@ XRect ViewsText_GetContentArea( ViewsText _this )
     ) - _this->RowDistance ) + _this->Font->Ascent ) + _this->Font->Descent );
 
   align = _this->Alignment;
-  rd = _this->Super1.Bounds;
+  rd = EwInflateRect( _this->Super1.Bounds, EwNewPoint( -_this->Padding, 0 ));
   rs = EwNewRect2Point( rd.Point1, EwMovePointPos( rd.Point1, _this->textSize ));
 
   if ((( align & ViewsTextAlignmentAlignHorzJustified ) == ViewsTextAlignmentAlignHorzJustified 
@@ -2794,7 +2804,10 @@ XRect ViewsText_GetContentArea( ViewsText _this )
     XInt32 maxWidth = _this->WrapWidth;
 
     if ( maxWidth <= 0 )
-      maxWidth = EwGetRectW( _this->Super1.Bounds );
+      maxWidth = EwGetRectW( _this->Super1.Bounds ) - ( _this->Padding * 2 );
+
+    if ( maxWidth < 0 )
+      maxWidth = 0;
 
     if ( maxWidth > EwGetRectW( rs ))
       rs = EwSetRectW( rs, maxWidth );
