@@ -7,11 +7,12 @@
 *
 ********************************************************************************
 *
-* This software and related documentation are intellectual property owned by 
-* TARA Systems and are copyright of TARA Systems.
-* Any copying, reproduction or redistribution of the software in whole or in 
-* part by any means not in accordance with the End-User License Agreement for
-* Embedded Wizard software is expressly prohibited.
+* This software and related documentation ("Software") are intellectual
+* property owned by TARA Systems and are copyright of TARA Systems.
+* Any modification, copying, reproduction or redistribution of the Software in
+* whole or in part by any means not in accordance with the End-User License
+* Agreement for Embedded Wizard is expressly prohibited. The removal of this
+* preamble is expressly prohibited.
 * 
 ********************************************************************************
 *
@@ -281,6 +282,60 @@ typedef struct
   char              Reserved[2];
   unsigned int      Colors[4];
 } XDrawText;
+
+
+/*******************************************************************************
+* TYPE:
+*   XFillPolygon
+*
+* DESCRIPTION:
+*   The XFillPolygon structure defines the parameters set for a FILL_POLYGON
+*   task.
+*
+*   When executed, the task should fill the raster a polygon resulting from the
+*   given path information and store it within the destination area of the
+*   destination surface. The path information is stored in the memory at the 
+*   end of this parameters structure. It is an array of int values starting
+*   with the number of edges a path is composed of. Then follow the coordinates
+*   of all path corners as X,Y pairs. After the last coordinate pair next path
+*   can follow starting again with the number of edges. The end of the path
+*   data is signed with 0. The X,Y coordinates are stored as signed integer
+*   with 4-bit fixpoint precision:
+*
+*   +-------+------+------+------+------+------+------+-------+     +-----+
+*   | edges |  X0  |  Y0  |  X1  |  Y1  |  X2  |  Y2  | edges | ... |  0  |
+*   +-------+------+------+------+------+------+------+-------+     +-----+
+*
+*   The additional four color values control the fading effects while drawing
+*   the pixel. If these values differ, the pixel are faded with a gradient by
+*   interpolation of the four values for all copied pixel.
+*
+* ELEMENTS:
+*   DstX1, DstY1,
+*   DstX2, DstY2    - Destination area to fill within the destination surface.
+*   NonZeroWinding  - Controls the fill rule to be used by the algorithm. If
+*    this parameter is == 0, the even-odd fill rule is used. If this parameter
+*    is != 0, the non-zero winding rule is used.
+*   Orientation     - Stores the orientation of the paths data relative to the
+*     physical origin of destination surface. This can be 0, 90, 180 or 270. If
+*     the specified orientation doesn't correspond to the of the destination
+*     surface, all path coordinates need to be converted just before performing
+*     the operation.
+*   Colors          - Color values to use while rasterizing the polygon. The
+*     four values correspond to the four corners of the destination area.
+*     (top-left, top-right, bottom-right, botom-left)
+*
+*******************************************************************************/
+typedef struct
+{
+  short             DstX1;
+  short             DstY1;
+  short             DstX2;
+  short             DstY2;
+  short             NonZeroWinding;
+  short             Orientation;
+  unsigned int      Colors[4];
+} XFillPolygon;
 
 
 /*******************************************************************************

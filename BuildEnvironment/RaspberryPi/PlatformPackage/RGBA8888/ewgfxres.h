@@ -7,11 +7,12 @@
 *
 ********************************************************************************
 *
-* This software and related documentation are intellectual property owned by 
-* TARA Systems and are copyright of TARA Systems.
-* Any copying, reproduction or redistribution of the software in whole or in 
-* part by any means not in accordance with the End-User License Agreement for
-* Embedded Wizard software is expressly prohibited.
+* This software and related documentation ("Software") are intellectual
+* property owned by TARA Systems and are copyright of TARA Systems.
+* Any modification, copying, reproduction or redistribution of the Software in
+* whole or in part by any means not in accordance with the End-User License
+* Agreement for Embedded Wizard is expressly prohibited. The removal of this
+* preamble is expressly prohibited.
 * 
 ********************************************************************************
 *

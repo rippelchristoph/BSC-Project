@@ -7,11 +7,12 @@
 *
 ********************************************************************************
 *
-* This software and related documentation are intellectual property owned by 
-* TARA Systems and are copyright of TARA Systems.
-* Any copying, reproduction or redistribution of the software in whole or in 
-* part by any means not in accordance with the End-User License Agreement for
-* Embedded Wizard software is expressly prohibited.
+* This software and related documentation ("Software") are intellectual
+* property owned by TARA Systems and are copyright of TARA Systems.
+* Any modification, copying, reproduction or redistribution of the Software in
+* whole or in part by any means not in accordance with the End-User License
+* Agreement for Embedded Wizard is expressly prohibited. The removal of this
+* preamble is expressly prohibited.
 * 
 ********************************************************************************
 *
@@ -116,10 +117,22 @@
 
 /* Platform specific drawing operations involving screen surface as the
    destination? */
-#if defined EwGfxScreenDrawLineGradient ||                                     \
+#if defined EwGfxScreenDrawLineSolid ||                                        \
+    defined EwGfxScreenDrawLineSolidBlend ||                                   \
+    defined EwGfxScreenFillSolid ||                                            \
+    defined EwGfxScreenFillSolidBlend ||                                       \
+    defined EwGfxScreenDrawLineGradient ||                                     \
     defined EwGfxScreenDrawLineGradientBlend ||                                \
     defined EwGfxScreenFillGradient ||                                         \
-    defined EwGfxScreenFillGradientBlend
+    defined EwGfxScreenFillGradientBlend ||                                    \
+    defined EwGfxScreenPolygonSolid ||                                         \
+    defined EwGfxScreenPolygonSolidBlend ||                                    \
+    defined EwGfxScreenPolygonGradient ||                                      \
+    defined EwGfxScreenPolygonGradientBlend ||                                 \
+    defined EwGfxScreenPolygonAntialiasedSolid ||                              \
+    defined EwGfxScreenPolygonAntialiasedSolidBlend ||                         \
+    defined EwGfxScreenPolygonAntialiasedGradient ||                           \
+    defined EwGfxScreenPolygonAntialiasedGradientBlend
   #define EwNeedScreenSurface
 #endif
 
@@ -167,7 +180,11 @@
 
 /* Platform specific drawing operations involving native surface as source and
    destination? */
-#if defined EwGfxDrawLineGradient ||                                           \
+#if defined EwGfxDrawLineSolid ||                                              \
+    defined EwGfxDrawLineSolidBlend ||                                         \
+    defined EwGfxFillSolid ||                                                  \
+    defined EwGfxFillSolidBlend ||                                             \
+    defined EwGfxDrawLineGradient ||                                           \
     defined EwGfxDrawLineGradientBlend ||                                      \
     defined EwGfxFillGradient ||                                               \
     defined EwGfxFillGradientBlend ||                                          \
@@ -204,7 +221,15 @@
     defined EwGfxScaleNativeFilter ||                                          \
     defined EwGfxScaleNativeFilterBlend ||                                     \
     defined EwGfxScaleNativeFilterGradient ||                                  \
-    defined EwGfxScaleNativeFilterGradientBlend
+    defined EwGfxScaleNativeFilterGradientBlend ||                             \
+    defined EwGfxPolygonSolid ||                                               \
+    defined EwGfxPolygonSolidBlend ||                                          \
+    defined EwGfxPolygonGradient ||                                            \
+    defined EwGfxPolygonGradientBlend ||                                       \
+    defined EwGfxPolygonAntialiasedSolid ||                                    \
+    defined EwGfxPolygonAntialiasedSolidBlend ||                               \
+    defined EwGfxPolygonAntialiasedGradient ||                                 \
+    defined EwGfxPolygonAntialiasedGradientBlend
   #define EwNeedNativeSurface
 #endif
 
@@ -979,6 +1004,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspNativeGradient
   #define EwWarpPerspNativeRowGradient               0
+  #define EwWarpPerspNativeRowSolid                  0
 #else
   #define EwGfxWarpPerspNativeGradient               0
   #define EwWarpPerspNativeRowGradient               EwWarpNativeRowGradient
@@ -986,6 +1012,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspNativeGradientBlend
   #define EwWarpPerspNativeRowGradientBlend          0
+  #define EwWarpPerspNativeRowSolidBlend             0
 #else
   #define EwGfxWarpPerspNativeGradientBlend          0
   #define EwWarpPerspNativeRowGradientBlend \
@@ -1008,6 +1035,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspNativeFilterGradient
   #define EwWarpPerspNativeRowFilterGradient         0
+  #define EwWarpPerspNativeRowFilterSolid            0
 #else
   #define EwGfxWarpPerspNativeFilterGradient         0
   #define EwWarpPerspNativeRowFilterGradient \
@@ -1016,6 +1044,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspNativeFilterGradientBlend
   #define EwWarpPerspNativeRowFilterGradientBlend    0
+  #define EwWarpPerspNativeRowFilterSolidBlend       0
 #else
   #define EwGfxWarpPerspNativeFilterGradientBlend    0
   #define EwWarpPerspNativeRowFilterGradientBlend \
@@ -1039,6 +1068,22 @@ static const XTileDriver TileDrivers[] =
     EwGfxWarpPerspNativeFilterGradientBlend
 #endif
 
+#ifndef EwWarpPerspNativeRowSolid
+  #define EwWarpPerspNativeRowSolid             EwWarpNativeRowSolid
+#endif
+
+#ifndef EwWarpPerspNativeRowSolidBlend
+  #define EwWarpPerspNativeRowSolidBlend        EwWarpNativeRowSolidBlend
+#endif
+
+#ifndef EwWarpPerspNativeRowFilterSolid
+  #define EwWarpPerspNativeRowFilterSolid       EwWarpNativeRowFilterSolid
+#endif
+
+#ifndef EwWarpPerspNativeRowFilterSolidBlend
+  #define EwWarpPerspNativeRowFilterSolidBlend  EwWarpNativeRowFilterSolidBlend
+#endif
+
 #ifdef EwGfxWarpPerspIndex8
   #define EwWarpPerspIndex8Row                       0
 #else
@@ -1055,6 +1100,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspIndex8Gradient
   #define EwWarpPerspIndex8RowGradient               0
+  #define EwWarpPerspIndex8RowSolid                  0
 #else
   #define EwGfxWarpPerspIndex8Gradient               0
   #define EwWarpPerspIndex8RowGradient               EwWarpIndex8RowGradient
@@ -1062,6 +1108,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspIndex8GradientBlend
   #define EwWarpPerspIndex8RowGradientBlend          0
+  #define EwWarpPerspIndex8RowSolidBlend             0
 #else
   #define EwGfxWarpPerspIndex8GradientBlend          0
   #define EwWarpPerspIndex8RowGradientBlend \
@@ -1084,6 +1131,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspIndex8FilterGradient
   #define EwWarpPerspIndex8RowFilterGradient         0
+  #define EwWarpPerspIndex8RowFilterSolid            0
 #else
   #define EwGfxWarpPerspIndex8FilterGradient         0
   #define EwWarpPerspIndex8RowFilterGradient \
@@ -1092,6 +1140,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspIndex8FilterGradientBlend
   #define EwWarpPerspIndex8RowFilterGradientBlend    0
+  #define EwWarpPerspIndex8RowFilterSolidBlend       0
 #else
   #define EwGfxWarpPerspIndex8FilterGradientBlend    0
   #define EwWarpPerspIndex8RowFilterGradientBlend \
@@ -1115,8 +1164,25 @@ static const XTileDriver TileDrivers[] =
     EwGfxWarpPerspIndex8FilterGradientBlend
 #endif
 
+#ifndef EwWarpPerspIndex8RowSolid
+  #define EwWarpPerspIndex8RowSolid             EwWarpIndex8RowSolid
+#endif
+
+#ifndef EwWarpPerspIndex8RowSolidBlend
+  #define EwWarpPerspIndex8RowSolidBlend        EwWarpIndex8RowSolidBlend
+#endif
+
+#ifndef EwWarpPerspIndex8RowFilterSolid
+  #define EwWarpPerspIndex8RowFilterSolid       EwWarpIndex8RowFilterSolid
+#endif
+
+#ifndef EwWarpPerspIndex8RowFilterSolidBlend
+  #define EwWarpPerspIndex8RowFilterSolidBlend  EwWarpIndex8RowFilterSolidBlend
+#endif
+
 #ifdef EwGfxWarpPerspAlpha8Gradient
   #define EwWarpPerspAlpha8RowGradient               0
+  #define EwWarpPerspAlpha8RowSolid                  0
 #else
   #define EwGfxWarpPerspAlpha8Gradient               0
   #define EwWarpPerspAlpha8RowGradient               EwWarpAlpha8RowGradient
@@ -1124,6 +1190,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspAlpha8GradientBlend
   #define EwWarpPerspAlpha8RowGradientBlend          0
+  #define EwWarpPerspAlpha8RowSolidBlend             0
 #else
   #define EwGfxWarpPerspAlpha8GradientBlend          0
   #define EwWarpPerspAlpha8RowGradientBlend \
@@ -1132,6 +1199,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspAlpha8FilterGradient
   #define EwWarpPerspAlpha8RowFilterGradient         0
+  #define EwWarpPerspAlpha8RowFilterSolid            0
 #else
   #define EwGfxWarpPerspAlpha8FilterGradient         0
   #define EwWarpPerspAlpha8RowFilterGradient \
@@ -1140,6 +1208,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxWarpPerspAlpha8FilterGradientBlend
   #define EwWarpPerspAlpha8RowFilterGradientBlend    0
+  #define EwWarpPerspAlpha8RowFilterSolidBlend       0
 #else
   #define EwGfxWarpPerspAlpha8FilterGradientBlend    0
   #define EwWarpPerspAlpha8RowFilterGradientBlend \
@@ -1163,6 +1232,22 @@ static const XTileDriver TileDrivers[] =
     EwGfxWarpPerspAlpha8FilterGradientBlend
 #endif
 
+#ifndef EwWarpPerspAlpha8RowSolid
+  #define EwWarpPerspAlpha8RowSolid             EwWarpAlpha8RowSolid
+#endif
+
+#ifndef EwWarpPerspAlpha8RowSolidBlend
+  #define EwWarpPerspAlpha8RowSolidBlend        EwWarpAlpha8RowSolidBlend
+#endif
+
+#ifndef EwWarpPerspAlpha8RowFilterSolid
+  #define EwWarpPerspAlpha8RowFilterSolid       EwWarpAlpha8RowFilterSolid
+#endif
+
+#ifndef EwWarpPerspAlpha8RowFilterSolidBlend
+  #define EwWarpPerspAlpha8RowFilterSolidBlend  EwWarpAlpha8RowFilterSolidBlend
+#endif
+
 #ifdef EwGfxScreenWarpPerspNative
   #define EwScreenWarpPerspNativeRow                       0
 #else
@@ -1179,6 +1264,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspNativeGradient
   #define EwScreenWarpPerspNativeRowGradient               0
+  #define EwScreenWarpPerspNativeRowSolid                  0
 #else
   #define EwGfxScreenWarpPerspNativeGradient               0
   #define EwScreenWarpPerspNativeRowGradient               EwScreenWarpNativeRowGradient
@@ -1186,6 +1272,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspNativeGradientBlend
   #define EwScreenWarpPerspNativeRowGradientBlend          0
+  #define EwScreenWarpPerspNativeRowSolidBlend             0
 #else
   #define EwGfxScreenWarpPerspNativeGradientBlend          0
   #define EwScreenWarpPerspNativeRowGradientBlend \
@@ -1208,6 +1295,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspNativeFilterGradient
   #define EwScreenWarpPerspNativeRowFilterGradient         0
+  #define EwScreenWarpPerspNativeRowFilterSolid            0
 #else
   #define EwGfxScreenWarpPerspNativeFilterGradient         0
   #define EwScreenWarpPerspNativeRowFilterGradient \
@@ -1216,6 +1304,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspNativeFilterGradientBlend
   #define EwScreenWarpPerspNativeRowFilterGradientBlend    0
+  #define EwScreenWarpPerspNativeRowFilterSolidBlend       0
 #else
   #define EwGfxScreenWarpPerspNativeFilterGradientBlend    0
   #define EwScreenWarpPerspNativeRowFilterGradientBlend \
@@ -1239,6 +1328,22 @@ static const XTileDriver TileDrivers[] =
     EwGfxScreenWarpPerspNativeFilterGradientBlend
 #endif
 
+#ifndef EwScreenWarpPerspNativeRowSolid
+  #define EwScreenWarpPerspNativeRowSolid             EwScreenWarpNativeRowSolid
+#endif
+
+#ifndef EwScreenWarpPerspNativeRowSolidBlend
+  #define EwScreenWarpPerspNativeRowSolidBlend        EwScreenWarpNativeRowSolidBlend
+#endif
+
+#ifndef EwScreenWarpPerspNativeRowFilterSolid
+  #define EwScreenWarpPerspNativeRowFilterSolid       EwScreenWarpNativeRowFilterSolid
+#endif
+
+#ifndef EwScreenWarpPerspNativeRowFilterSolidBlend
+  #define EwScreenWarpPerspNativeRowFilterSolidBlend  EwScreenWarpNativeRowFilterSolidBlend
+#endif
+
 #ifdef EwGfxScreenWarpPerspIndex8
   #define EwScreenWarpPerspIndex8Row                       0
 #else
@@ -1255,6 +1360,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspIndex8Gradient
   #define EwScreenWarpPerspIndex8RowGradient               0
+  #define EwScreenWarpPerspIndex8RowSolid                  0
 #else
   #define EwGfxScreenWarpPerspIndex8Gradient               0
   #define EwScreenWarpPerspIndex8RowGradient               EwScreenWarpIndex8RowGradient
@@ -1262,6 +1368,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspIndex8GradientBlend
   #define EwScreenWarpPerspIndex8RowGradientBlend          0
+  #define EwScreenWarpPerspIndex8RowSolidBlend             0
 #else
   #define EwGfxScreenWarpPerspIndex8GradientBlend          0
   #define EwScreenWarpPerspIndex8RowGradientBlend \
@@ -1284,6 +1391,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspIndex8FilterGradient
   #define EwScreenWarpPerspIndex8RowFilterGradient         0
+  #define EwScreenWarpPerspIndex8RowFilterSolid            0
 #else
   #define EwGfxScreenWarpPerspIndex8FilterGradient         0
   #define EwScreenWarpPerspIndex8RowFilterGradient \
@@ -1292,6 +1400,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspIndex8FilterGradientBlend
   #define EwScreenWarpPerspIndex8RowFilterGradientBlend    0
+  #define EwScreenWarpPerspIndex8RowFilterSolidBlend       0
 #else
   #define EwGfxScreenWarpPerspIndex8FilterGradientBlend    0
   #define EwScreenWarpPerspIndex8RowFilterGradientBlend \
@@ -1315,8 +1424,25 @@ static const XTileDriver TileDrivers[] =
     EwGfxScreenWarpPerspIndex8FilterGradientBlend
 #endif
 
+#ifndef EwScreenWarpPerspIndex8RowSolid
+  #define EwScreenWarpPerspIndex8RowSolid             EwScreenWarpIndex8RowSolid
+#endif
+
+#ifndef EwScreenWarpPerspIndex8RowSolidBlend
+  #define EwScreenWarpPerspIndex8RowSolidBlend        EwScreenWarpIndex8RowSolidBlend
+#endif
+
+#ifndef EwScreenWarpPerspIndex8RowFilterSolid
+  #define EwScreenWarpPerspIndex8RowFilterSolid       EwScreenWarpIndex8RowFilterSolid
+#endif
+
+#ifndef EwScreenWarpPerspIndex8RowFilterSolidBlend
+  #define EwScreenWarpPerspIndex8RowFilterSolidBlend  EwScreenWarpIndex8RowFilterSolidBlend
+#endif
+
 #ifdef EwGfxScreenWarpPerspAlpha8Gradient
   #define EwScreenWarpPerspAlpha8RowGradient               0
+  #define EwScreenWarpPerspAlpha8RowSolid                  0
 #else
   #define EwGfxScreenWarpPerspAlpha8Gradient               0
   #define EwScreenWarpPerspAlpha8RowGradient               EwScreenWarpAlpha8RowGradient
@@ -1324,6 +1450,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspAlpha8GradientBlend
   #define EwScreenWarpPerspAlpha8RowGradientBlend          0
+  #define EwScreenWarpPerspAlpha8RowSolidBlend             0
 #else
   #define EwGfxScreenWarpPerspAlpha8GradientBlend          0
   #define EwScreenWarpPerspAlpha8RowGradientBlend \
@@ -1332,6 +1459,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspAlpha8FilterGradient
   #define EwScreenWarpPerspAlpha8RowFilterGradient         0
+  #define EwScreenWarpPerspAlpha8RowFilterSolid            0
 #else
   #define EwGfxScreenWarpPerspAlpha8FilterGradient         0
   #define EwScreenWarpPerspAlpha8RowFilterGradient \
@@ -1340,6 +1468,7 @@ static const XTileDriver TileDrivers[] =
 
 #ifdef EwGfxScreenWarpPerspAlpha8FilterGradientBlend
   #define EwScreenWarpPerspAlpha8RowFilterGradientBlend    0
+  #define EwScreenWarpPerspAlpha8RowFilterSolidBlend       0
 #else
   #define EwGfxScreenWarpPerspAlpha8FilterGradientBlend    0
   #define EwScreenWarpPerspAlpha8RowFilterGradientBlend \
@@ -1361,6 +1490,22 @@ static const XTileDriver TileDrivers[] =
 #ifndef EwGfxScreenWarpPerspAlpha8FilterSolidBlend
   #define EwGfxScreenWarpPerspAlpha8FilterSolidBlend \
     EwGfxScreenWarpPerspAlpha8FilterGradientBlend
+#endif
+
+#ifndef EwScreenWarpPerspAlpha8RowSolid
+  #define EwScreenWarpPerspAlpha8RowSolid             EwScreenWarpAlpha8RowSolid
+#endif
+
+#ifndef EwScreenWarpPerspAlpha8RowSolidBlend
+  #define EwScreenWarpPerspAlpha8RowSolidBlend        EwScreenWarpAlpha8RowSolidBlend
+#endif
+
+#ifndef EwScreenWarpPerspAlpha8RowFilterSolid
+  #define EwScreenWarpPerspAlpha8RowFilterSolid       EwScreenWarpAlpha8RowFilterSolid
+#endif
+
+#ifndef EwScreenWarpPerspAlpha8RowFilterSolidBlend
+  #define EwScreenWarpPerspAlpha8RowFilterSolidBlend  EwScreenWarpAlpha8RowFilterSolidBlend
 #endif
 
 
@@ -1426,52 +1571,52 @@ static const XWarpDriver WarpPerspDrivers[] =
 static const XWarpWorker WarpPerspWorkers[] =
 {
   EwWarpPerspNativeRow,                      EwWarpPerspNativeRowBlend,
-  EwWarpPerspNativeRowGradient,              EwWarpPerspNativeRowGradientBlend,
+  EwWarpPerspNativeRowSolid,                 EwWarpPerspNativeRowSolidBlend,
   EwWarpPerspNativeRowGradient,              EwWarpPerspNativeRowGradientBlend,
   0,                                         0,
   EwWarpPerspNativeRowFilter,                EwWarpPerspNativeRowFilterBlend,
-  EwWarpPerspNativeRowFilterGradient,        EwWarpPerspNativeRowFilterGradientBlend,
+  EwWarpPerspNativeRowFilterSolid,           EwWarpPerspNativeRowFilterSolidBlend,
   EwWarpPerspNativeRowFilterGradient,        EwWarpPerspNativeRowFilterGradientBlend,
   0,                                         0,
   EwWarpPerspIndex8Row,                      EwWarpPerspIndex8RowBlend,
-  EwWarpPerspIndex8RowGradient,              EwWarpPerspIndex8RowGradientBlend,
+  EwWarpPerspIndex8RowSolid,                 EwWarpPerspIndex8RowSolidBlend,
   EwWarpPerspIndex8RowGradient,              EwWarpPerspIndex8RowGradientBlend,
   0,                                         0,
   EwWarpPerspIndex8RowFilter,                EwWarpPerspIndex8RowFilterBlend,
+  EwWarpPerspIndex8RowFilterSolid,           EwWarpPerspIndex8RowFilterSolidBlend,
   EwWarpPerspIndex8RowFilterGradient,        EwWarpPerspIndex8RowFilterGradientBlend,
-  EwWarpPerspIndex8RowFilterGradient,        EwWarpPerspIndex8RowFilterGradientBlend,
   0,                                         0,
   0,                                         0,
+  EwWarpPerspAlpha8RowSolid,                 EwWarpPerspAlpha8RowSolidBlend,
   EwWarpPerspAlpha8RowGradient,              EwWarpPerspAlpha8RowGradientBlend,
-  EwWarpPerspAlpha8RowGradient,              EwWarpPerspAlpha8RowGradientBlend,
   0,                                         0,
   0,                                         0,
-  EwWarpPerspAlpha8RowFilterGradient,        EwWarpPerspAlpha8RowFilterGradientBlend,
+  EwWarpPerspAlpha8RowFilterSolid,           EwWarpPerspAlpha8RowFilterSolidBlend,
   EwWarpPerspAlpha8RowFilterGradient,        EwWarpPerspAlpha8RowFilterGradientBlend,
 
 #ifdef EW_USE_PIXEL_FORMAT_SCREEN
   EwScreenWarpPerspNativeRow,                EwScreenWarpPerspNativeRowBlend,
-  EwScreenWarpPerspNativeRowGradient,        EwScreenWarpPerspNativeRowGradientBlend,
+  EwScreenWarpPerspNativeRowSolid,           EwScreenWarpPerspNativeRowSolidBlend,
   EwScreenWarpPerspNativeRowGradient,        EwScreenWarpPerspNativeRowGradientBlend,
   0,                                         0,
   EwScreenWarpPerspNativeRowFilter,          EwScreenWarpPerspNativeRowFilterBlend,
-  EwScreenWarpPerspNativeRowFilterGradient,  EwScreenWarpPerspNativeRowFilterGradientBlend,
+  EwScreenWarpPerspNativeRowFilterSolid,     EwScreenWarpPerspNativeRowFilterSolidBlend,
   EwScreenWarpPerspNativeRowFilterGradient,  EwScreenWarpPerspNativeRowFilterGradientBlend,
   0,                                         0,
   EwScreenWarpPerspIndex8Row,                EwScreenWarpPerspIndex8RowBlend,
-  EwScreenWarpPerspIndex8RowGradient,        EwScreenWarpPerspIndex8RowGradientBlend,
+  EwScreenWarpPerspIndex8RowSolid,           EwScreenWarpPerspIndex8RowSolidBlend,
   EwScreenWarpPerspIndex8RowGradient,        EwScreenWarpPerspIndex8RowGradientBlend,
   0,                                         0,
   EwScreenWarpPerspIndex8RowFilter,          EwScreenWarpPerspIndex8RowFilterBlend,
+  EwScreenWarpPerspIndex8RowFilterSolid,     EwScreenWarpPerspIndex8RowFilterSolidBlend,
   EwScreenWarpPerspIndex8RowFilterGradient,  EwScreenWarpPerspIndex8RowFilterGradientBlend,
-  EwScreenWarpPerspIndex8RowFilterGradient,  EwScreenWarpPerspIndex8RowFilterGradientBlend,
   0,                                         0,
   0,                                         0,
+  EwScreenWarpPerspAlpha8RowSolid,           EwScreenWarpPerspAlpha8RowSolidBlend,
   EwScreenWarpPerspAlpha8RowGradient,        EwScreenWarpPerspAlpha8RowGradientBlend,
-  EwScreenWarpPerspAlpha8RowGradient,        EwScreenWarpPerspAlpha8RowGradientBlend,
   0,                                         0,
   0,                                         0,
-  EwScreenWarpPerspAlpha8RowFilterGradient,  EwScreenWarpPerspAlpha8RowFilterGradientBlend,
+  EwScreenWarpPerspAlpha8RowFilterSolid,     EwScreenWarpPerspAlpha8RowFilterSolidBlend,
   EwScreenWarpPerspAlpha8RowFilterGradient,  EwScreenWarpPerspAlpha8RowFilterGradientBlend,
 #endif
 
@@ -1498,6 +1643,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineNativeGradient
   #define EwWarpAffineNativeRowGradient               0
+  #define EwWarpAffineNativeRowSolid                  0
 #else
   #define EwGfxWarpAffineNativeGradient               0
   #define EwWarpAffineNativeRowGradient               EwWarpNativeRowGradient
@@ -1505,6 +1651,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineNativeGradientBlend
   #define EwWarpAffineNativeRowGradientBlend          0
+  #define EwWarpAffineNativeRowSolidBlend             0
 #else
   #define EwGfxWarpAffineNativeGradientBlend          0
   #define EwWarpAffineNativeRowGradientBlend \
@@ -1527,6 +1674,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineNativeFilterGradient
   #define EwWarpAffineNativeRowFilterGradient         0
+  #define EwWarpAffineNativeRowFilterSolid            0
 #else
   #define EwGfxWarpAffineNativeFilterGradient         0
   #define EwWarpAffineNativeRowFilterGradient \
@@ -1535,6 +1683,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineNativeFilterGradientBlend
   #define EwWarpAffineNativeRowFilterGradientBlend    0
+  #define EwWarpAffineNativeRowFilterSolidBlend       0
 #else
   #define EwGfxWarpAffineNativeFilterGradientBlend    0
   #define EwWarpAffineNativeRowFilterGradientBlend \
@@ -1558,6 +1707,22 @@ static const XWarpWorker WarpPerspWorkers[] =
     EwGfxWarpAffineNativeFilterGradientBlend
 #endif
 
+#ifndef EwWarpAffineNativeRowSolid
+  #define EwWarpAffineNativeRowSolid             EwWarpNativeRowSolid
+#endif
+
+#ifndef EwWarpAffineNativeRowSolidBlend
+  #define EwWarpAffineNativeRowSolidBlend        EwWarpNativeRowSolidBlend
+#endif
+
+#ifndef EwWarpAffineNativeRowFilterSolid
+  #define EwWarpAffineNativeRowFilterSolid       EwWarpNativeRowFilterSolid
+#endif
+
+#ifndef EwWarpAffineNativeRowFilterSolidBlend
+  #define EwWarpAffineNativeRowFilterSolidBlend  EwWarpNativeRowFilterSolidBlend
+#endif
+
 #ifdef EwGfxWarpAffineIndex8
   #define EwWarpAffineIndex8Row                       0
 #else
@@ -1574,6 +1739,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineIndex8Gradient
   #define EwWarpAffineIndex8RowGradient               0
+  #define EwWarpAffineIndex8RowSolid                  0
 #else
   #define EwGfxWarpAffineIndex8Gradient               0
   #define EwWarpAffineIndex8RowGradient               EwWarpIndex8RowGradient
@@ -1581,6 +1747,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineIndex8GradientBlend
   #define EwWarpAffineIndex8RowGradientBlend          0
+  #define EwWarpAffineIndex8RowSolidBlend             0
 #else
   #define EwGfxWarpAffineIndex8GradientBlend          0
   #define EwWarpAffineIndex8RowGradientBlend \
@@ -1603,6 +1770,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineIndex8FilterGradient
   #define EwWarpAffineIndex8RowFilterGradient         0
+  #define EwWarpAffineIndex8RowFilterSolid            0
 #else
   #define EwGfxWarpAffineIndex8FilterGradient         0
   #define EwWarpAffineIndex8RowFilterGradient \
@@ -1611,6 +1779,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineIndex8FilterGradientBlend
   #define EwWarpAffineIndex8RowFilterGradientBlend    0
+  #define EwWarpAffineIndex8RowFilterSolidBlend       0
 #else
   #define EwGfxWarpAffineIndex8FilterGradientBlend    0
   #define EwWarpAffineIndex8RowFilterGradientBlend  \
@@ -1634,8 +1803,25 @@ static const XWarpWorker WarpPerspWorkers[] =
     EwGfxWarpAffineIndex8FilterGradientBlend
 #endif
 
+#ifndef EwWarpAffineIndex8RowSolid
+  #define EwWarpAffineIndex8RowSolid             EwWarpIndex8RowSolid
+#endif
+
+#ifndef EwWarpAffineIndex8RowSolidBlend
+  #define EwWarpAffineIndex8RowSolidBlend        EwWarpIndex8RowSolidBlend
+#endif
+
+#ifndef EwWarpAffineIndex8RowFilterSolid
+  #define EwWarpAffineIndex8RowFilterSolid       EwWarpIndex8RowFilterSolid
+#endif
+
+#ifndef EwWarpAffineIndex8RowFilterSolidBlend
+  #define EwWarpAffineIndex8RowFilterSolidBlend  EwWarpIndex8RowFilterSolidBlend
+#endif
+
 #ifdef EwGfxWarpAffineAlpha8Gradient
   #define EwWarpAffineAlpha8RowGradient               0
+  #define EwWarpAffineAlpha8RowSolid                  0
 #else
   #define EwGfxWarpAffineAlpha8Gradient               0
   #define EwWarpAffineAlpha8RowGradient               EwWarpAlpha8RowGradient
@@ -1643,6 +1829,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineAlpha8GradientBlend
   #define EwWarpAffineAlpha8RowGradientBlend          0
+  #define EwWarpAffineAlpha8RowSolidBlend             0
 #else
   #define EwGfxWarpAffineAlpha8GradientBlend          0
   #define EwWarpAffineAlpha8RowGradientBlend \
@@ -1651,6 +1838,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineAlpha8FilterGradient
   #define EwWarpAffineAlpha8RowFilterGradient         0
+  #define EwWarpAffineAlpha8RowFilterSolid            0
 #else
   #define EwGfxWarpAffineAlpha8FilterGradient         0
   #define EwWarpAffineAlpha8RowFilterGradient \
@@ -1659,6 +1847,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxWarpAffineAlpha8FilterGradientBlend
   #define EwWarpAffineAlpha8RowFilterGradientBlend    0
+  #define EwWarpAffineAlpha8RowFilterSolidBlend       0
 #else
   #define EwGfxWarpAffineAlpha8FilterGradientBlend    0
   #define EwWarpAffineAlpha8RowFilterGradientBlend \
@@ -1683,6 +1872,22 @@ static const XWarpWorker WarpPerspWorkers[] =
     EwGfxWarpAffineAlpha8FilterGradientBlend
 #endif
 
+#ifndef EwWarpAffineAlpha8RowSolid
+  #define EwWarpAffineAlpha8RowSolid             EwWarpAlpha8RowSolid
+#endif
+
+#ifndef EwWarpAffineAlpha8RowSolidBlend
+  #define EwWarpAffineAlpha8RowSolidBlend        EwWarpAlpha8RowSolidBlend
+#endif
+
+#ifndef EwWarpAffineAlpha8RowFilterSolid
+  #define EwWarpAffineAlpha8RowFilterSolid       EwWarpAlpha8RowFilterSolid
+#endif
+
+#ifndef EwWarpAffineAlpha8RowFilterSolidBlend
+  #define EwWarpAffineAlpha8RowFilterSolidBlend  EwWarpAlpha8RowFilterSolidBlend
+#endif
+
 #ifdef EwGfxScreenWarpAffineNative
   #define EwScreenWarpAffineNativeRow                       0
 #else
@@ -1699,6 +1904,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineNativeGradient
   #define EwScreenWarpAffineNativeRowGradient               0
+  #define EwScreenWarpAffineNativeRowSolid                  0
 #else
   #define EwGfxScreenWarpAffineNativeGradient               0
   #define EwScreenWarpAffineNativeRowGradient               EwScreenWarpNativeRowGradient
@@ -1706,6 +1912,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineNativeGradientBlend
   #define EwScreenWarpAffineNativeRowGradientBlend          0
+  #define EwScreenWarpAffineNativeRowSolidBlend             0
 #else
   #define EwGfxScreenWarpAffineNativeGradientBlend          0
   #define EwScreenWarpAffineNativeRowGradientBlend \
@@ -1728,6 +1935,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineNativeFilterGradient
   #define EwScreenWarpAffineNativeRowFilterGradient         0
+  #define EwScreenWarpAffineNativeRowFilterSolid            0
 #else
   #define EwGfxScreenWarpAffineNativeFilterGradient         0
   #define EwScreenWarpAffineNativeRowFilterGradient \
@@ -1736,6 +1944,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineNativeFilterGradientBlend
   #define EwScreenWarpAffineNativeRowFilterGradientBlend    0
+  #define EwScreenWarpAffineNativeRowFilterSolidBlend       0
 #else
   #define EwGfxScreenWarpAffineNativeFilterGradientBlend    0
   #define EwScreenWarpAffineNativeRowFilterGradientBlend \
@@ -1759,6 +1968,22 @@ static const XWarpWorker WarpPerspWorkers[] =
     EwGfxScreenWarpAffineNativeFilterGradientBlend
 #endif
 
+#ifndef EwScreenWarpAffineNativeRowSolid
+  #define EwScreenWarpAffineNativeRowSolid             EwScreenWarpNativeRowSolid
+#endif
+
+#ifndef EwScreenWarpAffineNativeRowSolidBlend
+  #define EwScreenWarpAffineNativeRowSolidBlend        EwScreenWarpNativeRowSolidBlend
+#endif
+
+#ifndef EwScreenWarpAffineNativeRowFilterSolid
+  #define EwScreenWarpAffineNativeRowFilterSolid       EwScreenWarpNativeRowFilterSolid
+#endif
+
+#ifndef EwScreenWarpAffineNativeRowFilterSolidBlend
+  #define EwScreenWarpAffineNativeRowFilterSolidBlend  EwScreenWarpNativeRowFilterSolidBlend
+#endif
+
 #ifdef EwGfxScreenWarpAffineIndex8
   #define EwScreenWarpAffineIndex8Row                       0
 #else
@@ -1775,6 +2000,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineIndex8Gradient
   #define EwScreenWarpAffineIndex8RowGradient               0
+  #define EwScreenWarpAffineIndex8RowSolid                  0
 #else
   #define EwGfxScreenWarpAffineIndex8Gradient               0
   #define EwScreenWarpAffineIndex8RowGradient               EwScreenWarpIndex8RowGradient
@@ -1782,6 +2008,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineIndex8GradientBlend
   #define EwScreenWarpAffineIndex8RowGradientBlend          0
+  #define EwScreenWarpAffineIndex8RowSolidBlend             0
 #else
   #define EwGfxScreenWarpAffineIndex8GradientBlend          0
   #define EwScreenWarpAffineIndex8RowGradientBlend \
@@ -1804,6 +2031,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineIndex8FilterGradient
   #define EwScreenWarpAffineIndex8RowFilterGradient         0
+  #define EwScreenWarpAffineIndex8RowFilterSolid            0
 #else
   #define EwGfxScreenWarpAffineIndex8FilterGradient         0
   #define EwScreenWarpAffineIndex8RowFilterGradient \
@@ -1812,6 +2040,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineIndex8FilterGradientBlend
   #define EwScreenWarpAffineIndex8RowFilterGradientBlend    0
+  #define EwScreenWarpAffineIndex8RowFilterSolidBlend       0
 #else
   #define EwGfxScreenWarpAffineIndex8FilterGradientBlend    0
   #define EwScreenWarpAffineIndex8RowFilterGradientBlend  \
@@ -1835,8 +2064,25 @@ static const XWarpWorker WarpPerspWorkers[] =
     EwGfxScreenWarpAffineIndex8FilterGradientBlend
 #endif
 
+#ifndef EwScreenWarpAffineIndex8RowSolid
+  #define EwScreenWarpAffineIndex8RowSolid             EwScreenWarpIndex8RowSolid
+#endif
+
+#ifndef EwScreenWarpAffineIndex8RowSolidBlend
+  #define EwScreenWarpAffineIndex8RowSolidBlend        EwScreenWarpIndex8RowSolidBlend
+#endif
+
+#ifndef EwScreenWarpAffineIndex8RowFilterSolid
+  #define EwScreenWarpAffineIndex8RowFilterSolid       EwScreenWarpIndex8RowFilterSolid
+#endif
+
+#ifndef EwScreenWarpAffineIndex8RowFilterSolidBlend
+  #define EwScreenWarpAffineIndex8RowFilterSolidBlend  EwScreenWarpIndex8RowFilterSolidBlend
+#endif
+
 #ifdef EwGfxScreenWarpAffineAlpha8Gradient
   #define EwScreenWarpAffineAlpha8RowGradient               0
+  #define EwScreenWarpAffineAlpha8RowSolid                  0
 #else
   #define EwGfxScreenWarpAffineAlpha8Gradient               0
   #define EwScreenWarpAffineAlpha8RowGradient               EwScreenWarpAlpha8RowGradient
@@ -1844,6 +2090,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineAlpha8GradientBlend
   #define EwScreenWarpAffineAlpha8RowGradientBlend          0
+  #define EwScreenWarpAffineAlpha8RowSolidBlend             0
 #else
   #define EwGfxScreenWarpAffineAlpha8GradientBlend          0
   #define EwScreenWarpAffineAlpha8RowGradientBlend \
@@ -1852,6 +2099,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineAlpha8FilterGradient
   #define EwScreenWarpAffineAlpha8RowFilterGradient         0
+  #define EwScreenWarpAffineAlpha8RowFilterSolid            0
 #else
   #define EwGfxScreenWarpAffineAlpha8FilterGradient         0
   #define EwScreenWarpAffineAlpha8RowFilterGradient \
@@ -1860,6 +2108,7 @@ static const XWarpWorker WarpPerspWorkers[] =
 
 #ifdef EwGfxScreenWarpAffineAlpha8FilterGradientBlend
   #define EwScreenWarpAffineAlpha8RowFilterGradientBlend    0
+  #define EwScreenWarpAffineAlpha8RowFilterSolidBlend       0
 #else
   #define EwGfxScreenWarpAffineAlpha8FilterGradientBlend    0
   #define EwScreenWarpAffineAlpha8RowFilterGradientBlend \
@@ -1882,6 +2131,22 @@ static const XWarpWorker WarpPerspWorkers[] =
 #ifndef EwGfxScreenWarpAffineAlpha8FilterSolidBlend
   #define EwGfxScreenWarpAffineAlpha8FilterSolidBlend \
     EwGfxScreenWarpAffineAlpha8FilterGradientBlend
+#endif
+
+#ifndef EwScreenWarpAffineAlpha8RowSolid
+  #define EwScreenWarpAffineAlpha8RowSolid             EwScreenWarpAlpha8RowSolid
+#endif
+
+#ifndef EwScreenWarpAffineAlpha8RowSolidBlend
+  #define EwScreenWarpAffineAlpha8RowSolidBlend        EwScreenWarpAlpha8RowSolidBlend
+#endif
+
+#ifndef EwScreenWarpAffineAlpha8RowFilterSolid
+  #define EwScreenWarpAffineAlpha8RowFilterSolid       EwScreenWarpAlpha8RowFilterSolid
+#endif
+
+#ifndef EwScreenWarpAffineAlpha8RowFilterSolidBlend
+  #define EwScreenWarpAffineAlpha8RowFilterSolidBlend  EwScreenWarpAlpha8RowFilterSolidBlend
 #endif
 
 
@@ -1947,52 +2212,52 @@ static const XWarpDriver WarpAffineDrivers[] =
 static const XWarpWorker WarpAffineWorkers[] =
 {
   EwWarpAffineNativeRow,                     EwWarpAffineNativeRowBlend,
-  EwWarpAffineNativeRowGradient,             EwWarpAffineNativeRowGradientBlend,
+  EwWarpAffineNativeRowSolid,                EwWarpAffineNativeRowSolidBlend,
   EwWarpAffineNativeRowGradient,             EwWarpAffineNativeRowGradientBlend,
   0,                                         0,
   EwWarpAffineNativeRowFilter,               EwWarpAffineNativeRowFilterBlend,
-  EwWarpAffineNativeRowFilterGradient,       EwWarpAffineNativeRowFilterGradientBlend,
+  EwWarpAffineNativeRowFilterSolid,          EwWarpAffineNativeRowFilterSolidBlend,
   EwWarpAffineNativeRowFilterGradient,       EwWarpAffineNativeRowFilterGradientBlend,
   0,                                         0,
   EwWarpAffineIndex8Row,                     EwWarpAffineIndex8RowBlend,
-  EwWarpAffineIndex8RowGradient,             EwWarpAffineIndex8RowGradientBlend,
+  EwWarpAffineIndex8RowSolid,                EwWarpAffineIndex8RowSolidBlend,
   EwWarpAffineIndex8RowGradient,             EwWarpAffineIndex8RowGradientBlend,
   0,                                         0,
   EwWarpAffineIndex8RowFilter,               EwWarpAffineIndex8RowFilterBlend,
+  EwWarpAffineIndex8RowFilterSolid,          EwWarpAffineIndex8RowFilterSolidBlend,
   EwWarpAffineIndex8RowFilterGradient,       EwWarpAffineIndex8RowFilterGradientBlend,
-  EwWarpAffineIndex8RowFilterGradient,       EwWarpAffineIndex8RowFilterGradientBlend,
   0,                                         0,
   0,                                         0,
+  EwWarpAffineAlpha8RowSolid,                EwWarpAffineAlpha8RowSolidBlend,
   EwWarpAffineAlpha8RowGradient,             EwWarpAffineAlpha8RowGradientBlend,
-  EwWarpAffineAlpha8RowGradient,             EwWarpAffineAlpha8RowGradientBlend,
   0,                                         0,
   0,                                         0,
-  EwWarpAffineAlpha8RowFilterGradient,       EwWarpAffineAlpha8RowFilterGradientBlend,
+  EwWarpAffineAlpha8RowFilterSolid,          EwWarpAffineAlpha8RowFilterSolidBlend,
   EwWarpAffineAlpha8RowFilterGradient,       EwWarpAffineAlpha8RowFilterGradientBlend,
 
 #ifdef EW_USE_PIXEL_FORMAT_SCREEN
   EwScreenWarpAffineNativeRow,               EwScreenWarpAffineNativeRowBlend,
-  EwScreenWarpAffineNativeRowGradient,       EwScreenWarpAffineNativeRowGradientBlend,
+  EwScreenWarpAffineNativeRowSolid,          EwScreenWarpAffineNativeRowSolidBlend,
   EwScreenWarpAffineNativeRowGradient,       EwScreenWarpAffineNativeRowGradientBlend,
   0,                                         0,
   EwScreenWarpAffineNativeRowFilter,         EwScreenWarpAffineNativeRowFilterBlend,
-  EwScreenWarpAffineNativeRowFilterGradient, EwScreenWarpAffineNativeRowFilterGradientBlend,
+  EwScreenWarpAffineNativeRowFilterSolid,   EwScreenWarpAffineNativeRowFilterSolidBlend,
   EwScreenWarpAffineNativeRowFilterGradient, EwScreenWarpAffineNativeRowFilterGradientBlend,
   0,                                         0,
   EwScreenWarpAffineIndex8Row,               EwScreenWarpAffineIndex8RowBlend,
-  EwScreenWarpAffineIndex8RowGradient,       EwScreenWarpAffineIndex8RowGradientBlend,
+  EwScreenWarpAffineIndex8RowSolid,          EwScreenWarpAffineIndex8RowSolidBlend,
   EwScreenWarpAffineIndex8RowGradient,       EwScreenWarpAffineIndex8RowGradientBlend,
   0,                                         0,
   EwScreenWarpAffineIndex8RowFilter,         EwScreenWarpAffineIndex8RowFilterBlend,
+  EwScreenWarpAffineIndex8RowFilterSolid,    EwScreenWarpAffineIndex8RowFilterSolidBlend,
   EwScreenWarpAffineIndex8RowFilterGradient, EwScreenWarpAffineIndex8RowFilterGradientBlend,
-  EwScreenWarpAffineIndex8RowFilterGradient, EwScreenWarpAffineIndex8RowFilterGradientBlend,
   0,                                         0,
   0,                                         0,
+  EwScreenWarpAffineAlpha8RowSolid,          EwScreenWarpAffineAlpha8RowSolidBlend,
   EwScreenWarpAffineAlpha8RowGradient,       EwScreenWarpAffineAlpha8RowGradientBlend,
-  EwScreenWarpAffineAlpha8RowGradient,       EwScreenWarpAffineAlpha8RowGradientBlend,
   0,                                         0,
   0,                                         0,
-  EwScreenWarpAffineAlpha8RowFilterGradient, EwScreenWarpAffineAlpha8RowFilterGradientBlend,
+  EwScreenWarpAffineAlpha8RowFilterSolid,    EwScreenWarpAffineAlpha8RowFilterSolidBlend,
   EwScreenWarpAffineAlpha8RowFilterGradient, EwScreenWarpAffineAlpha8RowFilterGradientBlend,
 #endif
 
@@ -2317,6 +2582,103 @@ static const XWarpDriver WarpScaleDrivers[] =
   0,                                    0,
   EwGfxScreenScaleAlpha8FilterSolid,    EwGfxScreenScaleAlpha8FilterSolidBlend,
   EwGfxScreenScaleAlpha8FilterGradient, EwGfxScreenScaleAlpha8FilterGradientBlend,
+#endif
+
+  0
+};
+
+
+/* Depending on the capabilities of the underlying graphics subsystem select
+   a set of functions for the 'fill polygon' operation. */
+#ifndef EwGfxPolygonGradient
+  #define EwGfxPolygonGradient                 0
+#endif
+
+#ifndef EwGfxPolygonGradientBlend
+  #define EwGfxPolygonGradientBlend            0
+#endif
+
+#ifndef EwGfxPolygonAntialiasedGradient
+  #define EwGfxPolygonAntialiasedGradient      0
+#endif
+
+#ifndef EwGfxPolygonAntialiasedGradientBlend
+  #define EwGfxPolygonAntialiasedGradientBlend 0
+#endif
+
+#ifndef EwGfxPolygonSolid
+  #define EwGfxPolygonSolid                 EwGfxPolygonGradient
+#endif
+
+#ifndef EwGfxPolygonSolidBlend
+  #define EwGfxPolygonSolidBlend            EwGfxPolygonGradientBlend
+#endif
+
+#ifndef EwGfxPolygonAntialiasedSolid
+  #define EwGfxPolygonAntialiasedSolid      EwGfxPolygonAntialiasedGradient
+#endif
+
+#ifndef EwGfxPolygonAntialiasedSolidBlend
+  #define EwGfxPolygonAntialiasedSolidBlend EwGfxPolygonAntialiasedGradientBlend
+#endif
+
+
+#ifndef EwGfxScreenPolygonGradient
+  #define EwGfxScreenPolygonGradient                 0
+#endif
+
+#ifndef EwGfxScreenPolygonGradientBlend
+  #define EwGfxScreenPolygonGradientBlend            0
+#endif
+
+#ifndef EwGfxScreenPolygonAntialiasedGradient
+  #define EwGfxScreenPolygonAntialiasedGradient      0
+#endif
+
+#ifndef EwGfxScreenPolygonAntialiasedGradientBlend
+  #define EwGfxScreenPolygonAntialiasedGradientBlend 0
+#endif
+
+#ifndef EwGfxScreenPolygonSolid
+  #define EwGfxScreenPolygonSolid                 EwGfxScreenPolygonGradient
+#endif
+
+#ifndef EwGfxScreenPolygonSolidBlend
+  #define EwGfxScreenPolygonSolidBlend            EwGfxScreenPolygonGradientBlend
+#endif
+
+#ifndef EwGfxScreenPolygonAntialiasedSolid
+  #define EwGfxScreenPolygonAntialiasedSolid      EwGfxScreenPolygonAntialiasedGradient
+#endif
+
+#ifndef EwGfxScreenPolygonAntialiasedSolidBlend
+  #define EwGfxScreenPolygonAntialiasedSolidBlend EwGfxScreenPolygonAntialiasedGradientBlend
+#endif
+
+
+/* Register the functionality provided by the underlying graphics subsystem. */
+static const XPolygonDriver PolygonDrivers[] =
+{
+  0, 0,
+  EwGfxPolygonSolid,                      EwGfxPolygonSolidBlend,
+  EwGfxPolygonGradient,                   EwGfxPolygonGradientBlend,
+  0, 0, 
+  0, 0,
+  EwGfxPolygonAntialiasedSolid,           EwGfxPolygonAntialiasedSolidBlend,
+  EwGfxPolygonAntialiasedGradient,        EwGfxPolygonAntialiasedGradientBlend,
+  0, 0,
+  0, 0,
+
+#ifdef EW_USE_PIXEL_FORMAT_SCREEN
+  0, 0,
+  EwGfxScreenPolygonSolid,                EwGfxScreenPolygonSolidBlend,
+  EwGfxScreenPolygonGradient,             EwGfxScreenPolygonGradientBlend,
+  0, 0,
+  0, 0,
+  EwGfxScreenPolygonAntialiasedSolid,     EwGfxScreenPolygonAntialiasedSolidBlend,
+  EwGfxScreenPolygonAntialiasedGradient,  EwGfxScreenPolygonAntialiasedGradientBlend,
+  0, 0,
+  0, 0,
 #endif
 
   0

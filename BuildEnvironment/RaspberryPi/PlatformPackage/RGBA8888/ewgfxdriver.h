@@ -7,12 +7,13 @@
 *
 ********************************************************************************
 *
-* This software and related documentation are intellectual property owned by 
-* TARA Systems and are copyright of TARA Systems.
-* Any copying, reproduction or redistribution of the software in whole or in 
-* part by any means not in accordance with the End-User License Agreement for
-* Embedded Wizard software is expressly prohibited.
-* 
+* This software and related documentation ("Software") are intellectual
+* property owned by TARA Systems and are copyright of TARA Systems.
+* Any modification, copying, reproduction or redistribution of the Software in
+* whole or in part by any means not in accordance with the End-User License
+* Agreement for Embedded Wizard is expressly prohibited. The removal of this
+* preamble is expressly prohibited.
+*
 ********************************************************************************
 *
 * DESCRIPTION:
@@ -32,7 +33,7 @@
 *   1. 'per row' worker functions. These functions build the low-level software
 *      pixel driver. They are intended to perform drawing operations optimized
 *      for the particular pixel format and the drawing mode. The declarations,
-*      any way, are platform independent. 
+*      any way, are platform independent.
 *
 *   2. 'per area' drawing functions. These functions provide the top-level view
 *      to the software pixel driver. They are intended to drive the 'per row'
@@ -42,7 +43,7 @@
 *      perform row-wise the operation without any dependency to the underlying
 *      pixel format.
 *
-*   Additionally, the header file provides generic declarations to simplify 
+*   Additionally, the header file provides generic declarations to simplify
 *   the integration of external graphics subsystem drivers into the Embedded
 *   Wizard Graphics Engine.
 *
@@ -66,7 +67,7 @@
 *   EW_ALPHA
 *
 * DESCRIPTION:
-*   The following macros provide a generic way to extract the RGBA color 
+*   The following macros provide a generic way to extract the RGBA color
 *   channels from the RGBA8888 aColor value as it is passed to all driver
 *   functions.
 *
@@ -96,7 +97,7 @@
 *     on the frame buffer or on the normal (native) destination when these use
 *     different color formats.
 *     The pixel format does not make any assumption regarding the respective
-*     color space, color channels, etc. In this manner the Graphics Engine 
+*     color space, color channels, etc. In this manner the Graphics Engine
 *     remains platform and color independent.
 *     Please note, surfaces with this color format can serve as a destination
 *     only in all drawing operations.
@@ -305,7 +306,7 @@ typedef void (*XFillWorker)
 typedef void (*XCopyWorker)
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   XGradient*        aGradient
 );
@@ -325,7 +326,7 @@ typedef void (*XCopyWorker)
 *     project on the destination row.
 *   aWidth        - Length of the row in pixel.
 *   aS, aT        - Source surface coordinates corresponding to the first pixel
-*     of the destination row. 
+*     of the destination row.
 *   aSS, aTS      - Factors to interpolate the s and t coefficients for next
 *     following pixel of the destination row.
 *   aSrcWidth,
@@ -339,7 +340,7 @@ typedef void (*XCopyWorker)
 typedef void (*XWarpWorker)
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -458,7 +459,7 @@ typedef void (*XFillDriver)
 *   aSrcY       - Origin of the area to copy from the source surface.
 *   aBlend      - != 0 if the operation should be performed with alpha blending.
 *   aColors     - Array with 4 color values. These four values do correspond
-*     to the four corners of the area: top-left, top-right, bottom-right and 
+*     to the four corners of the area: top-left, top-right, bottom-right and
 *     bottom-left.
 *
 * RETURN VALUE:
@@ -507,7 +508,7 @@ typedef void (*XCopyDriver)
 *     destination area.
 *   aBlend      - != 0 if the operation should be performed with alpha blending.
 *   aColors     - Array with 4 color values. These four values do correspond
-*     to the four corners of the area: top-left, top-right, bottom-right and 
+*     to the four corners of the area: top-left, top-right, bottom-right and
 *     bottom-left.
 *
 * RETURN VALUE:
@@ -551,7 +552,7 @@ typedef void (*XTileDriver)
 * ARGUMENTS:
 *   aDstHandle  - Handle to the screen/native destination surface.
 *   aSrcHandle  - Handle to the native/index8/alpha8 source surface.
-*   DstX1, 
+*   DstX1,
 *   DstY1,
 *   DstW1,
 *   ...
@@ -607,6 +608,69 @@ typedef void (*XWarpDriver)
   int               aClipHeight,
   int               aBlend,
   int               aFilter,
+  unsigned long*    aColors
+);
+
+
+/*******************************************************************************
+* PROTOTYPE:
+*   XPolygonDriver
+*
+* DESCRIPTION:
+*   The following type declares a prototype for an external graphics subsystem
+*   function, which should perform the 'fill polygon' operation by using solid
+*   or gradient color values. The polygon is described by values in the aPaths
+*   parameter.
+*
+*  aPaths stores the edges as a serie of X,Y pairs starting always with a value
+*  specifying the number of existing edges. With this approach one path can
+*  consist of several sub-paths. The end of the list is determined by a sub-
+*  path with 0 edges.
+*
+*  +-------+------+------+------+------+------+------+-------+     +-----+
+*  | edges |  X0  |  Y0  |  X1  |  Y1  |  X2  |  Y2  | edges | ... |  0  |
+*  +-------+------+------+------+------+------+------+-------+     +-----+
+
+*
+* ARGUMENTS:
+*   aDstHandle      - Handle to the screen/native destination surface.
+*   aPaths          - An array containing the path data. The array starts with
+*     the number of edges a path is composed of. Then follow the coordinates of
+*     all path corners as X,Y pairs. After the last coordinate pair next path
+*     can follow starting again with the number of edges. The end of the path
+*     data is signed with 0. The X,Y coordinates are stored as signed integer
+*     with 4-bit fixpoint precision.
+*   aDstX,
+*   aDstY           - Origin of the area to fill (relative to the top-left
+*     corner of the destination surface).
+*   aWidth,
+*   aHeight         - Size of the area to fill.
+*   aBlend          - = 0 if the operation should be performed with alpha
+*     blending.
+*   aAntialiased    - If != 0, the antialiasing should be applied to every
+*     pixel.
+*   aNonZeroWinding - Controls the fill rule to be used by the algorithm. If
+*    this parameter is == 0, the even-odd fill rule is used. If this parameter
+*    is != 0, the non-zero winding rule is used.
+*   aColors         - Array with 4 RGBA8888 color values. The four color values
+*     do correspond to the four corners of the area: top-left, top-right,
+*     bottom-right and bottom-left.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+typedef void (*XPolygonDriver)
+(
+  unsigned long     aDstHandle,
+  int*              aPaths,
+  int               aDstX,
+  int               aDstY,
+  int               aWidth,
+  int               aHeight,
+  int               aBlend,
+  int               aAntialiased,
+  int               aNonZeroWinding,
   unsigned long*    aColors
 );
 
@@ -1280,8 +1344,8 @@ void EwInitOpacityGradient
 *
 * ARGUMENTS:
 *   aGradient  - Color gradient to get the color.
-*   aX, aY     - Position relative to the upper-left corner of the gradient to 
-*     get the color value.    
+*   aX, aY     - Position relative to the upper-left corner of the gradient to
+*     get the color value.
 *
 * RETURN VALUE:
 *   Interpolated color value in the universal RGBA8888 color format.
@@ -1300,13 +1364,13 @@ unsigned int EwGetColorFromGradient
 *   EwGetOpacityFromGradient
 *
 * DESCRIPTION:
-*   The function EwGetOpacityFromGradient() has the job to interpolate the 
+*   The function EwGetOpacityFromGradient() has the job to interpolate the
 *   opacity value for the given position within a color gradient.
 *
 * ARGUMENTS:
 *   aGradient  - Color gradient to get the value.
-*   aX, aY     - Position relative to the upper-left corner of the gradient to 
-*     get the opacity value.    
+*   aX, aY     - Position relative to the upper-left corner of the gradient to
+*     get the opacity value.
 *
 * RETURN VALUE:
 *   Interpolated color value in the universal RGBA8888 color format. Only the
@@ -1318,6 +1382,70 @@ unsigned int EwGetOpacityFromGradient
   XGradient*        aGradient,
   int               aX,
   int               aY
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwRasterAlpha8Polygon
+*
+* DESCRIPTION:
+*  The function EwRasterAlpha8Polygon() implements an algorithm to estimate the
+*  content of an ALPHA8 bitmap from polygon data determined by edges in the
+*  array aPaths. aPaths stores the edges as a serie of X,Y pairs starting always
+*  with a value specifying the number of existing edges. With this approach one
+*  path can consist of several sub-paths. The end of the list is determined by a
+*  sub-path with 0 edges.
+*
+*  +-------+------+------+------+------+------+------+-------+     +-----+
+*  | edges |  X0  |  Y0  |  X1  |  Y1  |  X2  |  Y2  | edges | ... |  0  |
+*  +-------+------+------+------+------+------+------+-------+     +-----+
+*
+*  The function evaluates the path data for intersections between the edges and
+*  the pixel within the destination area aDstX, aDstY, aWidth and aHeight. Then
+*  the affected pixel are set or cleared according to whether they lie inside
+*  or outside the polygon.
+*
+* ARGUMENTS:
+*   aDst            - Pointer to the first pixel of the destination ALPHA8
+*     surface. The caller is responsable for clearing the surface before.
+*   aPaths          - An array containing the path data. The array starts with
+*     the number of edges a path is composed of. Then follow the coordinates of
+*     all path corners as X,Y pairs. After the last coordinate pair next path
+*     can follow starting again with the number of edges. The end of the path
+*     data is signed with 0. The X,Y coordinates are stored as signed integer
+*     with 4-bit fixpoint precision. The coordinates are valid relative to the
+*     top-left corner of the destination area aDstX, aDstY.
+*   aDstX,
+*   aDstY           - Origin of the area to fill (relative to the top-left
+*     corner of the destination surface).
+*   aWidth,
+*   aHeight         - Size of the area to fill.
+*   aX, aY          - Path coordinate at the top-left corner of aDstX, aDstY
+*     area. This value is expressed in in 4-bit fixpoint precision.
+*   aAntialiased    - If != 0, the function applies antialiasing to the pixel.
+*     The antialiasing is based on supersampling with 4 samples in X and Y
+*     direction.
+*   aNonZeroWinding - Controls the fill rule to be used by the algorithm. If
+*    this parameter is == 0, the even-odd fill rule is used. If this parameter
+*    is != 0, the non-zero winding rule is used.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwRasterAlpha8Polygon
+(
+  XSurfaceMemory*   aDst,
+  int*              aPaths,
+  int               aDstX,
+  int               aDstY,
+  int               aWidth,
+  int               aHeight,
+  int               aX,
+  int               aY,
+  int               aAntialiased,
+  int               aNonZeroWinding
 );
 
 
@@ -1467,7 +1595,7 @@ void EwEmulateCopy
 * DESCRIPTION:
 *   The function EwEmulateWarp() drives a warp operation for a rectangular area
 *   of a native, index8 or alpha8 surface to a polygon within a screen or native
-*   surface. The function modulates the copied pixel by solid or gradient 
+*   surface. The function modulates the copied pixel by solid or gradient
 *   opacity values.
 *
 *   The function provides the top-level interface to the software pixel driver.
@@ -1476,7 +1604,7 @@ void EwEmulateCopy
 * ARGUMENTS:
 *   aDst        - Pointer to the first pixel of the destination surface.
 *   aSrc        - Pointer to the first pixel of the source surface.
-*   DstX1, 
+*   DstX1,
 *   DstY1,
 *   DstW1,
 *   ...
@@ -1534,6 +1662,77 @@ void EwEmulateWarp
 
 /*******************************************************************************
 * FUNCTION:
+*   EwEmulateFillPolygon
+*
+* DESCRIPTION:
+*  The function EwEmulateFillPolygon() drives a fill polygon operation with
+*  polygon data provided in the array aPaths. aPaths stores polygon edges as a
+*  serie of X,Y coordinate pairs starting always with a value specifying the
+*  number of edges the path is composed of. With this approach one path can
+*  consist of several sub-paths. The end of the list is determined by a sub-
+*  path with 0 edges:
+*
+*  +-------+------+------+------+------+------+------+-------+     +-----+
+*  | edges |  X0  |  Y0  |  X1  |  Y1  |  X2  |  Y2  | edges | ... |  0  |
+*  +-------+------+------+------+------+------+------+-------+     +-----+
+*
+*  The function evaluates the path data for intersections between the edges and
+*  the pixel within the destination area aDstX, aDstY, aWidth and aHeight. The
+*  function modulates the pixel by solid or gradient color values.
+*
+*  The function provides the top-level interface to the software pixel driver.
+*  The real drawing operation will be driven by the passed worker function.
+*
+* ARGUMENTS:
+*   aDst            - Pointer to the first pixel of the destination surface.
+*   aPaths          - An array containing the path data. The array starts with
+*     the number of edges a path is composed of. Then follow the coordinates of
+*     all path corners as X,Y pairs. After the last coordinate pair next path
+*     can follow starting again with the number of edges. The end of the path
+*     data is signed with 0. The X,Y coordinates are stored as signed integer
+*     with 4-bit fixpoint precision. The coordinates are valid relative to the
+*     top-left corner of the destination bitmap.
+*   aDstX,
+*   aDstY           - Origin of the area to fill (relative to the top-left
+*     corner of the destination surface).
+*   aWidth,
+*   aHeight         - Size of the area to fill.
+*   aAntialiased    - If != 0, the function applies antialiasing to the pixel.
+*     The antialiasing is based on supersampling with 4 samples in X and Y
+*     direction.
+*   aNonZeroWinding - Controls the fill rule to be used by the algorithm. If
+*    this parameter is == 0, the even-odd fill rule is used. If this parameter
+*    is != 0, the non-zero winding rule is used.
+*   aGradient       - Color information to modulate the copied pixel.
+*   aGrdX,
+*   aGrdY           - Origin of the affected area in the gradient coordinate
+*     space.
+*   aWorker         - Low-level worker function to perform the final copy
+*     operation of the rasterized pixel row-wise.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwEmulateFillPolygon
+(
+  XSurfaceMemory*   aDst,
+  int*              aPaths,
+  int               aDstX,
+  int               aDstY,
+  int               aWidth,
+  int               aHeight,
+  int               aAntialiased,
+  int               aNonZeroWinding,
+  XGradient*        aGradient,
+  int               aGrdX,
+  int               aGrdY,
+  XCopyWorker       aWorker
+);
+
+
+/*******************************************************************************
+* FUNCTION:
 *   EwPackColor
 *
 * DESCRIPTION:
@@ -1567,7 +1766,7 @@ void EwEmulateWarp
 *   aRed,
 *   aGreen,
 *   aBlue,
-*   aAlpha  - Non-premultiplied color channel values in the range 0 .. 255. 
+*   aAlpha  - Non-premultiplied color channel values in the range 0 .. 255.
 *
 * RETURN VALUE:
 *   Packed 32 bit color value. Particular for the target color format.
@@ -1604,7 +1803,7 @@ unsigned int EwPackColor
 *   aRed,
 *   aGreen,
 *   aBlue,
-*   aAlpha  - Non-premultiplied color channel values in the range 0 .. 255. 
+*   aAlpha  - Non-premultiplied color channel values in the range 0 .. 255.
 *
 * RETURN VALUE:
 *   32 bit clut entry. Particular for the target color format.
@@ -1662,7 +1861,7 @@ void EwScreenSetPixelSolid
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
-*   to draw a single pixel with a solid color. The new pixel will be alpha 
+*   to draw a single pixel with a solid color. The new pixel will be alpha
 *   blended with the existing pixel of the destination.
 *
 * ARGUMENTS:
@@ -1747,14 +1946,14 @@ void EwScreenFillRowSolid
 void EwFillRowSolidBlend
 (
   XSurfaceMemory*   aDst,
-  int               aWidth, 
+  int               aWidth,
   XGradient*        aGradient
 );
 
 void EwScreenFillRowSolidBlend
 (
   XSurfaceMemory*   aDst,
-  int               aWidth, 
+  int               aWidth,
   XGradient*        aGradient
 );
 
@@ -1815,14 +2014,14 @@ void EwScreenFillRowGradient
 void EwFillRowGradientBlend
 (
   XSurfaceMemory*   aDst,
-  int               aWidth, 
+  int               aWidth,
   XGradient*        aGradient
 );
 
 void EwScreenFillRowGradientBlend
 (
   XSurfaceMemory*   aDst,
-  int               aWidth, 
+  int               aWidth,
   XGradient*        aGradient
 );
 
@@ -1911,7 +2110,7 @@ void EwScreenCopyNativeRowBlend
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
 *   to copy a horizontal pixel row between two native surfaces. The operation
-*   is executed with an additional solid opacity value. The new pixel will 
+*   is executed with an additional solid opacity value. The new pixel will
 *   overwrite the existing pixel within the destination.
 *
 * ARGUMENTS:
@@ -2062,7 +2261,7 @@ void EwScreenCopyNativeRowGradientBlend
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
-*   to copy a horizontal pixel row from an index8 to a native surface. The 
+*   to copy a horizontal pixel row from an index8 to a native surface. The
 *   operation is executed without any additional opacity values. The new pixel
 *   overwrites the existing pixel within the destination.
 *
@@ -2100,7 +2299,7 @@ void EwScreenCopyIndex8Row
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
-*   to copy a horizontal pixel row from an index8 to a native surface. The 
+*   to copy a horizontal pixel row from an index8 to a native surface. The
 *   operation is executed without any additional opacity values. The new pixel
 *   will be alpha blended withe the existing pixel of the destination.
 *
@@ -2138,7 +2337,7 @@ void EwScreenCopyIndex8RowBlend
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
-*   to copy a horizontal pixel row from an index8 to a native surface. The 
+*   to copy a horizontal pixel row from an index8 to a native surface. The
 *   operation is executed with an additional solid opacity value. The new pixel
 *   will overwrite the existing pixel within the destination.
 *
@@ -2176,7 +2375,7 @@ void EwScreenCopyIndex8RowSolid
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
-*   to copy a horizontal pixel row from an index8 to a native surface. The 
+*   to copy a horizontal pixel row from an index8 to a native surface. The
 *   operation is executed with an additional solid opacity value. The new pixel
 *   will be alpha blended with the existing pixel of the destination.
 *
@@ -2214,8 +2413,8 @@ void EwScreenCopyIndex8RowSolidBlend
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
-*   to copy a horizontal pixel row from an index8 to a native surface. The 
-*   operation is executed with an additional opacity gradient. The new pixel 
+*   to copy a horizontal pixel row from an index8 to a native surface. The
+*   operation is executed with an additional opacity gradient. The new pixel
 *   overwrites the existing pixel within the destination.
 *
 * ARGUMENTS:
@@ -2252,7 +2451,7 @@ void EwScreenCopyIndex8RowGradient
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
-*   to copy a horizontal pixel row from an index8 to a native surface. The 
+*   to copy a horizontal pixel row from an index8 to a native surface. The
 *   operation is executed with an additional opacity gradient. The new pixel
 *   will be alpha blended with the existing pixel of the destination.
 *
@@ -2463,7 +2662,7 @@ void EwScreenCopyAlpha8RowGradientBlend
 void EwWarpNativeRow
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2477,7 +2676,7 @@ void EwWarpNativeRow
 void EwScreenWarpNativeRow
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2518,7 +2717,7 @@ void EwScreenWarpNativeRow
 void EwWarpNativeRowFilter
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2532,7 +2731,7 @@ void EwWarpNativeRowFilter
 void EwScreenWarpNativeRowFilter
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2572,7 +2771,7 @@ void EwScreenWarpNativeRowFilter
 void EwWarpNativeRowBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2586,7 +2785,7 @@ void EwWarpNativeRowBlend
 void EwScreenWarpNativeRowBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2627,7 +2826,7 @@ void EwScreenWarpNativeRowBlend
 void EwWarpNativeRowFilterBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2641,7 +2840,7 @@ void EwWarpNativeRowFilterBlend
 void EwScreenWarpNativeRowFilterBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2656,7 +2855,9 @@ void EwScreenWarpNativeRowFilterBlend
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpNativeRowGradient
+*   EwWarpNativeRowSolid
 *   EwScreenWarpNativeRowGradient
+*   EwScreenWarpNativeRowSolid
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -2681,7 +2882,21 @@ void EwScreenWarpNativeRowFilterBlend
 void EwWarpNativeRowGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpNativeRowSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2695,7 +2910,7 @@ void EwWarpNativeRowGradient
 void EwScreenWarpNativeRowGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2706,11 +2921,26 @@ void EwScreenWarpNativeRowGradient
   XGradient*        aGradient
 );
 
+void EwScreenWarpNativeRowSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpNativeRowFilterGradient
+*   EwWarpNativeRowFilterSolid
 *   EwScreenWarpNativeRowFilterGradient
+*   EwScreenWarpNativeRowFilterSolid
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -2736,7 +2966,21 @@ void EwScreenWarpNativeRowGradient
 void EwWarpNativeRowFilterGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpNativeRowFilterSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2750,7 +2994,7 @@ void EwWarpNativeRowFilterGradient
 void EwScreenWarpNativeRowFilterGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2761,11 +3005,26 @@ void EwScreenWarpNativeRowFilterGradient
   XGradient*        aGradient
 );
 
+void EwScreenWarpNativeRowFilterSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpNativeRowGradientBlend
+*   EwWarpNativeRowSolidBlend
 *   EwScreenWarpNativeRowGradientBlend
+*   EwScreenWarpNativeRowSolidBlend
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -2791,7 +3050,21 @@ void EwScreenWarpNativeRowFilterGradient
 void EwWarpNativeRowGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpNativeRowSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2805,7 +3078,7 @@ void EwWarpNativeRowGradientBlend
 void EwScreenWarpNativeRowGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2816,11 +3089,26 @@ void EwScreenWarpNativeRowGradientBlend
   XGradient*        aGradient
 );
 
+void EwScreenWarpNativeRowSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpNativeRowFilterGradientBlend
+*   EwWarpNativeRowFilterSolidBlend
 *   EwScreenWarpNativeRowFilterGradientBlend
+*   EwScreenWarpNativeRowFilterSolidBlend
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -2847,7 +3135,21 @@ void EwScreenWarpNativeRowGradientBlend
 void EwWarpNativeRowFilterGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpNativeRowFilterSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2861,7 +3163,7 @@ void EwWarpNativeRowFilterGradientBlend
 void EwScreenWarpNativeRowFilterGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2872,6 +3174,19 @@ void EwScreenWarpNativeRowFilterGradientBlend
   XGradient*        aGradient
 );
 
+void EwScreenWarpNativeRowFilterSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
@@ -2901,7 +3216,7 @@ void EwScreenWarpNativeRowFilterGradientBlend
 void EwWarpIndex8Row
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2915,7 +3230,7 @@ void EwWarpIndex8Row
 void EwScreenWarpIndex8Row
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2956,7 +3271,7 @@ void EwScreenWarpIndex8Row
 void EwWarpIndex8RowFilter
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -2970,7 +3285,7 @@ void EwWarpIndex8RowFilter
 void EwScreenWarpIndex8RowFilter
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3010,7 +3325,7 @@ void EwScreenWarpIndex8RowFilter
 void EwWarpIndex8RowBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3024,7 +3339,7 @@ void EwWarpIndex8RowBlend
 void EwScreenWarpIndex8RowBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3065,7 +3380,7 @@ void EwScreenWarpIndex8RowBlend
 void EwWarpIndex8RowFilterBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3079,7 +3394,7 @@ void EwWarpIndex8RowFilterBlend
 void EwScreenWarpIndex8RowFilterBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3094,7 +3409,9 @@ void EwScreenWarpIndex8RowFilterBlend
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpIndex8RowGradient
+*   EwWarpIndex8RowSolid
 *   EwScreenWarpIndex8RowGradient
+*   EwScreenWarpIndex8RowSolid
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -3119,7 +3436,21 @@ void EwScreenWarpIndex8RowFilterBlend
 void EwWarpIndex8RowGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpIndex8RowSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3133,7 +3464,7 @@ void EwWarpIndex8RowGradient
 void EwScreenWarpIndex8RowGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3144,11 +3475,26 @@ void EwScreenWarpIndex8RowGradient
   XGradient*        aGradient
 );
 
+void EwScreenWarpIndex8RowSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpIndex8RowFilterGradient
+*   EwWarpIndex8RowFilterSolid
 *   EwScreenWarpIndex8RowFilterGradient
+*   EwScreenWarpIndex8RowFilterSolid
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -3174,7 +3520,21 @@ void EwScreenWarpIndex8RowGradient
 void EwWarpIndex8RowFilterGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpIndex8RowFilterSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3188,7 +3548,7 @@ void EwWarpIndex8RowFilterGradient
 void EwScreenWarpIndex8RowFilterGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3199,11 +3559,26 @@ void EwScreenWarpIndex8RowFilterGradient
   XGradient*        aGradient
 );
 
+void EwScreenWarpIndex8RowFilterSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpIndex8RowGradientBlend
+*   EwWarpIndex8RowSolidBlend
 *   EwScreenWarpIndex8RowGradientBlend
+*   EwScreenWarpIndex8RowSolidBlend
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -3229,7 +3604,21 @@ void EwScreenWarpIndex8RowFilterGradient
 void EwWarpIndex8RowGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpIndex8RowSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3243,7 +3632,7 @@ void EwWarpIndex8RowGradientBlend
 void EwScreenWarpIndex8RowGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3254,11 +3643,26 @@ void EwScreenWarpIndex8RowGradientBlend
   XGradient*        aGradient
 );
 
+void EwScreenWarpIndex8RowSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpIndex8RowFilterGradientBlend
+*   EwWarpIndex8RowFilterSolidBlend
 *   EwScreenWarpIndex8RowFilterGradientBlend
+*   EwScreenWarpIndex8RowFilterSolidBlend
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -3285,7 +3689,21 @@ void EwScreenWarpIndex8RowGradientBlend
 void EwWarpIndex8RowFilterGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpIndex8RowFilterSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3299,7 +3717,7 @@ void EwWarpIndex8RowFilterGradientBlend
 void EwScreenWarpIndex8RowFilterGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3310,11 +3728,26 @@ void EwScreenWarpIndex8RowFilterGradientBlend
   XGradient*        aGradient
 );
 
+void EwScreenWarpIndex8RowFilterSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpAlpha8RowGradient
+*   EwWarpAlpha8RowSolid
 *   EwScreenWarpAlpha8RowGradient
+*   EwScreenWarpAlpha8RowSolid
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -3339,7 +3772,21 @@ void EwScreenWarpIndex8RowFilterGradientBlend
 void EwWarpAlpha8RowGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpAlpha8RowSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3353,7 +3800,7 @@ void EwWarpAlpha8RowGradient
 void EwScreenWarpAlpha8RowGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3364,11 +3811,26 @@ void EwScreenWarpAlpha8RowGradient
   XGradient*        aGradient
 );
 
+void EwScreenWarpAlpha8RowSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpAlpha8RowFilterGradient
+*   EwWarpAlpha8RowFilterSolid
 *   EwScreenWarpAlpha8RowFilterGradient
+*   EwScreenWarpAlpha8RowFilterSolid
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -3394,7 +3856,21 @@ void EwScreenWarpAlpha8RowGradient
 void EwWarpAlpha8RowFilterGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpAlpha8RowFilterSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3408,7 +3884,7 @@ void EwWarpAlpha8RowFilterGradient
 void EwScreenWarpAlpha8RowFilterGradient
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3419,11 +3895,26 @@ void EwScreenWarpAlpha8RowFilterGradient
   XGradient*        aGradient
 );
 
+void EwScreenWarpAlpha8RowFilterSolid
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpAlpha8RowGradientBlend
+*   EwWarpAlpha8RowSolidBlend
 *   EwScreenWarpAlpha8RowGradientBlend
+*   EwScreenWarpAlpha8RowSolidBlend
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -3449,7 +3940,21 @@ void EwScreenWarpAlpha8RowFilterGradient
 void EwWarpAlpha8RowGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpAlpha8RowSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3463,7 +3968,7 @@ void EwWarpAlpha8RowGradientBlend
 void EwScreenWarpAlpha8RowGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3474,11 +3979,26 @@ void EwScreenWarpAlpha8RowGradientBlend
   XGradient*        aGradient
 );
 
+void EwScreenWarpAlpha8RowSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
 *   EwWarpAlpha8RowFilterGradientBlend
+*   EwWarpAlpha8RowFilterSolidBlend
 *   EwScreenWarpAlpha8RowFilterGradientBlend
+*   EwScreenWarpAlpha8RowFilterSolidBlend
 *
 * DESCRIPTION:
 *   The following function defines the low-level, pixel-wise drawing operation
@@ -3505,7 +4025,21 @@ void EwScreenWarpAlpha8RowGradientBlend
 void EwWarpAlpha8RowFilterGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
+
+void EwWarpAlpha8RowFilterSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3519,7 +4053,7 @@ void EwWarpAlpha8RowFilterGradientBlend
 void EwScreenWarpAlpha8RowFilterGradientBlend
 (
   XSurfaceMemory*   aDst,
-  XSurfaceMemory*   aSrc, 
+  XSurfaceMemory*   aSrc,
   int               aWidth,
   int               aS,
   int               aT,
@@ -3530,6 +4064,19 @@ void EwScreenWarpAlpha8RowFilterGradientBlend
   XGradient*        aGradient
 );
 
+void EwScreenWarpAlpha8RowFilterSolidBlend
+(
+  XSurfaceMemory*   aDst,
+  XSurfaceMemory*   aSrc,
+  int               aWidth,
+  int               aS,
+  int               aT,
+  int               aSS,
+  int               aTS,
+  int               aSrcWidth,
+  int               aSrcHeight,
+  XGradient*        aGradient
+);
 
 /*******************************************************************************
 * FUNCTION:
@@ -3580,6 +4127,34 @@ void EwFreeVideo
 (
   void*             aMemory
 );
+
+
+/*******************************************************************************
+* MACRO:
+*   EW_REDIRECT_WARP_FUNC
+*
+* DESCRIPTION:
+*   The macro EW_REDIRECT_WARP_FUNC defines a new function as wrapper to an
+*   already existing warp operations implemented in another function.
+*
+*   This macro is used in Software Pixel Driver modules implementing limited
+*   set of possible warp operations. The wrapper function created by the macro
+*   takes care of the right redirection of the operation to the corresponding
+*   worker function.
+*
+* ARGUMENTS:
+*   aFunc1 - Function to serve as the entry point for the operation.
+*   aFunc2 - Function, which should be called by the wrapper.
+*
+*******************************************************************************/
+#define EW_REDIRECT_WARP_FUNC( aFunc1, aFunc2 )                                \
+  void aFunc1( XSurfaceMemory* aDst, XSurfaceMemory* aSrc, int aWidth,         \
+    int aS, int aT, int aSS, int aTS, int aSrcWidth, int aSrcHeight,           \
+    XGradient* aGradient )                                                     \
+  {                                                                            \
+    aFunc2( aDst, aSrc, aWidth, aS, aT, aSS, aTS, aSrcWidth, aSrcHeight,       \
+            aGradient );                                                       \
+  }
 
 
 #ifdef __cplusplus

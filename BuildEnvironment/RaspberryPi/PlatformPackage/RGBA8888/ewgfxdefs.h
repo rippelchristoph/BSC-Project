@@ -7,11 +7,12 @@
 *
 ********************************************************************************
 *
-* This software and related documentation are intellectual property owned by 
-* TARA Systems and are copyright of TARA Systems.
-* Any copying, reproduction or redistribution of the software in whole or in 
-* part by any means not in accordance with the End-User License Agreement for
-* Embedded Wizard software is expressly prohibited.
+* This software and related documentation ("Software") are intellectual
+* property owned by TARA Systems and are copyright of TARA Systems.
+* Any modification, copying, reproduction or redistribution of the Software in
+* whole or in part by any means not in accordance with the End-User License
+* Agreement for Embedded Wizard is expressly prohibited. The removal of this
+* preamble is expressly prohibited.
 * 
 ********************************************************************************
 *
@@ -165,8 +166,8 @@
   #define EW_MAX_ISSUE_TASKS 100
 #endif
 
-#if (( EW_MAX_ISSUE_TASKS < 1 ) || ( EW_MAX_ISSUE_TASKS > 256 ))
-  #error "The maximum number of issue tasks out of range 1 .. 256."
+#if (( EW_MAX_ISSUE_TASKS < 1 ) || ( EW_MAX_ISSUE_TASKS > 8196 ))
+  #error "The maximum number of issue tasks out of range 1 .. 8192."
 #endif
 
 
@@ -233,7 +234,13 @@
    case the macro is 0, only dirty screen areas are redrawn.
 
    EW_PRESERVE_FRAMEBUFFER_CONTENT == 1 means that the graphics subsystem retains
-   the content of the framebuffer between two consecutive screen update frames. */
+   the content of the framebuffer between two consecutive screen update frames.
+
+   EW_PERFORM_FULLOFFSCREENBUFFER_UPDATE == 1 means that the underlying graphics
+   subsystem expects every off-screen buffer being cleared when drawing in it.
+   The effect is similar to the above described EW_PERFORM_FULLSCREEN_UPDATE
+   with the difference, that it applies to off-screen buffers only and not to the
+   framebuffer itself. */
 #ifndef EW_PERFORM_FULLSCREEN_UPDATE
   #define EW_PERFORM_FULLSCREEN_UPDATE 0
 #endif
@@ -258,6 +265,15 @@
 #if ( EW_PRESERVE_FRAMEBUFFER_CONTENT != 0 )
   #undef  EW_PRESERVE_FRAMEBUFFER_CONTENT
   #define EW_PRESERVE_FRAMEBUFFER_CONTENT   1
+#endif
+
+#ifndef EW_PERFORM_FULLOFFSCREENBUFFER_UPDATE
+  #define EW_PERFORM_FULLOFFSCREENBUFFER_UPDATE 0
+#endif
+
+#if ( EW_PERFORM_FULLOFFSCREENBUFFER_UPDATE != 0 )
+  #undef  EW_PERFORM_FULLOFFSCREENBUFFER_UPDATE
+  #define EW_PERFORM_FULLOFFSCREENBUFFER_UPDATE 1
 #endif
 
 

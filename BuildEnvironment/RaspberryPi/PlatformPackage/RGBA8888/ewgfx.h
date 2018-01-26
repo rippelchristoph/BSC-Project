@@ -7,12 +7,13 @@
 *
 ********************************************************************************
 *
-* This software and related documentation are intellectual property owned by 
-* TARA Systems and are copyright of TARA Systems.
-* Any copying, reproduction or redistribution of the software in whole or in 
-* part by any means not in accordance with the End-User License Agreement for
-* Embedded Wizard software is expressly prohibited.
-* 
+* This software and related documentation ("Software") are intellectual
+* property owned by TARA Systems and are copyright of TARA Systems.
+* Any modification, copying, reproduction or redistribution of the Software in
+* whole or in part by any means not in accordance with the End-User License
+* Agreement for Embedded Wizard is expressly prohibited. The removal of this
+* preamble is expressly prohibited.
+*
 ********************************************************************************
 *
 * DESCRIPTION:
@@ -48,12 +49,12 @@
 *     source only. It is not possible to draw to an Index8 or Alpha8 bitmap.
 *
 *     An additional feature are 'frames'. Except the 'Screen' bitmap format,
-*     each bitmap can consist of several contents, so called frames. When 
+*     each bitmap can consist of several contents, so called frames. When
 *     working with the bitmap, the desired frame needs to be selected. Within
 *     a bitmap all frames always have the same size. The 'Screen' bitmap format
 *     allows a single frame only.
 *
-*   > Rich set of drawing operations: lines, filled rectangles, bitmap copying,
+*   > Rich set of drawing operations: paths, filled polygons, bitmap copying,
 *     3D perspective correct projection and text output. All operations can be
 *     performed with or without the alpha-blending. Alpha-blending allows fine
 *     fading effects when several graphical objects are drawn one upon an other.
@@ -108,7 +109,7 @@
 *
 *     Note the possible performance limits, when software emulation is used.
 *
-*   This is the public header file of the Embedded Wizard Graphics Engine 
+*   This is the public header file of the Embedded Wizard Graphics Engine
 *   EWGFX. It declares the top level API of the engine:
 *
 *   > Bitmap and font management. Creation and destroying of bitmaps, loading
@@ -116,6 +117,8 @@
 *
 *   > Drawing operations. Functions to perform all kinds of drawing operations
 *     like drawing lines, attributed text, bitmaps, etc.
+*
+*   > Creation and management of path data.
 *
 *   > Text, flow text and attributed text processing and size calculation.
 *     The attributed text provides a powerful way to layout and output strings
@@ -136,17 +139,18 @@
 
 
 #ifdef __cplusplus
-  extern "C" 
+  extern "C"
   {
 #endif
 
-/* The current version of the Runtime Environment. */
-#define EW_GFX_VERSION 0x00080014
+/* The current version of the Graphics Engine. */
+#define EW_GFX_VERSION 0x0008001E
 
 
 /******************************************************************************
-* TYPE: 
+* TYPE:
 *   EwFullScreenUpdate
+*   EwFullOffScreenBufferUpdate
 *   EwPreserveFramebufferContent
 *
 * DESCRIPTION:
@@ -157,11 +161,67 @@
 *
 ******************************************************************************/
 extern int EwFullScreenUpdate;
+extern int EwFullOffScreenBufferUpdate;
 extern int EwPreserveFramebufferContent;
 
 
+/*******************************************************************************
+* MACRO:
+*   EW_PATH_CAP_XXX
+*   EW_PATH_JOIN_XXX
+*
+* DESCRIPTION:
+*   The following enumerations define the possible styles used when stroking
+*   paths. The enumeration EW_PATH_CAP_XXX controls the appearance of the ends
+*   of a stroken path. The enumeration EW_PATH_JOIN_XXX controls how the join
+*   points between two edges of the path should be connected.
+*
+* ELEMENTS:
+*   EW_PATH_CAP_START_FLAT     - The begin of every path is squared off.
+*   EW_PATH_CAP_START_SQUARE   - The begin of everry path is extended by the
+*     half of the line thickness and then squared off.
+*   EW_PATH_CAP_START_TRIANGLE - Every path does begin with a triangle.
+*   EW_PATH_CAP_START_ROUND    - The begin of every path is rounded.
+*
+*   EW_PATH_CAP_END_FLAT       - The end of every path is squared off.
+*   EW_PATH_CAP_END_SQUARE     - The end of every path end is extended by the
+*     half of the line thickness and then squared off.
+*   EW_PATH_CAP_END_TRIANGLE   - Every path does end with a triangle.
+*   EW_PATH_CAP_END_ROUND      - The end of every path is rounded.
+*
+*   EW_PATH_CAP_FLAT           - The begin and the end of every path are squared
+*     off at their endpoints.
+*   EW_PATH_CAP_SQUARE         - The begin and the end of every path are extended
+*     by the half of the line thickness and then squared off.
+*   EW_PATH_CAP_TRIANGLE       - The paths start and end with a triangle.
+*   EW_PATH_CAP_ROUND          - The begin and the end of every path are rounded.
+*
+*   EW_PATH_JOIN_BEVEL         - The path segments are joined by connecting their
+*     outside edges with a single straight path segment.
+*   EW_PATH_JOIN_MITER         - The path segments are joined by extending their
+*     outside edges until they intersect.
+*   EW_PATH_JOIN_ROUND         - The path corners are rounded.
+*
+*******************************************************************************/
+#define EW_PATH_CAP_START_FLAT     0x00000000
+#define EW_PATH_CAP_START_SQUARE   0x00000001
+#define EW_PATH_CAP_START_TRIANGLE 0x00000002
+#define EW_PATH_CAP_START_ROUND    0x00000003
+#define EW_PATH_CAP_END_FLAT       0x00000000
+#define EW_PATH_CAP_END_SQUARE     0x00000100
+#define EW_PATH_CAP_END_TRIANGLE   0x00000200
+#define EW_PATH_CAP_END_ROUND      0x00000300
+#define EW_PATH_CAP_FLAT           0x00000000
+#define EW_PATH_CAP_SQUARE         0x00000101
+#define EW_PATH_CAP_TRIANGLE       0x00000202
+#define EW_PATH_CAP_ROUND          0x00000303
+#define EW_PATH_JOIN_BEVEL         0x00000000
+#define EW_PATH_JOIN_MITER         0x00010000
+#define EW_PATH_JOIN_ROUND         0x00020000
+
+
 /******************************************************************************
-* TYPE: 
+* TYPE:
 *   XBitmapFrame
 *
 * DESCRIPTION:
@@ -178,7 +238,7 @@ extern int EwPreserveFramebufferContent;
 *
 ******************************************************************************/
 typedef struct
-{ 
+{
   struct XSurface*  Surface;
   XPoint            Origin;
   XRect             OpaqueRect;
@@ -186,7 +246,7 @@ typedef struct
 
 
 /******************************************************************************
-* TYPE: 
+* TYPE:
 *   XBitmap
 *
 * DESCRIPTION:
@@ -208,7 +268,7 @@ typedef struct
 *
 ******************************************************************************/
 typedef struct
-{ 
+{
   XInt32              Format;
   XPoint              FrameSize;
   XInt32              FrameDelay;
@@ -220,7 +280,7 @@ typedef struct
 
 
 /******************************************************************************
-* TYPE: 
+* TYPE:
 *   XFont
 *
 * DESCRIPTION:
@@ -251,7 +311,7 @@ typedef struct
 
 
 /******************************************************************************
-* TYPE: 
+* TYPE:
 *   XGlyphMetrics
 *
 * DESCRIPTION:
@@ -311,7 +371,6 @@ typedef struct
   int               Pitch2X;
   int               Pitch2Y;
 } XBitmapLock;
-
 
 
 /*******************************************************************************
@@ -392,8 +451,8 @@ typedef void (*XViewportProc)
 *
 * DESCRIPTION:
 *   The structure XViewport stores the attributes of a viewport. A viewport
-*   provides a kind of abstraction of the physical framebuffer or display 
-*   where graphical outputs are drawn. 
+*   provides a kind of abstraction of the physical framebuffer or display
+*   where graphical outputs are drawn.
 *
 * ELEMENTS:
 *   Size       - Size of the viewport in pixel. This is the area where graphics
@@ -477,12 +536,12 @@ typedef struct
 *
 * DESCRIPTION:
 *   The structure XAttrLink describes a single link stored within an already
-*   parsed, preprocessed attributed string. 
+*   parsed, preprocessed attributed string.
 *
 * ELEMENTS:
 *   Data        - Pointer to the link statement within the attributed string.
 *   NoOfRegions - Number of rectangular areas, the link consists of.
-*   X, Y        - Offset to the left/top origin of the group statement 
+*   X, Y        - Offset to the left/top origin of the group statement
 *     containing the link.
 *
 *******************************************************************************/
@@ -527,6 +586,111 @@ typedef struct
 
 
 /*******************************************************************************
+* TYPE:
+*   XSubPath
+*
+* DESCRIPTION:
+*   The structure XSubPath is used to store the coordinates of a sub-path used
+*   in the XPath structure. In this manner several sub-paths can be managed from
+*   one and the same XPath, every treated individually when stroking or filling
+*   the path area.
+*
+*   The implementation assumes, that the structure is immediately followed by an
+*   array of 'float' values storing the X, Y coordinate pairs of the sub-path.
+*   The first pair is available in the member 'Data'.
+*
+* ELEMENTS:
+*   Capacity  - The max. number of edges this sub-path can accomodate in 'Data'
+*     without the necesity to reallocate it.
+*   NoOfEdges - The number of edges stored already in 'Data'.
+*   HasData   - If != 0, there are data stored in Data array.
+*   IsOpened  - If != 0, the sub-path is opened,
+*   IsClosed  - If != 0, the sub-path is closed. This means the first and the
+*     last coordinate pair in 'Data' are equal and the path has been closed
+*     by explicitly calling the function EwClosePath().
+*   IsValid   - If != 0, the value 'Bounds' is up to date.
+*   Bounds    - Rectangular area enclosing all corners of the sub-path.
+*   Data      - The begin of an array containing the edge coordinates. The data
+*     is stored pairwise as X and Y values. The number of coordinate pairs in
+*     the array is equal ( NoOfEdges + 1 ).
+*
+*******************************************************************************/
+typedef struct _XSubPath
+{
+  XInt32            Capacity;
+  XInt32            NoOfEdges;
+  XBool             HasData;
+  XBool             IsOpened;
+  XBool             IsClosed;
+  XBool             IsValid;
+  XRect             Bounds;
+  float             Data[2];
+} XSubPath;
+
+
+/*******************************************************************************
+* TYPE:
+*   XPathMatrix
+*
+* DESCRIPTION:
+*   The structure XPathMatrix is used to store the state of the path matrix in
+*   a single chained list. Every time EwPushPathMatrix() is used, the actual
+*   matrix of a path is copied in a new XPathMatrix object and stored within
+*   the XPath.
+*
+* ELEMENTS:
+*   Next   - Pointer to the next matrix stored on the stack.
+*   Matrix - The stored content of the matrix.
+*
+*******************************************************************************/
+typedef struct _XPathMatrix
+{
+  struct _XPathMatrix* Next;
+  float                Matrix[6];
+} XPathMatrix;
+
+
+/*******************************************************************************
+* TYPE:
+*   XPath
+*
+* DESCRIPTION:
+*   The structure XPath is used to store the path information used to fill and
+*   stroke paths by using the functions EwFillPath() and EwStrokePath(). One
+*   path can consist of any number of sub-paths. Every sub-path consists of one
+*   or more edges (straight line segments) connected together. One path can be
+*   considered as opened or closed.
+*
+* ELEMENTS:
+*   MaxNoOfSubPaths - The max. number of sub-paths the path can manage.
+*   NoOfOpenedPaths - Counter reflecting the number of sub-paths which are open.
+*   NoOfClosedPaths - Counter reflecting the number of closed sub-paths.
+*   NoOfEdges       - The number of edges stored totally in all sub-paths.
+*   IsValid         - If != 0, the value 'Bounds' is up to date.
+*   Bounds          - Rectangular area enclosing all corners of all sub-path.
+*   Matrix          - 3x2 matrix describing transformations to apply on all
+*     shapes added to the path.
+*   MatrixStack     - Pointer to a list with stored path matrices.
+*   SubPaths        - An array with pointers to the sub-paths managed by this
+*     path.
+*
+*******************************************************************************/
+typedef struct
+{
+  XInt32            MaxNoOfSubPaths;
+  XInt32            NoOfOpenedPaths;
+  XInt32            NoOfClosedPaths;
+  XInt32            NoOfEdges;
+  XBool             IsValid;
+  char              Reserved[3];
+  XRect             Bounds;
+  float             Matrix[6];
+  XPathMatrix*      MatrixStack;
+  XSubPath*         SubPaths[1];
+} XPath;
+
+
+/*******************************************************************************
 * FUNCTION:
 *   EwInitGraphicsEngine
 *
@@ -534,7 +698,7 @@ typedef struct
 *   The function EwInitGraphicsEngine() initializes the Graphics Engine.
 *
 * ARGUMENTS:
-*   aArgs - Optional argument to pass to the init function of the underlying 
+*   aArgs - Optional argument to pass to the init function of the underlying
 *     platform specific adaptation layer.
 *
 * RETURN VALUE:
@@ -915,7 +1079,7 @@ void EwFreeFont
 *     target system. For example, OpenGL target uses aOrient to determine the
 *     screen rotation in degrees.
 *   aOpacity  - Opacity value for the created framebuffer in the range 0 .. 255.
-*     0 -> fully transparent. 255 -> fully opaque. 
+*     0 -> fully transparent. 255 -> fully opaque.
 *   aDisplay1,
 *   aDisplay2,
 *   aDisplay3 - Platform dependent parameter, where already existing framebuffer
@@ -975,10 +1139,10 @@ void EwDoneViewport
 *   aViewport - Viewport to reconfigure its framebuffer.
 *   aPos      - Position, where the framebuffer should be shown on the screen.
 *     Please note: The value is already expressed in coordinates valid within
-*     the target display by taking in account all particular configuration 
+*     the target display by taking in account all particular configuration
 *     aspects like the default rotation of the surface contents.
 *   aOpacity  - Opacity value for the framebuffer in the range 0 .. 255.
-*     0 -> fully transparent. 255 -> fully opaque. 
+*     0 -> fully transparent. 255 -> fully opaque.
 *
 * RETURN VALUE:
 *   If successful, the function returns != 0. If the used framebuffer doesn't
@@ -1191,6 +1355,1075 @@ void EwDrawBorder
 
 /*******************************************************************************
 * FUNCTION:
+*   EwCreatePath
+*
+* DESCRIPTION:
+*   The function EwCreatePath() creates a new path and reserves memory for up
+*   aMaxNoOfSubPaths sub-paths. The sub-paths are initially empty. Before data
+*   can be stored in a sub-path the function EwInitSubPath() should be called.
+*
+*   Once the path is prepared and loaded with coordinate information, the path
+*   can be passed to the EwFillPath() and EwStrokePath() functions. If not
+*   used anymore the path should be freed by using the function EwFreePath().
+*
+* ARGUMENTS:
+*   aMaxNoOfSubPaths - Max. number of sub-paths the new path can manage.
+*
+* RETURN VALUE:
+*   If successful, the function returns a pointer to the newly created path.
+*   Otherwise the function returns 0.
+*
+*******************************************************************************/
+XPath* EwCreatePath
+(
+  XInt32            aMaxNoOfSubPaths
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwFreePath
+*
+* DESCRIPTION:
+*   The function EwFreePath() frees the memory occupied by the path and its all
+*   sub-paths.
+*
+* ARGUMENTS:
+*   aPath - Pointer to the path to free.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwFreePath
+(
+  XPath*            aPath
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetMaxNoOfSubPaths
+*
+* DESCRIPTION:
+*   The function EwGetMaxNoOfSubPaths() returns how many sub-paths the given
+*   path can maximally store. The returned value corresponds to the parameter
+*   passed in the invocation of the EwCreatePath() function.
+*
+* ARGUMENTS:
+*   aPath - Pointer to the path to query the information.
+*
+* RETURN VALUE:
+*   If successful, the function returns the max. number of sub-path the path
+*   can store. Otherwise the function returns 0.
+*
+*******************************************************************************/
+XInt32 EwGetMaxNoOfSubPaths
+(
+  XPath*            aPath
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwInitSubPath
+*
+* DESCRIPTION:
+*   The function EwInitSubPath() prepares a sub-path to be able to store up to
+*   aMaxNoOfEdges path edges. With this operation memory for the sub-path data
+*   is reserved. Initially the just initialized sub-path is considered as being
+*   still empty. To fill the sub-path with edge coordinates use the functions
+*   EwAddSubPathLine(), EwAddSubPathArc(), etc.
+*
+*   If the affected sub-path has been already initialized in the past, the old
+*   information is discarded before initializing the new sub-path.
+*
+* ARGUMENTS:
+*   aPath         - Pointer to the path to initialize the sub-path.
+*   aSubPathNo    - Number identifying the sub-path within aPath to initialize.
+*     The first sub-path has the number 0. The second 1, and so far.
+*   aMaxNoOfEdges - The max. number of edges you intend to store in the sub-
+*     path. This is the max. capacity for the sub-path. Passing 0 (zero) in
+*     this  parameter results in the existing sub-path data being released and
+*     the sub-path is considered as empty again.
+*
+* RETURN VALUE:
+*   If successful, the function returns != 0. If there is no available memory
+*   for the sub-path allocation, 0 is returned.
+*
+*******************************************************************************/
+XBool EwInitSubPath
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XInt32            aMaxNoOfEdges
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwBeginSubPath
+*
+* DESCRIPTION:
+*   The function EwBeginSubPath() sets the start position for the sub-path. The
+*   affected sub-path has to be initialized previously by calling the function
+*   EwInitSubPath(). Beginning with the position, the path can be filled with
+*   edges by calling functions like EwAddSubPathLine(), EwAddSubPathBezier2(),
+*   etc.
+*
+*   Every sub-path contains exact one begin position. Calling this function for
+*   a sub-path being already filled with edge coordinates will clear the actual
+*   sub-path coordinate data and sets the new begin position.
+*
+* ARGUMENTS:
+*   aPath      - Pointer to the path containing the affected sub-path.
+*   aSubPathNo - Number identifying the sub-path within aPath to configure. The
+*     first sub-path has the number 0. The second 1, and so far.
+*   aX, aY     - The coordinates to be used as the start position for the sub-
+*     path. The position is transformed by using the path transformation matrix.
+*     See functions like EwScalePathMatrix(), EwRotatePathMatrix(), etc.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwBeginSubPath
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XFloat            aX,
+  XFloat            aY
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwAddSubPathLine
+*
+* DESCRIPTION:
+*   The function EwAddSubPathLine() appends at the actual position in the sub-
+*   path a new straight line segment consisting of one edge. Then the sub-path
+*   actual position is moved to the end of the just added line.
+*
+*   The actual position results from the end position of the preceding sub-path
+*   segment or it is the value specified in EwBeginSubPath() invocation. If the
+*   sub-path is empty and no start position has been specified in the preceding
+*   EwBeginSubPath() invocation, the function assumes the start position is X=0,
+*   Y=0.
+*
+* ARGUMENTS:
+*   aPath      - Pointer to the path containing the affected sub-path.
+*   aSubPathNo - Number identifying the sub-path within aPath to add the line.
+*     The first sub-path has the number 0. The second 1, and so far.
+*   aX, aY     - The coordinates to be used as the end position for the new line
+*     segment. The position is transformed by using the path transformation
+*     matrix. See functions like EwScalePathMatrix(), EwRotatePathMatrix(), etc.
+*
+* RETURN VALUE:
+*   Returns the index of the node within the sub-path where the end position
+*   of the new line segment has bee stored. Knowing this index, the position
+*   can be modified later by using the function EwSetSubPathNode().
+*
+*   If the sub-path has not been initialized previously by calling the function
+*   EwInitSubPath(), the sub-path has been closed by EwCloseSubPath() or the
+*   entire memory reserved for the sub-path is already occupied by other path
+*   information, the function fails and returns 0.
+*
+*******************************************************************************/
+XInt32 EwAddSubPathLine
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XFloat            aX,
+  XFloat            aY
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwAddSubPathBezier2
+*
+* DESCRIPTION:
+*   The function EwAddSubPathBezier2() appends at the actual position in the
+*   sub-path a new quadratic Bézier curve composed of exact aNoOfEdges straight
+*   line segments. Then the sub-path actual position is moved to the end of the
+*   just added curve.
+*
+*   The actual position results from the end position of the preceding sub-path
+*   segment or it is the value specified in EwBeginSubPath() invocation. If the
+*   sub-path is empty and no start position has been specified in the preceding
+*   EwBeginSubPath() invocation, the function assumes the start position is X=0,
+*   Y=0.
+*
+* ARGUMENTS:
+*   aPath      - Pointer to the path containing the affected sub-path.
+*   aSubPathNo - Number identifying the sub-path within aPath to add the curve.
+*     The first sub-path has the number 0. The second 1, and so far.
+*   aCPX, aCPY - The coordinates of the Bézier curve control point. The position
+*     is transformed by using the path transformation matrix. See functions like
+*     EwScalePathMatrix(), EwRotatePathMatrix(), etc.
+*   aX, aY     - The coordinates to be used as the end position for the Bézier
+*     curve. The position is transformed by using the path transformation matrix.
+*     See functions like EwScalePathMatrix(), EwRotatePathMatrix(), etc.
+*   aNoOfEdges - Number of straight line segments the Bézier curve should be
+*     composed of. The more edges the smoother the resulting curve.
+*
+* RETURN VALUE:
+*   Returns the index of the node within the sub-path where the position of the
+*   first Bézier line segment has bee stored. Knowing this index and the number
+*   of segments the Bézier curve is composed of (aNoOfEdges), the position of
+*   every Bézier line segment can be modified later. See EwSetSubPathNode().
+*
+*   If the sub-path has not been initialized previously by calling the function
+*   EwInitSubPath(), the sub-path has been closed by EwCloseSubPath() or there
+*   is no sufficient memory in the sub-path for the new Bézier curve segments,
+*   the function fails and returns 0.
+*
+*******************************************************************************/
+XInt32 EwAddSubPathBezier2
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XFloat            aCPX,
+  XFloat            aCPY,
+  XFloat            aX,
+  XFloat            aY,
+  XInt32            aNoOfEdges
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwAddSubPathBezier3
+*
+* DESCRIPTION:
+*   The function EwAddSubPathBezier3() appends at the actual position in the
+*   sub-path a new cubic Bézier curve composed of exact aNoOfEdges straight line
+*   segments. Then the sub-path actual position is moved to the end of the just
+*   added curve.
+*
+*   The actual position results from the end position of the preceding sub-path
+*   segment or it is the value specified in EwBeginSubPath() invocation. If the
+*   sub-path is empty and no start position has been specified in the preceding
+*   EwBeginSubPath() invocation, the function assumes the start position is X=0,
+*   Y=0.
+*
+* ARGUMENTS:
+*   aPath        - Pointer to the path containing the affected sub-path.
+*   aSubPathNo   - Number identifying the sub-path within aPath to add the
+*     curve. The first sub-path has the number 0. The second 1, and so far.
+*   aCP1X, aCP1Y - The coordinates of the first Bézier curve control point. The
+*     position is transformed by using the path transformation matrix. See
+*     functions like EwScalePathMatrix(), EwRotatePathMatrix(), etc.
+*   aCP2X, aCP2Y - The coordinates of the second Bézier curve control point. The
+*     position is transformed by using the path transformation matrix. See
+*     functions like EwScalePathMatrix(), EwRotatePathMatrix(), etc.
+*   aX, aY       - The coordinates to be used as the end position for the Bézier
+*     curve. The position is transformed by using the path transformation matrix.
+*     See functions like EwScalePathMatrix(), EwRotatePathMatrix(), etc.
+*   aNoOfEdges   - Number of straight line segments the Bézier curve should be
+*     composed of. The more edges the smoother the resulting curve.
+*
+* RETURN VALUE:
+*   Returns the index of the node within the sub-path where the position of the
+*   first Bézier line segment has bee stored. Knowing this index and the number
+*   of segments the Bézier curve is composed of (aNoOfEdges), the position of
+*   every Bézier line segment can be modified later. See EwSetSubPathNode().
+*
+*   If the sub-path has not been initialized previously by calling the function
+*   EwInitSubPath(), the sub-path has been closed by EwCloseSubPath() or there
+*   is no sufficient memory in the sub-path for the new Bézier curve segments,
+*   the function fails and returns 0.
+*
+*******************************************************************************/
+XInt32 EwAddSubPathBezier3
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XFloat            aCP1X,
+  XFloat            aCP1Y,
+  XFloat            aCP2X,
+  XFloat            aCP2Y,
+  XFloat            aX,
+  XFloat            aY,
+  XInt32            aNoOfEdges
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwAddSubPathArc
+*
+* DESCRIPTION:
+*   The function EwAddSubPathArc() adds to the sub-path a new arc curve composed
+*   of exact aNoOfEdges straight line segments. If the sub-path contains already
+*   any segment information, the start of the arc curve is connected with the
+*   end of the last segment by an additional straight line.
+*
+*   Similarly, if start position for the sub-path has been specified by using
+*   EwBeginSubPath(), an additional line segment is added to connect the curve
+*   with the specified sub-path start position.
+*
+*   After the curve is stored in the path, the sub-path actual position is moved
+*   to refer to the end position of the arc.
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to add the curve.
+*     The first sub-path has the number 0. The second 1, and so far.
+*   aCenterX,
+*   aCenterY    - The coordinates of the center of the arc to calculate. The
+*     position is transformed by using the path transformation matrix. See
+*     functions like EwScalePathMatrix(), EwRotatePathMatrix(), etc.
+*   aRadiusX,
+*   aRadiusY    - Radius if the arc in X and Y direction.
+*   aStartAngle,
+*   aEndAngle   - Start- and end-angle of the arc expressed in degree and
+*     measured clockwise relative to the positive X-axis.
+*   aNoOfEdges  - Number of straight line segments the arc curve should be
+*     composed of. The more edges the smoother the resulting curve.
+*
+* RETURN VALUE:
+*   Returns the index of the node within the sub-path where the start position
+*   of the first arc line segment has bee stored. Knowing this index and the
+*   number of segments the arc curve is composed of (aNoOfEdges), the position
+*   of every arc line segment can be modified later. See EwSetSubPathNode().
+*
+*   If the sub-path has not been initialized previously by calling the function
+*   EwInitSubPath(), the sub-path has been closed by EwCloseSubPath() or there
+*   is no sufficient memory in the sub-path for the new arc curve segments, the
+*   function fails and returns 0.
+*
+*******************************************************************************/
+XInt32 EwAddSubPathArc
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XFloat            aCenterX,
+  XFloat            aCenterY,
+  XFloat            aRadiusX,
+  XFloat            aRadiusY,
+  XFloat            aStartAngle,
+  XFloat            aEndAngle,
+  XInt32            aNoOfEdges
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwAddSubPathCopy
+*
+* DESCRIPTION:
+*   The function EwAddSubPathCopy() adds to the sub-path a copy of another sub-
+*   path. In this manner contents from different paths can be combined together
+*   without the necessity to re-calculate them again.
+*
+*   If the destination sub-path contains already any segment information, the
+*   start of the copied source sub-path is connected with the end of the last
+*   segment by an additional straight line.
+*
+*   Similarly, if start position for the sub-path has been specified by using
+*   EwBeginSubPath(), an additional line segment is added to connect it with
+*   the copied sub-path.
+*
+*   If the transformation matrix of the destination path has been configured,
+*   the copied source coordinates are transformed by using the matrix. (See
+*   EwTranslatePath(), EwScalePath(), etc.)
+*
+*   After the copy is stored in the path, the sub-path actual position is moved
+*   to refer to the end position of the copied sub-path.
+*
+* ARGUMENTS:
+*   aPath         - Pointer to the destination path containing the affected
+*     sub-path to add the copy.
+*   aSubPathNo    - Number identifying the sub-path within aPath to add the
+*     copy. The first sub-path has the number 0. The second 1, and so far.
+*   aSrcPath      - Pointer to the source path containing the sub-path to copy.
+*   aSrcSubPathNo - Number identifying the sub-path within aSrcPath to create
+*     a copy. The first sub-path has the number 0. The second 1, and so far.
+*   aSrcNodeNo    - The number of the node in the source sub-path to start the
+*     copy operation. If this parameter is == 0, the operation starts with the
+*     first node (the begin) of the source sub-path.
+*   aNoOfEdges    - The number of edges to copy from the source sub-path
+*     beginning with the node specified in the parameter aSrcNodeNo. In total,
+*     ( aNoOfEdges + 1 ) will be copied. Specifying -1 in this parameter means
+*     that all edges until the source sub-path end should be copied. If there
+*     are less edges available in the source path, the function fails.
+*
+* RETURN VALUE:
+*   Returns the index of the node within the destination sub-path where the
+*   start position of the first copied segment has bee stored. Knowing this
+*   index and the number of copied segments the, the position of every segment
+*   can be modified later. See EwSetSubPathNode().
+*
+*   If the sub-path has not been initialized previously by calling the function
+*   EwInitSubPath(), the sub-path has been closed by EwCloseSubPath(), there
+*   is no sufficient memory in the destination sub-path for the complete copy
+*   of the source sub-path or the source sub-path or the requested nodes do
+*   not exist, the function fails and returns 0.
+*
+*******************************************************************************/
+XInt32 EwAddSubPathCopy
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XPath*            aSrcPath,
+  XInt32            aSrcSubPathNo,
+  XInt32            aSrcNodeNo,
+  XInt32            aNoOfEdges
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwCloseSubPath
+*
+* DESCRIPTION:
+*   The function EwCloseSubPath() marks the affected sub-path as closed. The
+*   function verifies whether the first and last position of the path are equal
+*   and if this is not the case, adds an additional line segment to the path in
+*   order to close it.
+*
+*   Once the function is called, no additional path information can be added to
+*   the affected path unless it is initialized again by using EwInitSubPath()
+*   or cleared by using EwBeginSubPath().
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to close. The
+*     first sub-path has the number 0. The second 1, and so far.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwCloseSubPath
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwShiftSubPathNodes
+*
+* DESCRIPTION:
+*   The function EwShiftSubPathNodes() removes from the sub-path the specified
+*   number of leading coordinate values. This results in the sub-path content
+*   being shifted and the number of sub-path edges being reduced by the given
+*   aNoOfNodes parameter. Thereupon new edge data can be appended to the path,
+*   e.g. by using the function EwAddSubPathLine().
+*
+*   Applying the function on a sub-path closed by a preceding EwCloseSubPath()
+*   is not possible and causes the function to return without any modification
+*   on the sub-path data.
+*
+*   Moreover, the operation is limited to leave at least one node in the path.
+*   In other words, it is not possible to clear the path completely. Use the
+*   functions EwBeginSubPath() or EwInitSubPath() in such application cases.
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to close. The
+*     first sub-path has the number 0. The second 1, and so far.
+*   aNoOfNodes  - The number of X,Y coordinate pairs to remove from the sub-
+*     path starting with the very first node # 0.
+*   aTranslateX,
+*   aTranslateY - Offset to add to all coordinates after the content is
+*     shifted.
+*
+* RETURN VALUE:
+*   Returns the number of nodes removed from the sub-path or 0 if the sub-path
+*   doesn't exist, is not initialized (see EwInitSubPath()), is empty or it has
+*   been closed by preceding EwCloseSubPath() invocation.
+*
+*******************************************************************************/
+XInt32 EwShiftSubPathNodes
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XInt32            aNoOfNodes,
+  XFloat            aTranslateX,
+  XFloat            aTranslateY
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwSetSubPathNode
+*
+* DESCRIPTION:
+*   The function EwSetSubPathNode() modifies the X,Y coordinate of the given
+*   node within the path. In this manner it is not necessary to re-initialize
+*   and re-calculate the complete path if only few path corners do move.
+*
+*   Trying to modify a not existing node is ignored.
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to modify a node.
+*     The first sub-path has the number 0. The second 1, and so far.
+*   aNodeNo     - The path node (the corner) affected by the modification. The
+*     nodes are counted starting with 0.
+*   aX, aY      - The coordinates to assign to the affected node. The position
+*     is transformed by using the path transformation matrix. See functions like
+*     EwScalePathMatrix(), EwRotatePathMatrix(), etc.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwSetSubPathNode
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XInt32            aNodeNo,
+  XFloat            aX,
+  XFloat            aY
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetSubPathNodeX
+*
+* DESCRIPTION:
+*   The function EwGetSubPathNodeX() returns the X coordinate of the given
+*   node within the path.
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to get the node
+*     coordinate. The first sub-path has the number 0. The second 1, and so far.
+*   aNodeNo     - The path node (the corner) affected by the query ioperation.
+*     The nodes are counted starting with 0.
+*
+* RETURN VALUE:
+*   Returns the X coordinate stored in the specified node or 0.0 if the sub-
+*   path doesn't exist, is not initialized (see EwInitSubPath()) or the desired
+*   node is not available in the sub-apth.
+*
+*******************************************************************************/
+XFloat EwGetSubPathNodeX
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XInt32            aNodeNo
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetSubPathNodeY
+*
+* DESCRIPTION:
+*   The function EwGetSubPathNodeY() returns the Y coordinate of the given
+*   node within the path.
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to get the node
+*     coordinate. The first sub-path has the number 0. The second 1, and so far.
+*   aNodeNo     - The path node (the corner) affected by the query ioperation.
+*     The nodes are counted starting with 0.
+*
+* RETURN VALUE:
+*   Returns the Y coordinate stored in the specified node or 0.0 if the sub-
+*   path doesn't exist, is not initialized (see EwInitSubPath()) or the desired
+*   node is not available in the sub-apth.
+*
+*******************************************************************************/
+XFloat EwGetSubPathNodeY
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo,
+  XInt32            aNodeNo
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetNoOfSubPathEdges
+*
+* DESCRIPTION:
+*   The function EwGetNoOfSubPathEdges() returns how many edges (straight line
+*   segments) the affected sub-path actually store.
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to query the
+*     information. The first sub-path has the number 0. The second 1, and so
+*     far.
+*
+* RETURN VALUE:
+*   Returns the number of edges existing actually in the sub-path or 0 if the
+*   sub-path doesn't exist, is not initialized (see EwInitSubPath()) or is
+*   empty.
+*
+*******************************************************************************/
+XInt32 EwGetNoOfSubPathEdges
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetNoOfFreeSubPathEdges
+*
+* DESCRIPTION:
+*   The function EwGetNoOfFreeSubPathEdges() returns how many edges (straight
+*   line segments) can still be added to the affected sub-path.
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to query the
+*     information. The first sub-path has the number 0. The second 1, and so
+*     far.
+*
+* RETURN VALUE:
+*   Returns the number of edges the sub-path can additionally accomodate or 0
+*   if the sub-path doesn't exist, is not initialized (see EwInitSubPath()), is
+*   closed (see EwCloseSubPath()) or is full.
+*
+*******************************************************************************/
+XInt32 EwGetNoOfFreeSubPathEdges
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwIsSubPathClosed
+*
+* DESCRIPTION:
+*   The function EwIsSubPathClosed() returns != 0 if the affected sub-path has
+*   been closed by calling the function EwCloseSubPath(). Once closed, no new
+*   path segments can be added to the sub-path.
+*
+* ARGUMENTS:
+*   aPath       - Pointer to the path containing the affected sub-path.
+*   aSubPathNo  - Number identifying the sub-path within aPath to query the
+*     information. The first sub-path has the number 0. The second 1, and so
+*     far.
+*
+* RETURN VALUE:
+*   Returns != 0 if the sub-path has been closed.
+*
+*******************************************************************************/
+XBool EwIsSubPathClosed
+(
+  XPath*            aPath,
+  XInt32            aSubPathNo
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwTranslatePathMatrix
+*
+* DESCRIPTION:
+*   The function EwTranslatePathMatrix() applies the given displacement to the
+*   path matrix. This corresponds to the translation of the origin of the path
+*   coordinate system by the given values in the X- and Y-direction.
+*
+*   The modification of the path matrix affects the position of line segments
+*   added later to the sub-paths of the path.
+*
+* ARGUMENTS:
+*   aPath    - Pointer to the path to apply the transformation.
+*   aDeltaX,
+*   aDeltaY  - Displacement to apply on the transformation matrix.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwTranslatePathMatrix
+(
+  XPath*            aPath,
+  XFloat            aDeltaX,
+  XFloat            aDeltaY
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwScalePathMatrix
+*
+* DESCRIPTION:
+*   The function EwScalePathMatrix() applies the given factors to the path
+*   matrix. This corresponds to the scaling of the path coordinate system by
+*   the given values in the X- and Y-direction.
+*
+*   The modification of the path matrix affects the position of line segments
+*   added later to the sub-paths of the path.
+*
+* ARGUMENTS:
+*   aPath    - Pointer to the path to apply the transformation.
+*   aScaleX,
+*   aScaleY  - Scaling factors to apply on the transformation matrix.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwScalePathMatrix
+(
+  XPath*            aPath,
+  XFloat            aScaleX,
+  XFloat            aScaleY
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwRotatePathMatrix
+*
+* DESCRIPTION:
+*   The function EwRotatePathMatrix() applies the given angle to the path matrix.
+*   This corresponds to the rotation of the path coordinate system around its
+*   origin position.
+*
+*   The modification of the path matrix affects the position of line segments
+*   added later to the sub-paths of the path.
+*
+* ARGUMENTS:
+*   aPath  - Pointer to the path to apply the transformation.
+*   aAngle - Rotation angle to apply on the transformation matrix. The angle is
+*     expressed in degree and measured clockwise.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwRotatePathMatrix
+(
+  XPath*            aPath,
+  XFloat            aAngle
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwPushPathMatrix
+*
+* DESCRIPTION:
+*   The function EwPushPathMatrix() stores the current state of the path matrix
+*   on its internal stack. This is very useful during creation of complex paths.
+*
+*   To restore the matrix again use the function EwPopPathMatrix().
+*
+* ARGUMENTS:
+*   aPath  - Pointer to the path to store its matrix.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwPushPathMatrix
+(
+  XPath*            aPath
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwPopPathMatrix
+*
+* DESCRIPTION:
+*   The function EwPopPathMatrix() restores the current state of the path matrix
+*   from its internal stack. The matrix has to be stored by the preceding call
+*   to the EwPushPathMatrix() function.
+*
+*   If the stack is already empty, the identity matrix is loaded.
+*
+* ARGUMENTS:
+*   aPath  - Pointer to the path to restore its matrix.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwPopPathMatrix
+(
+  XPath*            aPath
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwInitPathMatrix
+*
+* DESCRIPTION:
+*   The function EwInitPathMatrix() loads the identity matrix in the path.
+*
+* ARGUMENTS:
+*   aPath  - Pointer to the path to load the matrix.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwInitPathMatrix
+(
+  XPath*            aPath
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwFillPath
+*
+* DESCRIPTION:
+*   The function EwFillPath() fills within the rectangular area aDstRect of
+*   the given bitmap aDst a polygon determined by the data stored in aPath. The
+*   polygon is filled with a color gradient specified by the four color
+*   parameters aColorTL .. aColorBL.
+*
+*   An additional clipping area aClipRect limits the operation. All pixel lying
+*   outside this area will not be drawn. The last aBlend parameter controls the
+*   mode how drawn pixel are combined with the pixel already existing in the
+*   destination bitmap. If aBlend != 0, the drawn pixel are alpha-blended with
+*   the background, otherwise the drawn pixel will overwrite the old content.
+*
+* ARGUMENTS:
+*   aDst            - Destination bitmap.
+*   aPath           - Data object providing the path information consisting of
+*     one or more sub-paths. Sub-paths, which are opened, are automatically
+*     closed by connecting their start and end positions with a straight line
+*     segment. All path coordinates are assumed as being relative to the top-
+*     left corner of the aDstRect area, or if aFlipY is != 0, relative to the
+*     bottom-left corner.
+*   aDstFrameNo     - Frame within the destination bitmap affected by the
+*     drawing operation.
+*   aClipRect       - Area to limit the drawing operation (Relative to the top-
+*     left corner of the destination bitmap frame).
+*   aDstRect        - Area to fill with the color gradient (Relative to the top-
+*     left corner of the destination bitmap frame).
+*   aFlipY          - If != 0, the coordinate system of the path is vertically
+*     mirrored and its origin is moved to the bottom-left edge of aDstRect.
+*   aOffset         - Offset to move the origin of the path coordinate system.
+*     Changing this value scrolls the displayed path content.
+*   aColorTL,
+*   aColorTR,
+*   aColorBR,
+*   aColorBL        - Color values corresponding to the four corners of aDstRect.
+*   aBlend          - If != 0, the drawn pixel will be alpha-blended with the
+*     pixel in the background.
+*   aAntialiased    - If != 0, the function applies antialiasing to the pixel.
+*     The antialiasing is based on supersampling with 4 samples in X and Y
+*     direction.
+*   aNonZeroWinding - Controls the fill rule to be used by the algorithm. If
+*     this parameter is == 0, the even-odd fill rule is used. If this parameter
+*     is != 0, the non-zero winding rule is used.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwFillPath
+(
+  XBitmap*          aDst,
+  XPath*            aPath,
+  XInt32            aDstFrameNo,
+  XRect             aClipRect,
+  XRect             aDstRect,
+  XBool             aFlipY,
+  XPoint            aOffset,
+  XColor            aColorTL,
+  XColor            aColorTR,
+  XColor            aColorBR,
+  XColor            aColorBL,
+  XBool             aBlend,
+  XBool             aAntialiased,
+  XBool             aNonZeroWinding
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwStrokePath
+*
+* DESCRIPTION:
+*   The function EwStrokePath() strokes within the rectangular area aDstRect of
+*   the given bitmap aDst a path determined by the data stored in aPath. The
+*   path is stroked with line thickness specified in the parameter aWidth and
+*   color gradient specified by the four color parameters aColorTL .. aColorBL.
+*   With the parameter aStyle the cap and join points of the path are configured.
+*
+*   An additional clipping area aClipRect limits the operation. All pixel lying
+*   outside this area will not be drawn. The last aBlend parameter controls the
+*   mode how drawn pixel are combined with the pixel already existing in the
+*   destination bitmap. If aBlend != 0, the drawn pixel are alpha-blended with
+*   the background, otherwise the drawn pixel will overwrite the old content.
+*
+* ARGUMENTS:
+*   aDst            - Destination bitmap.
+*   aPath           - Data object providing the path information consisting of
+*     one or more sub-paths. Sub-paths, which are opened, are automatically
+*     closed by connecting their start and end positions with a straight line
+*     segment. All path coordinates are assumed as being relative to the top-
+*     left corner of the aDstRect area, or if aFlipY is != 0, relative to the
+*     bottom-left corner.
+*   aDstFrameNo     - Frame within the destination bitmap affected by the
+*     drawing operation.
+*   aClipRect       - Area to limit the drawing operation (Relative to the top-
+*     left corner of the destination bitmap frame).
+*   aDstRect        - Area to fill with the color gradient (Relative to the top-
+*     left corner of the destination bitmap frame).
+*   aFlipY          - If != 0, the coordinate system of the path is vertically
+*     mirrored and its origin is moved to the bottom-left edge of aDstRect.
+*   aOffset         - Offset to move the origin of the path coordinate system.
+*     Changing this value scrolls the displayed path content.
+*   aWidth          - The width in pixel to stroke the path.
+*   aStyle          - Flags specifying how the path caps and join points should
+*     appear. See the enumeration EW_PATH_CAP_XXX and EW_PATH_JOIN_XXX.
+*   aMiterLimit     - In case aStyle is configured with EW_PATH_JOIN_MITER, this
+*     parameter imposes a limit on the ratio between the miter length and the
+*     half of the line thickness aWidth. If the limit is exceeded for a corner,
+*     the corner appears as bevel (EW_PATH_JOIN_BEVEL) instead of miter.
+*   aColorTL,
+*   aColorTR,
+*   aColorBR,
+*   aColorBL        - Color values corresponding to the four corners of aDstRect.
+*   aBlend          - If != 0, the drawn pixel will be alpha-blended with the
+*     pixel in the background.
+*   aAntialiased    - If != 0, the function applies antialiasing to the pixel.
+*     The antialiasing is based on supersampling with 4 samples in X and Y
+*     direction.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwStrokePath
+(
+  XBitmap*          aDst,
+  XPath*            aPath,
+  XInt32            aDstFrameNo,
+  XRect             aClipRect,
+  XRect             aDstRect,
+  XBool             aFlipY,
+  XPoint            aOffset,
+  XFloat            aWidth,
+  XUInt32           aStyle,
+  XFloat            aMiterLimit,
+  XColor            aColorTL,
+  XColor            aColorTR,
+  XColor            aColorBR,
+  XColor            aColorBL,
+  XBool             aBlend,
+  XBool             aAntialiased
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetBitmapFromFillPath
+*
+* DESCRIPTION:
+*   The function EwGetBitmapFromFillPath() creates an ALPHA8 bitmap consisting
+*   of a single frame in the size aSize and fills within the bitmap a polygon
+*   determined by the data stored in aPath. Finally, the function returns the
+*   bitmap. Such bitmap can be used in copy operations to speed-up the screen
+*   update without the necessity to rasterize the polygon again and again.
+*
+* ARGUMENTS:
+*   aSize           - Size of the bitmap to create.
+*   aPath           - Data object providing the path information consisting of
+*     one or more sub-paths. Sub-paths, which are opened, are automatically
+*     closed by connecting their start and end positions with a straight line
+*     segment. All path coordinates are assumed as being relative to the top-
+*     left corner of the bitmap area, or if aFlipY is != 0, relative to the
+*     bottom-left corner.
+*   aFlipY          - If != 0, the coordinate system of the path is vertically
+*     mirrored and its origin is moved to the bottom-left edge of the bitmap.
+*   aOffset         - Offset to move the origin of the path coordinate system.
+*     Changing this value scrolls the displayed path content.
+*   aAntialiased    - If != 0, the function applies antialiasing to the pixel.
+*     The antialiasing is based on supersampling with 4 samples in X and Y
+*     direction.
+*   aNonZeroWinding - Controls the fill rule to be used by the algorithm. If
+*     this parameter is == 0, the even-odd fill rule is used. If this parameter
+*     is != 0, the non-zero winding rule is used.
+*
+* RETURN VALUE:
+*   If successful, the function returns the just created bitmap. If the path
+*   is empty or the operation fails, the function returns 0.
+*
+*******************************************************************************/
+XBitmap* EwGetBitmapFromFillPath
+(
+  XPoint            aSize,
+  XPath*            aPath,
+  XBool             aFlipY,
+  XPoint            aOffset,
+  XBool             aAntialiased,
+  XBool             aNonZeroWinding
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwGetBitmapFromStrokePath
+*
+* DESCRIPTION:
+*   The function EwGetBitmapFromStrokePath() creates an ALPHA8 bitmap containing
+*   a single frame in the size aSize and strokes within it a path determined by
+*   the data stored in aPath. The path is stroked with line thickness specified
+*   in the parameter aWidth. With the parameter aStyle the cap and join points
+*   of the path are configured. Finally, the function returns the bitmap. Such
+*   bitmap can be used in copy operations to speed-up the screen update without
+*   the necessity to rasterize the polygon again and again.
+*
+* ARGUMENTS:
+*   aSize           - Size of the bitmap to create.
+*   aPath           - Data object providing the path information consisting of
+*     one or more sub-paths. Sub-paths, which are opened, are automatically
+*     closed by connecting their start and end positions with a straight line
+*     segment. All path coordinates are assumed as being relative to the top-
+*     left corner of the bitmap area, or if aFlipY is != 0, relative to the
+*     bottom-left corner.
+*   aFlipY          - If != 0, the coordinate system of the path is vertically
+*     mirrored and its origin is moved to the bottom-left edge of the bitmap.
+*   aOffset         - Offset to move the origin of the path coordinate system.
+*     Changing this value scrolls the displayed path content.
+*   aWidth          - The width in pixel to stroke the path.
+*   aStyle          - Flags specifying how the path caps and join points should
+*     appear. See the enumeration EW_PATH_CAP_XXX and EW_PATH_JOIN_XXX.
+*   aMiterLimit     - In case aStyle is configured with EW_PATH_JOIN_MITER, this
+*     parameter imposes a limit on the ratio between the miter length and the
+*     half of the line thickness aWidth. If the limit is exceeded for a corner,
+*     the corner appears as bevel (EW_PATH_JOIN_BEVEL) instead of miter.
+*   aAntialiased    - If != 0, the function applies antialiasing to the pixel.
+*     The antialiasing is based on supersampling with 4 samples in X and Y
+*     direction.
+*
+* RETURN VALUE:
+*   If successful, the function returns the just created bitmap. If the path
+*   is empty or the operation fails, the function returns 0.
+*
+*******************************************************************************/
+XBitmap* EwGetBitmapFromStrokePath
+(
+  XPoint            aSize,
+  XPath*            aPath,
+  XBool             aFlipY,
+  XPoint            aOffset,
+  XFloat            aWidth,
+  XUInt32           aStyle,
+  XFloat            aMiterLimit,
+  XBool             aAntialiased
+);
+
+
+/*******************************************************************************
+* FUNCTION:
 *   EwCopyBitmap
 *
 * DESCRIPTION:
@@ -1217,8 +2450,8 @@ void EwDrawBorder
 *   aDstRect    - Area to fill with the copied pixel (Relative to the top-left
 *     corner of the destination bitmap frame).
 *   aSrcPos     - Origin of the area to copy from the source bitmap (Relative
-*     to the top-left corner of the source bitmap frame). The size of the 
-*     source area corresponds to the size of the destination area as it is 
+*     to the top-left corner of the source bitmap frame). The size of the
+*     source area corresponds to the size of the destination area as it is
 *     specified in aDstRect.
 *   aColorTL,
 *   aColorTR,
@@ -1241,7 +2474,7 @@ void EwCopyBitmap
   XRect             aDstRect,
   XPoint            aSrcPos,
   XColor            aColorTL,
-  XColor            aColorTR, 
+  XColor            aColorTR,
   XColor            aColorBR,
   XColor            aColorBL,
   XBool             aBlend
@@ -1301,7 +2534,7 @@ void EwTileBitmap
   XRect             aSrcRect,
   XPoint            aSrcPos,
   XColor            aColorTL,
-  XColor            aColorTR, 
+  XColor            aColorTR,
   XColor            aColorBR,
   XColor            aColorBL,
   XBool             aBlend
@@ -1347,7 +2580,7 @@ void EwTileBitmap
 *   aSrcFrameNo - Source bitmap frame affected by the operation.
 *   aClipRect   - Area to limit the drawing operation (Relative to the top-left
 *     corner of the destination bitmap frame).
-*   aDstX1, 
+*   aDstX1,
 *   aDstY1,
 *   aDstW1,
 *   ...
@@ -1392,7 +2625,7 @@ void EwWarpBitmap
   XFloat            aDstW4,
   XRect             aSrcRect,
   XColor            aColor1,
-  XColor            aColor2, 
+  XColor            aColor2,
   XColor            aColor3,
   XColor            aColor4,
   XBool             aBlend,
@@ -1727,7 +2960,7 @@ void EwDrawBitmapFrame
   XBool             aDrawBottomEdge,
   XBool             aDrawInterior,
   XColor            aColorTL,
-  XColor            aColorTR, 
+  XColor            aColorTR,
   XColor            aColorBR,
   XColor            aColorBL,
   XBool             aBlend
@@ -1772,13 +3005,13 @@ void EwDrawBitmapFrame
 *   +-------------+
 *   | No of lines |
 *   +-------------+-------------+------+     +------+
-*   |    Offset   | No of char  | Char | ... | Char | 
+*   |    Offset   | No of char  | Char | ... | Char |
 *   +-------------+-------------+------+     +------+
-*   |    Offset   | No of char  | Char | ... | Char | 
+*   |    Offset   | No of char  | Char | ... | Char |
 *   +-------------+-------------+------+     +------+
 *      ...
 *   +-------------+-------------+------+     +------+
-*   |    Offset   | No of char  | Char | ... | Char | 
+*   |    Offset   | No of char  | Char | ... | Char |
 *   +-------------+-------------+------+     +------+
 *   |      0      |
 *   +-------------+
@@ -1818,14 +3051,14 @@ XString EwParseFlowString
 * DESCRIPTION:
 *   The function EwCreateAttrSet() creates and initializes a new XAttrSet. The
 *   set is used as a simple container for storing of fonts, bitmaps and colors.
-*   These resources are necessary for parsing and drawing of attributed strings. 
+*   These resources are necessary for parsing and drawing of attributed strings.
 *
 *   The size of the set (the max. number of entries, it can store) is passed in
 *   the arguments aNoOfFonts, aNoOfBitmaps and aNoOfColors. After creation, the
 *   size of the set is fixed and can not be changed any more.
 *
 *   All entries of a newly created set are always initialized with 0. To start
-*   working with attributed strings, the set should be loaded with necessary 
+*   working with attributed strings, the set should be loaded with necessary
 *   fonts, bitmaps and colors. The functions, defined below allow an access to
 *   these entries.
 *
@@ -1852,7 +3085,7 @@ XAttrSet* EwCreateAttrSet
 *   EwFreeAttrSet
 *
 * DESCRIPTION:
-*   The function EwFreeAttrSet() frees the memory occuped by the set. The
+*   The function EwFreeAttrSet() frees the memory occupied by the set. The
 *   function frees the memory only - the corresponding fonts, bitmaps are not
 *   affected!
 *
@@ -1896,7 +3129,7 @@ XInt32 EwGetNoOfAttrFonts
 *   EwGetNoOfAttrBitmaps
 *
 * DESCRIPTION:
-*   The function EwGetNoOfAttrBitmaps() determinate how many bitmaps can be 
+*   The function EwGetNoOfAttrBitmaps() determinate how many bitmaps can be
 *   stored within the given set.
 *
 * ARGUMENTS:
@@ -2042,7 +3275,7 @@ void EwSetAttrFont
 *   EwSetAttrBitmap
 *
 * DESCRIPTION:
-*   The function EwSetAttrBitmap() assigns new bitmap aBitmap to the entry 
+*   The function EwSetAttrBitmap() assigns new bitmap aBitmap to the entry
 *   aBitmapNo within the given set aAttrSet.
 *
 * ARGUMENTS:
@@ -2069,7 +3302,7 @@ void EwSetAttrBitmap
 *   EwSetAttrColor
 *
 * DESCRIPTION:
-*   The function EwSetAttrColor() assigns new color value aColor to the entry 
+*   The function EwSetAttrColor() assigns new color value aColor to the entry
 *   aColorNo within the given set aAttrSet.
 *
 * ARGUMENTS:
@@ -2100,7 +3333,7 @@ void EwSetAttrColor
 *   attributed strings may appear with multiple fonts, colors and images - like
 *   HTML.
 *
-*   The appearance of the string is determinated by the used attributes and by 
+*   The appearance of the string is determinated by the used attributes and by
 *   the passed aAttrSet container. The attributes describe what to do with the
 *   text, which font/color should be used or what images should be displayed
 *   together with the text. The attributes are always enclosed in '{ .... }'
@@ -2111,7 +3344,7 @@ void EwSetAttrColor
 *   The attribute {clr1} forces the Graphics Engine to draw the following text
 *   with the color number 1. The value of the desired color is stored in the
 *   aAttrSet container. In the same manner a font selection can be applied or
-*   an image can be displayed together with the text. The attributed strings 
+*   an image can be displayed together with the text. The attributed strings
 *   use a small but very powerfull set of attributes. They control the entire
 *   layout and the appearance of the displayed text.
 *
@@ -2169,7 +3402,7 @@ void EwFreeAttrString
 * DESCRIPTION:
 *   The function EwDrawAttrText() executes the drawing statements from the
 *   attributed string aAttrString and draws the text and images into the aDst
-*   bitmap at the origin (aDstX, aDstY). The drawing area is clipped by the 
+*   bitmap at the origin (aDstX, aDstY). The drawing area is clipped by the
 *   aClipping rectangle. The necessary fonts, bitmaps and colors are passed in
 *   the aAttrSet container.
 *
@@ -2177,7 +3410,7 @@ void EwFreeAttrString
 *   aDst        - Destination bitmap.
 *   aAttrSet    - Pointer to the set of fonts, bitmaps and colors.
 *   aAttrString - Pointer to the memory area containing the parsed, preprocessed
-*     drawing statements. This area is created by the EwParseAttrString() 
+*     drawing statements. This area is created by the EwParseAttrString()
 *     function.
 *   aDstFrameNo - Frame within the destination bitmap affected by the drawing
 *     operation.
@@ -2185,7 +3418,7 @@ void EwFreeAttrString
 *     corner of the destination bitmap frame).
 *   aDstRect    - Area to fill with the text (Relative to the top-left corner
 *     of the destination bitmap frame).
-*   aSrcPos     - Text output origin (relative to the top-left corner of the 
+*   aSrcPos     - Text output origin (relative to the top-left corner of the
 *     text area).
 *   aOpacityTL,
 *   aOpacityTR,
@@ -2200,7 +3433,7 @@ void EwFreeAttrString
 *******************************************************************************/
 void EwDrawAttrText
 (
-  XBitmap*          aDst, 
+  XBitmap*          aDst,
   XAttrSet*         aAttrSet,
   XAttrString*      aAttrString,
   XInt32            aDstFrameNo,
@@ -2221,12 +3454,12 @@ void EwDrawAttrText
 *
 * DESCRIPTION:
 *   The function EwGetAttrTextSize() calculates the rectangular area necessary
-*   to draw the given attributed string. The rectangular area is calculated by 
+*   to draw the given attributed string. The rectangular area is calculated by
 *   building an union of all drawing statements of the attributed string.
 *
 * ARGUMENTS:
 *   aAttrString - Pointer to the memory area containing the parsed, preprocessed
-*     drawing statements. This area is created by the EwParseAttrString() 
+*     drawing statements. This area is created by the EwParseAttrString()
 *     function.
 *
 * RETURN VALUE:
@@ -2249,7 +3482,7 @@ XPoint EwGetAttrTextSize
 *
 * ARGUMENTS:
 *   aAttrString - Pointer to the memory area containing the parsed, preprocessed
-*     drawing statements. This area is created by the EwParseAttrString() 
+*     drawing statements. This area is created by the EwParseAttrString()
 *     function.
 *
 * RETURN VALUE:
@@ -2278,9 +3511,9 @@ XInt32 EwGetNoOfAttrLinks
 *
 * ARGUMENTS:
 *   aAttrString - Pointer to the memory area containing the parsed, preprocessed
-*     drawing statements. This area is created by the EwParseAttrString() 
+*     drawing statements. This area is created by the EwParseAttrString()
 *     function.
-*   aLinkNo     - The number of the affected link. The first link has the 
+*   aLinkNo     - The number of the affected link. The first link has the
 *     number 0, the second 1, ...
 *
 * RETURN VALUE:
@@ -2306,22 +3539,22 @@ XString EwGetAttrLinkName
 *   EwGetNoOfAttrLinkRegions
 *
 * DESCRIPTION:
-*   The function EwGetNoOfAttrLinkRegions() returns the number of rectangular 
+*   The function EwGetNoOfAttrLinkRegions() returns the number of rectangular
 *   text areas enclosed by the given link aLinkNo within the attributed string
-*   aAttrString. 
+*   aAttrString.
 *
-*   Due to the line wrap, the text enclosed by a single link can be wrapped in 
+*   Due to the line wrap, the text enclosed by a single link can be wrapped in
 *   several text lines, so the link area may become a very complex polygon. To
 *   describe this polygon, it is divided in several rectangular areas, one for
 *   each text line enclosed by the link. To get the origin and the size of an
 *   area, the function EwGetAttrLinkRect() should be used.
 *
-*   The regions are very useful, if a selection frame or an other kind of 
-*   decoration should be drawn together with the link. 
+*   The regions are very useful, if a selection frame or an other kind of
+*   decoration should be drawn together with the link.
 *
 * ARGUMENTS:
 *   aAttrString - Pointer to the memory area containing the parsed, preprocessed
-*     drawing statements. This area is created by the EwParseAttrString() 
+*     drawing statements. This area is created by the EwParseAttrString()
 *     function.
 *   aLinkNo     - Number of the affected link. The first link has the number 0,
 *     the second 1, ...
@@ -2345,13 +3578,13 @@ XInt32 EwGetNoOfAttrLinkRegions
 *
 * DESCRIPTION:
 *   The function EwGetAttrLinkRect() returns the origin and the size of an area
-*   occuped by the link aLinkNo within the attributed string aAttrString.
+*   occupied by the link aLinkNo within the attributed string aAttrString.
 *
-*   Due to the line wrap, the text enclosed by a single link can be wrapped in 
+*   Due to the line wrap, the text enclosed by a single link can be wrapped in
 *   several text lines, so the link area may become a very complex polygon. To
 *   describe this polygon, it is divided in several rectangular areas, one for
 *   each text line enclosed by the link. The number of the desired rectangular
-*   area should be passed in the argument aRegionNo. The first region has the 
+*   area should be passed in the argument aRegionNo. The first region has the
 *   number 0, the second 1, ...
 *
 *   The total number of available regions can be determinated by the call to the
@@ -2359,7 +3592,7 @@ XInt32 EwGetNoOfAttrLinkRegions
 *
 * ARGUMENTS:
 *   aAttrString - Pointer to the memory area containing the parsed, preprocessed
-*     drawing statements. This area is created by the EwParseAttrString() 
+*     drawing statements. This area is created by the EwParseAttrString()
 *     function.
 *   aLinkNo     - Number of the affected link. The first link has the number 0,
 *     the second 1, ...
@@ -2386,14 +3619,14 @@ XRect EwGetAttrLinkRect
 *
 * DESCRIPTION:
 *   The function EwGetAttrLinkBaseline() returns the vertical offset to the base
-*   line of the text enclosed by the link aLinkNo within the attributed string 
+*   line of the text enclosed by the link aLinkNo within the attributed string
 *   aAttrString. The base line is used for vertical text alignment.
 *
-*   Due to the line wrap, the text enclosed by a single link can be wrapped in 
+*   Due to the line wrap, the text enclosed by a single link can be wrapped in
 *   several text lines. For each text line a different base line may be used.
 *   This function provides you with an access to this base line offset for each
 *   text region enclosed by the link. The number of the desired region should be
-*   passed in the argument aRegionNo. The first region has the number 0, the 
+*   passed in the argument aRegionNo. The first region has the number 0, the
 *   second 1, ...
 *
 *   The total number of available regions can be determinated by the call to the
@@ -2401,7 +3634,7 @@ XRect EwGetAttrLinkRect
 *
 * ARGUMENTS:
 *   aAttrString - Pointer to the memory area containing the parsed, preprocessed
-*     drawing statements. This area is created by the EwParseAttrString() 
+*     drawing statements. This area is created by the EwParseAttrString()
 *     function.
 *   aLinkNo     - Number of the affected link. The first link has the number 0,
 *     the second 1, ...
@@ -2442,7 +3675,7 @@ XInt32 EwGetAttrLinkBaseline
 *
 *******************************************************************************/
 XColor EwIndexToColor
-( 
+(
   XInt32            aIndex
 );
 
@@ -2467,7 +3700,7 @@ XColor EwIndexToColor
 *
 *******************************************************************************/
 XUInt8 EwColorToIndex
-( 
+(
   XColor            aColor
 );
 
@@ -2477,11 +3710,11 @@ XUInt8 EwColorToIndex
 *   EwAllocUserColor
 *
 * DESCRIPTION:
-*   The function EwAllocUserColor() tries to store the given user defined color 
+*   The function EwAllocUserColor() tries to store the given user defined color
 *   within an empty area in the global CLUT/palette. User defined colors exist
 *   for external applications (native applications) only. In this manner the
 *   external application can manage its own/private set of color values.
-*   
+*
 *   This functionality is available on Index8, palette based target systems
 *   only.
 *
@@ -2494,7 +3727,7 @@ XUInt8 EwColorToIndex
 *
 *******************************************************************************/
 XUInt8 EwAllocUserColor
-( 
+(
   XColor           aColor
 );
 
@@ -2509,7 +3742,7 @@ XUInt8 EwAllocUserColor
 *   defined colors exist for external applications (native applications) only.
 *   In this manner the external application can manage its own/private set of
 *   color values.
-*   
+*
 *   This functionality is available on Index8, palette based target systems
 *   only.
 *
@@ -2521,7 +3754,7 @@ XUInt8 EwAllocUserColor
 *
 *******************************************************************************/
 void EwFreeUserColor
-( 
+(
   XInt32            aIndex
 );
 
@@ -2531,11 +3764,11 @@ void EwFreeUserColor
 *   EwSetUserColor
 *
 * DESCRIPTION:
-*   The function EwSetUserColor() changes the color value of an user defined 
+*   The function EwSetUserColor() changes the color value of an user defined
 *   color within the global CLUT/palette. User defined colors exist for external
 *   applications (native applications) only. In this manner the application can
 *   manage its own/private set of color values.
-*   
+*
 *   This functionality is available on Index8, palette based target systems
 *   only.
 *
@@ -2548,7 +3781,7 @@ void EwFreeUserColor
 *
 *******************************************************************************/
 void EwSetUserColor
-( 
+(
   XInt32            aIndex,
   XColor            aColor
 );
@@ -2567,7 +3800,7 @@ void EwSetUserColor
 *   User defined colors exist for external applications (native applications)
 *   only. In this manner the application can manage its own/private set of color
 *   values.
-*   
+*
 *   This functionality is available on Index8, palette based target systems
 *   only.
 *
@@ -2581,7 +3814,7 @@ void EwSetUserColor
 *
 *******************************************************************************/
 XUInt8 EwFindUserColor
-( 
+(
   XColor            aColor
 );
 

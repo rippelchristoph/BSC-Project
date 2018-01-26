@@ -7,11 +7,12 @@
 *
 ********************************************************************************
 *
-* This software and related documentation are intellectual property owned by 
-* TARA Systems and are copyright of TARA Systems.
-* Any copying, reproduction or redistribution of the software in whole or in 
-* part by any means not in accordance with the End-User License Agreement for
-* Embedded Wizard software is expressly prohibited.
+* This software and related documentation ("Software") are intellectual
+* property owned by TARA Systems and are copyright of TARA Systems.
+* Any modification, copying, reproduction or redistribution of the Software in
+* whole or in part by any means not in accordance with the End-User License
+* Agreement for Embedded Wizard is expressly prohibited. The removal of this
+* preamble is expressly prohibited.
 * 
 ********************************************************************************
 *
@@ -61,6 +62,12 @@
    The explicit clear may improve the overall performance depending on the
    GPU hardware.
 
+   EW_PERFORM_FULLOFFSCREENBUFFER_UPDATE forces the OpenGL driver to clear
+   an off-screen framebuffer before starting to drawin it. If this option is
+   set 1, the Mosaic will redraw the entire content of the off-screen buffer
+   each time something changes in its area. The explicit clear may improve
+   the overall performance depending on the GPU hardware.
+
    EW_USE_TEXTURE2D_PROJ uses the texture2DProj() function in fragment shaders
    per default. If set to 0, texture2D() function is used and the perspective
    distortion is calculated by x/z and y/z coordinate divisions. This mode was
@@ -74,15 +81,19 @@
    to adjust texture width and height.
 */
 #ifndef EW_PERFORM_FULLSCREEN_UPDATE
-  #define EW_PERFORM_FULLSCREEN_UPDATE 0
+  #define EW_PERFORM_FULLSCREEN_UPDATE          0
+#endif
+
+#ifndef EW_PERFORM_FULLOFFSCREENBUFFER_UPDATE
+  #define EW_PERFORM_FULLOFFSCREENBUFFER_UPDATE 0
 #endif
 
 #ifndef EW_USE_TEXTURE2D_PROJ
-  #define EW_USE_TEXTURE2D_PROJ        0
+  #define EW_USE_TEXTURE2D_PROJ                 0
 #endif
 
 #ifndef EW_USE_POWER_OF_TWO_TEXTURES
-  #define EW_USE_POWER_OF_TWO_TEXTURES 0
+  #define EW_USE_POWER_OF_TWO_TEXTURES          0
 #endif
 
 
@@ -121,7 +132,7 @@
    which can wait for execution in a so-called 'issue'. Large number of
    tasks can promote the automatic elimination of drawing tasks. */
 #ifndef EW_MAX_ISSUE_TASKS
-  #define EW_MAX_ISSUE_TASKS 160
+  #define EW_MAX_ISSUE_TASKS 250
 #endif
 
 
@@ -440,6 +451,30 @@ void OpenGLWarpDriver
 #define EwGfxWarpAffineAlpha8GradientBlend          OpenGLWarpDriver
 #define EwGfxWarpAffineAlpha8FilterGradient         OpenGLWarpDriver
 #define EwGfxWarpAffineAlpha8FilterGradientBlend    OpenGLWarpDriver
+
+
+/* This function will be called to fill polygon area within the texture
+   aDstHandle with color or color gradient. The operation is done by OpenGL. */
+void OpenGLPolygonDriver
+(
+  unsigned long     aDstHandle,
+  int*              aPaths,
+  int               aDstX,
+  int               aDstY,
+  int               aWidth,
+  int               aHeight,
+  int               aBlend,
+  int               aAntialiased,
+  int               aNonZeroWinding,
+  unsigned long*    aColors
+);
+
+
+/* Redirect the fill polygon area operations to this OpenGL module */
+#define EwGfxPolygonGradient                  OpenGLPolygonDriver
+#define EwGfxPolygonGradientBlend             OpenGLPolygonDriver
+#define EwGfxPolygonAntialiasedSolidBlend     OpenGLPolygonDriver
+#define EwGfxPolygonAntialiasedGradientBlend  OpenGLPolygonDriver
 
 
 #ifdef __cplusplus

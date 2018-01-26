@@ -7,11 +7,12 @@
 *
 ********************************************************************************
 *
-* This software and related documentation are intellectual property owned by 
-* TARA Systems and are copyright of TARA Systems.
-* Any copying, reproduction or redistribution of the software in whole or in 
-* part by any means not in accordance with the End-User License Agreement for
-* Embedded Wizard software is expressly prohibited.
+* This software and related documentation ("Software") are intellectual
+* property owned by TARA Systems and are copyright of TARA Systems.
+* Any modification, copying, reproduction or redistribution of the Software in
+* whole or in part by any means not in accordance with the End-User License
+* Agreement for Embedded Wizard is expressly prohibited. The removal of this
+* preamble is expressly prohibited.
 * 
 ********************************************************************************
 *
@@ -146,6 +147,8 @@
 *     color gradient.
 *   EW_TASKID_DRAW_TEXT           - Draw text fragment with a solid color or
 *     with a color gradient.
+*   EW_TASKID_FILL_POLYGON        - Fill a polygon with a solid color or with
+*     a color gradient.
 *
 *******************************************************************************/
 #define EW_TASKID_FILL_RECTANGLE       1
@@ -156,6 +159,7 @@
 #define EW_TASKID_WARP_SCALE_SURFACE   6
 #define EW_TASKID_DRAW_LINE            7
 #define EW_TASKID_DRAW_TEXT            8
+#define EW_TASKID_FILL_POLYGON         9
 
 
 /*******************************************************************************
@@ -1033,6 +1037,29 @@ void* EwAllocTaskData
 (
   XIssue*           aIssue,
   int               aSize
+);
+
+
+/*******************************************************************************
+* FUNCTION:
+*   EwFreeTaskData
+*
+* DESCRIPTION:
+*  The function EwFreeTaskData() has the job to shrink the memory area reserved
+*  by the preceding invocation of the EwAllocTaskData() call.
+*
+* ARGUMENTS:
+*   aIssue - Issue to attend the memory allocation.
+*   aPtr   - Address specifying the new end of actually occupied memory area.
+*
+* RETURN VALUE:
+*   None
+*
+*******************************************************************************/
+void EwFreeTaskData
+(
+  XIssue*           aIssue,
+  void*             aPtr
 );
 
 

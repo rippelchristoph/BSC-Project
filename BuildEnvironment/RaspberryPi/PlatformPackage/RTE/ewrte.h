@@ -7,11 +7,12 @@
 *
 ********************************************************************************
 *
-* This software and related documentation are intellectual property owned by 
-* TARA Systems and are copyright of TARA Systems.
-* Any copying, reproduction or redistribution of the software in whole or in 
-* part by any means not in accordance with the End-User License Agreement for
-* Embedded Wizard software is expressly prohibited.
+* This software and related documentation ("Software") are intellectual
+* property owned by TARA Systems and are copyright of TARA Systems.
+* Any modification, copying, reproduction or redistribution of the Software in
+* whole or in part by any means not in accordance with the End-User License
+* Agreement for Embedded Wizard is expressly prohibited. The removal of this
+* preamble is expressly prohibited.
 * 
 ********************************************************************************
 *
@@ -33,7 +34,7 @@
 #endif
 
 /* The current version of the Runtime Environment. */
-#define EW_RTE_VERSION 0x00080014
+#define EW_RTE_VERSION 0x0008001E
 
 
 /* Assigning zero (0) to the EW_PRINT_MEMORY_USAGE macro should turn it off
@@ -115,10 +116,6 @@
 *   name and the line number, where the problem has occurred. The last macro
 *   EW_PANIC also causes the application to terminate immediately.
 *
-*   The macro EW_WARNING depend on the debug level durring the compilation of
-*   the application. This macro works if DEBUG macro switch has been defined
-*   only.
-*
 *   All macros support arguments, which can be referred from the message by
 *   using the standard printf() escape sequence.
 *   
@@ -133,32 +130,25 @@
 *   None. EW_PANIC never returns!
 *
 *******************************************************************************/
-#ifdef DEBUG
-  #define EW_WARNING( aMsg )                                                   \
-    EwPrint( "[WARNING in %s:%d] ", __FILE__, __LINE__ ),                      \
-    EwPrint( aMsg ),                                                           \
-    EwPrint( "\n" )
+#define EW_WARNING( aMsg )                                                     \
+  EwPrint( "[WARNING in %s:%d] ", __FILE__, __LINE__ ),                        \
+  EwPrint( aMsg ),                                                             \
+  EwPrint( "\n" )
 
-  #define EW_WARNING_1( aMsg, aArg1 )                                          \
-    EwPrint( "[WARNING in %s:%d] ", __FILE__, __LINE__ ),                      \
-    EwPrint( aMsg, aArg1 ),                                                    \
-    EwPrint( "\n" )
+#define EW_WARNING_1( aMsg, aArg1 )                                            \
+  EwPrint( "[WARNING in %s:%d] ", __FILE__, __LINE__ ),                        \
+  EwPrint( aMsg, aArg1 ),                                                      \
+  EwPrint( "\n" )
 
-  #define EW_WARNING_2( aMsg, aArg1, aArg2 )                                   \
-    EwPrint( "[WARNING in %s:%d] ", __FILE__, __LINE__ ),                      \
-    EwPrint( aMsg, aArg1, aArg2 ),                                             \
-    EwPrint( "\n" )
+#define EW_WARNING_2( aMsg, aArg1, aArg2 )                                     \
+  EwPrint( "[WARNING in %s:%d] ", __FILE__, __LINE__ ),                        \
+  EwPrint( aMsg, aArg1, aArg2 ),                                               \
+  EwPrint( "\n" )
 
-  #define EW_WARNING_3( aMsg, aArg1, aArg2, aArg3 )                            \
-    EwPrint( "[WARNING in %s:%d] ", __FILE__, __LINE__ ),                      \
-    EwPrint( aMsg, aArg1, aArg2, aArg3 ),                                      \
-    EwPrint( "\n" )
-#else
-  #define EW_WARNING( aMsg )
-  #define EW_WARNING_1( aMsg, aArg1 )
-  #define EW_WARNING_2( aMsg, aArg1, aArg2 )
-  #define EW_WARNING_3( aMsg, aArg1, aArg2, aArg3 )
-#endif
+#define EW_WARNING_3( aMsg, aArg1, aArg2, aArg3 )                              \
+  EwPrint( "[WARNING in %s:%d] ", __FILE__, __LINE__ ),                        \
+  EwPrint( aMsg, aArg1, aArg2, aArg3 ),                                        \
+  EwPrint( "\n" )
 
 #define EW_ERROR( aMsg )                                                       \
   EwPrint( "[ERROR in %s:%d] ", __FILE__, __LINE__ ),                          \
@@ -1632,28 +1622,6 @@ void EwFree
 #define EwThis  _this
 
 
-/*******************************************************************************
-* MACRO:
-*   EW_RESERVED
-*
-* DESCRIPTION:
-*   The following macro expands to additional padding space used in definitions
-*   of data structures. Technically seen the padding is not necessary. Compiler
-*   will take care of the right alignment of all data members automatically.
-*   The C compiler, however, may report a warning wherever an additinal padding
-*   has been added. With the macro we simply suppress the warning.
-*   
-* ARGUMENTS:
-*   aSize - Size of the padding in bytes.
-*
-* RETURN VALUE:
-*   None.
-*
-*******************************************************************************/
-#define EW_RESERVED( aSize )                                                   \
-  char _padding[ aSize ];
-
-
 /******************************************************************************
 * TYPE: 
 *   XInt8,  XInt16, XInt16, XUInt8,  XUInt16, XUInt32, XBool, XEnum, XSet,
@@ -1808,7 +1776,6 @@ typedef struct
 {
   const void*       Block;
   XUInt16           Offset;
-  char              Reserved[2];
 } XStringRes;
 
 
@@ -1867,14 +1834,12 @@ typedef struct
 {
   int               LangId;
   XInt8             Value;
-  char              Reserved[3];
 } XVariantOfInt8;
 
 typedef struct
 {
   int               LangId;
   XInt16            Value;
-  char              Reserved[2];
 } XVariantOfInt16;
 
 typedef struct
@@ -1887,14 +1852,12 @@ typedef struct
 {
   int               LangId;
   XUInt8            Value;
-  char              Reserved[3];
 } XVariantOfUInt8;
 
 typedef struct
 {
   int               LangId;
   XUInt16           Value;
-  char              Reserved[2];
 } XVariantOfUInt16;
 
 typedef struct
@@ -1907,7 +1870,6 @@ typedef struct
 {
   int               LangId;
   XBool             Value;
-  char              Reserved[3];
 } XVariantOfBool;
 
 typedef struct
@@ -1932,7 +1894,6 @@ typedef struct
 {
   int               LangId;
   XChar             Value;
-  char              Reserved[2];
 } XVariantOfChar;
 
 typedef struct
@@ -6304,8 +6265,8 @@ XString EwNewStringChar
 *
 * RETURN VALUE:
 *   If aString1 is identical to aString2 the function returns 0 (zero).
-*   If aString1 is less that aString2 the function returns -1.
-*   If aString1 is greater that aString2 the function returns +1.
+*   If aString1 is less than aString2 the function returns -1.
+*   If aString1 is greater than aString2 the function returns +1.
 *
 *******************************************************************************/
 int EwCompString
@@ -7254,7 +7215,6 @@ typedef struct _XTimer
   XTimerProc      Proc;
   XHandle         Arg;
   XBool           Enabled;
-  char            Reserved[3];
   XTicks          Ticks;
   XInt32          InitialTime;
   XInt32          RepeatTime;
