@@ -45,6 +45,7 @@
 #include "_DeviceDeviceClass.h"
 #include "_DeviceRemainingTimeContext.h"
 #include "_DeviceSampleCollectedContext.h"
+#include "_DeviceTimeContext.h"
 
 /* User defined auto object: 'Device::Device' */
 EW_DECLARE_AUTOOBJECT( DeviceDevice, DeviceDeviceClass )

@@ -29,57 +29,61 @@
 #include "_DeviceDeviceClass.h"
 #include "_DeviceRemainingTimeContext.h"
 #include "_DeviceSampleCollectedContext.h"
+#include "_DeviceTimeContext.h"
 #include "Device.h"
 
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x00000322, /* ratio 49.38 % */
-  0xB8002F00, 0x00000452, 0xB8010718, 0x21708848, 0x410987C2, 0x63A00430, 0x06884562,
-  0x082C0C2B, 0x3A8009C0, 0x1000DA00, 0x000CA003, 0x009E0039, 0x08600330, 0x01273480,
-  0x12F8F98C, 0x73001D00, 0xB0041A28, 0x8F41A360, 0x2C0CEF26, 0xD14D8009, 0x027C1E9D,
-  0x40136298, 0x99379898, 0xE709153E, 0x00374C28, 0xD89000CE, 0x24802B62, 0x34DEB000,
-  0xD38ED289, 0x1A2B46A3, 0xA254A09C, 0x6728984B, 0xD3798482, 0x24914823, 0x9834EAC9,
-  0x82C1A094, 0x56040052, 0xC4A2B819, 0x84DF312B, 0x6DF5EACD, 0xEB35B94C, 0x144BC4D2,
-  0x4A0D41A5, 0xB94E0B01, 0x9450F0D9, 0x956AB18A, 0x656C5608, 0x1A9F6600, 0x83106A35,
-  0x0121A952, 0xD26A3554, 0x44D5E2A5, 0x40058E67, 0x89576BC6, 0x3002F658, 0x5AB834A0,
-  0x02DA0A00, 0xA45352A0, 0x321FE3C9, 0xD9DC1E6F, 0x8BD0622B, 0x19ACB747, 0xAF5D2697,
-  0x8DE76376, 0xEBC43069, 0xC2AB8AA6, 0xBB356AA6, 0x65DCC6EF, 0x9E1A6F7A, 0x6CE3DEB2,
-  0x021002FD, 0x28000980, 0xD3962800, 0x14C1DF4D, 0x09C04E9A, 0x59728077, 0x169CA828,
-  0x11C7E5C2, 0x28018173, 0x06055360, 0xC66798B8, 0x528164ED, 0x20353D88, 0x84E21651,
-  0x720789E1, 0xFA6B9C28, 0x4A1204B9, 0x5A649928, 0x98662389, 0x1A1D57A2, 0xCC528144,
-  0x869FF7A5, 0x21B8A235, 0xC045C28E, 0xE9EC5123, 0x2F4DD4F5, 0x4ED9E512, 0x0004053B,
-  0x00000000
+  0x00000326, /* ratio 49.63 % */
+  0xB8002B00, 0x00000452, 0x00EA0027, 0x0C400368, 0xE4003280, 0xC0027800, 0x0021800C,
+  0x300444D2, 0x00466126, 0x01CC0074, 0x8020C3A0, 0x1E0B0305, 0xCEE0087C, 0x006C9640,
+  0x21E834C4, 0x2029C1A5, 0x18D98401, 0x864EE712, 0x747E6470, 0x000CE003, 0x1C5A0010,
+  0x00049005, 0x251090D1, 0x3429D1DA, 0x13834966, 0xA8C52E6C, 0x85476251, 0x5422431A,
+  0x5461D0C8, 0x126B2692, 0x0A505834, 0xDD14B700, 0x657A4496, 0x45A71BE3, 0xEAF47EB7,
+  0xB24AEC31, 0x344A590D, 0xDB6B41A8, 0xCF1113B7, 0x2EF1297D, 0x9B48A351, 0x600C153E,
+  0x3398CEEA, 0xEAD06001, 0xA0802173, 0xBC622131, 0x4765998B, 0x2CC800A8, 0x0B148A55,
+  0xB406835A, 0x400ABEBA, 0x54A45681, 0x4884323E, 0xC46183FB, 0xAD2F1570, 0xE42F18DB,
+  0xF6397B8B, 0xAC7489CD, 0x0D1BB367, 0xF39CE086, 0x40CED06E, 0xBC7C6A85, 0xE5576F5A,
+  0x2F3A7360, 0xD676994B, 0x008400B5, 0x0A000260, 0x4323BB80, 0x18E8D5FA, 0x00D7EB6D,
+  0x9006DC0E, 0xF47EBF05, 0xDF816948, 0xE6E52A79, 0xE5F07B96, 0x787BDF34, 0x499B362D,
+  0xD7556816, 0x84B1F14E, 0x660A48A0, 0xF8839F58, 0x461E866D, 0x1124490A, 0x585D9344,
+  0x2E1B82E1, 0x1441A0F5, 0x759B9568, 0xA27831ED, 0x88AA0D86, 0xB22E045F, 0x3B59DD94,
+  0x4B221485, 0x1B64198B, 0xB469B97A, 0x15267D9B, 0x490B95A0, 0x929067EE, 0x1266D1E8,
+  0x00010100, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
 static const XStringRes _Const0000 = { _StringsDefault0, 0x0003 };
-static const XStringRes _Const0001 = { _StringsDefault0, 0x001A };
-static const XStringRes _Const0002 = { _StringsDefault0, 0x002F };
-static const XStringRes _Const0003 = { _StringsDefault0, 0x003A };
-static const XStringRes _Const0004 = { _StringsDefault0, 0x0058 };
-static const XStringRes _Const0005 = { _StringsDefault0, 0x006B };
-static const XStringRes _Const0006 = { _StringsDefault0, 0x0089 };
-static const XStringRes _Const0007 = { _StringsDefault0, 0x00A3 };
-static const XStringRes _Const0008 = { _StringsDefault0, 0x00BB };
-static const XStringRes _Const0009 = { _StringsDefault0, 0x00C1 };
-static const XStringRes _Const000A = { _StringsDefault0, 0x00CB };
-static const XStringRes _Const000B = { _StringsDefault0, 0x00EA };
-static const XStringRes _Const000C = { _StringsDefault0, 0x010B };
-static const XStringRes _Const000D = { _StringsDefault0, 0x011E };
-static const XStringRes _Const000E = { _StringsDefault0, 0x0125 };
-static const XStringRes _Const000F = { _StringsDefault0, 0x012C };
-static const XStringRes _Const0010 = { _StringsDefault0, 0x013F };
-static const XStringRes _Const0011 = { _StringsDefault0, 0x0155 };
-static const XStringRes _Const0012 = { _StringsDefault0, 0x016D };
-static const XStringRes _Const0013 = { _StringsDefault0, 0x0181 };
-static const XColor _Const0014 = { 0xF3, 0x89, 0x00, 0xFF };
-static const XColor _Const0015 = { 0x32, 0xCE, 0x00, 0xFF };
-static const XColor _Const0016 = { 0x07, 0x36, 0xA3, 0xFF };
-static const XColor _Const0017 = { 0x00, 0x00, 0xFF, 0xFF };
-static const XColor _Const0018 = { 0x00, 0xFF, 0xFF, 0xFF };
-static const XColor _Const0019 = { 0xFF, 0x00, 0xFF, 0xFF };
-static const XColor _Const001A = { 0xFF, 0x00, 0x00, 0xFF };
+static const XStringRes _Const0001 = { _StringsDefault0, 0x0018 };
+static const XStringRes _Const0002 = { _StringsDefault0, 0x0023 };
+static const XStringRes _Const0003 = { _StringsDefault0, 0x0041 };
+static const XStringRes _Const0004 = { _StringsDefault0, 0x0054 };
+static const XStringRes _Const0005 = { _StringsDefault0, 0x0072 };
+static const XStringRes _Const0006 = { _StringsDefault0, 0x008C };
+static const XStringRes _Const0007 = { _StringsDefault0, 0x00A4 };
+static const XStringRes _Const0008 = { _StringsDefault0, 0x00AA };
+static const XStringRes _Const0009 = { _StringsDefault0, 0x00B4 };
+static const XStringRes _Const000A = { _StringsDefault0, 0x00D3 };
+static const XStringRes _Const000B = { _StringsDefault0, 0x00F4 };
+static const XStringRes _Const000C = { _StringsDefault0, 0x0107 };
+static const XStringRes _Const000D = { _StringsDefault0, 0x010E };
+static const XStringRes _Const000E = { _StringsDefault0, 0x0115 };
+static const XStringRes _Const000F = { _StringsDefault0, 0x0128 };
+static const XStringRes _Const0010 = { _StringsDefault0, 0x013E };
+static const XStringRes _Const0011 = { _StringsDefault0, 0x0156 };
+static const XStringRes _Const0012 = { _StringsDefault0, 0x016A };
+static const XColor _Const0013 = { 0xF3, 0x89, 0x00, 0xFF };
+static const XColor _Const0014 = { 0x32, 0xCE, 0x00, 0xFF };
+static const XColor _Const0015 = { 0x07, 0x36, 0xA3, 0xFF };
+static const XColor _Const0016 = { 0x00, 0x00, 0xFF, 0xFF };
+static const XColor _Const0017 = { 0x00, 0xFF, 0xFF, 0xFF };
+static const XColor _Const0018 = { 0xFF, 0x00, 0xFF, 0xFF };
+static const XColor _Const0019 = { 0xFF, 0x00, 0x00, 0xFF };
+static const XStringRes _Const001A = { _StringsDefault0, 0x017B };
+static const XStringRes _Const001B = { _StringsDefault0, 0x0185 };
+static const XStringRes _Const001C = { _StringsDefault0, 0x018A };
+static const XStringRes _Const001D = { _StringsDefault0, 0x018F };
 
 /* User defined inline code: 'Device::I2CHeader' */
 #include <unistd.h>				//Needed for I2C port
@@ -98,6 +102,7 @@ void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aA
   /* ... then construct all embedded objects */
   CoreSystemEvent__Init( &_this->SampleCollectedEvent, &_this->_XObject, 0 );
   CoreSystemEvent__Init( &_this->RemainingTimeEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->TimeEvent, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( DeviceDeviceClass );
@@ -105,7 +110,6 @@ void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aA
   /* ... and initialize objects, variables, properties, etc. */
   _this->NuOfCircuits = 6;
   _this->Temperature = 0.000000f;
-  EwRetainString( &_this->Time, EwLoadString( &_Const0000 ));
 }
 
 /* Re-Initializer for the class 'Device::DeviceClass' */
@@ -117,6 +121,7 @@ void DeviceDeviceClass__ReInit( DeviceDeviceClass _this )
   /* ... then re-construct all embedded objects */
   CoreSystemEvent__ReInit( &_this->SampleCollectedEvent );
   CoreSystemEvent__ReInit( &_this->RemainingTimeEvent );
+  CoreSystemEvent__ReInit( &_this->TimeEvent );
 }
 
 /* Finalizer method for the class 'Device::DeviceClass' */
@@ -128,9 +133,7 @@ void DeviceDeviceClass__Done( DeviceDeviceClass _this )
   /* Finalize all embedded objects */
   CoreSystemEvent__Done( &_this->SampleCollectedEvent );
   CoreSystemEvent__Done( &_this->RemainingTimeEvent );
-
-  /* Release all used strings */
-  EwReleaseString( &_this->Time );
+  CoreSystemEvent__Done( &_this->TimeEvent );
 
   /* Don't forget to deinitialize the super class ... */
   TemplatesDeviceClass__Done( &_this->_Super );
@@ -141,6 +144,7 @@ void DeviceDeviceClass__Mark( DeviceDeviceClass _this )
 {
   EwMarkObject( &_this->SampleCollectedEvent );
   EwMarkObject( &_this->RemainingTimeEvent );
+  EwMarkObject( &_this->TimeEvent );
 
   /* Give the super class a chance to mark its objects and references */
   TemplatesDeviceClass__Mark( &_this->_Super );
@@ -153,7 +157,7 @@ void DeviceDeviceClass_OnSetNuOfCircuits( DeviceDeviceClass _this, XInt32 value 
     return;
 
   _this->NuOfCircuits = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0001 ), EwNewStringInt( _this->NuOfCircuits, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0000 ), EwNewStringInt( _this->NuOfCircuits, 
     0, 10 )));
   {
     /*
@@ -213,7 +217,7 @@ void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value )
        YourDevice_SomeVariable = value;
     */
   }
-  EwTrace( "%s", EwLoadString( &_Const0002 ));
+  EwTrace( "%s", EwLoadString( &_Const0001 ));
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNewWell, DeviceDeviceClass_OnSetNewWell 
     ), 0 );
 }
@@ -242,19 +246,19 @@ void DeviceDeviceClass_StartSampling( DeviceDeviceClass _this, XInt32 aIntervall
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0003 
-    ), EwNewStringInt( aIntervall, 0, 10 )), EwLoadString( &_Const0004 )), EwNewStringInt( 
+  EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0002 
+    ), EwNewStringInt( aIntervall, 0, 10 )), EwLoadString( &_Const0003 )), EwNewStringInt( 
     aCircuitNumber, 0, 10 )));
 
   if (( aCircuitNumber < 0 ) || ( aCircuitNumber > 5 ))
   {
-    EwTrace( "%s", EwLoadString( &_Const0005 ));
+    EwTrace( "%s", EwLoadString( &_Const0004 ));
     return;
   }
 
   if ( aIntervall <= 0 )
   {
-    EwTrace( "%s", EwLoadString( &_Const0006 ));
+    EwTrace( "%s", EwLoadString( &_Const0005 ));
     return;
   }
 }
@@ -267,10 +271,10 @@ void DeviceDeviceClass_onSampleCollected( DeviceDeviceClass _this, XPoint aWellI
   DeviceSampleCollectedContext context;
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0007 ), 
-    EwNewStringInt( aWellIndex.X, 0, 10 )), EwLoadString( &_Const0008 )), EwNewStringInt( 
-    aWellIndex.Y, 0, 10 )), EwLoadString( &_Const0004 )), EwNewStringInt( aCircuitNumber, 
-    0, 10 )), EwLoadString( &_Const0009 )), aTime ));
+    EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0006 ), 
+    EwNewStringInt( aWellIndex.X, 0, 10 )), EwLoadString( &_Const0007 )), EwNewStringInt( 
+    aWellIndex.Y, 0, 10 )), EwLoadString( &_Const0003 )), EwNewStringInt( aCircuitNumber, 
+    0, 10 )), EwLoadString( &_Const0008 )), aTime ));
   context = EwNewObject( DeviceSampleCollectedContext, 0 );
   DeviceSampleCollectedContext_OnSetWellIndex( context, aWellIndex );
   DeviceSampleCollectedContext_OnSetCircuitNumber( context, aCircuitNumber );
@@ -297,7 +301,7 @@ void DeviceDeviceClass_onRemainingTime( DeviceDeviceClass _this, XInt32 aCircuit
 
   if (( aCircuitNumber > 5 ) || ( aCircuitNumber < 0 ))
   {
-    EwTrace( "%s", EwLoadString( &_Const000A ));
+    EwTrace( "%s", EwLoadString( &_Const0009 ));
     return;
   }
 
@@ -319,12 +323,12 @@ void DeviceDeviceClass_StopSampling( DeviceDeviceClass _this, XInt32 aCircuitNum
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000B ), EwNewStringInt( aCircuitNumber, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000A ), EwNewStringInt( aCircuitNumber, 
     0, 10 )));
 
   if (( aCircuitNumber < 0 ) || ( aCircuitNumber > 5 ))
   {
-    EwTrace( "%s", EwLoadString( &_Const0005 ));
+    EwTrace( "%s", EwLoadString( &_Const0004 ));
     return;
   }
 }
@@ -337,8 +341,8 @@ void DeviceDeviceClass_SetBLPosition( DeviceDeviceClass _this, XInt32 aX, XInt32
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const000C ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const000D )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000E )), 
+    EwConcatString( EwLoadString( &_Const000B ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const000C )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000D )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -350,8 +354,8 @@ void DeviceDeviceClass_SetTRPosition( DeviceDeviceClass _this, XInt32 aX, XInt32
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const000F ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const000D )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000E )), 
+    EwConcatString( EwLoadString( &_Const000E ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const000C )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000D )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -363,8 +367,8 @@ void DeviceDeviceClass_SetWastePosition( DeviceDeviceClass _this, XInt32 aX, XIn
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0010 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const000D )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000E )), 
+    EwConcatString( EwLoadString( &_Const000F ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const000C )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000D )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -376,8 +380,8 @@ void DeviceDeviceClass_SetCurrentPosition( DeviceDeviceClass _this, XInt32 aX, X
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0011 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const000D )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000E )), 
+    EwConcatString( EwLoadString( &_Const0010 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const000C )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000D )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -389,8 +393,8 @@ void DeviceDeviceClass_SetTopPosition( DeviceDeviceClass _this, XInt32 aX, XInt3
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0012 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const000D )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000E )), 
+    EwConcatString( EwLoadString( &_Const0011 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const000C )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const000D )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -401,7 +405,7 @@ void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value )
     return;
 
   _this->Temperature = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0013 ), EwNewStringFloat( 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0012 ), EwNewStringFloat( 
     _this->Temperature, 0, 6 )));
   {
     /*
@@ -429,7 +433,7 @@ void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewAr
   if ( aNewArgument != _this->Temperature )
   {
     _this->Temperature = aNewArgument;
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0013 ), EwNewStringFloat( 
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0012 ), EwNewStringFloat( 
       _this->Temperature, 0, 6 )));
     EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetTemperature, DeviceDeviceClass_OnSetTemperature 
       ), 0 );
@@ -451,70 +455,56 @@ XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumbe
   switch ( aCircuitNumber )
   {
     case 0 :
-      return _Const0014;
+      return _Const0013;
 
     case 1 :
-      return _Const0015;
+      return _Const0014;
 
     case 2 :
-      return _Const0016;
+      return _Const0015;
 
     case 3 :
-      return _Const0017;
+      return _Const0016;
 
     case 4 :
-      return _Const0018;
+      return _Const0017;
 
     case 5 :
-      return _Const0019;
+      return _Const0018;
 
     default : 
-      return _Const001A;
+      return _Const0019;
   }
-}
-
-/* 'C' function for method : 'Device::DeviceClass.OnSetTime()' */
-void DeviceDeviceClass_OnSetTime( DeviceDeviceClass _this, XString value )
-{
-  if ( !EwCompString( _this->Time, value ))
-    return;
-
-  EwRetainString( &_this->Time, value );
-  {
-    /*
-       TO DO:
-
-       You can call a function of your own device API or you simply
-       modify a variable existing in your middleware to reflect the
-       new value:
-
-       YourDevice_SetSomeValue( value );
-
-       or
-
-       YourDevice_SomeVariable = value;
-    */
-  }
-  EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetTime, DeviceDeviceClass_OnSetTime 
-    ), 0 );
 }
 
 /* This method is intended to be called by the device to notify the GUI application 
-   about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateTime( DeviceDeviceClass _this, XString aNewValue )
+   about a particular system event. */
+void DeviceDeviceClass_onTime( DeviceDeviceClass _this, XInt32 aYear, XInt32 aMonth, 
+  XInt32 aDay, XInt32 aHour, XInt32 aMinute )
 {
-  if ( EwCompString( aNewValue, _this->Time ) != 0 )
-  {
-    EwRetainString( &_this->Time, aNewValue );
-    EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetTime, DeviceDeviceClass_OnSetTime 
-      ), 0 );
-  }
+  DeviceTimeContext context = EwNewObject( DeviceTimeContext, 0 );
+
+  DeviceTimeContext_OnSetYear( context, aYear );
+  DeviceTimeContext_OnSetMonth( context, aMonth );
+  DeviceTimeContext_OnSetDay( context, aDay );
+  DeviceTimeContext_OnSetHour( context, aHour );
+  DeviceTimeContext_OnSetMinute( context, aMinute );
+  EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
+    EwConcatString( EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
+    EwLoadString( &_Const001A ), EwNewStringInt( context->Day, 0, 10 )), EwLoadString( 
+    &_Const001B )), EwNewStringInt( context->Month, 0, 10 )), EwLoadString( &_Const001B 
+    )), EwNewStringInt( context->Year, 0, 10 )), EwLoadString( &_Const001C )), EwNewStringInt( 
+    context->Hour, 0, 10 )), EwLoadString( &_Const001D )), EwNewStringInt( context->Minute, 
+    0, 10 )));
+  CoreSystemEvent_Trigger( &_this->TimeEvent, ((XObject)context ), 0 );
 }
 
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateTime()' */
-void DeviceDeviceClass__UpdateTime( void* _this, XString aNewValue )
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.onTime()' */
+void DeviceDeviceClass__onTime( void* _this, XInt32 aYear, XInt32 aMonth, XInt32 
+  aDay, XInt32 aHour, XInt32 aMinute )
 {
-  DeviceDeviceClass_UpdateTime((DeviceDeviceClass)_this, aNewValue );
+  DeviceDeviceClass_onTime((DeviceDeviceClass)_this, aYear, aMonth, aDay, aHour, 
+  aMinute );
 }
 
 /* Default onget method for the property 'NuOfCircuits' */
@@ -533,12 +523,6 @@ XBool DeviceDeviceClass_OnGetNewWell( DeviceDeviceClass _this )
 XFloat DeviceDeviceClass_OnGetTemperature( DeviceDeviceClass _this )
 {
   return _this->Temperature;
-}
-
-/* Default onget method for the property 'Time' */
-XString DeviceDeviceClass_OnGetTime( DeviceDeviceClass _this )
-{
-  return _this->Time;
 }
 
 /* Variants derived from the class : 'Device::DeviceClass' */
@@ -698,5 +682,92 @@ EW_END_OF_CLASS_VARIANTS( DeviceRemainingTimeContext )
 /* Virtual Method Table (VMT) for the class : 'Device::RemainingTimeContext' */
 EW_DEFINE_CLASS( DeviceRemainingTimeContext, XObject, "Device::RemainingTimeContext" )
 EW_END_OF_CLASS( DeviceRemainingTimeContext )
+
+/* Initializer for the class 'Device::TimeContext' */
+void DeviceTimeContext__Init( DeviceTimeContext _this, XObject aLink, XHandle aArg )
+{
+  /* At first initialize the super class ... */
+  XObject__Init( &_this->_Super, aLink, aArg );
+
+  /* Setup the VMT pointer */
+  _this->_VMT = EW_CLASS( DeviceTimeContext );
+}
+
+/* Re-Initializer for the class 'Device::TimeContext' */
+void DeviceTimeContext__ReInit( DeviceTimeContext _this )
+{
+  /* At first re-initialize the super class ... */
+  XObject__ReInit( &_this->_Super );
+}
+
+/* Finalizer method for the class 'Device::TimeContext' */
+void DeviceTimeContext__Done( DeviceTimeContext _this )
+{
+  /* Finalize this class */
+  _this->_VMT = EW_CLASS( DeviceTimeContext );
+
+  /* Don't forget to deinitialize the super class ... */
+  XObject__Done( &_this->_Super );
+}
+
+/* Garbage Collector method for the class 'Device::TimeContext' */
+void DeviceTimeContext__Mark( DeviceTimeContext _this )
+{
+  /* Give the super class a chance to mark its objects and references */
+  XObject__Mark( &_this->_Super );
+}
+
+/* 'C' function for method : 'Device::TimeContext.OnSetDay()' */
+void DeviceTimeContext_OnSetDay( DeviceTimeContext _this, XInt32 value )
+{
+  if ( _this->Day == value )
+    return;
+
+  _this->Day = value;
+}
+
+/* 'C' function for method : 'Device::TimeContext.OnSetMonth()' */
+void DeviceTimeContext_OnSetMonth( DeviceTimeContext _this, XInt32 value )
+{
+  if ( _this->Month == value )
+    return;
+
+  _this->Month = value;
+}
+
+/* 'C' function for method : 'Device::TimeContext.OnSetYear()' */
+void DeviceTimeContext_OnSetYear( DeviceTimeContext _this, XInt32 value )
+{
+  if ( _this->Year == value )
+    return;
+
+  _this->Year = value;
+}
+
+/* 'C' function for method : 'Device::TimeContext.OnSetHour()' */
+void DeviceTimeContext_OnSetHour( DeviceTimeContext _this, XInt32 value )
+{
+  if ( _this->Hour == value )
+    return;
+
+  _this->Hour = value;
+}
+
+/* 'C' function for method : 'Device::TimeContext.OnSetMinute()' */
+void DeviceTimeContext_OnSetMinute( DeviceTimeContext _this, XInt32 value )
+{
+  if ( _this->Minute == value )
+    return;
+
+  _this->Minute = value;
+}
+
+/* Variants derived from the class : 'Device::TimeContext' */
+EW_DEFINE_CLASS_VARIANTS( DeviceTimeContext )
+EW_END_OF_CLASS_VARIANTS( DeviceTimeContext )
+
+/* Virtual Method Table (VMT) for the class : 'Device::TimeContext' */
+EW_DEFINE_CLASS( DeviceTimeContext, XObject, "Device::TimeContext" )
+EW_END_OF_CLASS( DeviceTimeContext )
 
 /* Embedded Wizard */

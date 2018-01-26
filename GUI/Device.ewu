@@ -165,47 +165,6 @@ class DeviceClass : Templates::DeviceClass
   $output true
   method void onSampleCollected( arg point aWellIndex, arg int32 aCircuitNumber, arg string aTime )
   {
-    // Just trigger the system event. All associated system event handler
-    // will then be notified automatically.
-
-
-    /*
-       HINT 1:
-
-       When triggering the event you can pass an optional 'context' object.
-       With it additional event specific data can be attached at the event
-       and dispatched with it. All notified system event handler can thus
-       evaluate this 'context' information.
-
-       To do this, you will need to define a particular 'context' class
-       suitable to store the event specific information. Then create an
-       instance of the class, initialize it with all the specific context
-       data and finally pass the instance in the first parameter of the
-       Trigger() method:
-
-
-       var YourUnit::ContextClass context = new YourUnit::ContextClass;
-
-       context.SomeData1 = ...
-       context.SomeData2 = ...
-
-       SystemEvent.Trigger( context, false );
-
-
-       You can add parameters to the method in order to simply receive
-       values from the device.
-    */
-
-    /*
-       HINT 2:
-
-       When triggering a system event you can determine its priority. Per
-       default system events are delivered strictly in the order in which
-       they have been triggered. When you pass 'true' in the last parameter
-       of Trigger() you can force the event to be dispatched early:
-
-       SystemEvent.Trigger( null, true );
-    */
     trace "SampleCollected - X:"+string(aWellIndex.x)+"X:"+string(aWellIndex.y)+" CircuitNumber:"+string(aCircuitNumber)+" Time:"+aTime;
 
 
@@ -429,58 +388,28 @@ class DeviceClass : Templates::DeviceClass
   }
 
   $rect <240,380,440,420>
-  property string Time = "00.00.0000 00:00:00";
-
-  $rect <440,380,640,420>
-  onset Time
-  {
-    // The property doesn't change -> nothing to do.
-    if ( pure Time == value )
-      return;
-
-    // Remember the new value in the internal memory of the property.
-    pure Time = value;
-
-    // For target code generation you will use your specific device API 
-    // to change the affected value.
-    $if !$prototyper
-      native ( value )
-      {
-        /*
-           TO DO:
-
-           You can call a function of your own device API or you simply
-           modify a variable existing in your middleware to reflect the
-           new value:
-
-           YourDevice_SetSomeValue( value );
-
-           or
-
-           YourDevice_SomeVariable = value;
-        */
-      }
-    $endif
-
-    // Notify all associated property observers.
-    notifyobservers ^Time;
-  }
+  object Core::SystemEvent TimeEvent;
 
   // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
+  // about a particular system event.
   $rect <40,380,240,420>
   $output true
-  method void UpdateTime( arg string aNewValue )
+  method void onTime( arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
   {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure Time )
-    {
-      // Remember the new value in the internal memory of the property.
-      pure Time = aNewValue;
 
-      // Notify all associated property observers.
-      notifyobservers ^Time;
-    }
+
+
+    var Device::TimeContext context = new Device::TimeContext;
+    context.Year=aYear;
+    context.Month=aMonth;
+    context.Day=aDay;
+    context.Hour=aHour;
+    context.Minute=aMinute;
+
+    trace "Time: "+string(context.Day)+"."+string(context.Month)+"."+string(context.Year)+" "
+                          +string(context.Hour)+":"+string(context.Minute);
+
+    TimeEvent.Trigger( context, false );
   }
 }
 
@@ -620,7 +549,7 @@ class RemainingTimeContext
 // System Event Context
 note group Note
 {
-  attr Bounds = <540,10,840,260>;
+  attr Bounds = <540,10,840,310>;
 }
 
 // Device Interface
@@ -631,58 +560,125 @@ note group Note1
 
 $rect <600,140,800,180>
 $output false
-class CurrentTimeContext
+class TimeContext
 {
-  $rect <20,20,220,60>
-  property string CurrentTime = "00.00.0000 00:00:00";
+  $rect <10,0,210,40>
+  property int32 Day = 0;
 
-  $rect <20,60,220,100>
-  onset CurrentTime
+  $rect <10,40,210,80>
+  onset Day
   {
     // The value doesn't change - nothing to do.
-    if ( pure CurrentTime == value )
+    if ( pure Day == value )
       return;
 
     // Remember the property's new value.
-    pure CurrentTime = value;
+    pure Day = value;
 
     // TO DO:
     // 
     // Now you can handle the alternation of the property.
   }
 
-  $rect <20,100,220,140>
-  onget CurrentTime
+  $rect <10,80,210,120>
+  onget Day
   {
-    return pure CurrentTime;
+    return pure Day;
   }
-}
 
-$rect <600,180,800,220>
-$output false
-class TimeTillFullContext
-{
-  $rect <20,20,220,60>
-  property string TimeTillFull = "00.00.0000 00:00:00";
+  $rect <220,0,420,40>
+  property int32 Month = 0;
 
-  $rect <20,60,220,100>
-  onset TimeTillFull
+  $rect <220,40,420,80>
+  onset Month
   {
     // The value doesn't change - nothing to do.
-    if ( pure TimeTillFull == value )
+    if ( pure Month == value )
       return;
 
     // Remember the property's new value.
-    pure TimeTillFull = value;
+    pure Month = value;
 
     // TO DO:
     // 
     // Now you can handle the alternation of the property.
   }
 
-  $rect <20,100,220,140>
-  onget TimeTillFull
+  $rect <220,80,420,120>
+  onget Month
   {
-    return pure TimeTillFull;
+    return pure Month;
+  }
+
+  $rect <440,0,640,40>
+  property int32 Year = 0;
+
+  $rect <440,40,640,80>
+  onset Year
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Year == value )
+      return;
+
+    // Remember the property's new value.
+    pure Year = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <440,80,640,120>
+  onget Year
+  {
+    return pure Year;
+  }
+
+  $rect <0,140,200,180>
+  property int32 Hour = 0;
+
+  $rect <0,180,200,220>
+  onset Hour
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Hour == value )
+      return;
+
+    // Remember the property's new value.
+    pure Hour = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <0,220,200,260>
+  onget Hour
+  {
+    return pure Hour;
+  }
+
+  $rect <220,140,420,180>
+  property int32 Minute = 0;
+
+  $rect <220,180,420,220>
+  onset Minute
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Minute == value )
+      return;
+
+    // Remember the property's new value.
+    pure Minute = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <220,220,420,260>
+  onget Minute
+  {
+    return pure Minute;
   }
 }

@@ -1358,64 +1358,28 @@ class Clock : Core::Group
     preset Bounds = <0,0,120,60>;
     preset AutoSize = false;
     preset WrapText = true;
-    preset String = "00.00.0000 00:00:00";
+    preset String = "00.00.0000 00:00";
     preset Font = Flat::FontM;
   }
 
-  $rect <500,20,700,60>
-  property string TimeProperty = "00.00.0000 00:00:00";
-
-  $rect <500,60,700,100>
-  onset TimeProperty
+  $rect <190,10,390,50>
+  object Core::SystemEventHandler TimeHandler
   {
-    // The value doesn't change - nothing to do.
-    if ( pure TimeProperty == value )
-      return;
-    TimeText.String=TimeProperty;
-
-    // Remember the property's new value.
-    pure TimeProperty = value;
-
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
+    preset OnEvent = onEvent;
   }
 
-  $rect <500,100,700,140>
-  onget TimeProperty
+  // This slot method is executed when the associated system event handler 'SystemEventHandler' \
+  // receives an event.
+  $rect <390,10,590,50>
+  slot onEvent
   {
-    return pure TimeProperty;
-  }
-
-  $rect <140,40,340,80>
-  object Core::PropertyObserver TimeObserver
-  {
-    preset OnEvent = onTime;
-    preset Outlet = ^Device::Device.Time;
-  }
-
-  // This slot method is executed when the associated property observer 'PropertyObserver' \
-  // is notified.
-  $rect <140,80,340,120>
-  slot onTime
-  {
-    /*
-       HINT 1:
-
-       You can evaluate the 'sender' parameter. It refers to the observer
-       this method has been called from. This is very useful if multiple
-       property observer are connected to one and the same 'onEvent'
-       method:
-
-       if ( sender == Observer1 )
-         trace "The event comes from the Observer1";
-
-       if ( sender == Observer2 )
-         trace "... or from the Observer2";
-    */
-
-    TimeProperty=Device::Device.Time;
+      var Device::TimeContext context = (Device::TimeContext )TimeHandler.Context;
+       // Any context data passed and the cast was successful?
+       if ( context != null )
+       {
+         TimeText.String=string(context.Day)+"."+string(context.Month)+"."+string(context.Year)+" "
+                          +string(context.Hour)+":"+string(context.Minute);
+       }
   }
 }
 
@@ -6445,257 +6409,5 @@ class AIndicator : Core::Group
 
     /* ...and finally, force an update */
     InvalidateViewState();
-  }
-}
-
-$rect <150,330,350,370>
-$output false
-class TimeTillFull : Core::Group
-{
-  $rect <10,230,210,270>
-  inherited property Bounds = <0,0,120,60>;
-
-  $rect <10,390,210,430>
-  inherited method UpdateLayout()
-  {
-    // Always invoke the inherited method.
-    super( aSize );
-
-    /*
-
-      HINT:
-
-      This method exists for sophisticated layout calculation. Please note, that in 
-      most cases it is completely sufficient to use the views property 'Layout' to
-      determine how the view should behave when the component is resized.
-
-    */
-
-    /*
-
-      TO DO:
-
-      Put here the code to calculate new position and size of enclosed views. The
-      current (new) size of the component itself is passed in the parameter aSize.
-      For example:
-
-        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
-
-    */
-  }
-
-  $rect <10,350,210,390>
-  inherited method UpdateViewState()
-  {
-    // Always invoke the inherited method.
-    super( aState );
-
-    /*
-
-      HINT 1:
-
-      This method is invoked automatically when the state set of the component has
-      been changed. The new state set can be found in the parameter aState.
-      Following are the important states:
-
-        Enabled   --> The component can react to user inputs.
-
-        Selected  --> The component is selected in context of its owner.
-
-        Focused   --> The component is selected in context of its owner and 
-                      the owner can react to keyboard events. In this manner the
-                      component is also able to react to keyboard events.
-
-        Modal     --> The component is modal. All events are redirected to this
-                      component.
-
-      To determine whether a state is currently active or not you have to test
-      the aState parameter. For example to test the 'Selected' state:
-
-        if ( aState.contains( Core::ViewState[ Selected ]))
-        {
-          ... yes, this component is currently selected.
-        }
-
-    */
-
-    /*
-
-      HINT 2:
-
-      Alternatively you can request this method invocation by executing explicitly
-      following code:
-
-
-        InvalidateViewState();
-
-    */
-      
-    /*
-
-      TO DO 1:
-
-      Put here the code to ensure that the visual aspect of the component does
-      reflect its current state. For example, depending on its 'Enabled' state
-      a component may appear with full colors or pale if it is disabled:
-
-        if ( aState.contains( Core::ViewState[ Enabled ]))
-        {
-          SomeBackgroundView.Opacity = 255;
-          SomeTextView.Color         = #000000FF;
-        }
-        else
-        {
-          SomeBackgroundView.Opacity = 128;
-          SomeTextView.Color         = #00000080;
-        }
-
-
-      TO DO 2:
-
-      You can evaluate here also the state of any other member in your component.
-      For example in a push-button component, the button should appear highlighted
-      as long as the user holds the finger within a touch area of the button:
-
-        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
-          HighlightedBackground.Visible = true;
-        else
-          HighlightedBackground.Visible = false;
-
-      The touch handler itself only requests the update method to be called. Use
-      for this purpose 'InvalidateViewState()' method.
-
-
-      TO DO 3:
-
-      You can calculate here also the position/size of views accordingly to the
-      state of any other member in your component. For example in a slider you
-      can calculate the position of the slider knob from some properties like
-      'SliderValue' and 'SliderRange':
-
-        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
-
-      Changing the 'SliderValue' or 'SliderRange' property should only request
-      the update method to be called. Use for this purpose 'InvalidateViewState()'
-      method.
-
-    */
-  }
-
-  // To do:
-  // 
-  // - Adjust the visible size of your component (the thick blue border).
-  // 
-  // - The simplest way to compose the appearance of the component is to use the \
-  // 'Views' and 'Widget Sets' from the Gallery.
-  // 
-  // - To react to touch or keyboard events use the templates from the Gallery folder \
-  // 'Event Handlers'.
-  // 
-  // - To perform transitions (animations) use the templates from the Gallery folder \
-  // 'Effects'.
-  // 
-  // - To implement the interface of the component use the 'Property' template from \
-  // the Gallery folder 'Chora'.
-  // 
-  // - To store values use the 'Variable' and 'Array' templates available in the \
-  // Gallery folder 'Chora'.
-  // 
-  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
-  // in the Gallery folder 'Chora'.
-  // 
-  // - In the method 'UpdateViewState()' you can put code to update the state of \
-  // views enclosed in your component.
-  // 
-  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
-  // calculation for enclosed views.
-  note legend Note1
-  {
-    attr Bounds = <220,230,1000,550>;
-  }
-
-  $rect <20,20,160,60>
-  object Views::Text TimeText
-  {
-    preset Bounds = <0,0,120,60>;
-    preset AutoSize = false;
-    preset WrapText = true;
-    preset String = "00.00.0000 00:00:00";
-    preset Font = Flat::FontM;
-  }
-
-  $rect <500,20,700,60>
-  property string TimeProperty = "00.00.0000 00:00:00";
-
-  $rect <500,60,700,100>
-  onset TimeProperty
-  {
-    // The value doesn't change - nothing to do.
-    if ( pure TimeProperty == value )
-      return;
-    TimeText.String=TimeProperty;
-
-    // Remember the property's new value.
-    pure TimeProperty = value;
-
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <500,100,700,140>
-  onget TimeProperty
-  {
-    return pure TimeProperty;
-  }
-
-  $rect <240,10,440,50>
-  object Core::SystemEventHandler TimeTillFullHandler
-  {
-    preset OnEvent = onTimeTillFull;
-    preset Event = Device::Device.TimeTillFullEvent;
-  }
-
-  // This slot method is executed when the associated system event handler 'SystemEventHandler' \
-  // receives an event.
-  $rect <240,50,440,90>
-  slot onTimeTillFull
-  {
-    /*
-       HINT 1:
-
-       You can evaluate the 'sender' parameter. It refers to the handler 
-       this method has been called from. This is very useful if multiple
-       system event handlers are connected to one and the same 'onEvent'
-       method:
-
-       if ( sender == Handler1 )
-         trace "The event comes from the Handler1";
-
-       if ( sender == Handler2 )
-         trace "... or from the Handler2";
-    */
-
-    /*
-       HINT 2:
-
-       From this 'onEvent' slot method you can evaluate the optional
-       'context' data dispatched together with the system event:
-
-       // First get the context data. You need to cast from the generic 'object'
-       // to your own specific context class:
-       
-
-       // Any context data passed and the cast was successful?
-       if ( context != null )
-       {
-         // Evaluate the context data:
-         someTarget1 = context.SomeData1;
-         someTarget2 = context.SomeData2;
-       }
-    */
-    var Device::CurrentTimeContext context = (Device::CurrentTimeContext)TimeTillFullHandler.Context;
-    TimeProperty=context.CurrentTime;
   }
 }

@@ -58,7 +58,7 @@ EW_DEFINE_FIELDS( DeviceDeviceClass, TemplatesDeviceClass )
   EW_OBJECT  ( SampleCollectedEvent, CoreSystemEvent )
   EW_OBJECT  ( RemainingTimeEvent, CoreSystemEvent )
   EW_PROPERTY( Temperature,     XFloat )
-  EW_PROPERTY( Time,            XString )
+  EW_OBJECT  ( TimeEvent,       CoreSystemEvent )
   EW_PROPERTY( NewWell,         XBool )
 EW_END_OF_FIELDS( DeviceDeviceClass )
 
@@ -159,18 +159,17 @@ void DeviceDeviceClass__UpdateTemperature( void* _this, XFloat aNewArgument );
 /* 'C' function for method : 'Device::DeviceClass.getColor()' */
 XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumber );
 
-/* 'C' function for method : 'Device::DeviceClass.OnSetTime()' */
-void DeviceDeviceClass_OnSetTime( DeviceDeviceClass _this, XString value );
-
 /* This method is intended to be called by the device to notify the GUI application 
-   about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateTime( DeviceDeviceClass _this, XString aNewValue );
+   about a particular system event. */
+void DeviceDeviceClass_onTime( DeviceDeviceClass _this, XInt32 aYear, XInt32 aMonth, 
+  XInt32 aDay, XInt32 aHour, XInt32 aMinute );
 
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateTime()' */
-void DeviceDeviceClass__UpdateTime( void* _this, XString aNewValue );
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.onTime()' */
+void DeviceDeviceClass__onTime( void* _this, XInt32 aYear, XInt32 aMonth, XInt32 
+  aDay, XInt32 aHour, XInt32 aMinute );
 
-/* The following define announces the presence of the method Device::DeviceClass.UpdateTime(). */
-#define _DeviceDeviceClass__UpdateTime_
+/* The following define announces the presence of the method Device::DeviceClass.onTime(). */
+#define _DeviceDeviceClass__onTime_
 
 /* Default onget method for the property 'NuOfCircuits' */
 XInt32 DeviceDeviceClass_OnGetNuOfCircuits( DeviceDeviceClass _this );
@@ -180,9 +179,6 @@ XBool DeviceDeviceClass_OnGetNewWell( DeviceDeviceClass _this );
 
 /* Default onget method for the property 'Temperature' */
 XFloat DeviceDeviceClass_OnGetTemperature( DeviceDeviceClass _this );
-
-/* Default onget method for the property 'Time' */
-XString DeviceDeviceClass_OnGetTime( DeviceDeviceClass _this );
 
 #ifdef __cplusplus
   }

@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::Clock;
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Application::Clock.onTime;
-attr codeSelEnd = <0,0>;
-attr codeSelStart = <0,0>;
+attr codeInspector = Device::DeviceClass.onTime;
+attr codeSelEnd = <71,11>;
+attr codeSelStart = <71,11>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -41,7 +41,7 @@ view unit Application
 {
   attr enableGrid = true;
   attr grid = 10;
-  attr scrollTo = <-7,-7>;
+  attr scrollTo = <-7,25>;
   attr zoom = 1.0;
 }
 
@@ -53,26 +53,21 @@ view unit Device
   attr zoom = 1.0;
 }
 
-view class Application::Temperature
+view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,31>;
-  attr codeInspector = onEvent;
-  attr codeSelEnd = <49,44>;
-  attr codeSelStart = <49,44>;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onTime;
+  attr codeSelEnd = <15,1>;
+  attr codeSelStart = <15,1>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
-view class Device::DeviceClass
+view class Device::TimeContext
 {
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = UpdateTime;
-  attr codeSelEnd = <45,8>;
-  attr codeSelStart = <45,8>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -81,30 +76,11 @@ view class Device::DeviceClass
 
 view class Application::Clock
 {
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::MainMenu
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,217>;
-  attr zoom = 1.0;
-}
-
-view class Application::ControllMenu
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,345>;
-  attr zoom = 1.0;
-}
-
-view class Core::Timer
-{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onEvent;
+  attr codeSelEnd = <21,4>;
+  attr codeSelStart = <63,5>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
