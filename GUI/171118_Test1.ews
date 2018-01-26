@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application::Clock;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Device::DeviceClass.UpdateTime;
-attr codeSelEnd = <45,8>;
-attr codeSelStart = <45,8>;
+attr codeInspector = Application::Clock.onTime;
+attr codeSelEnd = <0,0>;
+attr codeSelStart = <0,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -91,11 +91,19 @@ view class Application::MainMenu
 {
   attr enableGrid = true;
   attr grid = 10;
-  attr scrollTo = <-7,121>;
+  attr scrollTo = <-7,217>;
   attr zoom = 1.0;
 }
 
 view class Application::ControllMenu
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,345>;
+  attr zoom = 1.0;
+}
+
+view class Core::Timer
 {
   attr enableGrid = true;
   attr grid = 10;

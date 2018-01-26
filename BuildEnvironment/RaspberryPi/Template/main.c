@@ -542,6 +542,8 @@ int main( int argc, char** argv )
       usleep( 1 );
   }
 
+  destroyBSCController(BSCController);
+
   EwPrint( "Terminate EmWi Main Loop...                  " );
   ShutDown = 1;
   EwPrint( "[OK]\n" );

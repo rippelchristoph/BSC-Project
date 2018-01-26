@@ -58,6 +58,7 @@
 #include "HtlStdDef.h"
 #include "List.h"
 #include "BSCCommonTypes.h"
+#include "PlotterController.h"
 
 
 /****************************************************************************
@@ -86,9 +87,11 @@ typedef enum SamplerStates {
  ****************************************************************************/
 typedef struct Sampler {
 	TBSCConfig* Config;
+	TPlotter* Plotter;
 	TListHeader* Queue;
 	ESamplerStates State;
 	TWellData** Well;
+	time_t* Time;
 	char* ErrorMessage;
 }TSampler;
 
@@ -209,8 +212,10 @@ newSampler (
 	TSampler* retSampler;
 	retSampler = malloc(sizeof(TSampler));
 
+	retSampler->Time = malloc(sizeof(time_t));
 	retSampler->Well = aWell;
 	retSampler->Queue = newList();
+	retSampler->Plotter = newPlotter();
 	return retSampler;
 }
 
@@ -234,6 +239,7 @@ destroySampler (
 		free(retInt);
 	}
 	destroyList(aSampler->Queue);
+	free(aSampler->Time);
 
 	free(aSampler);
 }
@@ -328,6 +334,10 @@ EnterStateWait (
 {
 	//TODO: Ventile Schalten
 	aSampler->State = Wait;
+	if (aSampler->Plotter == NULL) {
+		EnterStateERROR(aSampler);
+	}
+	
 }
 
 /****************************************************************************
@@ -373,6 +383,9 @@ PRIVATE void
 StateHome (
   TSampler * aSampler )
 {
+	if (EFALSE) {//Ok from Printer
+		EnterStateWaistPos(aSampler);
+	}	
 	//TODO Check for ok´s for homes
 }
 
@@ -387,7 +400,7 @@ PRIVATE void
 EnterStateWaistPos (
   TSampler * aSampler )
 {
-	
+	//Plotter go to WaistPos
 }
 
 /****************************************************************************
@@ -400,7 +413,11 @@ EnterStateWaistPos (
 PRIVATE void
 StateWaistPos (
   TSampler * aSampler )
-{}
+{
+	if (EFALSE) { //Ok from Plotter
+		EnterStateWaist(aSampler);
+	}
+}
 
 /****************************************************************************
  * FUNCTION: EnterStateWaist
@@ -413,7 +430,8 @@ PRIVATE void
 EnterStateWaist (
   TSampler * aSampler )
 {
-
+	//Open Valves
+	time(aSampler->Time);
 }
 
 /****************************************************************************
@@ -427,7 +445,13 @@ PRIVATE void
 StateWaist (
   TSampler * aSampler )
 {
+	time_t now;
+	time(&now);
 
+	if ((now - *(aSampler->Time)) > 5) {
+		//Close Valves
+		EnterStateOverPos(aSampler);
+	}
 }
 /****************************************************************************
  * FUNCTION: EnterStateOverPos
@@ -440,7 +464,7 @@ PRIVATE void
 EnterStateOverPos (
   TSampler * aSampler )
 {
-
+	//Send Plotter Command to go to Over Pos
 }
 
 /****************************************************************************
@@ -454,7 +478,9 @@ PRIVATE void
 StateOverPos (
   TSampler * aSampler )
 {
-
+	if (EFALSE) { //Potter OK?
+		EnterStateDrawerOpen(aSampler);
+	}
 }
 /****************************************************************************
  * FUNCTION: EnterStateDrawerOpen
@@ -467,7 +493,7 @@ PRIVATE void
 EnterStateDrawerOpen (
   TSampler * aSampler )
 {
-
+	//Send Plotter Command to open Cooler Drawer
 }
 
 /****************************************************************************
@@ -481,7 +507,9 @@ PRIVATE void
 StateDrawerOpen (
   TSampler * aSampler )
 {
-
+	if (EFALSE) { //Plotter Ok?
+		EnterStateDropPos(aSampler);
+	}
 }
 /****************************************************************************
  * FUNCTION: EnterStateDropPos
@@ -494,7 +522,7 @@ PRIVATE void
 EnterStateDropPos (
   TSampler * aSampler )
 {
-
+	//Plotter Command to go to DropPos
 }
 
 /****************************************************************************
@@ -508,7 +536,9 @@ PRIVATE void
 StateDropPos (
   TSampler * aSampler )
 {
-
+	if (EFALSE) { //Plotter Ok?
+		EnterStateFlow(aSampler);
+	}
 }
 /****************************************************************************
  * FUNCTION: EnterStateFlow
@@ -521,7 +551,8 @@ PRIVATE void
 EnterStateFlow (
   TSampler * aSampler )
 {
-
+	//Open Valves
+	time(aSampler->Time);
 }
 
 /****************************************************************************
@@ -535,7 +566,12 @@ PRIVATE void
 StateFlow (
   TSampler * aSampler )
 {
+	time_t now;
+	time(&now);
 
+	if ((now - *(aSampler->Time)) > 5) {
+		EnterStateBackOut(aSampler);
+	}
 }
 /****************************************************************************
  * FUNCTION: EnterStateBackOut
@@ -548,7 +584,7 @@ PRIVATE void
 EnterStateBackOut (
   TSampler * aSampler )
 {
-
+	//Send Plotter Command
 }
 
 /****************************************************************************
@@ -562,7 +598,9 @@ PRIVATE void
 StateBackOut (
   TSampler * aSampler )
 {
-
+	if (EFALSE) { //Plotter Ok?
+		EnterStateDrawerClose(aSampler);
+	}
 }
 /****************************************************************************
  * FUNCTION: EnterStateDrawerClose
@@ -575,7 +613,7 @@ PRIVATE void
 EnterStateDrawerClose (
   TSampler * aSampler )
 {
-
+	//Send Plotter Command
 }
 
 /****************************************************************************
@@ -589,7 +627,9 @@ PRIVATE void
 StateDrawerClose (
   TSampler * aSampler )
 {
-
+	if (EFALSE) { //Plotter Ok?
+		EnterStateWait(aSampler);
+	}
 }
 /****************************************************************************
  * FUNCTION: EnterStateERROR

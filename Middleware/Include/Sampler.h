@@ -27,6 +27,7 @@
 #include "HtlStdDef.h"
 #include "List.h"
 #include "BSCCommonTypes.h"
+#include "PlotterController.h"
 
 
 /****************************************************************************
@@ -55,9 +56,11 @@ typedef enum SamplerStates {
  ****************************************************************************/
 typedef struct Sampler {
 	TBSCConfig* Config;
+	TPlotter* Plotter;
 	TListHeader* Queue;
 	ESamplerStates State;
 	TWellData** Well;
+	time_t* Time;
 	char* ErrorMessage;
 }TSampler;
 

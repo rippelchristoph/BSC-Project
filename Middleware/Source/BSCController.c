@@ -12,6 +12,8 @@
  *   PUBLIC FUNCTIONS:
  *
  * PUBLIC FUNCTIONS:
+ *   destroyBSCController
+ *   BSCReadConfiguration
  *   ProcessBSCController
  *   BSCWriteConfiguration
  *   GetFormattedTime
@@ -19,6 +21,7 @@
  * PRIVATE FUNCTIONS:
  *   UpdateRemainingTimes
  *   UpdateTemperature
+ *   UpdateDayTime
  *   getConfigByIndex
  ****************************************************************************/
 
@@ -108,6 +111,10 @@ PRIVATE void
 UpdateTemperature (
   TBSCController *              aController );
 
+PRIVATE void
+UpdateDayTime (
+  TBSCController *              aController );
+
 PRIVATE void *
 getConfigByIndex (
   TBSCConfig *                  aConfiguration,
@@ -134,9 +141,10 @@ newBSCController ( void )
 	TBSCController* retPtr;
 	retPtr = malloc(sizeof(TBSCController));
 	retPtr->Orders = newOrderController();
-	retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well);
+	//retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well);
 	
-	BSCReadConfiguration(retPtr->Configuration, NULL); //TODO: Configuration Path
+	retPtr->Configuration = malloc(sizeof(TBSCConfig));
+	//BSCReadConfiguration(retPtr->Configuration, NULL); //TODO: Configuration Path
 	
 	//Allocate Storage for multidimensional array
 	retPtr->Well = malloc(retPtr->Configuration->NWellX * sizeof(TWellData*));
@@ -147,19 +155,44 @@ newBSCController ( void )
 		}
 	}
 
-	//TODO: EwDeviceObject Initialisieren
 	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, DeviceDeviceClass);
 
+	
 
 	return retPtr;
 }
 
 /****************************************************************************
-* FUNCTION: BSCReadConfiguration
-*
-* DESCRIPTION:
-*   Sends a Command to the Plotter
-****************************************************************************/
+ * FUNCTION: destroyBSCController
+ ****************************************************************************/
+
+PUBLIC void
+destroyBSCController (
+  TBSCController * aController )
+{
+	int i = 0;
+
+	destroyOrderController(aController->Orders);
+	destroySampler(aController->Sampler);
+
+	free(aController->Configuration);
+
+	
+	for (i = 0; i < aController->Configuration->NWellX; i++) {
+		free(aController->Well[i]);
+	}
+
+	free(aController->Well);
+
+	free(aController);
+}
+
+/****************************************************************************
+ * FUNCTION: BSCReadConfiguration
+ *
+ *   DESCRIPTION:
+ *     Sends a Command to the Plotter
+ ****************************************************************************/
 PUBLIC void
 BSCReadConfiguration (
   TBSCConfig * aConfiguration,
@@ -256,13 +289,14 @@ ProcessBSCController (
 	}
 
 	ProcessSampler(aBSCController->Sampler);
-	
-	GetFormattedTime(time(NULL), line);*/
-	//TODO: UpdateTime - EwDevice Function call
+	*/
+
+	UpdateRemainingTimes(aBSCController);
+	ProcessOrderController(aBSCController->Orders);
 	UpdateTemperature(aBSCController);
 	
-
-
+	
+	UpdateDayTime(aBSCController);
 	
 }
 /****************************************************************************
@@ -350,7 +384,14 @@ PRIVATE void
 UpdateRemainingTimes (
   TBSCController * aController )
 {
+	TListHeader* OrderList = aController->Orders->OrderList;
+	TOrder* retOrder;
+	ListSetReadPointer(OrderList, 0);
 
+	while ((retOrder = ListGetNext(OrderList)))
+	{
+		//Call EwFunction Update(EwDevice, retOrder->Origin, OrderGetRemainingTime(retOrder)
+	}
 }
 
 /****************************************************************************
@@ -370,18 +411,51 @@ UpdateTemperature (
 	unsigned char byteAdd[] = { 0x00 };
 	unsigned char buffer[2];
 	float updateVal = 0;
+	short complement;
+	int decValue;
 	TI2C* dataStream = newI2C(0x4F);
 	I2CWriteBytes(dataStream, byteAdd, 1);
 	I2CReadBytes(dataStream, buffer, 2);
 
-	
 
-	char num = buffer[0] << 7 | buffer[1] >> 1;
-	updateVal = num;
-	updateVal += (float)(buffer[1] & 0x01) / (float)2;
 
-	DeviceDeviceClass__UpdateTemperature(aController->EwDeviceObject,(XFloat) updateVal);
+	if ((buffer[0] & (1 << 7)) == 0) { //Positiv
+		decValue = buffer[0] << 3 | buffer[1] >> 5;
+		updateVal = (float)decValue * 0.125f;
+	}
+	else {
+		complement = buffer[0] << 3 | buffer[1] >> 5;
+		complement ^= 0x7FF;
+		updateVal = -1.0 * ((float)complement) * 0.125f;
+	}
+
+
+
+	DeviceDeviceClass__UpdateTemperature(aController->EwDeviceObject,((XFloat) updateVal));
 	
+}
+
+/****************************************************************************
+ * FUNCTION: UpdateDayTime
+ * DESCRIPTION:
+ *   Updates the Remaining Times of all Orders until next Execution.
+ *   Therefore it uses the NextPointer of the List that is a property of the
+ *   OrderController to make the Process faster
+ * PARAMETER:
+ *   aController - The Address of the Controller Device Object -
+ ****************************************************************************/
+
+PRIVATE void
+UpdateDayTime (
+  TBSCController * aController )
+{
+	char buffer[30];
+	time_t now = time(NULL);
+	
+	GetFormattedTime(&now, buffer);
+	XString updateValue = EwNewStringUtf8(buffer, strlen(buffer));
+	DeviceDeviceClass__UpdateTime(aController->EwDeviceObject, updateValue);
+
 }
 
 /****************************************************************************

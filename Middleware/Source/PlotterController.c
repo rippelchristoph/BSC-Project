@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include "PlotterController.h"
 
 /** HEADER ******************************************************************
  */
@@ -32,8 +33,9 @@
  * SECTION: #include
  ****************************************************************************/
 #include "HtlStdDef.h"
-#include "SerialConnection.h"
 #include "BSCCommonTypes.h"
+#include "SerialConnection.h"
+
 
 /****************************************************************************
 * SECTION: #define
@@ -119,7 +121,7 @@ newPlotter ( void )
  *     Sends a Command to the Plotter
  ****************************************************************************/
 PUBLIC void
-PLTSendCommand (
+PLTSendCommand(
   TPlotter * aPlotter,
   char *     aCommand )
 {

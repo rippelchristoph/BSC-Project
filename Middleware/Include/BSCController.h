@@ -12,6 +12,8 @@
  *   PUBLIC FUNCTIONS:
  *
  * PUBLIC FUNCTIONS:
+ *   destroyBSCController
+ *   BSCReadConfiguration
  *   ProcessBSCController
  *   BSCWriteConfiguration
  *   GetFormattedTime
@@ -85,11 +87,20 @@ newBSCController ( void );
 
 
 /****************************************************************************
-* FUNCTION: BSCReadConfiguration
-*
-* DESCRIPTION:
-*   Sends a Command to the Plotter
-****************************************************************************/
+ * FUNCTION: destroyBSCController
+ ****************************************************************************/
+
+PUBLIC void
+destroyBSCController (
+  TBSCController * aController );
+
+
+/****************************************************************************
+ * FUNCTION: BSCReadConfiguration
+ *
+ *   DESCRIPTION:
+ *     Sends a Command to the Plotter
+ ****************************************************************************/
 
 PUBLIC void
 BSCReadConfiguration (
