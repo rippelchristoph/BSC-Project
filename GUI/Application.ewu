@@ -1,16 +1,5 @@
 $version 6.60
 
-$rect <980,130,1180,170>
-inline I2CHeader
-{
-  #include <unistd.h>				//Needed for I2C port
-  #include <fcntl.h>				//Needed for I2C port
-  #include <sys/ioctl.h>			//Needed for I2C port
-  #include <linux/i2c-dev.h>		//Needed for I2C port
-  #include <stdio.h>
-  #include <time.h>
-}
-
 // This is the root component of the entire GUI application.
 $rect <360,20,560,60>
 $output false
@@ -211,7 +200,7 @@ class MainMenu : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Application::ControllMenu ControllMenue
+  object Application::ControllMenu ControllMenu
   {
     preset Bounds = <0,0,800,480>;
     preset Config = Config;
@@ -222,7 +211,7 @@ class MainMenu : Core::Group
   {
     preset Bounds = <960,1210,1760,1690>;
     preset Visible = true;
-    preset ControllMenue = ControllMenue;
+    preset ControllMenue = ControllMenu;
   }
 }
 
@@ -742,16 +731,6 @@ class Well : Core::Group
   );
 
   $rect <20,20,160,60>
-  object Views::WarpImage Logo
-  {
-    preset Point4 = <700,100>;
-    preset Point3 = <800,100>;
-    preset Point2 = <800,0>;
-    preset Point1 = <700,0>;
-    preset Bitmap = Application::Logo;
-  }
-
-  $rect <20,20,160,60>
   object Application::WellLabel WellLabel
   {
     preset Bounds = <70,10,140,50>;
@@ -901,6 +880,16 @@ class Well : Core::Group
      
 
 
+  }
+
+  $rect <20,20,160,60>
+  object Views::WarpImage Logo
+  {
+    preset Point4 = <730,80>;
+    preset Point3 = <800,80>;
+    preset Point2 = <800,10>;
+    preset Point1 = <730,10>;
+    preset Bitmap = Application::Logo;
   }
 
   $reorder Rectangle 76
@@ -1190,7 +1179,7 @@ $rect <560,440,760,480>
 $output false
 class Clock : Core::Group
 {
-  $rect <10,230,210,270>
+  $rect <10,310,210,350>
   inherited property Bounds = <0,0,120,60>;
 
   $rect <10,390,210,430>
@@ -1320,38 +1309,6 @@ class Clock : Core::Group
     */
   }
 
-  // To do:
-  // 
-  // - Adjust the visible size of your component (the thick blue border).
-  // 
-  // - The simplest way to compose the appearance of the component is to use the \
-  // 'Views' and 'Widget Sets' from the Gallery.
-  // 
-  // - To react to touch or keyboard events use the templates from the Gallery folder \
-  // 'Event Handlers'.
-  // 
-  // - To perform transitions (animations) use the templates from the Gallery folder \
-  // 'Effects'.
-  // 
-  // - To implement the interface of the component use the 'Property' template from \
-  // the Gallery folder 'Chora'.
-  // 
-  // - To store values use the 'Variable' and 'Array' templates available in the \
-  // Gallery folder 'Chora'.
-  // 
-  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
-  // in the Gallery folder 'Chora'.
-  // 
-  // - In the method 'UpdateViewState()' you can put code to update the state of \
-  // views enclosed in your component.
-  // 
-  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
-  // calculation for enclosed views.
-  note legend Note1
-  {
-    attr Bounds = <220,230,1000,550>;
-  }
-
   $rect <20,20,160,60>
   object Views::Text TimeText
   {
@@ -1365,13 +1322,13 @@ class Clock : Core::Group
   $rect <190,10,390,50>
   object Core::SystemEventHandler TimeHandler
   {
-    preset OnEvent = onEvent;
+    preset OnEvent = onTime;
   }
 
   // This slot method is executed when the associated system event handler 'SystemEventHandler' \
   // receives an event.
   $rect <390,10,590,50>
-  slot onEvent
+  slot onTime
   {
       var Device::TimeContext context = (Device::TimeContext )TimeHandler.Context;
        // Any context data passed and the cast was successful?
@@ -1638,15 +1595,8 @@ class SampleController : Core::Group
 
   }
 
-  $rect <30,260,230,300>
-  method void WellFull()
-  {
-    EnabledProperty=false;
-    BtnStart.Enabled=false;
-  }
-
   $rect <20,20,160,60>
-  object Application::TextEditor TextEditor
+  object Application::ATextEditor TextEditor
   {
     preset Bounds = <30,20,70,60>;
     preset WrapText = false;
@@ -1819,7 +1769,7 @@ resource Resources::Font FontArial17
 // This component implements an editor.
 $rect <560,360,760,400>
 $output false
-class TextEditor : Templates::TextEditor
+class ATextEditor : Templates::TextEditor
 {
   $rect <670,620,870,660>
   inherited property Bounds = <0,0,160,130>;
@@ -2761,7 +2711,7 @@ class TextEditor : Templates::TextEditor
 // This component implements a virtual keyboard.
 $rect <560,400,760,440>
 $output false
-class NumKeyboard : Templates::NumKeyboard
+class ANumKeyboard : Templates::NumKeyboard
 {
   $rect <250,370,450,410>
   inherited property Bounds = <0,0,170,180>;
@@ -3835,12 +3785,16 @@ class Config : Core::Group
       }
     }
 
+    ControllMenue.Btn_NewWell.Enabled=true;
+    ControllMenue.Btn_StopAll.Enabled=true;
+    ControllMenue.NumKeyboard.Enabled=true;
+
 
 
   }
 
   $rect <20,20,160,60>
-  object Application::TextEditor TextEditor
+  object Application::ATextEditor TextEditor
   {
     preset Bounds = <330,110,470,170>;
     preset String = "6";
@@ -3848,7 +3802,7 @@ class Config : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Application::NumKeyboard NumKeyboard
+  object Application::ANumKeyboard NumKeyboard
   {
     preset Bounds = <610,230,780,410>;
   }
@@ -4432,42 +4386,42 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA
   {
-    preset Bounds = <10,50,450,120>;
+    preset Bounds = <10,50,430,120>;
     preset NameProperty = '1';
   }
 
   $rect <20,20,160,60>
   object Application::SampleController SCA1
   {
-    preset Bounds = <10,120,450,190>;
+    preset Bounds = <10,120,430,190>;
     preset NameProperty = '2';
   }
 
   $rect <20,20,160,60>
   object Application::SampleController SCA2
   {
-    preset Bounds = <10,190,450,260>;
+    preset Bounds = <10,190,430,260>;
     preset NameProperty = '3';
   }
 
   $rect <20,20,160,60>
   object Application::SampleController SCA3
   {
-    preset Bounds = <10,260,450,330>;
+    preset Bounds = <10,260,430,330>;
     preset NameProperty = '4';
   }
 
   $rect <20,20,160,60>
   object Application::SampleController SCA4
   {
-    preset Bounds = <10,330,450,400>;
+    preset Bounds = <10,330,430,400>;
     preset NameProperty = '5';
   }
 
   $rect <20,20,160,60>
   object Application::SampleController SCA5
   {
-    preset Bounds = <10,400,450,470>;
+    preset Bounds = <10,400,430,470>;
     preset NameProperty = '6';
   }
 
@@ -4480,23 +4434,24 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Views::WarpImage Logo
   {
-    preset Point4 = <700,110>;
-    preset Point3 = <800,110>;
+    preset Point4 = <730,80>;
+    preset Point3 = <800,80>;
     preset Point2 = <800,10>;
-    preset Point1 = <700,10>;
+    preset Point1 = <730,10>;
     preset Bitmap = Application::Logo;
   }
 
   $rect <20,20,160,60>
-  object Application::NumKeyboard NumKeyboard
+  object Application::ANumKeyboard NumKeyboard
   {
-    preset Bounds = <460,290,660,470>;
+    preset Bounds = <440,320,560,470>;
+    preset Enabled = false;
   }
 
   $rect <20,20,160,60>
   object Application::Temperature Temperature
   {
-    preset Bounds = <660,330,800,390>;
+    preset Bounds = <440,130,560,190>;
   }
 
   $rect <840,100,1040,140>
@@ -4538,7 +4493,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_Config
   {
-    preset Bounds = <480,140,600,170>;
+    preset Bounds = <440,200,560,230>;
     preset OnAction = onBtn_Config;
     preset Caption = "Config";
   }
@@ -4565,7 +4520,8 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_NewWell
   {
-    preset Bounds = <480,180,600,210>;
+    preset Bounds = <440,240,560,270>;
+    preset Enabled = false;
     preset OnAction = onBtn_NewWell;
     preset Caption = "NewWell";
   }
@@ -4603,7 +4559,8 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_StopAll
   {
-    preset Bounds = <480,220,600,250>;
+    preset Bounds = <440,280,560,310>;
+    preset Enabled = false;
     preset Caption = "StopAll";
   }
 
@@ -4688,7 +4645,7 @@ class AHorzBar : Core::Group
 
     /* update the text item for current value */
     if ( pure ShowCurrent )
-      BarText.String = formatValueString( pure CurrentValue )+"min";
+      BarText.String = formatValueString( pure CurrentValue )+" min";
     BarText.Visible = pure ShowCurrent;
 
     /* arrange the bar and text item according bar width */
@@ -4995,23 +4952,6 @@ class AHorzBar : Core::Group
 
     /* ...and finally, force an update */
     InvalidateViewState();
-  }
-
-  // The class 'HorzBar' implements a widget to illustrate a value by using an animated \
-  // colored horizontal bar.
-  // The property 'CurrentValue' represents the momentary value of the widget and \
-  // corresponds to the position of the bar. The supported value range of the horizontal \
-  // bar can be defined by setting the properties 'MinValue' and 'MaxValue'.
-  // Optionally, the widget displays the current value as text. The properties 'DotPosition' \
-  // and 'Divisor' can be used to configure the value text display.
-  // A horizontal bar can be connected with an Int32 'Outlet' property to show the \
-  // current value of this property.
-  // The height of the horizontal bar can be configured via the property 'BarSize'.
-  // Additionally, the colors of the widget can be configured individually by setting \
-  // the properties 'BackColor', 'BarColor' and 'TextColor'.
-  note legend Note
-  {
-    attr Bounds = <10,430,950,590>;
   }
 
   // The property 'BackColor' defines the background color of the widget. The property \

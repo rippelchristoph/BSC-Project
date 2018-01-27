@@ -1,16 +1,5 @@
 $version 6.60
 
-$rect <50,250,250,290>
-inline I2CHeader
-{
-  #include <unistd.h>				//Needed for I2C port
-  #include <fcntl.h>				//Needed for I2C port
-  #include <sys/ioctl.h>			//Needed for I2C port
-  #include <linux/i2c-dev.h>		//Needed for I2C port
-  #include <stdio.h>
-  #include <time.h>
-}
-
 $rect <60,70,260,110>
 $output false
 class DeviceClass : Templates::DeviceClass
@@ -361,7 +350,7 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  // Software
+  // GUI intern
   note group Note2
   {
     attr Bounds = <20,500,530,730>;

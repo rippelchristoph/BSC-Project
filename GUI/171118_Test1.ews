@@ -1,12 +1,11 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Device::DeviceClass.onTime;
-attr codeSelEnd = <71,11>;
-attr codeSelStart = <71,11>;
+attr codeInspector = Application::ControllMenu.onRemainingTime;
+attr codeSelEnd = <0,0>;
+attr codeSelStart = <0,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -31,56 +30,6 @@ attr search_WildCards = false;
 
 view Project
 {
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view unit Application
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,25>;
-  attr zoom = 1.0;
-}
-
-view unit Device
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Device::DeviceClass
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onTime;
-  attr codeSelEnd = <15,1>;
-  attr codeSelStart = <15,1>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Device::TimeContext
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Clock
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onEvent;
-  attr codeSelEnd = <21,4>;
-  attr codeSelStart = <63,5>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
