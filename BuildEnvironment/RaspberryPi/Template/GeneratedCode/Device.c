@@ -85,14 +85,6 @@ static const XStringRes _Const001B = { _StringsDefault0, 0x0185 };
 static const XStringRes _Const001C = { _StringsDefault0, 0x018A };
 static const XStringRes _Const001D = { _StringsDefault0, 0x018F };
 
-/* User defined inline code: 'Device::I2CHeader' */
-#include <unistd.h>				//Needed for I2C port
-#include <fcntl.h>				//Needed for I2C port
-#include <sys/ioctl.h>			//Needed for I2C port
-#include <linux/i2c-dev.h>		//Needed for I2C port
-#include <stdio.h>
-#include <time.h>
-
 /* Initializer for the class 'Device::DeviceClass' */
 void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aArg )
 {

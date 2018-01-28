@@ -129,6 +129,11 @@ EW_DEFINE_METHODS( ApplicationApplication, CoreRoot )
   EW_METHOD( Add,               void )( CoreRoot _this, CoreView aView, XInt32 aOrder )
 EW_END_OF_METHODS( ApplicationApplication )
 
+/* The method Init() is invoked automatically after the component has been created. 
+   This method can be overridden and filled with logic containing additional initialization 
+   statements. */
+void ApplicationApplication_Init( ApplicationApplication _this, XHandle aArg );
+
 #ifdef __cplusplus
   }
 #endif

@@ -8,6 +8,28 @@ class Application : Core::Root
   $rect <820,0,1020,40>
   inherited property Bounds = <0,0,800,480>;
 
+  $rect <1040,0,1180,40>
+  inherited method Init()
+  {
+
+    //When the User starts the Application the Configuration has to be done first
+
+    MainMenu.ControllMenu.Enabled=false;
+
+    MainMenu.Config.ConfigBL.Visible=true;
+    MainMenu.Config.ConfigTR.Visible=true;
+    MainMenu.Config.ConfigWaste.Visible=true;
+    MainMenu.Config.Visible=true;
+
+    MainMenu.Config.ConfigBL.Enabled=true;
+    MainMenu.Config.ConfigTR.Enabled=true;
+    MainMenu.Config.ConfigWaste.Enabled=true;
+    MainMenu.Config.Enabled=true;
+
+    MainMenu.Config.Bounds.x1=0;
+    MainMenu.Config.Bounds.y1=0;
+  }
+
   // To do:
   // 
   // - The simplest way to compose the appearance of the application is to use the \
@@ -1601,7 +1623,7 @@ class SampleController : Core::Group
     preset Bounds = <30,20,70,60>;
     preset WrapText = false;
     preset String = "10";
-    preset Color = #000000FF;
+    preset Color = #FFFFFFFF;
   }
 
   $rect <20,20,160,60>
@@ -3232,7 +3254,7 @@ class ANumKeyboard : Templates::NumKeyboard
 // Resources
 note group Note
 {
-  attr Bounds = <460,540,1150,990>;
+  attr Bounds = <460,540,1150,910>;
 }
 
 $rect <610,200,810,240>
@@ -3783,10 +3805,11 @@ class Config : Core::Group
       if(ControllMenue.SampleController[i].EnabledProperty==false){
         ControllMenue.SampleController[i].BtnStart.Enabled=true;
       }
+      ControllMenue.SampleController[i].Enabled=true;
     }
 
     ControllMenue.Btn_NewWell.Enabled=true;
-    ControllMenue.Btn_StopAll.Enabled=true;
+
     ControllMenue.NumKeyboard.Enabled=true;
 
 
@@ -3797,6 +3820,7 @@ class Config : Core::Group
   object Application::ATextEditor TextEditor
   {
     preset Bounds = <330,110,470,170>;
+    preset Enabled = false;
     preset String = "6";
     preset Font = Flat::FontL;
   }
@@ -3805,6 +3829,7 @@ class Config : Core::Group
   object Application::ANumKeyboard NumKeyboard
   {
     preset Bounds = <610,230,780,410>;
+    preset Enabled = false;
   }
 
   $rect <20,20,160,60>
@@ -3914,6 +3939,8 @@ class Config : Core::Group
     ConfigTop.Visible=false;
     ConfigTop.Enabled=false;
     Btn_Ok.Enabled=true;
+    NumKeyboard.Enabled=true;
+    TextEditor.Enabled=true;
   }
 }
 
@@ -4387,6 +4414,7 @@ class ControllMenu : Core::Group
   object Application::SampleController SCA
   {
     preset Bounds = <10,50,430,120>;
+    preset Enabled = false;
     preset NameProperty = '1';
   }
 
@@ -4394,6 +4422,7 @@ class ControllMenu : Core::Group
   object Application::SampleController SCA1
   {
     preset Bounds = <10,120,430,190>;
+    preset Enabled = false;
     preset NameProperty = '2';
   }
 
@@ -4401,6 +4430,7 @@ class ControllMenu : Core::Group
   object Application::SampleController SCA2
   {
     preset Bounds = <10,190,430,260>;
+    preset Enabled = false;
     preset NameProperty = '3';
   }
 
@@ -4408,6 +4438,7 @@ class ControllMenu : Core::Group
   object Application::SampleController SCA3
   {
     preset Bounds = <10,260,430,330>;
+    preset Enabled = false;
     preset NameProperty = '4';
   }
 
@@ -4415,6 +4446,7 @@ class ControllMenu : Core::Group
   object Application::SampleController SCA4
   {
     preset Bounds = <10,330,430,400>;
+    preset Enabled = false;
     preset NameProperty = '5';
   }
 
@@ -4422,6 +4454,7 @@ class ControllMenu : Core::Group
   object Application::SampleController SCA5
   {
     preset Bounds = <10,400,430,470>;
+    preset Enabled = false;
     preset NameProperty = '6';
   }
 
@@ -4444,14 +4477,14 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::ANumKeyboard NumKeyboard
   {
-    preset Bounds = <440,320,560,470>;
+    preset Bounds = <440,260,650,469>;
     preset Enabled = false;
   }
 
   $rect <20,20,160,60>
   object Application::Temperature Temperature
   {
-    preset Bounds = <440,130,560,190>;
+    preset Bounds = <440,110,580,170>;
   }
 
   $rect <840,100,1040,140>
@@ -4493,9 +4526,9 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_Config
   {
-    preset Bounds = <440,200,560,230>;
+    preset Bounds = <440,180,650,210>;
     preset OnAction = onBtn_Config;
-    preset Caption = "Config";
+    preset Caption = "Einstellungen";
   }
 
   $rect <830,190,1030,230>
@@ -4520,10 +4553,10 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_NewWell
   {
-    preset Bounds = <440,240,560,270>;
+    preset Bounds = <440,220,650,250>;
     preset Enabled = false;
     preset OnAction = onBtn_NewWell;
-    preset Caption = "NewWell";
+    preset Caption = "Neues Well";
   }
 
   $rect <830,230,1030,270>
@@ -4554,14 +4587,6 @@ class ControllMenu : Core::Group
   onget Config
   {
     return pure Config;
-  }
-
-  $rect <20,20,160,60>
-  object Application::AActionButton Btn_StopAll
-  {
-    preset Bounds = <440,280,560,310>;
-    preset Enabled = false;
-    preset Caption = "StopAll";
   }
 
   $rect <370,500,570,540>

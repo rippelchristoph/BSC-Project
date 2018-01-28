@@ -45,7 +45,7 @@
 #include "_ApplicationAActionButton.h"
 #include "_ApplicationAHorzBar.h"
 #include "_ApplicationAIndicator.h"
-#include "_ApplicationTextEditor.h"
+#include "_ApplicationATextEditor.h"
 #include "_CoreGroup.h"
 #include "_CorePropertyObserver.h"
 #include "_FlatLabel.h"
@@ -91,7 +91,7 @@ EW_DEFINE_FIELDS( ApplicationSampleController, CoreGroup )
   EW_OBJECT  ( BtnStart,        ApplicationAActionButton )
   EW_OBJECT  ( BtnStop,         ApplicationAActionButton )
   EW_OBJECT  ( Indicator,       ApplicationAIndicator )
-  EW_OBJECT  ( TextEditor,      ApplicationTextEditor )
+  EW_OBJECT  ( TextEditor,      ApplicationATextEditor )
   EW_OBJECT  ( Line,            ViewsLine )
   EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
   EW_PROPERTY( RemainingTime,   XInt32 )

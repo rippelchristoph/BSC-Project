@@ -141,7 +141,7 @@ void ApplicationClock_UpdateViewState( ApplicationClock _this, XSet aState );
 
 /* This slot method is executed when the associated system event handler 'SystemEventHandler' 
    receives an event. */
-void ApplicationClock_onEvent( ApplicationClock _this, XObject sender );
+void ApplicationClock_onTime( ApplicationClock _this, XObject sender );
 
 #ifdef __cplusplus
   }

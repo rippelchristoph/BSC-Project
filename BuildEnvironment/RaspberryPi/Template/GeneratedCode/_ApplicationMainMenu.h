@@ -79,7 +79,7 @@
 
 /* Deklaration of class : 'Application::MainMenu' */
 EW_DEFINE_FIELDS( ApplicationMainMenu, CoreGroup )
-  EW_OBJECT  ( ControllMenue,   ApplicationControllMenu )
+  EW_OBJECT  ( ControllMenu,    ApplicationControllMenu )
   EW_OBJECT  ( Config,          ApplicationConfig )
 EW_END_OF_FIELDS( ApplicationMainMenu )
 

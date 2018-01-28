@@ -3,9 +3,9 @@ $version 1.0
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Application::ControllMenu.onRemainingTime;
-attr codeSelEnd = <0,0>;
-attr codeSelStart = <0,0>;
+attr codeInspector = Application::Config.onNextTop;
+attr codeSelEnd = <103,5>;
+attr codeSelStart = <103,5>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -29,6 +29,14 @@ attr search_WholeWords = false;
 attr search_WildCards = false;
 
 view Project
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view unit Application
 {
   attr enableGrid = true;
   attr grid = 10;
