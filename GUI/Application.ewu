@@ -397,7 +397,7 @@ class Well : Core::Group
   object Application::WellPart A1
   {
     preset Bounds = <70,50,140,120>;
-    preset TimeProperty = "19.01.2018 14:38:12";
+    preset TimeProperty = "";
     preset CircuitNumber = 0;
   }
 
@@ -435,7 +435,7 @@ class Well : Core::Group
   object Application::WellPart A2
   {
     preset Bounds = <140,50,210,120>;
-    preset TimeProperty = "19.01.2018 14:38:12";
+    preset TimeProperty = "";
     preset CircuitNumber = 1;
   }
 
@@ -473,7 +473,7 @@ class Well : Core::Group
   object Application::WellPart A3
   {
     preset Bounds = <210,50,280,120>;
-    preset TimeProperty = "19.01.2018 14:43";
+    preset TimeProperty = "";
     preset CircuitNumber = 2;
   }
 
@@ -511,7 +511,7 @@ class Well : Core::Group
   object Application::WellPart A4
   {
     preset Bounds = <280,50,350,120>;
-    preset TimeProperty = "19.01.2018 14:38:12";
+    preset TimeProperty = "";
     preset CircuitNumber = 3;
   }
 
@@ -549,7 +549,7 @@ class Well : Core::Group
   object Application::WellPart A5
   {
     preset Bounds = <350,50,420,120>;
-    preset TimeProperty = "19.01.2018 14:38:12";
+    preset TimeProperty = "";
     preset CircuitNumber = 4;
   }
 
@@ -587,7 +587,7 @@ class Well : Core::Group
   object Application::WellPart A6
   {
     preset Bounds = <420,50,490,120>;
-    preset TimeProperty = "19.01.2018 14:38:12";
+    preset TimeProperty = "";
     preset CircuitNumber = 5;
   }
 
@@ -625,7 +625,7 @@ class Well : Core::Group
   object Application::WellPart A7
   {
     preset Bounds = <490,50,560,120>;
-    preset TimeProperty = "19.01.2018 14:38:12";
+    preset TimeProperty = "";
     preset CircuitNumber = 6;
   }
 
@@ -1128,10 +1128,6 @@ class WellPart : Core::Group
   $rect <90,50,290,90>
   onset TimeProperty
   {
-    // The value doesn't change - nothing to do.
-    if ( pure TimeProperty == value )
-      return;
-
 
     // Remember the property's new value.
     pure TimeProperty = value;
@@ -1150,30 +1146,6 @@ class WellPart : Core::Group
     return pure TimeProperty;
   }
 
-  $rect <300,10,500,50>
-  property point Coordinate = <0,0>;
-
-  $rect <300,50,500,90>
-  onset Coordinate
-  {
-    // The value doesn't change - nothing to do.
-    if ( pure Coordinate == value )
-      return;
-
-    // Remember the property's new value.
-    pure Coordinate = value;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <300,90,500,130>
-  onget Coordinate
-  {
-    return pure Coordinate;
-  }
-
   $rect <530,10,730,50>
   property int32 CircuitNumber = 0;
 
@@ -1181,11 +1153,7 @@ class WellPart : Core::Group
   onset CircuitNumber
   {
     Text.Color=Device::Device.getColor( value );
-                      
 
-    // The value doesn't change - nothing to do.
-    if ( pure CircuitNumber == value )
-      return;
 
     // Remember the property's new value.
     pure CircuitNumber = value;
@@ -1386,7 +1354,7 @@ $output false
 class SampleController : Core::Group
 {
   $rect <20,550,220,590>
-  inherited property Bounds = <0,0,420,70>;
+  inherited property Bounds = <0,0,470,70>;
 
   $rect <20,630,220,670>
   inherited method UpdateLayout()
@@ -1545,7 +1513,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Views::Border Border
   {
-    preset Bounds = <0,1,418,69>;
+    preset Bounds = <0,1,460,69>;
     preset Width = 3;
     preset Color = #000000FF;
   }
@@ -1681,7 +1649,7 @@ class SampleController : Core::Group
   // Timing
   note group Note1
   {
-    attr Bounds = <10,90,260,360>;
+    attr Bounds = <10,90,260,250>;
   }
 
   $rect <310,400,510,440>
@@ -1690,15 +1658,11 @@ class SampleController : Core::Group
   $rect <310,440,510,480>
   onset RemainingTime
   {
-    // The value doesn't change - nothing to do.
-    if ( pure RemainingTime == value )
-      return;
-
     // Remember the property's new value.
     pure RemainingTime = value;
 
     HorzBar.CurrentValue=RemainingTime;
-    trace "RemainingTime:"+string(RemainingTime);
+    trace "SC: RemainingTime:"+string(RemainingTime);
 
     // TO DO:
     // 
@@ -1714,7 +1678,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Application::AHorzBar HorzBar
   {
-    preset Bounds = <210,10,410,60>;
+    preset Bounds = <210,10,440,60>;
     preset MaxValue = 10;
     preset CurrentValue = 5;
     preset TextColor = Flat::ColorOfBackground;
@@ -4430,7 +4394,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA0
   {
-    preset Bounds = <20,50,440,120>;
+    preset Bounds = <20,50,480,120>;
     preset Enabled = false;
     preset NameProperty = '1';
   }
@@ -4438,7 +4402,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA1
   {
-    preset Bounds = <20,120,440,190>;
+    preset Bounds = <20,120,480,190>;
     preset Enabled = false;
     preset NameProperty = '2';
   }
@@ -4446,7 +4410,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA2
   {
-    preset Bounds = <20,190,440,260>;
+    preset Bounds = <20,190,480,260>;
     preset Enabled = false;
     preset NameProperty = '3';
   }
@@ -4454,7 +4418,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA3
   {
-    preset Bounds = <20,260,440,330>;
+    preset Bounds = <20,260,480,330>;
     preset Enabled = false;
     preset NameProperty = '4';
   }
@@ -4462,7 +4426,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA4
   {
-    preset Bounds = <20,330,440,400>;
+    preset Bounds = <20,330,480,400>;
     preset Enabled = false;
     preset NameProperty = '5';
   }
@@ -4470,7 +4434,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA5
   {
-    preset Bounds = <20,400,440,470>;
+    preset Bounds = <20,400,480,470>;
     preset Enabled = false;
     preset NameProperty = '6';
   }
@@ -4495,10 +4459,10 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::Temperature Temperature
   {
-    preset Bounds = <610,110,750,170>;
+    preset Bounds = <610,120,750,180>;
   }
 
-  $rect <840,100,1040,140>
+  $rect <370,540,570,580>
   object Core::PropertyObserver NuOfCircuitsObserver
   {
     preset OnEvent = onNuOfCircuits;
@@ -4507,7 +4471,7 @@ class ControllMenu : Core::Group
 
   // This slot method is executed when the associated property observer 'PropertyObserver' \
   // is notified.
-  $rect <1040,100,1240,140>
+  $rect <570,540,770,580>
   slot onNuOfCircuits
   {
     var int32 i;
@@ -4523,7 +4487,7 @@ class ControllMenu : Core::Group
 
   }
 
-  $rect <840,60,1040,100>
+  $rect <840,90,1040,130>
   array Application::SampleController SampleController[ 6 ] =
   (
     Default[0] = SCA0;
@@ -4614,7 +4578,7 @@ class ControllMenu : Core::Group
   {
     var Device::RemainingTimeContext context = (Device::RemainingTimeContext)RemainingTime.Context;
     SampleController[context.CircuitNumber].RemainingTime=context.RemainingTime;
-    trace "RemainingTime: CircuitNumber="+string(context.CircuitNumber)+" RemainingTime="+string(context.RemainingTime);
+    trace "ControllMenu: CircuitNumber="+string(context.CircuitNumber)+" RemainingTime="+string(context.RemainingTime);
 
   }
 
@@ -4630,6 +4594,36 @@ class ControllMenu : Core::Group
   slot onBtn_Exit
   {
     Device::Device.ExitApplication();
+  }
+
+  $rect <20,20,160,60>
+  object Flat::ActionButton Btn_Test
+  {
+    preset Bounds = <70,10,140,40>;
+    preset OnAction = onBtn_Test;
+    preset Caption = "Test";
+  }
+
+  $rect <840,20,1040,60>
+  slot onBtn_Test
+  {
+
+
+    Device::Device.onSampleCollected( <0,0>, 0, 2018, 01, 31, 19, 23 );
+    Device::Device.onSampleCollected( <1,0>, 1, 2018, 01, 31, 19, 23 );
+    Device::Device.onSampleCollected( <2,0>, 2, 2018, 01, 31, 19, 23 );
+    Device::Device.onSampleCollected( <3,0>, 3, 2018, 01, 31, 19, 23 );
+    Device::Device.onSampleCollected( <4,0>, 4, 2018, 01, 31, 19, 23 );
+    Device::Device.onSampleCollected( <5,0>, 5, 2018, 01, 31, 19, 23 );
+    Device::Device.onSampleCollected( <6,0>, 6, 2018, 01, 31, 19, 23 );
+    Device::Device.onRemainingTime( 0, 0 );
+    Device::Device.onRemainingTime( 1, 1 );
+    Device::Device.onRemainingTime( 2, 2 );
+    Device::Device.onRemainingTime( 3, 3 );
+    Device::Device.onRemainingTime( 4, 4 );
+    Device::Device.onRemainingTime( 5, 5 );
+    Device::Device.onTime( 2018, 01, 11, 20, 30 );
+    Device::Device.UpdateTemperature( -22.5 );
   }
 }
 

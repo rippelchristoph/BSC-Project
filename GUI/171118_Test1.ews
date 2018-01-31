@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application::ControllMenu;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,1>;
-attr codeInspector = Device::DeviceClass.onRemainingTime;
-attr codeSelEnd = <61,5>;
-attr codeSelStart = <61,5>;
+attr codeFirstPos = <0,0>;
+attr codeInspector = Application::ControllMenu.onBtn_Test;
+attr codeSelEnd = <0,0>;
+attr codeSelStart = <0,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -61,23 +61,10 @@ view unit Device
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,1>;
-  attr codeInspector = onRemainingTime;
-  attr codeSelEnd = <42,8>;
-  attr codeSelStart = <37,8>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Clock
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,2>;
-  attr codeInspector = onTime;
-  attr codeSelEnd = <4,9>;
-  attr codeSelStart = <4,9>;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = getColor;
+  attr codeSelEnd = <22,4>;
+  attr codeSelStart = <22,4>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -87,10 +74,10 @@ view class Application::Clock
 view class Application::ControllMenu
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onRemainingTime;
-  attr codeSelEnd = <48,2>;
-  attr codeSelStart = <48,2>;
+  attr codeFirstPos = <0,7>;
+  attr codeInspector = onBtn_Test;
+  attr codeSelEnd = <39,14>;
+  attr codeSelStart = <39,14>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -100,51 +87,30 @@ view class Application::ControllMenu
 view class Application::SampleController
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,1>;
-  attr codeInspector = OnSetRemainingTime;
-  attr codeSelEnd = <45,8>;
-  attr codeSelStart = <45,8>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Application
-{
-  attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = onNewWell;
-  attr codeSelEnd = <24,0>;
-  attr codeSelStart = <24,0>;
+  attr codeInspector = OnSetRemainingTime;
+  attr codeSelEnd = <37,0>;
+  attr codeSelStart = <37,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
+  attr zoom = 1.25;
 }
 
 view class Application::Well
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <322,0>;
-  attr codeInspector = onSampleCollected;
-  attr codeSelEnd = <202,2>;
-  attr codeSelStart = <77,2>;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onNewWell;
+  attr codeSelEnd = <38,5>;
+  attr codeSelStart = <38,5>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
-view class Device::TimeContext
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Device::SampleCollectedContext
+view class Application::WellPart
 {
   attr enableGrid = true;
   attr grid = 10;

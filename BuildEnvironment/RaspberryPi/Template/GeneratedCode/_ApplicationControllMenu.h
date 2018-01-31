@@ -49,6 +49,7 @@
 #include "_CoreGroup.h"
 #include "_CorePropertyObserver.h"
 #include "_CoreSystemEventHandler.h"
+#include "_FlatActionButton.h"
 #include "_ViewsRectangle.h"
 #include "_ViewsWarpImage.h"
 
@@ -108,6 +109,7 @@ EW_DEFINE_FIELDS( ApplicationControllMenu, CoreGroup )
   EW_PROPERTY( Config,          ApplicationConfig )
   EW_OBJECT  ( RemainingTime,   CoreSystemEventHandler )
   EW_OBJECT  ( btn_Exit,        ApplicationAActionButton )
+  EW_OBJECT  ( Btn_Test,        FlatActionButton )
 EW_END_OF_FIELDS( ApplicationControllMenu )
 
 /* Virtual Method Table (VMT) for the class : 'Application::ControllMenu' */
@@ -192,6 +194,10 @@ void ApplicationControllMenu_onRemainingTime( ApplicationControllMenu _this, XOb
 
 /* 'C' function for method : 'Application::ControllMenu.onBtn_Exit()' */
 void ApplicationControllMenu_onBtn_Exit( ApplicationControllMenu _this, XObject 
+  sender );
+
+/* 'C' function for method : 'Application::ControllMenu.onBtn_Test()' */
+void ApplicationControllMenu_onBtn_Test( ApplicationControllMenu _this, XObject 
   sender );
 
 #ifdef __cplusplus

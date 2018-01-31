@@ -1,6 +1,6 @@
 $version 6.60
 
-$rect <130,390,330,430>
+$rect <50,270,250,310>
 inline BSCHeader
 {
   #include "BSCController.h"
@@ -84,19 +84,8 @@ class DeviceClass : Templates::DeviceClass
     $if !$prototyper
       native ( value )
       {
-        /*
-           TO DO:
+        System("scrot -b '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/home/share/screenshots'");
 
-           You can call a function of your own device API or you simply
-           modify a variable existing in your middleware to reflect the
-           new value:
-
-           YourDevice_SetSomeValue( value );
-
-           or
-
-           YourDevice_SomeVariable = value;
-        */
       }
     $endif
 
@@ -124,25 +113,17 @@ class DeviceClass : Templates::DeviceClass
   $rect <40,180,240,220>
   method void StartSampling( arg int32 aIntervall, arg int32 aCircuitNumber )
   {
-    $if $prototyper
 
-
-    aIntervall;
-    aCircuitNumber;
-
-
-                                                        
-    $endif
 
     trace "StartSampling - Intervall:"+string(aIntervall)+" CircuitNumber:"+string(aCircuitNumber);
 
     $if !$prototyper
      
     if(aCircuitNumber<0||aCircuitNumber>5){
-      trace "ERROR: Wrong CircuitNumber";
+      trace "ERROR: Wrong CircuitNumber"+string(aCircuitNumber);
       return;
     }if(aIntervall<=0){
-      trace "ERROR: Wrong Intervall";
+      trace "ERROR: Wrong Intervall"+string(aIntervall);
       return;
     }
 
@@ -164,7 +145,7 @@ class DeviceClass : Templates::DeviceClass
   method void onSampleCollected( arg point aWellIndex, arg int32 aCircuitNumber, arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
   {
     trace "SampleCollected - X:"+string(aWellIndex.x)
-    +"X:"+string(aWellIndex.y)
+    +"Y:"+string(aWellIndex.y)
     +" CircuitNumber:"+string(aCircuitNumber)
     +" Time:"+string(aDay)+"."
     +string(aMonth)+"."
@@ -201,7 +182,7 @@ class DeviceClass : Templates::DeviceClass
       trace "ERROR: Wrong Circuit Number:"+string(aCircuitNumber);
       return;
     }
-    trace "RemainingTime before Context:"+string(aRemainingTime);
+    trace "Device: RemainingTime="+string(aRemainingTime);
     context.CircuitNumber=aCircuitNumber;
     context.RemainingTime=aRemainingTime;
     RemainingTimeEvent.Trigger( context, false );
@@ -218,7 +199,7 @@ class DeviceClass : Templates::DeviceClass
     $if !$prototyper
 
     if(aCircuitNumber<0||aCircuitNumber>5){
-      trace "ERROR: Wrong CircuitNumber";
+      trace "ERROR: Wrong CircuitNumber:"+string(aCircuitNumber);
       return;
     }
      
@@ -376,7 +357,7 @@ class DeviceClass : Templates::DeviceClass
   // GUI intern
   note group Note2
   {
-    attr Bounds = <20,500,530,730>;
+    attr Bounds = <20,500,310,630>;
   }
 
   $rect <40,540,240,580>
@@ -384,12 +365,12 @@ class DeviceClass : Templates::DeviceClass
   {
     switch ( aCircuitNumber )
     {
-      case 0  : return #F38900FF;   //schwarz 
-      case 1  : return #32CE00FF;  //weiß
-      case 2  : return #0736A3FF;  //gelb
-      case 3  : return #0000FFFF;  //blau
-      case 4  : return #00FFFFFF; //türkis
-      case 5  : return #FF00FFFF;  //lila
+      case 0  : return #F38900FF;    
+      case 1  : return #32CE00FF;  
+      case 2  : return #1E6033FF;  
+      case 3  : return #0000FFFF;  
+      case 4  : return #00FFFFFF; 
+      case 5  : return #FF00FFFF;  
       default : return #FF0000FF; //rot=ERROR
     }
 
@@ -442,7 +423,7 @@ class DeviceClass : Templates::DeviceClass
 $rect <60,110,260,150>
 autoobject Device::DeviceClass Device;
 
-$rect <600,60,800,100>
+$rect <400,70,600,110>
 $output false
 class SampleCollectedContext
 {
@@ -615,7 +596,7 @@ class SampleCollectedContext
   }
 }
 
-$rect <600,100,800,140>
+$rect <400,110,600,150>
 $output false
 class RemainingTimeContext
 {
@@ -671,7 +652,7 @@ class RemainingTimeContext
 // System Event Context
 note group Note
 {
-  attr Bounds = <540,10,840,310>;
+  attr Bounds = <340,20,640,320>;
 }
 
 // Device Interface
@@ -680,7 +661,7 @@ note group Note1
   attr Bounds = <10,20,310,220>;
 }
 
-$rect <600,140,800,180>
+$rect <400,150,600,190>
 $output false
 class TimeContext
 {
@@ -803,4 +784,10 @@ class TimeContext
   {
     return pure Minute;
   }
+}
+
+// Header
+note group Note2
+{
+  attr Bounds = <10,230,310,340>;
 }
