@@ -146,7 +146,10 @@ class DeviceClass : Templates::DeviceClass
       return;
     }
 
-      
+      native(aIntervall,aCircuitNumber){
+        BSCAddOrder(aIntervall, aCircuitNumber);
+
+      }
      
     $endif
   }

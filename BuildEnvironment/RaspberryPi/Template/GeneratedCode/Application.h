@@ -45,7 +45,6 @@
 #include "_ApplicationAActionButton.h"
 #include "_ApplicationAHorzBar.h"
 #include "_ApplicationAHorzSlider.h"
-#include "_ApplicationAIndicator.h"
 #include "_ApplicationANumKeyboard.h"
 #include "_ApplicationATextEditor.h"
 #include "_ApplicationAToggleButton.h"

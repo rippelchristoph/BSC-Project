@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::Clock;
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,3>;
-attr codeInspector = Device::DeviceClass.onTime;
-attr codeSelEnd = <0,0>;
-attr codeSelStart = <0,0>;
+attr codeFirstPos = <0,18>;
+attr codeInspector = Device::DeviceClass.StartSampling;
+attr codeSelEnd = <44,23>;
+attr codeSelStart = <44,23>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -61,8 +61,55 @@ view unit Device
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,3>;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = UpdateNewWell;
+  attr codeSelEnd = <4,3>;
+  attr codeSelStart = <4,3>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::Clock
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,5>;
   attr codeInspector = onTime;
+  attr codeSelEnd = <4,9>;
+  attr codeSelStart = <4,9>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::ControllMenu
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::SampleController
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,11>;
+  attr codeInspector = OnSetEnabledProperty;
+  attr codeSelEnd = <2,18>;
+  attr codeSelStart = <2,18>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.75;
+}
+
+view class Application::AActionButton
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = pressReleaseSlot;
   attr codeSelEnd = <0,0>;
   attr codeSelStart = <0,0>;
   attr enableGrid = true;
@@ -71,7 +118,7 @@ view class Device::DeviceClass
   attr zoom = 1.0;
 }
 
-view class Application::Clock
+view class Application::AHorzBar
 {
   attr enableGrid = true;
   attr grid = 10;

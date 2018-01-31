@@ -1562,12 +1562,6 @@ class SampleController : Core::Group
     preset Caption = "Stop";
   }
 
-  $rect <20,20,160,60>
-  object Application::AIndicator Indicator
-  {
-    preset Bounds = <380,20,410,50>;
-  }
-
   $rect <30,180,230,220>
   slot onStart
   {
@@ -1598,13 +1592,16 @@ class SampleController : Core::Group
     if(EnabledProperty){
       BtnStart.Enabled=false;
       BtnStop.Enabled=true;
+      HorzBar.TextColor=Application::WidgetColor;
+
     }else{
       BtnStart.Enabled=true;
       BtnStop.Enabled=false;
+      HorzBar.TextColor=Flat::ColorOfBackground;
     }
 
 
-    Indicator.Active=EnabledProperty;
+    //Indicator.Active=EnabledProperty;
   }
 
   $rect <310,350,510,390>
@@ -1701,9 +1698,10 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Application::AHorzBar HorzBar
   {
-    preset Bounds = <210,10,370,60>;
+    preset Bounds = <210,10,410,60>;
     preset MaxValue = 10;
     preset CurrentValue = 5;
+    preset TextColor = Flat::ColorOfBackground;
   }
 
   $rect <20,20,160,60>
@@ -1763,7 +1761,6 @@ class SampleController : Core::Group
   $reorder NameText 9
   $reorder BtnStart 9
   $reorder BtnStop 9
-  $reorder Indicator 9
   $reorder onStart 9
   $reorder Enabled 5
   $reorder OnSetEnabled 1
@@ -4417,7 +4414,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA0
   {
-    preset Bounds = <10,50,430,120>;
+    preset Bounds = <20,50,440,120>;
     preset Enabled = false;
     preset NameProperty = '1';
   }
@@ -4425,7 +4422,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA1
   {
-    preset Bounds = <10,120,430,190>;
+    preset Bounds = <20,120,440,190>;
     preset Enabled = false;
     preset NameProperty = '2';
   }
@@ -4433,7 +4430,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA2
   {
-    preset Bounds = <10,190,430,260>;
+    preset Bounds = <20,190,440,260>;
     preset Enabled = false;
     preset NameProperty = '3';
   }
@@ -4441,7 +4438,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA3
   {
-    preset Bounds = <10,260,430,330>;
+    preset Bounds = <20,260,440,330>;
     preset Enabled = false;
     preset NameProperty = '4';
   }
@@ -4449,7 +4446,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA4
   {
-    preset Bounds = <10,330,430,400>;
+    preset Bounds = <20,330,440,400>;
     preset Enabled = false;
     preset NameProperty = '5';
   }
@@ -4457,7 +4454,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA5
   {
-    preset Bounds = <10,400,430,470>;
+    preset Bounds = <20,400,440,470>;
     preset Enabled = false;
     preset NameProperty = '6';
   }
@@ -4475,7 +4472,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::ANumKeyboard NumKeyboard
   {
-    preset Bounds = <580,260,790,469>;
+    preset Bounds = <570,260,780,469>;
     preset Enabled = false;
   }
 
@@ -4524,7 +4521,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_Config
   {
-    preset Bounds = <580,180,790,210>;
+    preset Bounds = <570,180,780,210>;
     preset OnAction = onBtn_Config;
     preset Caption = "Einstellungen";
   }
@@ -4551,7 +4548,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_NewWell
   {
-    preset Bounds = <580,220,790,250>;
+    preset Bounds = <570,220,780,250>;
     preset Enabled = false;
     preset OnAction = onBtn_NewWell;
     preset Caption = "Neues Well";
@@ -4607,7 +4604,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton btn_Exit
   {
-    preset Bounds = <10,10,35,35>;
+    preset Bounds = <20,10,45,35>;
     preset OnAction = onBtn_Exit;
     preset Caption = "X";
   }

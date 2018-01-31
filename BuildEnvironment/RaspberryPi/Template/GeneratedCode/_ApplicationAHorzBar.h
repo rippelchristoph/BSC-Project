@@ -94,6 +94,7 @@ EW_DEFINE_FIELDS( ApplicationAHorzBar, CoreGroup )
   EW_PROPERTY( BarSize,         XInt32 )
   EW_PROPERTY( BackColor,       XColor )
   EW_PROPERTY( BarColor,        XColor )
+  EW_PROPERTY( TextColor,       XColor )
   EW_PROPERTY( ShowCurrent,     XBool )
 EW_END_OF_FIELDS( ApplicationAHorzBar )
 
@@ -157,6 +158,9 @@ void ApplicationAHorzBar_OnSetbarPos( ApplicationAHorzBar _this, XInt32 value );
    and @Divisor. */
 XString ApplicationAHorzBar_formatValueString( ApplicationAHorzBar _this, XInt32 
   aValue );
+
+/* 'C' function for method : 'Application::AHorzBar.OnSetTextColor()' */
+void ApplicationAHorzBar_OnSetTextColor( ApplicationAHorzBar _this, XColor value );
 
 /* Default onget method for the property 'barPos' */
 XInt32 ApplicationAHorzBar_OnGetbarPos( ApplicationAHorzBar _this );

@@ -257,6 +257,8 @@ void DeviceDeviceClass_StartSampling( DeviceDeviceClass _this, XInt32 aIntervall
     EwTrace( "%s", EwLoadString( &_Const0005 ));
     return;
   }
+
+  BSCAddOrder(aIntervall, aCircuitNumber);
 }
 
 /* This method is intended to be called by the device to notify the GUI application 
