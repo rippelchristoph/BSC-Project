@@ -1,5 +1,11 @@
 $version 6.60
 
+$rect <130,390,330,430>
+inline BSCHeader
+{
+  #include "BSCController.h"
+}
+
 $rect <60,70,260,110>
 $output false
 class DeviceClass : Templates::DeviceClass
@@ -406,7 +412,11 @@ class DeviceClass : Templates::DeviceClass
     $endif
 
     $if !$prototyper
+    native{
 
+       BSCShutdown();
+
+    }
     $endif
 
   }
