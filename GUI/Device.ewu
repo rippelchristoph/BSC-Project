@@ -77,7 +77,7 @@ class DeviceClass : Templates::DeviceClass
     if ( pure NewWell == value )
       return;
 
-
+    notifyobservers ^NewWell;
 
     // For target code generation you will use your specific device API 
     // to change the affected value.
@@ -103,7 +103,7 @@ class DeviceClass : Templates::DeviceClass
     trace "NewWell";
 
     // Notify all associated property observers.
-    notifyobservers ^NewWell;
+
   }
 
   // This method is intended to be called by the device to notify the GUI application \
@@ -401,8 +401,8 @@ class DeviceClass : Templates::DeviceClass
     context.Hour=aHour;
     context.Minute=aMinute;
 
-    trace "Time: "+string(context.Day)+"."+string(context.Month)+"."+string(context.Year)+" "
-                          +string(context.Hour)+":"+string(context.Minute);
+    //trace "Time: "+string(context.Day)+"."+string(context.Month)+"."+string(context.Year)+" "
+                          //+string(context.Hour)+":"+string(context.Minute);
 
     TimeEvent.Trigger( context, false );
   }

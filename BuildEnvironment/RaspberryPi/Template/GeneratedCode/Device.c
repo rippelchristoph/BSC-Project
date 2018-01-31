@@ -35,7 +35,7 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x0000034C, /* ratio 49.29 % */
+  0x0000031A, /* ratio 49.87 % */
   0xB8002B00, 0x00000452, 0x00EA0027, 0x0C400368, 0xE4003280, 0xC0027800, 0x0021800C,
   0x300444D2, 0x00466126, 0x01CC0074, 0x8020C3A0, 0x1E0B0305, 0xCEE0087C, 0x006C9640,
   0x21E834C4, 0x2029C1A5, 0x18D98401, 0x864EE712, 0x747E6470, 0x000CE003, 0x1C5A0010,
@@ -49,8 +49,8 @@ static const unsigned int _StringsDefault0[] =
   0x9006DC0E, 0xF47EBF05, 0xDF816948, 0xE6E52A79, 0xE5F07B96, 0x787BDF34, 0x499B362D,
   0xD7556816, 0x84B1F14E, 0x660A48A0, 0xF8839F58, 0x461E866D, 0x1124490A, 0x585D9344,
   0x2E1B82E1, 0x1441A0F5, 0x759B9568, 0xA27831ED, 0x88AA0D86, 0xB22E045F, 0x3B59DD94,
-  0x4B221485, 0x1B64198B, 0xB469B97A, 0x15267D9B, 0x490B95A0, 0x929067EE, 0x1BF799E8,
-  0x14851F1E, 0xC65867C4, 0x3D4751A4, 0x499F547E, 0x00040526, 0x00000000
+  0x4B221485, 0x1BF5618B, 0x14851F1E, 0xC64867C4, 0x3D4751A4, 0x499F547E, 0x00040526,
+  0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -81,10 +81,6 @@ static const XColor _Const0017 = { 0x00, 0xFF, 0xFF, 0xFF };
 static const XColor _Const0018 = { 0xFF, 0x00, 0xFF, 0xFF };
 static const XColor _Const0019 = { 0xFF, 0x00, 0x00, 0xFF };
 static const XStringRes _Const001A = { _StringsDefault0, 0x017B };
-static const XStringRes _Const001B = { _StringsDefault0, 0x0185 };
-static const XStringRes _Const001C = { _StringsDefault0, 0x018A };
-static const XStringRes _Const001D = { _StringsDefault0, 0x018F };
-static const XStringRes _Const001E = { _StringsDefault0, 0x0194 };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
@@ -198,6 +194,8 @@ void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value )
   if ( _this->NewWell == value )
     return;
 
+  EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNewWell, DeviceDeviceClass_OnSetNewWell 
+    ), 0 );
   {
     /*
        TO DO:
@@ -214,8 +212,6 @@ void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value )
     */
   }
   EwTrace( "%s", EwLoadString( &_Const0001 ));
-  EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNewWell, DeviceDeviceClass_OnSetNewWell 
-    ), 0 );
 }
 
 /* This method is intended to be called by the device to notify the GUI application 
@@ -487,13 +483,6 @@ void DeviceDeviceClass_onTime( DeviceDeviceClass _this, XInt32 aYear, XInt32 aMo
   DeviceTimeContext_OnSetDay( context, aDay );
   DeviceTimeContext_OnSetHour( context, aHour );
   DeviceTimeContext_OnSetMinute( context, aMinute );
-  EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwLoadString( &_Const001A ), EwNewStringInt( context->Day, 0, 10 )), EwLoadString( 
-    &_Const001B )), EwNewStringInt( context->Month, 0, 10 )), EwLoadString( &_Const001B 
-    )), EwNewStringInt( context->Year, 0, 10 )), EwLoadString( &_Const001C )), EwNewStringInt( 
-    context->Hour, 0, 10 )), EwLoadString( &_Const001D )), EwNewStringInt( context->Minute, 
-    0, 10 )));
   CoreSystemEvent_Trigger( &_this->TimeEvent, ((XObject)context ), 0 );
 }
 
@@ -511,7 +500,7 @@ void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this )
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwLoadString( &_Const001E ));
+  EwTrace( "%s", EwLoadString( &_Const001A ));
   BSCShutdown();
 }
 

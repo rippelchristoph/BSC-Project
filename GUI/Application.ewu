@@ -85,6 +85,21 @@ class Application : Core::Root
     preset Embedded = true;
     preset Visible = true;
   }
+
+  $rect <810,70,1010,110>
+  object Core::PropertyObserver NewWellObserver
+  {
+    preset OnEvent = onNewWell;
+    preset Outlet = ^Device::Device.NewWell;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <1010,70,1210,110>
+  slot onNewWell
+  {
+    Outline.ScrollOffset.x=-800;
+  }
 }
 
 $rect <130,120,330,160>
@@ -4598,6 +4613,7 @@ class ControllMenu : Core::Group
   {
     var Device::RemainingTimeContext context = (Device::RemainingTimeContext)RemainingTime.Context;
     SampleController[context.CircuitNumber].RemainingTime=context.RemainingTime;
+    trace "RemainingTime: CircuitNumber="+string(context.CircuitNumber)+" RemainingTime="+string(context.RemainingTime);
 
   }
 

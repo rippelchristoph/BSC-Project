@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application::SampleController;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,18>;
-attr codeInspector = Device::DeviceClass.StartSampling;
-attr codeSelEnd = <44,23>;
-attr codeSelStart = <44,23>;
+attr codeFirstPos = <0,11>;
+attr codeInspector = Application::SampleController.OnSetEnabledProperty;
+attr codeSelEnd = <2,18>;
+attr codeSelStart = <2,18>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -61,10 +61,10 @@ view unit Device
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = UpdateNewWell;
-  attr codeSelEnd = <4,3>;
-  attr codeSelStart = <4,3>;
+  attr codeFirstPos = <0,1>;
+  attr codeInspector = onRemainingTime;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -102,24 +102,16 @@ view class Application::SampleController
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
-  attr zoom = 1.75;
-}
-
-view class Application::AActionButton
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = pressReleaseSlot;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
-view class Application::AHorzBar
+view class Application::Application
 {
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onNewWell;
+  attr codeSelEnd = <24,0>;
+  attr codeSelStart = <24,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;

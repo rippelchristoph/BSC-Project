@@ -45,6 +45,7 @@
 #include "_ApplicationMainMenu.h"
 #include "_ApplicationWell.h"
 #include "_CoreOutline.h"
+#include "_CorePropertyObserver.h"
 #include "_CoreRoot.h"
 #include "_CoreSlideTouchHandler.h"
 #include "_CoreTimer.h"
@@ -98,6 +99,7 @@ EW_DEFINE_FIELDS( ApplicationApplication, CoreRoot )
   EW_OBJECT  ( Outline,         CoreOutline )
   EW_OBJECT  ( MainMenu,        ApplicationMainMenu )
   EW_OBJECT  ( WellObj,         ApplicationWell )
+  EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
 EW_END_OF_FIELDS( ApplicationApplication )
 
 /* Virtual Method Table (VMT) for the class : 'Application::Application' */
@@ -133,6 +135,10 @@ EW_END_OF_METHODS( ApplicationApplication )
    This method can be overridden and filled with logic containing additional initialization 
    statements. */
 void ApplicationApplication_Init( ApplicationApplication _this, XHandle aArg );
+
+/* This slot method is executed when the associated property observer 'PropertyObserver' 
+   is notified. */
+void ApplicationApplication_onNewWell( ApplicationApplication _this, XObject sender );
 
 #ifdef __cplusplus
   }
