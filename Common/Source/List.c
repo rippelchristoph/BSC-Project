@@ -386,7 +386,10 @@ makeNode (
 
 	if ((newPtr = (TListNode *)malloc(sizeof(TListNode))) != NULL) {
 		newPtr->Next = aNext;
+		newPtr->Data = aData;
 	}
+
+	
 
 	return newPtr;
 }

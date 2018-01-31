@@ -18,6 +18,7 @@
  *   BSCShutdown
  *   BSCWriteConfiguration
  *   GetFormattedTime
+ *   BSCAddOrder
  ****************************************************************************/
 
 #ifndef BSCCONTROLLER_H
@@ -32,6 +33,7 @@
 #include "Device.h"
 #include "OrderController.h"
 #include "Sampler.h"
+#include <time.h>
 
 /****************************************************************************
 * SECTION: #define
@@ -64,13 +66,14 @@ typedef struct BSCController {
 	TOrderController* Orders;
 	TSampler* Sampler;
 	DeviceDeviceClass EwDeviceObject;
+	time_t LastUpdate;
 } TBSCController;
 
 /****************************************************************************
  * SECTION: Declaration of Global Variables
  ****************************************************************************/
 TBoolean ShutdownBSCController;
-
+TBSCController* BSCController;
 
 
 #ifdef __cplusplus
@@ -163,6 +166,19 @@ PUBLIC void
 GetFormattedTime (
   time_t * aTimeStamp,
   char *   aBuffer );
+
+
+/****************************************************************************
+ * FUNCTION: BSCAddOrder
+ * DESCRIPTION:
+ *   Wrapper function to add an Order to the OrderController of the
+ *   BSCController
+ ****************************************************************************/
+
+PUBLIC void
+BSCAddOrder (
+  int aInterval,
+  int aOrigin );
 
 
 
