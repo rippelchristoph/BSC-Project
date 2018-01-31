@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application::SampleController;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,1>;
-attr codeInspector = Device::DeviceClass.onSampleCollected;
-attr codeSelEnd = <17,6>;
-attr codeSelStart = <17,6>;
+attr codeFirstPos = <0,3>;
+attr codeInspector = Application::SampleController.OnSetRemainingTime;
+attr codeSelEnd = <27,7>;
+attr codeSelStart = <27,7>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -61,9 +61,10 @@ view unit Device
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,1>;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onSampleCollected;
+  attr codeSelEnd = <9,3>;
+  attr codeSelStart = <9,3>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -73,7 +74,7 @@ view class Device::DeviceClass
 view class Application::Clock
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,5>;
+  attr codeFirstPos = <0,2>;
   attr codeInspector = onTime;
   attr codeSelEnd = <4,9>;
   attr codeSelStart = <4,9>;
@@ -116,6 +117,35 @@ view class Application::Application
   attr codeInspector = onNewWell;
   attr codeSelEnd = <24,0>;
   attr codeSelStart = <24,0>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::Well
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <322,0>;
+  attr codeInspector = onSampleCollected;
+  attr codeSelEnd = <202,2>;
+  attr codeSelStart = <77,2>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Device::TimeContext
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Device::SampleCollectedContext
+{
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;

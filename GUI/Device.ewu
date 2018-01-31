@@ -163,13 +163,27 @@ class DeviceClass : Templates::DeviceClass
   $output true
   method void onSampleCollected( arg point aWellIndex, arg int32 aCircuitNumber, arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
   {
-    trace "SampleCollected - X:"+string(aWellIndex.x)+"X:"+string(aWellIndex.y)+" CircuitNumber:"+string(aCircuitNumber)+" Time:";
+    trace "SampleCollected - X:"+string(aWellIndex.x)
+    +"X:"+string(aWellIndex.y)
+    +" CircuitNumber:"+string(aCircuitNumber)
+    +" Time:"+string(aDay)+"."
+    +string(aMonth)+"."
+    +string(aYear)+" "
+    +string(aHour)+":"
+    +string(aMinute);
 
 
     var Device::SampleCollectedContext context = new Device::SampleCollectedContext;
     context.WellIndex = aWellIndex;
     context.CircuitNumber = aCircuitNumber;
-    context.Time = "";
+    context.Year=aYear;
+    context.Month=aMonth;
+    context.Day=aDay;
+    context.Hour=aHour;
+    context.Minute=aMinute;
+
+
+
     SampleCollectedEvent.Trigger( context, false );
   }
 
@@ -480,28 +494,124 @@ class SampleCollectedContext
     return pure CircuitNumber;
   }
 
-  $rect <480,40,680,80>
-  property string Time = "";
+  $rect <500,40,700,80>
+  property int32 Year = 0;
 
-  $rect <480,80,680,120>
-  onset Time
+  $rect <500,80,700,120>
+  onset Year
   {
     // The value doesn't change - nothing to do.
-    if ( pure Time == value )
+    if ( pure Year == value )
       return;
 
     // Remember the property's new value.
-    pure Time = value;
+    pure Year = value;
 
     // TO DO:
     // 
     // Now you can handle the alternation of the property.
   }
 
-  $rect <480,120,680,160>
-  onget Time
+  $rect <500,120,700,160>
+  onget Year
   {
-    return pure Time;
+    return pure Year;
+  }
+
+  $rect <730,40,930,80>
+  property int32 Month = 0;
+
+  $rect <730,80,930,120>
+  onset Month
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Month == value )
+      return;
+
+    // Remember the property's new value.
+    pure Month = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <730,120,930,160>
+  onget Month
+  {
+    return pure Month;
+  }
+
+  $rect <950,40,1150,80>
+  property int32 Day = 0;
+
+  $rect <950,80,1150,120>
+  onset Day
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Day == value )
+      return;
+
+    // Remember the property's new value.
+    pure Day = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <950,120,1150,160>
+  onget Day
+  {
+    return pure Day;
+  }
+
+  $rect <730,180,930,220>
+  property int32 Minute = 0;
+
+  $rect <730,220,930,260>
+  onset Minute
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Minute == value )
+      return;
+
+    // Remember the property's new value.
+    pure Minute = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <730,260,930,300>
+  onget Minute
+  {
+    return pure Minute;
+  }
+
+  $rect <500,180,700,220>
+  property int32 Hour = 0;
+
+  $rect <500,220,700,260>
+  onset Hour
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Hour == value )
+      return;
+
+    // Remember the property's new value.
+    pure Hour = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <500,260,700,300>
+  onget Hour
+  {
+    return pure Hour;
   }
 }
 

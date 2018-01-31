@@ -913,7 +913,7 @@ class Well : Core::Group
   {
     var Device::SampleCollectedContext context = (Device::SampleCollectedContext)SampleCollected.Context;
      
-    timeToWellPart(context.CircuitNumber,context.WellIndex.x,context.WellIndex.y,context.Time);
+    timeToWellPart(context.CircuitNumber,context.WellIndex.x,context.WellIndex.y,string(context.Day)+"."+string(context.Month)+"."+string(context.Year)+" "+string(context.Hour)+":"+string(context.Minute));
      
 
 

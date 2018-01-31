@@ -53,7 +53,11 @@
 EW_DEFINE_FIELDS( DeviceSampleCollectedContext, XObject )
   EW_PROPERTY( WellIndex,       XPoint )
   EW_PROPERTY( CircuitNumber,   XInt32 )
-  EW_PROPERTY( Time,            XString )
+  EW_PROPERTY( Year,            XInt32 )
+  EW_PROPERTY( Month,           XInt32 )
+  EW_PROPERTY( Day,             XInt32 )
+  EW_PROPERTY( Minute,          XInt32 )
+  EW_PROPERTY( Hour,            XInt32 )
 EW_END_OF_FIELDS( DeviceSampleCollectedContext )
 
 /* Virtual Method Table (VMT) for the class : 'Device::SampleCollectedContext' */
@@ -68,9 +72,25 @@ void DeviceSampleCollectedContext_OnSetWellIndex( DeviceSampleCollectedContext _
 void DeviceSampleCollectedContext_OnSetCircuitNumber( DeviceSampleCollectedContext _this, 
   XInt32 value );
 
-/* 'C' function for method : 'Device::SampleCollectedContext.OnSetTime()' */
-void DeviceSampleCollectedContext_OnSetTime( DeviceSampleCollectedContext _this, 
-  XString value );
+/* 'C' function for method : 'Device::SampleCollectedContext.OnSetYear()' */
+void DeviceSampleCollectedContext_OnSetYear( DeviceSampleCollectedContext _this, 
+  XInt32 value );
+
+/* 'C' function for method : 'Device::SampleCollectedContext.OnSetMonth()' */
+void DeviceSampleCollectedContext_OnSetMonth( DeviceSampleCollectedContext _this, 
+  XInt32 value );
+
+/* 'C' function for method : 'Device::SampleCollectedContext.OnSetDay()' */
+void DeviceSampleCollectedContext_OnSetDay( DeviceSampleCollectedContext _this, 
+  XInt32 value );
+
+/* 'C' function for method : 'Device::SampleCollectedContext.OnSetMinute()' */
+void DeviceSampleCollectedContext_OnSetMinute( DeviceSampleCollectedContext _this, 
+  XInt32 value );
+
+/* 'C' function for method : 'Device::SampleCollectedContext.OnSetHour()' */
+void DeviceSampleCollectedContext_OnSetHour( DeviceSampleCollectedContext _this, 
+  XInt32 value );
 
 #ifdef __cplusplus
   }
