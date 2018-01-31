@@ -306,11 +306,11 @@ static const XRect _Const00B8 = {{ 10, 190 }, { 430, 260 }};
 static const XRect _Const00B9 = {{ 10, 260 }, { 430, 330 }};
 static const XRect _Const00BA = {{ 10, 330 }, { 430, 400 }};
 static const XRect _Const00BB = {{ 10, 400 }, { 430, 470 }};
-static const XRect _Const00BC = {{ 670, 410 }, { 790, 470 }};
-static const XRect _Const00BD = {{ 440, 110 }, { 580, 170 }};
-static const XRect _Const00BE = {{ 440, 180 }, { 650, 210 }};
+static const XRect _Const00BC = {{ 580, 260 }, { 790, 469 }};
+static const XRect _Const00BD = {{ 610, 110 }, { 750, 170 }};
+static const XRect _Const00BE = {{ 580, 180 }, { 790, 210 }};
 static const XStringRes _Const00BF = { _StringsDefault1, 0x0067 };
-static const XRect _Const00C0 = {{ 440, 220 }, { 650, 250 }};
+static const XRect _Const00C0 = {{ 580, 220 }, { 790, 250 }};
 static const XStringRes _Const00C1 = { _StringsDefault1, 0x0078 };
 static const XRect _Const00C2 = {{ 10, 10 }, { 35, 35 }};
 static const XRect _Const00C3 = {{ 0, 0 }, { 160, 50 }};
@@ -448,21 +448,8 @@ void ApplicationApplication__Mark( ApplicationApplication _this )
 void ApplicationApplication_Init( ApplicationApplication _this, XHandle aArg )
 {
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
   EW_UNUSED_ARG( aArg );
-
-  CoreGroup_OnSetEnabled((CoreGroup)&_this->MainMenu.ControllMenu, 0 );
-  CoreGroup_OnSetVisible((CoreGroup)&_this->MainMenu.Config.ConfigBL, 1 );
-  CoreGroup_OnSetVisible((CoreGroup)&_this->MainMenu.Config.ConfigTR, 1 );
-  CoreGroup_OnSetVisible((CoreGroup)&_this->MainMenu.Config.ConfigWaste, 1 );
-  CoreGroup_OnSetVisible((CoreGroup)&_this->MainMenu.Config, 1 );
-  CoreGroup_OnSetEnabled((CoreGroup)&_this->MainMenu.Config.ConfigBL, 1 );
-  CoreGroup_OnSetEnabled((CoreGroup)&_this->MainMenu.Config.ConfigTR, 1 );
-  CoreGroup_OnSetEnabled((CoreGroup)&_this->MainMenu.Config.ConfigWaste, 1 );
-  CoreGroup_OnSetEnabled((CoreGroup)&_this->MainMenu.Config, 1 );
-  CoreRectView__OnSetBounds( &_this->MainMenu.Config, EwSetRectX1( _this->MainMenu.Config.Super2.Bounds, 
-  0 ));
-  CoreRectView__OnSetBounds( &_this->MainMenu.Config, EwSetRectY1( _this->MainMenu.Config.Super2.Bounds, 
-  0 ));
 }
 
 /* Variants derived from the class : 'Application::Application' */
@@ -1543,6 +1530,8 @@ void ApplicationClock__Init( ApplicationClock _this, XObject aLink, XHandle aArg
   ViewsText_OnSetFont( &_this->TimeText, EwLoadResource( &FlatFontM, ResourcesFont 
   ));
   _this->TimeHandler.OnEvent = EwNewSlot( _this, ApplicationClock_onTime );
+  CoreSystemEventHandler_OnSetEvent( &_this->TimeHandler, &EwGetAutoObject( &DeviceDevice, 
+  DeviceDeviceClass )->TimeEvent );
 }
 
 /* Re-Initializer for the class 'Application::Clock' */
@@ -6263,7 +6252,6 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   ApplicationSampleController__Init( &_this->SCA3, &_this->_XObject, 0 );
   ApplicationSampleController__Init( &_this->SCA4, &_this->_XObject, 0 );
   ApplicationSampleController__Init( &_this->SCA5, &_this->_XObject, 0 );
-  ApplicationClock__Init( &_this->Clock, &_this->_XObject, 0 );
   ViewsWarpImage__Init( &_this->Logo, &_this->_XObject, 0 );
   ApplicationANumKeyboard__Init( &_this->NumKeyboard, &_this->_XObject, 0 );
   ApplicationTemperature__Init( &_this->Temperature, &_this->_XObject, 0 );
@@ -6298,12 +6286,11 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   CoreRectView__OnSetBounds( &_this->SCA5, _Const00BB );
   CoreGroup_OnSetEnabled((CoreGroup)&_this->SCA5, 0 );
   ApplicationSampleController_OnSetNameProperty( &_this->SCA5, '6' );
-  CoreRectView__OnSetBounds( &_this->Clock, _Const00BC );
   CoreQuadView__OnSetPoint4( &_this->Logo, _Const0054 );
   CoreQuadView__OnSetPoint3( &_this->Logo, _Const0055 );
   CoreQuadView__OnSetPoint2( &_this->Logo, _Const0056 );
   CoreQuadView__OnSetPoint1( &_this->Logo, _Const0057 );
-  CoreRectView__OnSetBounds( &_this->NumKeyboard, _Const00A1 );
+  CoreRectView__OnSetBounds( &_this->NumKeyboard, _Const00BC );
   CoreGroup_OnSetEnabled((CoreGroup)&_this->NumKeyboard, 0 );
   CoreRectView__OnSetBounds( &_this->Temperature, _Const00BD );
   CoreRectView__OnSetBounds( &_this->Btn_Config, _Const00BE );
@@ -6323,7 +6310,6 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   CoreGroup__Add( _this, ((CoreView)&_this->SCA3 ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->SCA4 ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->SCA5 ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->Clock ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Logo ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->NumKeyboard ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Temperature ), 0 );
@@ -6369,7 +6355,6 @@ void ApplicationControllMenu__ReInit( ApplicationControllMenu _this )
   ApplicationSampleController__ReInit( &_this->SCA3 );
   ApplicationSampleController__ReInit( &_this->SCA4 );
   ApplicationSampleController__ReInit( &_this->SCA5 );
-  ApplicationClock__ReInit( &_this->Clock );
   ViewsWarpImage__ReInit( &_this->Logo );
   ApplicationANumKeyboard__ReInit( &_this->NumKeyboard );
   ApplicationTemperature__ReInit( &_this->Temperature );
@@ -6394,7 +6379,6 @@ void ApplicationControllMenu__Done( ApplicationControllMenu _this )
   ApplicationSampleController__Done( &_this->SCA3 );
   ApplicationSampleController__Done( &_this->SCA4 );
   ApplicationSampleController__Done( &_this->SCA5 );
-  ApplicationClock__Done( &_this->Clock );
   ViewsWarpImage__Done( &_this->Logo );
   ApplicationANumKeyboard__Done( &_this->NumKeyboard );
   ApplicationTemperature__Done( &_this->Temperature );
@@ -6418,7 +6402,6 @@ void ApplicationControllMenu__Mark( ApplicationControllMenu _this )
   EwMarkObject( &_this->SCA3 );
   EwMarkObject( &_this->SCA4 );
   EwMarkObject( &_this->SCA5 );
-  EwMarkObject( &_this->Clock );
   EwMarkObject( &_this->Logo );
   EwMarkObject( &_this->NumKeyboard );
   EwMarkObject( &_this->Temperature );

@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application::Clock;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,3>;
-attr codeInspector = Device::DeviceClass.ExitApplication;
-attr codeSelEnd = <17,7>;
-attr codeSelStart = <17,7>;
+attr codeInspector = Device::DeviceClass.onTime;
+attr codeSelEnd = <0,0>;
+attr codeSelStart = <0,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -61,30 +61,17 @@ view unit Device
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,1>;
-  attr codeInspector = ExitApplication;
-  attr codeSelEnd = <1,6>;
-  attr codeSelStart = <1,6>;
+  attr codeFirstPos = <0,3>;
+  attr codeInspector = onTime;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
-view class Application::ControllMenu
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtn_Exit;
-  attr codeSelEnd = <33,0>;
-  attr codeSelStart = <33,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::SampleController
+view class Application::Clock
 {
   attr enableGrid = true;
   attr grid = 10;

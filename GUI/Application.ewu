@@ -12,7 +12,7 @@ class Application : Core::Root
   inherited method Init()
   {
     //When the User starts the Application the Configuration has to be done first
-
+     /*
     MainMenu.ControllMenu.Enabled=false;
 
     MainMenu.Config.ConfigBL.Visible=true;
@@ -27,6 +27,7 @@ class Application : Core::Root
 
     MainMenu.Config.Bounds.x1=0;
     MainMenu.Config.Bounds.y1=0;
+    */
   }
 
   // To do:
@@ -1344,6 +1345,7 @@ class Clock : Core::Group
   object Core::SystemEventHandler TimeHandler
   {
     preset OnEvent = onTime;
+    preset Event = Device::Device.TimeEvent;
   }
 
   // This slot method is executed when the associated system event handler 'SystemEventHandler' \
@@ -4461,12 +4463,6 @@ class ControllMenu : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Application::Clock Clock
-  {
-    preset Bounds = <670,410,790,470>;
-  }
-
-  $rect <20,20,160,60>
   object Views::WarpImage Logo
   {
     preset Point4 = <730,80>;
@@ -4479,14 +4475,14 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::ANumKeyboard NumKeyboard
   {
-    preset Bounds = <440,260,650,469>;
+    preset Bounds = <580,260,790,469>;
     preset Enabled = false;
   }
 
   $rect <20,20,160,60>
   object Application::Temperature Temperature
   {
-    preset Bounds = <440,110,580,170>;
+    preset Bounds = <610,110,750,170>;
   }
 
   $rect <840,100,1040,140>
@@ -4528,7 +4524,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_Config
   {
-    preset Bounds = <440,180,650,210>;
+    preset Bounds = <580,180,790,210>;
     preset OnAction = onBtn_Config;
     preset Caption = "Einstellungen";
   }
@@ -4555,7 +4551,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_NewWell
   {
-    preset Bounds = <440,220,650,250>;
+    preset Bounds = <580,220,790,250>;
     preset Enabled = false;
     preset OnAction = onBtn_NewWell;
     preset Caption = "Neues Well";

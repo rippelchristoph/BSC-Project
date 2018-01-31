@@ -44,7 +44,6 @@
 
 #include "_ApplicationAActionButton.h"
 #include "_ApplicationANumKeyboard.h"
-#include "_ApplicationClock.h"
 #include "_ApplicationSampleController.h"
 #include "_ApplicationTemperature.h"
 #include "_CoreGroup.h"
@@ -99,7 +98,6 @@ EW_DEFINE_FIELDS( ApplicationControllMenu, CoreGroup )
   EW_OBJECT  ( SCA3,            ApplicationSampleController )
   EW_OBJECT  ( SCA4,            ApplicationSampleController )
   EW_OBJECT  ( SCA5,            ApplicationSampleController )
-  EW_OBJECT  ( Clock,           ApplicationClock )
   EW_OBJECT  ( Logo,            ViewsWarpImage )
   EW_OBJECT  ( NumKeyboard,     ApplicationANumKeyboard )
   EW_OBJECT  ( Temperature,     ApplicationTemperature )
