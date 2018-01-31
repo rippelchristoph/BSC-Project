@@ -462,7 +462,8 @@ int main( int argc, char** argv )
   //Get Time from Server
   system("sudo date -s \"$(wget -qSO- --max-redirect=0 google.com 2>&1 | grep Date: | cut -d' ' -f5-8)Z\"");
   
-  TBSCController* BSCController = newBSCController();
+
+  BSCController = newBSCController();
   
   /* start the EmWi main loop and process all user inputs, timers and signals */
   EwPrint( "Start EmWi Main Loop...                      " );
@@ -474,9 +475,7 @@ int main( int argc, char** argv )
     int events  = 0;
     XPoint lastPos = {0,0};
 	
-	if (ProcessBSCController(BSCController)) {
-		break;
-	}
+
 
     /* receive keyboard events and provide it to the application */
     cmd = GetKeyCommand();
@@ -486,6 +485,10 @@ int main( int argc, char** argv )
       events |= CoreRoot__DriveKeyboardHitting( rootObject, cmd, 0, 1 );
       events |= CoreRoot__DriveKeyboardHitting( rootObject, cmd, 0, 0 );
     }
+
+	if (ProcessBSCController(BSCController)) {
+		cmd = CoreKeyCodePower;
+	}
 
     /* receive touch events and provide it to the application */
     if ( TouchState > 0 )

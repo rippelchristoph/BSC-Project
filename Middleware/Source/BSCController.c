@@ -18,6 +18,7 @@
  *   BSCShutdown
  *   BSCWriteConfiguration
  *   GetFormattedTime
+ *   BSCAddOrder
  *
  * PRIVATE FUNCTIONS:
  *   UpdateRemainingTimes
@@ -34,6 +35,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+
 #include "i2c.h"
 
 
@@ -49,6 +51,7 @@
 #include "Device.h"
 #include "OrderController.h"
 #include "Sampler.h"
+#include <time.h>
 
 /****************************************************************************
 * SECTION: #define
@@ -81,13 +84,14 @@ typedef struct BSCController {
 	TOrderController* Orders;
 	TSampler* Sampler;
 	DeviceDeviceClass EwDeviceObject;
+	time_t LastUpdate;
 } TBSCController;
 
 /****************************************************************************
  * SECTION: Declaration of Global Variables
  ****************************************************************************/
 TBoolean ShutdownBSCController;
-
+TBSCController* BSCController;
 #endif
 
 /*
@@ -146,20 +150,21 @@ newBSCController ( void )
 	int j = 0;
 	TBSCController* retPtr;
 	retPtr = malloc(sizeof(TBSCController));
+	time(&retPtr->LastUpdate);
 	retPtr->Orders = newOrderController();
 	//retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well);
-	
-	retPtr->Configuration = malloc(sizeof(TBSCConfig));
-	//BSCReadConfiguration(retPtr->Configuration, NULL); //TODO: Configuration Path
-	
-	//Allocate Storage for multidimensional array
-	retPtr->Well = malloc(retPtr->Configuration->NWellX * sizeof(TWellData*));
-	for (i = 0; i < retPtr->Configuration->NWellX; i++) {
-		retPtr->Well[i] = malloc(retPtr->Configuration->NWellY * sizeof(TWellData));
-		for (j = 0; j < retPtr->Configuration->NWellY; j++) {
-			retPtr->Well[i][j].Status = EMPTY;
-		}
-	}
+	//
+	////retPtr->Configuration = malloc(sizeof(TBSCConfig));
+	////BSCReadConfiguration(retPtr->Configuration, NULL); //TODO: Configuration Path
+	////
+	////Allocate Storage for multidimensional array
+	//retPtr->Well = malloc(retPtr->Configuration->NWellX * sizeof(TWellData*));
+	//for (i = 0; i < retPtr->Configuration->NWellX; i++) {
+	//	retPtr->Well[i] = malloc(retPtr->Configuration->NWellY * sizeof(TWellData));
+	//	for (j = 0; j < retPtr->Configuration->NWellY; j++) {
+	//		retPtr->Well[i][j].Status = EMPTY;
+	//	}
+	//}
 
 	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, DeviceDeviceClass);
 
@@ -288,21 +293,26 @@ PUBLIC int
 ProcessBSCController (
   TBSCController * aBSCController )
 {
-	/*int retVal = -1;
-	char line[30];
-	if ((retVal = ProcessOrderController(aBSCController->Orders)) != -1) {
-		SamplerAddToQueue(aBSCController->Sampler, retVal);
+	//int retVal = -1;
+	//if ((retVal = ProcessOrderController(aBSCController->Orders)) != -1) {
+	//	SamplerAddToQueue(aBSCController->Sampler, retVal);
+	//}
+
+	//ProcessSampler(aBSCController->Sampler);
+	
+
+	
+	//ProcessOrderController(aBSCController->Orders);
+	
+	time_t now = time(NULL);
+
+	if ((now - aBSCController->LastUpdate) >= 1) {
+		aBSCController->LastUpdate = now;
+
+		UpdateTemperature(aBSCController);
+		UpdateDayTime(aBSCController);
+		UpdateRemainingTimes(aBSCController);
 	}
-
-	ProcessSampler(aBSCController->Sampler);
-	*/
-
-	UpdateRemainingTimes(aBSCController);
-	ProcessOrderController(aBSCController->Orders);
-	UpdateTemperature(aBSCController);
-	
-	
-	UpdateDayTime(aBSCController);
 	
 	return ShutdownBSCController;
 }
@@ -383,6 +393,21 @@ GetFormattedTime (
 }
 
 /****************************************************************************
+ * FUNCTION: BSCAddOrder
+ * DESCRIPTION:
+ *   Wrapper function to add an Order to the OrderController of the
+ *   BSCController
+ ****************************************************************************/
+
+PUBLIC void
+BSCAddOrder (
+  int aInterval,
+  int aOrigin )
+{
+	OrderControllerAddOrder(BSCController->Orders, (time_t) aInterval, aOrigin);
+}
+
+/****************************************************************************
  * SECTION: Implementation of private Functions
  ****************************************************************************/
 
@@ -403,10 +428,12 @@ UpdateRemainingTimes (
 	TListHeader* OrderList = aController->Orders->OrderList;
 	TOrder* retOrder;
 	ListSetReadPointer(OrderList, 0);
-
 	while ((retOrder = ListGetNext(OrderList)))
 	{
-		//Call EwFunction Update(EwDevice, retOrder->Origin, OrderGetRemainingTime(retOrder)
+		DeviceDeviceClass_onRemainingTime(aController->EwDeviceObject, 
+			(XInt32) retOrder->Origin,
+			(XInt32) OrderGetRemainingTime(retOrder) / 60 
+		);
 	}
 }
 
@@ -445,8 +472,7 @@ UpdateTemperature (
 		updateVal = -1.0 * ((float)complement) * 0.125f;
 	}
 
-
-
+	destroyI2C(dataStream);
 	DeviceDeviceClass__UpdateTemperature(aController->EwDeviceObject,((XFloat) updateVal));
 	
 }
