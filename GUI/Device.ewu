@@ -201,7 +201,7 @@ class DeviceClass : Templates::DeviceClass
       trace "ERROR: Wrong Circuit Number:"+string(aCircuitNumber);
       return;
     }
-
+    trace "RemainingTime before Context:"+string(aRemainingTime);
     context.CircuitNumber=aCircuitNumber;
     context.RemainingTime=aRemainingTime;
     RemainingTimeEvent.Trigger( context, false );

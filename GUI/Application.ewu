@@ -1698,6 +1698,7 @@ class SampleController : Core::Group
     pure RemainingTime = value;
 
     HorzBar.CurrentValue=RemainingTime;
+    trace "RemainingTime:"+string(RemainingTime);
 
     // TO DO:
     // 
