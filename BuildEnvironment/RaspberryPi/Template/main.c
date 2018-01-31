@@ -464,7 +464,6 @@ int main( int argc, char** argv )
   
   TBSCController* BSCController = newBSCController();
   
-  
   /* start the EmWi main loop and process all user inputs, timers and signals */
   EwPrint( "Start EmWi Main Loop...                      " );
   EwPrint( "[OK]\n" );
@@ -475,7 +474,9 @@ int main( int argc, char** argv )
     int events  = 0;
     XPoint lastPos = {0,0};
 	
-	 ProcessBSCController(BSCController);
+	if (ProcessBSCController(BSCController)) {
+		break;
+	}
 
     /* receive keyboard events and provide it to the application */
     cmd = GetKeyCommand();
