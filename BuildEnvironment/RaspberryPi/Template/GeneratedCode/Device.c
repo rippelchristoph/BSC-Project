@@ -86,6 +86,9 @@ static const XStringRes _Const001C = { _StringsDefault0, 0x018A };
 static const XStringRes _Const001D = { _StringsDefault0, 0x018F };
 static const XStringRes _Const001E = { _StringsDefault0, 0x0194 };
 
+/* User defined inline code: 'Device::BSCHeader' */
+#include "BSCController.h"
+
 /* Initializer for the class 'Device::DeviceClass' */
 void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aArg )
 {
@@ -507,6 +510,7 @@ void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this )
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwLoadString( &_Const001E ));
+  BSCShutdown();
 }
 
 /* Default onget method for the property 'NuOfCircuits' */
