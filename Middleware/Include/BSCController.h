@@ -15,6 +15,7 @@
  *   destroyBSCController
  *   BSCReadConfiguration
  *   ProcessBSCController
+ *   BSCShutdown
  *   BSCWriteConfiguration
  *   GetFormattedTime
  ****************************************************************************/
@@ -65,6 +66,11 @@ typedef struct BSCController {
 	DeviceDeviceClass EwDeviceObject;
 } TBSCController;
 
+/****************************************************************************
+ * SECTION: Declaration of Global Variables
+ ****************************************************************************/
+TBoolean ShutdownBSCController;
+
 
 
 #ifdef __cplusplus
@@ -112,9 +118,17 @@ BSCReadConfiguration (
  * FUNCTION: ProcessBSCController
  ****************************************************************************/
 
-PUBLIC void
+PUBLIC int
 ProcessBSCController (
   TBSCController * aBSCController );
+
+
+/****************************************************************************
+ * FUNCTION: BSCShutdown
+ ****************************************************************************/
+
+PUBLIC void
+BSCShutdown ( void );
 
 
 /****************************************************************************

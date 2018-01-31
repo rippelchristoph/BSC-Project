@@ -15,6 +15,7 @@
  *   destroyBSCController
  *   BSCReadConfiguration
  *   ProcessBSCController
+ *   BSCShutdown
  *   BSCWriteConfiguration
  *   GetFormattedTime
  *
@@ -81,6 +82,11 @@ typedef struct BSCController {
 	TSampler* Sampler;
 	DeviceDeviceClass EwDeviceObject;
 } TBSCController;
+
+/****************************************************************************
+ * SECTION: Declaration of Global Variables
+ ****************************************************************************/
+TBoolean ShutdownBSCController;
 
 #endif
 
@@ -157,7 +163,7 @@ newBSCController ( void )
 
 	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, DeviceDeviceClass);
 
-	
+	ShutdownBSCController = EFALSE;
 
 	return retPtr;
 }
@@ -278,7 +284,7 @@ BSCReadConfiguration (
 /****************************************************************************
  * FUNCTION: ProcessBSCController
  ****************************************************************************/
-PUBLIC void
+PUBLIC int
 ProcessBSCController (
   TBSCController * aBSCController )
 {
@@ -298,6 +304,16 @@ ProcessBSCController (
 	
 	UpdateDayTime(aBSCController);
 	
+	return ShutdownBSCController;
+}
+
+/****************************************************************************
+ * FUNCTION: BSCShutdown
+ ****************************************************************************/
+PUBLIC void
+BSCShutdown ( void )
+{
+	ShutdownBSCController = ETRUE;
 }
 /****************************************************************************
  * FUNCTION: BSCWriteConfiguration
@@ -449,12 +465,16 @@ PRIVATE void
 UpdateDayTime (
   TBSCController * aController )
 {
-	char buffer[30];
 	time_t now = time(NULL);
-	
-	GetFormattedTime(&now, buffer);
-	XString updateValue = EwNewStringUtf8(buffer, strlen(buffer));
-	DeviceDeviceClass__UpdateTime(aController->EwDeviceObject, updateValue);
+	struct tm* structTime = localtime(&now);
+
+	DeviceDeviceClass_onTime(aController->EwDeviceObject,
+		(XInt32) (structTime->tm_year + 1900),
+		(XInt32) (structTime->tm_mon + 1),
+		(XInt32) (structTime->tm_mday),
+		(XInt32) (structTime->tm_hour),
+		(XInt32) (structTime->tm_min)
+	);
 
 }
 
