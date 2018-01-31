@@ -99,11 +99,13 @@ void DeviceDeviceClass_StartSampling( DeviceDeviceClass _this, XInt32 aIntervall
 /* This method is intended to be called by the device to notify the GUI application 
    about a particular system event. */
 void DeviceDeviceClass_onSampleCollected( DeviceDeviceClass _this, XPoint aWellIndex, 
-  XInt32 aCircuitNumber, XString aTime );
+  XInt32 aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 aHour, 
+  XInt32 aMinute );
 
 /* Wrapper function for the non virtual method : 'Device::DeviceClass.onSampleCollected()' */
 void DeviceDeviceClass__onSampleCollected( void* _this, XPoint aWellIndex, XInt32 
-  aCircuitNumber, XString aTime );
+  aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 aHour, XInt32 
+  aMinute );
 
 /* The following define announces the presence of the method Device::DeviceClass.onSampleCollected(). */
 #define _DeviceDeviceClass__onSampleCollected_

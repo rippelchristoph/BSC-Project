@@ -161,15 +161,15 @@ class DeviceClass : Templates::DeviceClass
   // about a particular system event.
   $rect <40,280,240,320>
   $output true
-  method void onSampleCollected( arg point aWellIndex, arg int32 aCircuitNumber, arg string aTime )
+  method void onSampleCollected( arg point aWellIndex, arg int32 aCircuitNumber, arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
   {
-    trace "SampleCollected - X:"+string(aWellIndex.x)+"X:"+string(aWellIndex.y)+" CircuitNumber:"+string(aCircuitNumber)+" Time:"+aTime;
+    trace "SampleCollected - X:"+string(aWellIndex.x)+"X:"+string(aWellIndex.y)+" CircuitNumber:"+string(aCircuitNumber)+" Time:";
 
 
     var Device::SampleCollectedContext context = new Device::SampleCollectedContext;
     context.WellIndex = aWellIndex;
     context.CircuitNumber = aCircuitNumber;
-    context.Time = aTime;
+    context.Time = "";
     SampleCollectedEvent.Trigger( context, false );
   }
 
@@ -184,7 +184,7 @@ class DeviceClass : Templates::DeviceClass
   {
     var Device::RemainingTimeContext context = new Device::RemainingTimeContext;
     if(aCircuitNumber>5||aCircuitNumber<0){
-      trace "ERROR: Wrong Circuit Number";
+      trace "ERROR: Wrong Circuit Number:"+string(aCircuitNumber);
       return;
     }
 

@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::SampleController;
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,11>;
-attr codeInspector = Application::SampleController.OnSetEnabledProperty;
-attr codeSelEnd = <2,18>;
-attr codeSelStart = <2,18>;
+attr codeFirstPos = <0,1>;
+attr codeInspector = Device::DeviceClass.onSampleCollected;
+attr codeSelEnd = <17,6>;
+attr codeSelStart = <17,6>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -62,7 +62,6 @@ view class Device::DeviceClass
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,1>;
-  attr codeInspector = onRemainingTime;
   attr codeSelEnd = <0,0>;
   attr codeSelStart = <0,0>;
   attr enableGrid = true;
@@ -86,6 +85,11 @@ view class Application::Clock
 
 view class Application::ControllMenu
 {
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onRemainingTime;
+  attr codeSelEnd = <75,1>;
+  attr codeSelStart = <62,1>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -95,10 +99,10 @@ view class Application::ControllMenu
 view class Application::SampleController
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,11>;
-  attr codeInspector = OnSetEnabledProperty;
-  attr codeSelEnd = <2,18>;
-  attr codeSelStart = <2,18>;
+  attr codeFirstPos = <0,3>;
+  attr codeInspector = OnSetRemainingTime;
+  attr codeSelEnd = <27,7>;
+  attr codeSelStart = <27,7>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;

@@ -35,7 +35,7 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x0000031A, /* ratio 49.87 % */
+  0x0000031C, /* ratio 49.75 % */
   0xB8002B00, 0x00000452, 0x00EA0027, 0x0C400368, 0xE4003280, 0xC0027800, 0x0021800C,
   0x300444D2, 0x00466126, 0x01CC0074, 0x8020C3A0, 0x1E0B0305, 0xCEE0087C, 0x006C9640,
   0x21E834C4, 0x2029C1A5, 0x18D98401, 0x864EE712, 0x747E6470, 0x000CE003, 0x1C5A0010,
@@ -43,13 +43,13 @@ static const unsigned int _StringsDefault0[] =
   0x5461D0C8, 0x126B2692, 0x0A505834, 0xDD14B700, 0x657A4496, 0x45A71BE3, 0xEAF47EB7,
   0xB24AEC31, 0x344A590D, 0xDB6B41A8, 0xCF1113B7, 0x2EF1297D, 0x9B48A351, 0x600C153E,
   0x3398CEEA, 0xEAD06001, 0xA0802173, 0xBC622131, 0x4765998B, 0x2CC800A8, 0x0B148A55,
-  0xB406835A, 0x400ABEBA, 0x54A45681, 0x4884323E, 0xC46183FB, 0xAD2F1570, 0xE42F18DB,
-  0xF6397B8B, 0xAC7489CD, 0x0D1BB367, 0xF39CE086, 0x40CED06E, 0xBC7C6A85, 0xE5576F5A,
+  0xB406835A, 0x400ABEBA, 0x54A45681, 0x4884323E, 0xC3CAAE9B, 0xAD2F1570, 0xE42F18DB,
+  0xF6397B8B, 0xAC7489CD, 0x691BB367, 0xF39CE087, 0x40CED06E, 0xBC7C6A85, 0xE5576F5A,
   0x2F3A7360, 0xD676994B, 0x008400B5, 0x0A000260, 0x4323BB80, 0x18E8D5FA, 0x00D7EB6D,
   0x9006DC0E, 0xF47EBF05, 0xDF816948, 0xE6E52A79, 0xE5F07B96, 0x787BDF34, 0x499B362D,
   0xD7556816, 0x84B1F14E, 0x660A48A0, 0xF8839F58, 0x461E866D, 0x1124490A, 0x585D9344,
   0x2E1B82E1, 0x1441A0F5, 0x759B9568, 0xA27831ED, 0x88AA0D86, 0xB22E045F, 0x3B59DD94,
-  0x4B221485, 0x1BF5618B, 0x14851F1E, 0xC64867C4, 0x3D4751A4, 0x499F547E, 0x00040526,
+  0x4B221485, 0x1865618B, 0x147C7800, 0x259F1052, 0x1D469319, 0x7D51F8F5, 0x10149926,
   0x00000000
 };
 
@@ -64,15 +64,15 @@ static const XStringRes _Const0006 = { _StringsDefault0, 0x008C };
 static const XStringRes _Const0007 = { _StringsDefault0, 0x00A4 };
 static const XStringRes _Const0008 = { _StringsDefault0, 0x00AA };
 static const XStringRes _Const0009 = { _StringsDefault0, 0x00B4 };
-static const XStringRes _Const000A = { _StringsDefault0, 0x00D3 };
-static const XStringRes _Const000B = { _StringsDefault0, 0x00F4 };
-static const XStringRes _Const000C = { _StringsDefault0, 0x0107 };
-static const XStringRes _Const000D = { _StringsDefault0, 0x010E };
-static const XStringRes _Const000E = { _StringsDefault0, 0x0115 };
-static const XStringRes _Const000F = { _StringsDefault0, 0x0128 };
-static const XStringRes _Const0010 = { _StringsDefault0, 0x013E };
-static const XStringRes _Const0011 = { _StringsDefault0, 0x0156 };
-static const XStringRes _Const0012 = { _StringsDefault0, 0x016A };
+static const XStringRes _Const000A = { _StringsDefault0, 0x00D4 };
+static const XStringRes _Const000B = { _StringsDefault0, 0x00F5 };
+static const XStringRes _Const000C = { _StringsDefault0, 0x0108 };
+static const XStringRes _Const000D = { _StringsDefault0, 0x010F };
+static const XStringRes _Const000E = { _StringsDefault0, 0x0116 };
+static const XStringRes _Const000F = { _StringsDefault0, 0x0129 };
+static const XStringRes _Const0010 = { _StringsDefault0, 0x013F };
+static const XStringRes _Const0011 = { _StringsDefault0, 0x0157 };
+static const XStringRes _Const0012 = { _StringsDefault0, 0x016B };
 static const XColor _Const0013 = { 0xF3, 0x89, 0x00, 0xFF };
 static const XColor _Const0014 = { 0x32, 0xCE, 0x00, 0xFF };
 static const XColor _Const0015 = { 0x07, 0x36, 0xA3, 0xFF };
@@ -80,7 +80,7 @@ static const XColor _Const0016 = { 0x00, 0x00, 0xFF, 0xFF };
 static const XColor _Const0017 = { 0x00, 0xFF, 0xFF, 0xFF };
 static const XColor _Const0018 = { 0xFF, 0x00, 0xFF, 0xFF };
 static const XColor _Const0019 = { 0xFF, 0x00, 0x00, 0xFF };
-static const XStringRes _Const001A = { _StringsDefault0, 0x017B };
+static const XStringRes _Const001A = { _StringsDefault0, 0x017C };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
@@ -260,29 +260,38 @@ void DeviceDeviceClass_StartSampling( DeviceDeviceClass _this, XInt32 aIntervall
 /* This method is intended to be called by the device to notify the GUI application 
    about a particular system event. */
 void DeviceDeviceClass_onSampleCollected( DeviceDeviceClass _this, XPoint aWellIndex, 
-  XInt32 aCircuitNumber, XString aTime )
+  XInt32 aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 aHour, 
+  XInt32 aMinute )
 {
   DeviceSampleCollectedContext context;
 
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( aMinute );
+  EW_UNUSED_ARG( aHour );
+  EW_UNUSED_ARG( aDay );
+  EW_UNUSED_ARG( aMonth );
+  EW_UNUSED_ARG( aYear );
+
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0006 ), 
-    EwNewStringInt( aWellIndex.X, 0, 10 )), EwLoadString( &_Const0007 )), EwNewStringInt( 
-    aWellIndex.Y, 0, 10 )), EwLoadString( &_Const0003 )), EwNewStringInt( aCircuitNumber, 
-    0, 10 )), EwLoadString( &_Const0008 )), aTime ));
+    EwConcatString( EwConcatString( EwLoadString( &_Const0006 ), EwNewStringInt( 
+    aWellIndex.X, 0, 10 )), EwLoadString( &_Const0007 )), EwNewStringInt( aWellIndex.Y, 
+    0, 10 )), EwLoadString( &_Const0003 )), EwNewStringInt( aCircuitNumber, 0, 10 
+    )), EwLoadString( &_Const0008 )));
   context = EwNewObject( DeviceSampleCollectedContext, 0 );
   DeviceSampleCollectedContext_OnSetWellIndex( context, aWellIndex );
   DeviceSampleCollectedContext_OnSetCircuitNumber( context, aCircuitNumber );
-  DeviceSampleCollectedContext_OnSetTime( context, aTime );
+  DeviceSampleCollectedContext_OnSetTime( context, 0 );
   CoreSystemEvent_Trigger( &_this->SampleCollectedEvent, ((XObject)context ), 0 
   );
 }
 
 /* Wrapper function for the non virtual method : 'Device::DeviceClass.onSampleCollected()' */
 void DeviceDeviceClass__onSampleCollected( void* _this, XPoint aWellIndex, XInt32 
-  aCircuitNumber, XString aTime )
+  aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 aHour, XInt32 
+  aMinute )
 {
   DeviceDeviceClass_onSampleCollected((DeviceDeviceClass)_this, aWellIndex, aCircuitNumber
-  , aTime );
+  , aYear, aMonth, aDay, aHour, aMinute );
 }
 
 /* This method is intended to be called by the device to notify the GUI application 
@@ -295,7 +304,8 @@ void DeviceDeviceClass_onRemainingTime( DeviceDeviceClass _this, XInt32 aCircuit
 
   if (( aCircuitNumber > 5 ) || ( aCircuitNumber < 0 ))
   {
-    EwTrace( "%s", EwLoadString( &_Const0009 ));
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0009 ), EwNewStringInt( 
+      aCircuitNumber, 0, 10 )));
     return;
   }
 
