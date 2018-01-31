@@ -385,9 +385,6 @@ class DeviceClass : Templates::DeviceClass
   $output true
   method void onTime( arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
   {
-
-
-
     var Device::TimeContext context = new Device::TimeContext;
     context.Year=aYear;
     context.Month=aMonth;
@@ -399,6 +396,19 @@ class DeviceClass : Templates::DeviceClass
                           +string(context.Hour)+":"+string(context.Minute);
 
     TimeEvent.Trigger( context, false );
+  }
+
+  $rect <40,430,240,470>
+  method void ExitApplication()
+  {
+    trace "ExitApplication";
+    $if $prototyper
+    $endif
+
+    $if !$prototyper
+
+    $endif
+
   }
 }
 

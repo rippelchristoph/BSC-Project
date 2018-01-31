@@ -1,11 +1,12 @@
 $version 1.0
 
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Application::Config.onNextTop;
-attr codeSelEnd = <103,5>;
-attr codeSelStart = <103,5>;
+attr codeInspector = Device::DeviceClass.ExitApplication;
+attr codeSelEnd = <0,5>;
+attr codeSelStart = <0,5>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -37,6 +38,48 @@ view Project
 }
 
 view unit Application
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view unit Device
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Device::DeviceClass
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = ExitApplication;
+  attr codeSelEnd = <0,5>;
+  attr codeSelStart = <0,5>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::ControllMenu
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onBtn_Exit;
+  attr codeSelEnd = <33,0>;
+  attr codeSelStart = <33,0>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::SampleController
 {
   attr enableGrid = true;
   attr grid = 10;

@@ -93,7 +93,7 @@
 /* Deklaration of class : 'Application::ControllMenu' */
 EW_DEFINE_FIELDS( ApplicationControllMenu, CoreGroup )
   EW_OBJECT  ( Rectangle,       ViewsRectangle )
-  EW_OBJECT  ( SCA,             ApplicationSampleController )
+  EW_OBJECT  ( SCA0,            ApplicationSampleController )
   EW_OBJECT  ( SCA1,            ApplicationSampleController )
   EW_OBJECT  ( SCA2,            ApplicationSampleController )
   EW_OBJECT  ( SCA3,            ApplicationSampleController )
@@ -109,6 +109,7 @@ EW_DEFINE_FIELDS( ApplicationControllMenu, CoreGroup )
   EW_OBJECT  ( Btn_NewWell,     ApplicationAActionButton )
   EW_PROPERTY( Config,          ApplicationConfig )
   EW_OBJECT  ( RemainingTime,   CoreSystemEventHandler )
+  EW_OBJECT  ( btn_Exit,        ApplicationAActionButton )
 EW_END_OF_FIELDS( ApplicationControllMenu )
 
 /* Virtual Method Table (VMT) for the class : 'Application::ControllMenu' */
@@ -189,6 +190,10 @@ void ApplicationControllMenu_OnSetConfig( ApplicationControllMenu _this, Applica
 /* This slot method is executed when the associated system event handler 'SystemEventHandler' 
    receives an event. */
 void ApplicationControllMenu_onRemainingTime( ApplicationControllMenu _this, XObject 
+  sender );
+
+/* 'C' function for method : 'Application::ControllMenu.onBtn_Exit()' */
+void ApplicationControllMenu_onBtn_Exit( ApplicationControllMenu _this, XObject 
   sender );
 
 #ifdef __cplusplus

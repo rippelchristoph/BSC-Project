@@ -35,7 +35,7 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x00000326, /* ratio 49.63 % */
+  0x0000034C, /* ratio 49.29 % */
   0xB8002B00, 0x00000452, 0x00EA0027, 0x0C400368, 0xE4003280, 0xC0027800, 0x0021800C,
   0x300444D2, 0x00466126, 0x01CC0074, 0x8020C3A0, 0x1E0B0305, 0xCEE0087C, 0x006C9640,
   0x21E834C4, 0x2029C1A5, 0x18D98401, 0x864EE712, 0x747E6470, 0x000CE003, 0x1C5A0010,
@@ -49,8 +49,8 @@ static const unsigned int _StringsDefault0[] =
   0x9006DC0E, 0xF47EBF05, 0xDF816948, 0xE6E52A79, 0xE5F07B96, 0x787BDF34, 0x499B362D,
   0xD7556816, 0x84B1F14E, 0x660A48A0, 0xF8839F58, 0x461E866D, 0x1124490A, 0x585D9344,
   0x2E1B82E1, 0x1441A0F5, 0x759B9568, 0xA27831ED, 0x88AA0D86, 0xB22E045F, 0x3B59DD94,
-  0x4B221485, 0x1B64198B, 0xB469B97A, 0x15267D9B, 0x490B95A0, 0x929067EE, 0x1266D1E8,
-  0x00010100, 0x00000000
+  0x4B221485, 0x1B64198B, 0xB469B97A, 0x15267D9B, 0x490B95A0, 0x929067EE, 0x1BF799E8,
+  0x14851F1E, 0xC65867C4, 0x3D4751A4, 0x499F547E, 0x00040526, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -84,6 +84,7 @@ static const XStringRes _Const001A = { _StringsDefault0, 0x017B };
 static const XStringRes _Const001B = { _StringsDefault0, 0x0185 };
 static const XStringRes _Const001C = { _StringsDefault0, 0x018A };
 static const XStringRes _Const001D = { _StringsDefault0, 0x018F };
+static const XStringRes _Const001E = { _StringsDefault0, 0x0194 };
 
 /* Initializer for the class 'Device::DeviceClass' */
 void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aArg )
@@ -497,6 +498,15 @@ void DeviceDeviceClass__onTime( void* _this, XInt32 aYear, XInt32 aMonth, XInt32
 {
   DeviceDeviceClass_onTime((DeviceDeviceClass)_this, aYear, aMonth, aDay, aHour, 
   aMinute );
+}
+
+/* 'C' function for method : 'Device::DeviceClass.ExitApplication()' */
+void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+
+  EwTrace( "%s", EwLoadString( &_Const001E ));
 }
 
 /* Default onget method for the property 'NuOfCircuits' */

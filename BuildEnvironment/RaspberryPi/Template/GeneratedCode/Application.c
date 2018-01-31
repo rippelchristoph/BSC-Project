@@ -276,10 +276,10 @@ static const XRect _Const009A = {{ 0, 0 }, { 70, 40 }};
 static const XRect _Const009B = {{ 0, 0 }, { 130, 60 }};
 static const XStringRes _Const009C = { _StringsDefault0, 0x00EA };
 static const XStringRes _Const009D = { _StringsDefault0, 0x00F2 };
-static const XRect _Const009E = {{ 670, 440 }, { 790, 470 }};
+static const XRect _Const009E = {{ 670, 439 }, { 790, 469 }};
 static const XStringRes _Const009F = { _StringsDefault0, 0x00F8 };
 static const XRect _Const00A0 = {{ 330, 110 }, { 470, 170 }};
-static const XRect _Const00A1 = {{ 610, 230 }, { 780, 410 }};
+static const XRect _Const00A1 = {{ 440, 260 }, { 650, 469 }};
 static const XRect _Const00A2 = {{ 60, 10 }, { 690, 120 }};
 static const XStringRes _Const00A3 = { _StringsDefault0, 0x00FE };
 static const XStringRes _Const00A4 = { _StringsDefault0, 0x014C };
@@ -297,7 +297,7 @@ static const XRect _Const00AF = {{ 10, 310 }, { 50, 360 }};
 static const XStringRes _Const00B0 = { _StringsDefault1, 0x0055 };
 static const XRect _Const00B1 = {{ 10, 370 }, { 50, 420 }};
 static const XStringRes _Const00B2 = { _StringsDefault1, 0x005A };
-static const XRect _Const00B3 = {{ 550, 440 }, { 650, 470 }};
+static const XRect _Const00B3 = {{ 550, 439 }, { 650, 469 }};
 static const XStringRes _Const00B4 = { _StringsDefault1, 0x005F };
 static const XRect _Const00B5 = {{ 10, 10 }, { 790, 430 }};
 static const XRect _Const00B6 = {{ 10, 50 }, { 430, 120 }};
@@ -307,12 +307,12 @@ static const XRect _Const00B9 = {{ 10, 260 }, { 430, 330 }};
 static const XRect _Const00BA = {{ 10, 330 }, { 430, 400 }};
 static const XRect _Const00BB = {{ 10, 400 }, { 430, 470 }};
 static const XRect _Const00BC = {{ 670, 410 }, { 790, 470 }};
-static const XRect _Const00BD = {{ 440, 260 }, { 650, 469 }};
-static const XRect _Const00BE = {{ 440, 110 }, { 580, 170 }};
-static const XRect _Const00BF = {{ 440, 180 }, { 650, 210 }};
-static const XStringRes _Const00C0 = { _StringsDefault1, 0x0067 };
-static const XRect _Const00C1 = {{ 440, 220 }, { 650, 250 }};
-static const XStringRes _Const00C2 = { _StringsDefault1, 0x0078 };
+static const XRect _Const00BD = {{ 440, 110 }, { 580, 170 }};
+static const XRect _Const00BE = {{ 440, 180 }, { 650, 210 }};
+static const XStringRes _Const00BF = { _StringsDefault1, 0x0067 };
+static const XRect _Const00C0 = {{ 440, 220 }, { 650, 250 }};
+static const XStringRes _Const00C1 = { _StringsDefault1, 0x0078 };
+static const XRect _Const00C2 = {{ 10, 10 }, { 35, 35 }};
 static const XRect _Const00C3 = {{ 0, 0 }, { 160, 50 }};
 static const XRect _Const00C4 = {{ 0, 0 }, { 160, 20 }};
 static const XRect _Const00C5 = {{ 0, 0 }, { 90, 20 }};
@@ -6257,7 +6257,7 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
 
   /* ... then construct all embedded objects */
   ViewsRectangle__Init( &_this->Rectangle, &_this->_XObject, 0 );
-  ApplicationSampleController__Init( &_this->SCA, &_this->_XObject, 0 );
+  ApplicationSampleController__Init( &_this->SCA0, &_this->_XObject, 0 );
   ApplicationSampleController__Init( &_this->SCA1, &_this->_XObject, 0 );
   ApplicationSampleController__Init( &_this->SCA2, &_this->_XObject, 0 );
   ApplicationSampleController__Init( &_this->SCA3, &_this->_XObject, 0 );
@@ -6271,6 +6271,7 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   ApplicationAActionButton__Init( &_this->Btn_Config, &_this->_XObject, 0 );
   ApplicationAActionButton__Init( &_this->Btn_NewWell, &_this->_XObject, 0 );
   CoreSystemEventHandler__Init( &_this->RemainingTime, &_this->_XObject, 0 );
+  ApplicationAActionButton__Init( &_this->btn_Exit, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( ApplicationControllMenu );
@@ -6279,9 +6280,9 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   CoreRectView__OnSetBounds( _this, _Const0000 );
   CoreRectView__OnSetBounds( &_this->Rectangle, _Const0000 );
   ViewsRectangle_OnSetColor( &_this->Rectangle, ApplicationBackgroundColor );
-  CoreRectView__OnSetBounds( &_this->SCA, _Const00B6 );
-  CoreGroup_OnSetEnabled((CoreGroup)&_this->SCA, 0 );
-  ApplicationSampleController_OnSetNameProperty( &_this->SCA, '1' );
+  CoreRectView__OnSetBounds( &_this->SCA0, _Const00B6 );
+  CoreGroup_OnSetEnabled((CoreGroup)&_this->SCA0, 0 );
+  ApplicationSampleController_OnSetNameProperty( &_this->SCA0, '1' );
   CoreRectView__OnSetBounds( &_this->SCA1, _Const00B7 );
   CoreGroup_OnSetEnabled((CoreGroup)&_this->SCA1, 0 );
   ApplicationSampleController_OnSetNameProperty( &_this->SCA1, '2' );
@@ -6302,18 +6303,21 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   CoreQuadView__OnSetPoint3( &_this->Logo, _Const0055 );
   CoreQuadView__OnSetPoint2( &_this->Logo, _Const0056 );
   CoreQuadView__OnSetPoint1( &_this->Logo, _Const0057 );
-  CoreRectView__OnSetBounds( &_this->NumKeyboard, _Const00BD );
+  CoreRectView__OnSetBounds( &_this->NumKeyboard, _Const00A1 );
   CoreGroup_OnSetEnabled((CoreGroup)&_this->NumKeyboard, 0 );
-  CoreRectView__OnSetBounds( &_this->Temperature, _Const00BE );
-  CoreRectView__OnSetBounds( &_this->Btn_Config, _Const00BF );
-  ApplicationAActionButton_OnSetCaption( &_this->Btn_Config, EwLoadString( &_Const00C0 
+  CoreRectView__OnSetBounds( &_this->Temperature, _Const00BD );
+  CoreRectView__OnSetBounds( &_this->Btn_Config, _Const00BE );
+  ApplicationAActionButton_OnSetCaption( &_this->Btn_Config, EwLoadString( &_Const00BF 
   ));
-  CoreRectView__OnSetBounds( &_this->Btn_NewWell, _Const00C1 );
+  CoreRectView__OnSetBounds( &_this->Btn_NewWell, _Const00C0 );
   CoreGroup_OnSetEnabled((CoreGroup)&_this->Btn_NewWell, 0 );
-  ApplicationAActionButton_OnSetCaption( &_this->Btn_NewWell, EwLoadString( &_Const00C2 
+  ApplicationAActionButton_OnSetCaption( &_this->Btn_NewWell, EwLoadString( &_Const00C1 
+  ));
+  CoreRectView__OnSetBounds( &_this->btn_Exit, _Const00C2 );
+  ApplicationAActionButton_OnSetCaption( &_this->btn_Exit, EwLoadString( &_Const00AE 
   ));
   CoreGroup__Add( _this, ((CoreView)&_this->Rectangle ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->SCA ), 0 );
+  CoreGroup__Add( _this, ((CoreView)&_this->SCA0 ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->SCA1 ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->SCA2 ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->SCA3 ), 0 );
@@ -6325,6 +6329,7 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   CoreGroup__Add( _this, ((CoreView)&_this->Temperature ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Btn_Config ), 0 );
   CoreGroup__Add( _this, ((CoreView)&_this->Btn_NewWell ), 0 );
+  CoreGroup__Add( _this, ((CoreView)&_this->btn_Exit ), 0 );
   ViewsWarpImage_OnSetBitmap( &_this->Logo, EwLoadResource( &ApplicationLogo, ResourcesBitmap 
   ));
   _this->NuOfCircuitsObserver.OnEvent = EwNewSlot( _this, ApplicationControllMenu_onNuOfCircuits 
@@ -6332,7 +6337,7 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   CorePropertyObserver_OnSetOutlet( &_this->NuOfCircuitsObserver, EwNewRef( EwGetAutoObject( 
   &DeviceDevice, DeviceDeviceClass ), DeviceDeviceClass_OnGetNuOfCircuits, DeviceDeviceClass_OnSetNuOfCircuits 
   ));
-  _this->SampleController[ 0 ] = &_this->SCA;
+  _this->SampleController[ 0 ] = &_this->SCA0;
   _this->SampleController[ 1 ] = &_this->SCA1;
   _this->SampleController[ 2 ] = &_this->SCA2;
   _this->SampleController[ 3 ] = &_this->SCA3;
@@ -6346,6 +6351,8 @@ void ApplicationControllMenu__Init( ApplicationControllMenu _this, XObject aLink
   );
   CoreSystemEventHandler_OnSetEvent( &_this->RemainingTime, &EwGetAutoObject( &DeviceDevice, 
   DeviceDeviceClass )->RemainingTimeEvent );
+  _this->btn_Exit.OnAction = EwNewSlot( _this, ApplicationControllMenu_onBtn_Exit 
+  );
 }
 
 /* Re-Initializer for the class 'Application::ControllMenu' */
@@ -6356,7 +6363,7 @@ void ApplicationControllMenu__ReInit( ApplicationControllMenu _this )
 
   /* ... then re-construct all embedded objects */
   ViewsRectangle__ReInit( &_this->Rectangle );
-  ApplicationSampleController__ReInit( &_this->SCA );
+  ApplicationSampleController__ReInit( &_this->SCA0 );
   ApplicationSampleController__ReInit( &_this->SCA1 );
   ApplicationSampleController__ReInit( &_this->SCA2 );
   ApplicationSampleController__ReInit( &_this->SCA3 );
@@ -6370,6 +6377,7 @@ void ApplicationControllMenu__ReInit( ApplicationControllMenu _this )
   ApplicationAActionButton__ReInit( &_this->Btn_Config );
   ApplicationAActionButton__ReInit( &_this->Btn_NewWell );
   CoreSystemEventHandler__ReInit( &_this->RemainingTime );
+  ApplicationAActionButton__ReInit( &_this->btn_Exit );
 }
 
 /* Finalizer method for the class 'Application::ControllMenu' */
@@ -6380,7 +6388,7 @@ void ApplicationControllMenu__Done( ApplicationControllMenu _this )
 
   /* Finalize all embedded objects */
   ViewsRectangle__Done( &_this->Rectangle );
-  ApplicationSampleController__Done( &_this->SCA );
+  ApplicationSampleController__Done( &_this->SCA0 );
   ApplicationSampleController__Done( &_this->SCA1 );
   ApplicationSampleController__Done( &_this->SCA2 );
   ApplicationSampleController__Done( &_this->SCA3 );
@@ -6394,6 +6402,7 @@ void ApplicationControllMenu__Done( ApplicationControllMenu _this )
   ApplicationAActionButton__Done( &_this->Btn_Config );
   ApplicationAActionButton__Done( &_this->Btn_NewWell );
   CoreSystemEventHandler__Done( &_this->RemainingTime );
+  ApplicationAActionButton__Done( &_this->btn_Exit );
 
   /* Don't forget to deinitialize the super class ... */
   CoreGroup__Done( &_this->_Super );
@@ -6403,7 +6412,7 @@ void ApplicationControllMenu__Done( ApplicationControllMenu _this )
 void ApplicationControllMenu__Mark( ApplicationControllMenu _this )
 {
   EwMarkObject( &_this->Rectangle );
-  EwMarkObject( &_this->SCA );
+  EwMarkObject( &_this->SCA0 );
   EwMarkObject( &_this->SCA1 );
   EwMarkObject( &_this->SCA2 );
   EwMarkObject( &_this->SCA3 );
@@ -6419,6 +6428,7 @@ void ApplicationControllMenu__Mark( ApplicationControllMenu _this )
   EwMarkObject( &_this->Btn_NewWell );
   EwMarkObject( _this->Config );
   EwMarkObject( &_this->RemainingTime );
+  EwMarkObject( &_this->btn_Exit );
 
   /* Give the super class a chance to mark its objects and references */
   CoreGroup__Mark( &_this->_Super );
@@ -6543,6 +6553,18 @@ void ApplicationControllMenu_onRemainingTime( ApplicationControllMenu _this, XOb
   );
   ApplicationSampleController_OnSetRemainingTime( _this->SampleController[ EwCheckIndex( 
   context->CircuitNumber, 6 )], context->RemainingTime );
+}
+
+/* 'C' function for method : 'Application::ControllMenu.onBtn_Exit()' */
+void ApplicationControllMenu_onBtn_Exit( ApplicationControllMenu _this, XObject 
+  sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+  EW_UNUSED_ARG( sender );
+
+  DeviceDeviceClass_ExitApplication( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
+  ));
 }
 
 /* Variants derived from the class : 'Application::ControllMenu' */

@@ -11,7 +11,6 @@ class Application : Core::Root
   $rect <1040,0,1180,40>
   inherited method Init()
   {
-
     //When the User starts the Application the Configuration has to be done first
 
     MainMenu.ControllMenu.Enabled=false;
@@ -1356,8 +1355,11 @@ class Clock : Core::Group
        // Any context data passed and the cast was successful?
        if ( context != null )
        {
-         TimeText.String=string(context.Day)+"."+string(context.Month)+"."+string(context.Year)+" "
-                          +string(context.Hour)+":"+string(context.Minute);
+         TimeText.String=string(context.Day)
+         +"."+string(context.Month)
+         +"."+string(context.Year)
+         +" "+string(context.Hour)
+         +":"+string(context.Minute);
        }
   }
 }
@@ -3780,7 +3782,7 @@ class Config : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_Ok
   {
-    preset Bounds = <670,440,790,470>;
+    preset Bounds = <670,439,790,469>;
     preset Enabled = false;
     preset OnAction = onBtn_Ok;
     preset Caption = "OK";
@@ -3828,7 +3830,7 @@ class Config : Core::Group
   $rect <20,20,160,60>
   object Application::ANumKeyboard NumKeyboard
   {
-    preset Bounds = <610,230,780,410>;
+    preset Bounds = <440,260,650,469>;
     preset Enabled = false;
   }
 
@@ -4088,7 +4090,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_Next
   {
-    preset Bounds = <670,440,790,470>;
+    preset Bounds = <670,439,790,469>;
     preset Enabled = false;
     preset OnAction = onBtnNext;
     preset Caption = "Next";
@@ -4245,7 +4247,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Application::AToggleButton Btn_Help
   {
-    preset Bounds = <550,440,650,470>;
+    preset Bounds = <550,439,650,469>;
     preset OnChange = onBtn_Help;
     preset Caption = "Help";
   }
@@ -4411,7 +4413,7 @@ class ControllMenu : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Application::SampleController SCA
+  object Application::SampleController SCA0
   {
     preset Bounds = <10,50,430,120>;
     preset Enabled = false;
@@ -4515,7 +4517,7 @@ class ControllMenu : Core::Group
   $rect <840,60,1040,100>
   array Application::SampleController SampleController[ 6 ] =
   (
-    Default[0] = SCA;
+    Default[0] = SCA0;
     Default[1] = SCA1;
     Default[2] = SCA2;
     Default[3] = SCA3;
@@ -4604,6 +4606,20 @@ class ControllMenu : Core::Group
     var Device::RemainingTimeContext context = (Device::RemainingTimeContext)RemainingTime.Context;
     SampleController[context.CircuitNumber].RemainingTime=context.RemainingTime;
 
+  }
+
+  $rect <20,20,160,60>
+  object Application::AActionButton btn_Exit
+  {
+    preset Bounds = <10,10,35,35>;
+    preset OnAction = onBtn_Exit;
+    preset Caption = "X";
+  }
+
+  $rect <830,270,1030,310>
+  slot onBtn_Exit
+  {
+    Device::Device.ExitApplication();
   }
 }
 

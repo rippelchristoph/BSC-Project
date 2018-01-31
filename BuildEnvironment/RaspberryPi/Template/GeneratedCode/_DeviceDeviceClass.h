@@ -171,6 +171,9 @@ void DeviceDeviceClass__onTime( void* _this, XInt32 aYear, XInt32 aMonth, XInt32
 /* The following define announces the presence of the method Device::DeviceClass.onTime(). */
 #define _DeviceDeviceClass__onTime_
 
+/* 'C' function for method : 'Device::DeviceClass.ExitApplication()' */
+void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this );
+
 /* Default onget method for the property 'NuOfCircuits' */
 XInt32 DeviceDeviceClass_OnGetNuOfCircuits( DeviceDeviceClass _this );
 
