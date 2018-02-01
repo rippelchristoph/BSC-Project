@@ -13,18 +13,18 @@ $output false
 class DeviceClass : Templates::DeviceClass
 {
   $rect <920,80,1120,120>
-  property int32 NuOfCircuits = 6;
+  property int32 SampleVolume = 6;
 
   $rect <1120,80,1320,120>
-  onset NuOfCircuits
+  onset SampleVolume
   {
     // The property doesn't change -> nothing to do.
-    if ( pure NuOfCircuits == value )
+    if ( pure SampleVolume == value )
       return;
 
     // Remember the new value in the internal memory of the property.
-    pure NuOfCircuits = value;
-    trace "NumberOfCircuits:"+string(NuOfCircuits);
+    pure SampleVolume = value;
+    trace "SampleVolume:"+string(SampleVolume);
 
 
     // For target code generation you will use your specific device API 
@@ -49,23 +49,23 @@ class DeviceClass : Templates::DeviceClass
     $endif
 
     // Notify all associated property observers.
-    notifyobservers ^NuOfCircuits;
+    notifyobservers ^SampleVolume;
   }
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
   $rect <720,80,920,120>
   $output true
-  method void UpdateNuOfCircuits( arg int32 aNewValue )
+  method void UpdateSampleVolume( arg int32 aNewValue )
   {
     // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure NuOfCircuits )
+    if ( aNewValue != pure SampleVolume )
     {
       // Remember the new value in the internal memory of the property.
-      pure NuOfCircuits = aNewValue;
+      pure SampleVolume = aNewValue;
 
       // Notify all associated property observers.
-      notifyobservers ^NuOfCircuits;
+      notifyobservers ^SampleVolume;
     }
   }
 
@@ -142,10 +142,10 @@ class DeviceClass : Templates::DeviceClass
   // about a particular system event.
   $rect <40,280,240,320>
   $output true
-  method void onSampleCollected( arg point aWellIndex, arg int32 aCircuitNumber, arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
+  method void onSampleCollected( arg int32 aXPosition, arg int32 aYPosition, arg int32 aCircuitNumber, arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
   {
-    trace "SampleCollected - X:"+string(aWellIndex.x)
-    +"Y:"+string(aWellIndex.y)
+    trace "SampleCollected - X:"+string(aXPosition)
+    +"Y:"+string(aYPosition)
     +" CircuitNumber:"+string(aCircuitNumber)
     +" Time:"+string(aDay)+"."
     +string(aMonth)+"."
@@ -155,13 +155,17 @@ class DeviceClass : Templates::DeviceClass
 
 
     var Device::SampleCollectedContext context = new Device::SampleCollectedContext;
-    context.WellIndex = aWellIndex;
+
+
     context.CircuitNumber = aCircuitNumber;
     context.Year=aYear;
     context.Month=aMonth;
     context.Day=aDay;
     context.Hour=aHour;
     context.Minute=aMinute;
+    context.XPosition=aXPosition;
+    context.YPosition=aYPosition;
+
 
 
 
@@ -181,6 +185,10 @@ class DeviceClass : Templates::DeviceClass
     if(aCircuitNumber>5||aCircuitNumber<0){
       trace "ERROR: Wrong Circuit Number:"+string(aCircuitNumber);
       return;
+    }
+    if(aRemainingTime<0){
+      trace"ERROR: Wrong RemainingTime:"+string(aRemainingTime);
+
     }
     trace "Device: RemainingTime="+string(aRemainingTime);
     context.CircuitNumber=aCircuitNumber;
@@ -428,17 +436,17 @@ $output false
 class SampleCollectedContext
 {
   $rect <40,40,240,80>
-  property point WellIndex = <0,0>;
+  property int32 XPosition = 0;
 
   $rect <40,80,240,120>
-  onset WellIndex
+  onset XPosition
   {
     // The value doesn't change - nothing to do.
-    if ( pure WellIndex == value )
+    if ( pure XPosition == value )
       return;
 
     // Remember the property's new value.
-    pure WellIndex = value;
+    pure XPosition = value;
 
     // TO DO:
     // 
@@ -446,9 +454,9 @@ class SampleCollectedContext
   }
 
   $rect <40,120,240,160>
-  onget WellIndex
+  onget XPosition
   {
-    return pure WellIndex;
+    return pure XPosition;
   }
 
   $rect <260,40,460,80>
@@ -593,6 +601,30 @@ class SampleCollectedContext
   onget Hour
   {
     return pure Hour;
+  }
+
+  $rect <40,170,240,210>
+  property int32 YPosition = 0;
+
+  $rect <40,210,240,250>
+  onset YPosition
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure YPosition == value )
+      return;
+
+    // Remember the property's new value.
+    pure YPosition = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <40,250,240,290>
+  onget YPosition
+  {
+    return pure YPosition;
   }
 }
 

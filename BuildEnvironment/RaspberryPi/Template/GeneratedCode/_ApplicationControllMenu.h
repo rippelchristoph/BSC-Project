@@ -47,9 +47,7 @@
 #include "_ApplicationSampleController.h"
 #include "_ApplicationTemperature.h"
 #include "_CoreGroup.h"
-#include "_CorePropertyObserver.h"
 #include "_CoreSystemEventHandler.h"
-#include "_FlatActionButton.h"
 #include "_ViewsRectangle.h"
 #include "_ViewsWarpImage.h"
 
@@ -102,14 +100,13 @@ EW_DEFINE_FIELDS( ApplicationControllMenu, CoreGroup )
   EW_OBJECT  ( Logo,            ViewsWarpImage )
   EW_OBJECT  ( NumKeyboard,     ApplicationANumKeyboard )
   EW_OBJECT  ( Temperature,     ApplicationTemperature )
-  EW_OBJECT  ( NuOfCircuitsObserver, CorePropertyObserver )
   EW_ARRAY   ( SampleController, ApplicationSampleController, [6])
   EW_OBJECT  ( Btn_Config,      ApplicationAActionButton )
   EW_OBJECT  ( Btn_NewWell,     ApplicationAActionButton )
   EW_PROPERTY( Config,          ApplicationConfig )
   EW_OBJECT  ( RemainingTime,   CoreSystemEventHandler )
   EW_OBJECT  ( btn_Exit,        ApplicationAActionButton )
-  EW_OBJECT  ( Btn_Test,        FlatActionButton )
+  EW_OBJECT  ( Btn_Test,        ApplicationAActionButton )
 EW_END_OF_FIELDS( ApplicationControllMenu )
 
 /* Virtual Method Table (VMT) for the class : 'Application::ControllMenu' */
@@ -169,11 +166,6 @@ void ApplicationControllMenu_UpdateLayout( ApplicationControllMenu _this, XPoint
    you can request its invocation by using the method @InvalidateViewState(). */
 void ApplicationControllMenu_UpdateViewState( ApplicationControllMenu _this, XSet 
   aState );
-
-/* This slot method is executed when the associated property observer 'PropertyObserver' 
-   is notified. */
-void ApplicationControllMenu_onNuOfCircuits( ApplicationControllMenu _this, XObject 
-  sender );
 
 /* 'C' function for method : 'Application::ControllMenu.onBtn_Config()' */
 void ApplicationControllMenu_onBtn_Config( ApplicationControllMenu _this, XObject 

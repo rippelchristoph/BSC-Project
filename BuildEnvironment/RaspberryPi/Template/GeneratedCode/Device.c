@@ -35,59 +35,60 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x000003AC, /* ratio 48.94 % */
-  0xB8002B00, 0x00000452, 0x00EA0027, 0x0C400368, 0xE4003280, 0xC0027800, 0x0021800C,
-  0x300444D2, 0x00466126, 0x01CC0074, 0x8020C3A0, 0x1E0B0305, 0xCEE0087C, 0x006C9640,
-  0x21E834C4, 0x2029C1A5, 0x18D98401, 0x864EE712, 0x747E6470, 0x000CE003, 0x1C5A0010,
-  0x00049005, 0x251090D1, 0x3429D1DA, 0x13834966, 0xA8C52E6C, 0x85476251, 0x5422431A,
-  0x5461D0C8, 0x126B2692, 0x0A505834, 0xDD14B700, 0x657A4496, 0x45A71BE3, 0xEAF47EB7,
-  0xB24AEC31, 0x344A590D, 0xDB6B41A8, 0xCF1113B7, 0x2EF1297D, 0x9B48A351, 0x600C153E,
-  0x3398CEEA, 0xEAD06001, 0xA0802173, 0xBC622131, 0x4765998B, 0x2CC800A8, 0x0B148A55,
-  0xB406835A, 0x400D7966, 0x54A45681, 0x7884323E, 0xAD014015, 0x5EFE4C2E, 0x70E0D4BB,
-  0xAAE9BD95, 0xF1570C3C, 0xF18DBAD2, 0x97B8BE42, 0x489CDF63, 0xBB367AC7, 0xE26177B1,
-  0xD54E5844, 0x52F791D8, 0xEE1910B7, 0x7D9448D4, 0x771ADCDE, 0x3261E803, 0x779CE704,
-  0x2A067683, 0xD674FDD4, 0x1D6575D4, 0x57693958, 0x7DBD6516, 0xCD621860, 0x5D9CF5C9,
-  0xE025E9D2, 0xE5891F57, 0xF56781D1, 0x42711596, 0x0004C000, 0xD7700050, 0xA5F92148,
-  0xB5686391, 0xB701DB46, 0x6F5B3001, 0x9487122C, 0xA86DB416, 0x856E6E52, 0x264E6238,
-  0x62D7888A, 0x8166F5AE, 0x44ED7556, 0x8A3A4B22, 0x2892E3C4, 0x66DB4902, 0x90A461C4,
-  0x34411244, 0xF6479259, 0x4152E4D8, 0x5681449A, 0xA207E5B9, 0xF932598F, 0x45B49723,
-  0xFC4B2600, 0x4853B59D, 0x18B4B253, 0x51E20B56, 0x7C410021, 0xE44C67A6, 0x8FA25551,
-  0x52649944, 0x00000040, 0x00000000
+  0x000003E2, /* ratio 47.08 % */
+  0xB8002300, 0x80000452, 0x00C20029, 0x0E000368, 0xCA003600, 0xE002B000, 0x750043CD,
+  0xA0044616, 0x058020C3, 0x70020B03, 0xC0CEF1B2, 0x1A21108D, 0x20D210F4, 0x01093A42,
+  0x130001C8, 0x0E8642A1, 0xE001A621, 0x0019C006, 0x00B40020, 0x4F09200A, 0xDA671B9A,
+  0xA3929989, 0x892D09C7, 0x73B0010E, 0x548C18E6, 0xC8CC9291, 0xA7524C50, 0x9416A32B,
+  0x93EC8002, 0x5E834EB2, 0xE8F15991, 0xAB53A0CF, 0x719AB802, 0x1AADCC27, 0x699C4ABD,
+  0xB4588350, 0x5476D166, 0xCF62D6CB, 0xC28F45B7, 0xA9600BDC, 0x3106A6C2, 0x31A9B544,
+  0x16A9C6E7, 0xBABC4A9B, 0xA2190018, 0x01628343, 0xD440C00B, 0x4415A42C, 0x2B254A0D,
+  0x0D1D8943, 0xC2EA8816, 0x06826CE3, 0x1A8ECA83, 0x006E289B, 0x259ED163, 0x4CE4F83B,
+  0x66A53EC3, 0x2ED58AB5, 0xBF5DBC51, 0x97F0FEF6, 0xBEE2606C, 0x4A25BB0B, 0x85432256,
+  0x4F867B3B, 0x6BE77ADE, 0x137F7ED2, 0xE774B8D9, 0x37DCD855, 0x7E2ACF7E, 0x128D797B,
+  0x310C787B, 0x8745A919, 0xD174E194, 0x06858878, 0xD16C5C40, 0x585DD595, 0x74D8C745,
+  0x582709D5, 0x076DC776, 0x357372D7, 0x008355A7, 0x6F56C5E8, 0x0426FD50, 0x00004C00,
+  0x20735B45, 0xC84EDCE5, 0x6F5A3715, 0x0006AC07, 0xA8CA306A, 0x8A216905, 0x27591AD4,
+  0x4C22945A, 0x93D5B62B, 0x1059A48B, 0xFD0A5AD5, 0x008F51B8, 0x8B641928, 0x91E8BD44,
+  0x954DBF64, 0x49334CD1, 0x4C4C13D4, 0x90A2A93A, 0xA5200169, 0xD5441441, 0xA2267FDA,
+  0x609025F8, 0x409BD912, 0x5DE6B5BF, 0x04295F43, 0x151B95D3, 0x068E5067, 0x82C78415,
+  0xA7410400, 0xC4C5EE65, 0x791E7226, 0x00001014, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
 static const XStringRes _Const0000 = { _StringsDefault0, 0x0003 };
-static const XStringRes _Const0001 = { _StringsDefault0, 0x0018 };
-static const XStringRes _Const0002 = { _StringsDefault0, 0x0023 };
-static const XStringRes _Const0003 = { _StringsDefault0, 0x0041 };
-static const XStringRes _Const0004 = { _StringsDefault0, 0x0054 };
-static const XStringRes _Const0005 = { _StringsDefault0, 0x0072 };
-static const XStringRes _Const0006 = { _StringsDefault0, 0x008C };
-static const XStringRes _Const0007 = { _StringsDefault0, 0x00A4 };
-static const XStringRes _Const0008 = { _StringsDefault0, 0x00AA };
-static const XStringRes _Const0009 = { _StringsDefault0, 0x00B4 };
-static const XStringRes _Const000A = { _StringsDefault0, 0x00B9 };
-static const XStringRes _Const000B = { _StringsDefault0, 0x00BE };
-static const XStringRes _Const000C = { _StringsDefault0, 0x00C3 };
-static const XStringRes _Const000D = { _StringsDefault0, 0x00E3 };
-static const XStringRes _Const000E = { _StringsDefault0, 0x00FD };
-static const XStringRes _Const000F = { _StringsDefault0, 0x011E };
-static const XStringRes _Const0010 = { _StringsDefault0, 0x013D };
-static const XStringRes _Const0011 = { _StringsDefault0, 0x0150 };
-static const XStringRes _Const0012 = { _StringsDefault0, 0x0157 };
-static const XStringRes _Const0013 = { _StringsDefault0, 0x015E };
-static const XStringRes _Const0014 = { _StringsDefault0, 0x0171 };
-static const XStringRes _Const0015 = { _StringsDefault0, 0x0187 };
-static const XStringRes _Const0016 = { _StringsDefault0, 0x019F };
-static const XStringRes _Const0017 = { _StringsDefault0, 0x01B3 };
-static const XColor _Const0018 = { 0xF3, 0x89, 0x00, 0xFF };
-static const XColor _Const0019 = { 0x32, 0xCE, 0x00, 0xFF };
-static const XColor _Const001A = { 0x1E, 0x60, 0x33, 0xFF };
-static const XColor _Const001B = { 0x00, 0x00, 0xFF, 0xFF };
-static const XColor _Const001C = { 0x00, 0xFF, 0xFF, 0xFF };
-static const XColor _Const001D = { 0xFF, 0x00, 0xFF, 0xFF };
-static const XColor _Const001E = { 0xFF, 0x00, 0x00, 0xFF };
-static const XStringRes _Const001F = { _StringsDefault0, 0x01C4 };
+static const XStringRes _Const0001 = { _StringsDefault0, 0x0014 };
+static const XStringRes _Const0002 = { _StringsDefault0, 0x001F };
+static const XStringRes _Const0003 = { _StringsDefault0, 0x003D };
+static const XStringRes _Const0004 = { _StringsDefault0, 0x0050 };
+static const XStringRes _Const0005 = { _StringsDefault0, 0x006E };
+static const XStringRes _Const0006 = { _StringsDefault0, 0x0088 };
+static const XStringRes _Const0007 = { _StringsDefault0, 0x00A0 };
+static const XStringRes _Const0008 = { _StringsDefault0, 0x00A6 };
+static const XStringRes _Const0009 = { _StringsDefault0, 0x00B0 };
+static const XStringRes _Const000A = { _StringsDefault0, 0x00B5 };
+static const XStringRes _Const000B = { _StringsDefault0, 0x00BA };
+static const XStringRes _Const000C = { _StringsDefault0, 0x00BF };
+static const XStringRes _Const000D = { _StringsDefault0, 0x00DF };
+static const XStringRes _Const000E = { _StringsDefault0, 0x00FE };
+static const XStringRes _Const000F = { _StringsDefault0, 0x0118 };
+static const XStringRes _Const0010 = { _StringsDefault0, 0x0139 };
+static const XStringRes _Const0011 = { _StringsDefault0, 0x0158 };
+static const XStringRes _Const0012 = { _StringsDefault0, 0x016B };
+static const XStringRes _Const0013 = { _StringsDefault0, 0x0172 };
+static const XStringRes _Const0014 = { _StringsDefault0, 0x0179 };
+static const XStringRes _Const0015 = { _StringsDefault0, 0x018C };
+static const XStringRes _Const0016 = { _StringsDefault0, 0x01A2 };
+static const XStringRes _Const0017 = { _StringsDefault0, 0x01BA };
+static const XStringRes _Const0018 = { _StringsDefault0, 0x01CE };
+static const XColor _Const0019 = { 0xF3, 0x89, 0x00, 0xFF };
+static const XColor _Const001A = { 0x32, 0xCE, 0x00, 0xFF };
+static const XColor _Const001B = { 0x1E, 0x60, 0x33, 0xFF };
+static const XColor _Const001C = { 0x00, 0x00, 0xFF, 0xFF };
+static const XColor _Const001D = { 0x00, 0xFF, 0xFF, 0xFF };
+static const XColor _Const001E = { 0xFF, 0x00, 0xFF, 0xFF };
+static const XColor _Const001F = { 0xFF, 0x00, 0x00, 0xFF };
+static const XStringRes _Const0020 = { _StringsDefault0, 0x01DF };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
@@ -109,7 +110,7 @@ void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aA
   _this->_VMT = EW_CLASS( DeviceDeviceClass );
 
   /* ... and initialize objects, variables, properties, etc. */
-  _this->NuOfCircuits = 6;
+  _this->SampleVolume = 6;
   _this->Temperature = 0.000000f;
 }
 
@@ -151,14 +152,14 @@ void DeviceDeviceClass__Mark( DeviceDeviceClass _this )
   TemplatesDeviceClass__Mark( &_this->_Super );
 }
 
-/* 'C' function for method : 'Device::DeviceClass.OnSetNuOfCircuits()' */
-void DeviceDeviceClass_OnSetNuOfCircuits( DeviceDeviceClass _this, XInt32 value )
+/* 'C' function for method : 'Device::DeviceClass.OnSetSampleVolume()' */
+void DeviceDeviceClass_OnSetSampleVolume( DeviceDeviceClass _this, XInt32 value )
 {
-  if ( _this->NuOfCircuits == value )
+  if ( _this->SampleVolume == value )
     return;
 
-  _this->NuOfCircuits = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0000 ), EwNewStringInt( _this->NuOfCircuits, 
+  _this->SampleVolume = value;
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0000 ), EwNewStringInt( _this->SampleVolume, 
     0, 10 )));
   {
     /*
@@ -175,26 +176,26 @@ void DeviceDeviceClass_OnSetNuOfCircuits( DeviceDeviceClass _this, XInt32 value 
        YourDevice_SomeVariable = value;
     */
   }
-  EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNuOfCircuits, DeviceDeviceClass_OnSetNuOfCircuits 
+  EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetSampleVolume, DeviceDeviceClass_OnSetSampleVolume 
     ), 0 );
 }
 
 /* This method is intended to be called by the device to notify the GUI application 
    about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateNuOfCircuits( DeviceDeviceClass _this, XInt32 aNewValue )
+void DeviceDeviceClass_UpdateSampleVolume( DeviceDeviceClass _this, XInt32 aNewValue )
 {
-  if ( aNewValue != _this->NuOfCircuits )
+  if ( aNewValue != _this->SampleVolume )
   {
-    _this->NuOfCircuits = aNewValue;
-    EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNuOfCircuits, 
-      DeviceDeviceClass_OnSetNuOfCircuits ), 0 );
+    _this->SampleVolume = aNewValue;
+    EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetSampleVolume, 
+      DeviceDeviceClass_OnSetSampleVolume ), 0 );
   }
 }
 
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateNuOfCircuits()' */
-void DeviceDeviceClass__UpdateNuOfCircuits( void* _this, XInt32 aNewValue )
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateSampleVolume()' */
+void DeviceDeviceClass__UpdateSampleVolume( void* _this, XInt32 aNewValue )
 {
-  DeviceDeviceClass_UpdateNuOfCircuits((DeviceDeviceClass)_this, aNewValue );
+  DeviceDeviceClass_UpdateSampleVolume((DeviceDeviceClass)_this, aNewValue );
 }
 
 /* 'C' function for method : 'Device::DeviceClass.OnSetNewWell()' */
@@ -255,41 +256,42 @@ void DeviceDeviceClass_StartSampling( DeviceDeviceClass _this, XInt32 aIntervall
 
 /* This method is intended to be called by the device to notify the GUI application 
    about a particular system event. */
-void DeviceDeviceClass_onSampleCollected( DeviceDeviceClass _this, XPoint aWellIndex, 
-  XInt32 aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 aHour, 
-  XInt32 aMinute )
+void DeviceDeviceClass_onSampleCollected( DeviceDeviceClass _this, XInt32 aXPosition, 
+  XInt32 aYPosition, XInt32 aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 
+  aDay, XInt32 aHour, XInt32 aMinute )
 {
   DeviceSampleCollectedContext context;
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
     EwConcatString( EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
     EwConcatString( EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0006 ), EwNewStringInt( aWellIndex.X, 0, 
-    10 )), EwLoadString( &_Const0007 )), EwNewStringInt( aWellIndex.Y, 0, 10 )), 
-    EwLoadString( &_Const0003 )), EwNewStringInt( aCircuitNumber, 0, 10 )), EwLoadString( 
-    &_Const0008 )), EwNewStringInt( aDay, 0, 10 )), EwLoadString( &_Const0009 )), 
-    EwNewStringInt( aMonth, 0, 10 )), EwLoadString( &_Const0009 )), EwNewStringInt( 
-    aYear, 0, 10 )), EwLoadString( &_Const000A )), EwNewStringInt( aHour, 0, 10 
-    )), EwLoadString( &_Const000B )), EwNewStringInt( aMinute, 0, 10 )));
+    EwConcatString( EwLoadString( &_Const0006 ), EwNewStringInt( aXPosition, 0, 
+    10 )), EwLoadString( &_Const0007 )), EwNewStringInt( aYPosition, 0, 10 )), EwLoadString( 
+    &_Const0003 )), EwNewStringInt( aCircuitNumber, 0, 10 )), EwLoadString( &_Const0008 
+    )), EwNewStringInt( aDay, 0, 10 )), EwLoadString( &_Const0009 )), EwNewStringInt( 
+    aMonth, 0, 10 )), EwLoadString( &_Const0009 )), EwNewStringInt( aYear, 0, 10 
+    )), EwLoadString( &_Const000A )), EwNewStringInt( aHour, 0, 10 )), EwLoadString( 
+    &_Const000B )), EwNewStringInt( aMinute, 0, 10 )));
   context = EwNewObject( DeviceSampleCollectedContext, 0 );
-  DeviceSampleCollectedContext_OnSetWellIndex( context, aWellIndex );
   DeviceSampleCollectedContext_OnSetCircuitNumber( context, aCircuitNumber );
   DeviceSampleCollectedContext_OnSetYear( context, aYear );
   DeviceSampleCollectedContext_OnSetMonth( context, aMonth );
   DeviceSampleCollectedContext_OnSetDay( context, aDay );
   DeviceSampleCollectedContext_OnSetHour( context, aHour );
   DeviceSampleCollectedContext_OnSetMinute( context, aMinute );
+  DeviceSampleCollectedContext_OnSetXPosition( context, aXPosition );
+  DeviceSampleCollectedContext_OnSetYPosition( context, aYPosition );
   CoreSystemEvent_Trigger( &_this->SampleCollectedEvent, ((XObject)context ), 0 
   );
 }
 
 /* Wrapper function for the non virtual method : 'Device::DeviceClass.onSampleCollected()' */
-void DeviceDeviceClass__onSampleCollected( void* _this, XPoint aWellIndex, XInt32 
-  aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 aHour, XInt32 
-  aMinute )
+void DeviceDeviceClass__onSampleCollected( void* _this, XInt32 aXPosition, XInt32 
+  aYPosition, XInt32 aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 
+  aHour, XInt32 aMinute )
 {
-  DeviceDeviceClass_onSampleCollected((DeviceDeviceClass)_this, aWellIndex, aCircuitNumber
-  , aYear, aMonth, aDay, aHour, aMinute );
+  DeviceDeviceClass_onSampleCollected((DeviceDeviceClass)_this, aXPosition, aYPosition
+  , aCircuitNumber, aYear, aMonth, aDay, aHour, aMinute );
 }
 
 /* This method is intended to be called by the device to notify the GUI application 
@@ -307,7 +309,13 @@ void DeviceDeviceClass_onRemainingTime( DeviceDeviceClass _this, XInt32 aCircuit
     return;
   }
 
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000D ), EwNewStringInt( aRemainingTime, 
+  if ( aRemainingTime < 0 )
+  {
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const000D ), EwNewStringInt( 
+      aRemainingTime, 0, 10 )));
+  }
+
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000E ), EwNewStringInt( aRemainingTime, 
     0, 10 )));
   DeviceRemainingTimeContext_OnSetCircuitNumber( context, aCircuitNumber );
   DeviceRemainingTimeContext_OnSetRemainingTime( context, aRemainingTime );
@@ -327,12 +335,12 @@ void DeviceDeviceClass_StopSampling( DeviceDeviceClass _this, XInt32 aCircuitNum
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000E ), EwNewStringInt( aCircuitNumber, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000F ), EwNewStringInt( aCircuitNumber, 
     0, 10 )));
 
   if (( aCircuitNumber < 0 ) || ( aCircuitNumber > 5 ))
   {
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const000F ), EwNewStringInt( 
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0010 ), EwNewStringInt( 
       aCircuitNumber, 0, 10 )));
     return;
   }
@@ -346,8 +354,8 @@ void DeviceDeviceClass_SetBLPosition( DeviceDeviceClass _this, XInt32 aX, XInt32
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0010 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
+    EwConcatString( EwLoadString( &_Const0011 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -359,8 +367,8 @@ void DeviceDeviceClass_SetTRPosition( DeviceDeviceClass _this, XInt32 aX, XInt32
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0013 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
+    EwConcatString( EwLoadString( &_Const0014 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -372,8 +380,8 @@ void DeviceDeviceClass_SetWastePosition( DeviceDeviceClass _this, XInt32 aX, XIn
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0014 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
+    EwConcatString( EwLoadString( &_Const0015 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -385,8 +393,8 @@ void DeviceDeviceClass_SetCurrentPosition( DeviceDeviceClass _this, XInt32 aX, X
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0015 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
+    EwConcatString( EwLoadString( &_Const0016 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -398,8 +406,8 @@ void DeviceDeviceClass_SetTopPosition( DeviceDeviceClass _this, XInt32 aX, XInt3
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0016 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
+    EwConcatString( EwLoadString( &_Const0017 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -410,7 +418,7 @@ void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value )
     return;
 
   _this->Temperature = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0017 ), EwNewStringFloat( 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0018 ), EwNewStringFloat( 
     _this->Temperature, 0, 6 )));
   {
     /*
@@ -438,7 +446,7 @@ void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewAr
   if ( aNewArgument != _this->Temperature )
   {
     _this->Temperature = aNewArgument;
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0017 ), EwNewStringFloat( 
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0018 ), EwNewStringFloat( 
       _this->Temperature, 0, 6 )));
     EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetTemperature, DeviceDeviceClass_OnSetTemperature 
       ), 0 );
@@ -460,25 +468,25 @@ XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumbe
   switch ( aCircuitNumber )
   {
     case 0 :
-      return _Const0018;
-
-    case 1 :
       return _Const0019;
 
-    case 2 :
+    case 1 :
       return _Const001A;
 
-    case 3 :
+    case 2 :
       return _Const001B;
 
-    case 4 :
+    case 3 :
       return _Const001C;
 
-    case 5 :
+    case 4 :
       return _Const001D;
 
-    default : 
+    case 5 :
       return _Const001E;
+
+    default : 
+      return _Const001F;
   }
 }
 
@@ -511,14 +519,14 @@ void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this )
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwLoadString( &_Const001F ));
+  EwTrace( "%s", EwLoadString( &_Const0020 ));
   BSCShutdown();
 }
 
-/* Default onget method for the property 'NuOfCircuits' */
-XInt32 DeviceDeviceClass_OnGetNuOfCircuits( DeviceDeviceClass _this )
+/* Default onget method for the property 'SampleVolume' */
+XInt32 DeviceDeviceClass_OnGetSampleVolume( DeviceDeviceClass _this )
 {
-  return _this->NuOfCircuits;
+  return _this->SampleVolume;
 }
 
 /* Default onget method for the property 'NewWell' */
@@ -588,14 +596,14 @@ void DeviceSampleCollectedContext__Mark( DeviceSampleCollectedContext _this )
   XObject__Mark( &_this->_Super );
 }
 
-/* 'C' function for method : 'Device::SampleCollectedContext.OnSetWellIndex()' */
-void DeviceSampleCollectedContext_OnSetWellIndex( DeviceSampleCollectedContext _this, 
-  XPoint value )
+/* 'C' function for method : 'Device::SampleCollectedContext.OnSetXPosition()' */
+void DeviceSampleCollectedContext_OnSetXPosition( DeviceSampleCollectedContext _this, 
+  XInt32 value )
 {
-  if ( !EwCompPoint( _this->WellIndex, value ))
+  if ( _this->XPosition == value )
     return;
 
-  _this->WellIndex = value;
+  _this->XPosition = value;
 }
 
 /* 'C' function for method : 'Device::SampleCollectedContext.OnSetCircuitNumber()' */
@@ -656,6 +664,16 @@ void DeviceSampleCollectedContext_OnSetHour( DeviceSampleCollectedContext _this,
     return;
 
   _this->Hour = value;
+}
+
+/* 'C' function for method : 'Device::SampleCollectedContext.OnSetYPosition()' */
+void DeviceSampleCollectedContext_OnSetYPosition( DeviceSampleCollectedContext _this, 
+  XInt32 value )
+{
+  if ( _this->YPosition == value )
+    return;
+
+  _this->YPosition = value;
 }
 
 /* Variants derived from the class : 'Device::SampleCollectedContext' */

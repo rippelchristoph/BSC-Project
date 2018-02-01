@@ -42,7 +42,6 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
-#include "_FlatActionButton.h"
 #include "_FlatLabel.h"
 #include "_FlatMinMaxText.h"
 

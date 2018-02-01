@@ -54,7 +54,7 @@
 
 /* Deklaration of class : 'Device::DeviceClass' */
 EW_DEFINE_FIELDS( DeviceDeviceClass, TemplatesDeviceClass )
-  EW_PROPERTY( NuOfCircuits,    XInt32 )
+  EW_PROPERTY( SampleVolume,    XInt32 )
   EW_OBJECT  ( SampleCollectedEvent, CoreSystemEvent )
   EW_OBJECT  ( RemainingTimeEvent, CoreSystemEvent )
   EW_PROPERTY( Temperature,     XFloat )
@@ -66,18 +66,18 @@ EW_END_OF_FIELDS( DeviceDeviceClass )
 EW_DEFINE_METHODS( DeviceDeviceClass, TemplatesDeviceClass )
 EW_END_OF_METHODS( DeviceDeviceClass )
 
-/* 'C' function for method : 'Device::DeviceClass.OnSetNuOfCircuits()' */
-void DeviceDeviceClass_OnSetNuOfCircuits( DeviceDeviceClass _this, XInt32 value );
+/* 'C' function for method : 'Device::DeviceClass.OnSetSampleVolume()' */
+void DeviceDeviceClass_OnSetSampleVolume( DeviceDeviceClass _this, XInt32 value );
 
 /* This method is intended to be called by the device to notify the GUI application 
    about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateNuOfCircuits( DeviceDeviceClass _this, XInt32 aNewValue );
+void DeviceDeviceClass_UpdateSampleVolume( DeviceDeviceClass _this, XInt32 aNewValue );
 
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateNuOfCircuits()' */
-void DeviceDeviceClass__UpdateNuOfCircuits( void* _this, XInt32 aNewValue );
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateSampleVolume()' */
+void DeviceDeviceClass__UpdateSampleVolume( void* _this, XInt32 aNewValue );
 
-/* The following define announces the presence of the method Device::DeviceClass.UpdateNuOfCircuits(). */
-#define _DeviceDeviceClass__UpdateNuOfCircuits_
+/* The following define announces the presence of the method Device::DeviceClass.UpdateSampleVolume(). */
+#define _DeviceDeviceClass__UpdateSampleVolume_
 
 /* 'C' function for method : 'Device::DeviceClass.OnSetNewWell()' */
 void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value );
@@ -98,14 +98,14 @@ void DeviceDeviceClass_StartSampling( DeviceDeviceClass _this, XInt32 aIntervall
 
 /* This method is intended to be called by the device to notify the GUI application 
    about a particular system event. */
-void DeviceDeviceClass_onSampleCollected( DeviceDeviceClass _this, XPoint aWellIndex, 
-  XInt32 aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 aHour, 
-  XInt32 aMinute );
+void DeviceDeviceClass_onSampleCollected( DeviceDeviceClass _this, XInt32 aXPosition, 
+  XInt32 aYPosition, XInt32 aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 
+  aDay, XInt32 aHour, XInt32 aMinute );
 
 /* Wrapper function for the non virtual method : 'Device::DeviceClass.onSampleCollected()' */
-void DeviceDeviceClass__onSampleCollected( void* _this, XPoint aWellIndex, XInt32 
-  aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 aHour, XInt32 
-  aMinute );
+void DeviceDeviceClass__onSampleCollected( void* _this, XInt32 aXPosition, XInt32 
+  aYPosition, XInt32 aCircuitNumber, XInt32 aYear, XInt32 aMonth, XInt32 aDay, XInt32 
+  aHour, XInt32 aMinute );
 
 /* The following define announces the presence of the method Device::DeviceClass.onSampleCollected(). */
 #define _DeviceDeviceClass__onSampleCollected_
@@ -176,8 +176,8 @@ void DeviceDeviceClass__onTime( void* _this, XInt32 aYear, XInt32 aMonth, XInt32
 /* 'C' function for method : 'Device::DeviceClass.ExitApplication()' */
 void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this );
 
-/* Default onget method for the property 'NuOfCircuits' */
-XInt32 DeviceDeviceClass_OnGetNuOfCircuits( DeviceDeviceClass _this );
+/* Default onget method for the property 'SampleVolume' */
+XInt32 DeviceDeviceClass_OnGetSampleVolume( DeviceDeviceClass _this );
 
 /* Default onget method for the property 'NewWell' */
 XBool DeviceDeviceClass_OnGetNewWell( DeviceDeviceClass _this );

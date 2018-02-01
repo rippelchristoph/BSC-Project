@@ -25,14 +25,10 @@
 *******************************************************************************/
 
 #include "ewlocale.h"
-#include "_CoreSimpleTouchHandler.h"
 #include "_CoreView.h"
-#include "_FlatActionButton.h"
 #include "_FlatLabel.h"
 #include "_FlatMinMaxText.h"
-#include "_ResourcesBitmap.h"
 #include "_ResourcesFont.h"
-#include "_ViewsFrame.h"
 #include "_ViewsText.h"
 #include "Core.h"
 #include "Flat.h"
@@ -41,22 +37,16 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x0000003C, /* ratio 93.33 % */
-  0xB8001500, 0x00000452, 0x00EA0021, 0xC010B3A0, 0x0C6E001B, 0xB0304802, 0x00260020,
-  0x031000C2, 0x36000CA0, 0x34122912, 0x0B800308, 0x4A532500, 0x0010195C, 0x00000000
+  0x00000028, /* ratio 100.00 % */
+  0xB8001300, 0x00000452, 0x00C20026, 0x0CA00310, 0x01063600, 0x10682408, 0x00170006,
+  0xC88C6A2C, 0x00002031, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
-static const XRect _Const0000 = {{ 0, 0 }, { 120, 30 }};
-static const XPoint _Const0001 = { 0, 30 };
-static const XPoint _Const0002 = { 120, 30 };
-static const XPoint _Const0003 = { 120, 0 };
-static const XPoint _Const0004 = { 0, 0 };
-static const XStringRes _Const0005 = { _StringsDefault0, 0x0003 };
-static const XRect _Const0006 = {{ 0, 0 }, { 140, 30 }};
-static const XStringRes _Const0007 = { _StringsDefault0, 0x000D };
-static const XRect _Const0008 = {{ 0, 0 }, { 50, 20 }};
-static const XStringRes _Const0009 = { _StringsDefault0, 0x0016 };
+static const XRect _Const0000 = {{ 0, 0 }, { 140, 30 }};
+static const XStringRes _Const0001 = { _StringsDefault0, 0x0003 };
+static const XRect _Const0002 = {{ 0, 0 }, { 50, 20 }};
+static const XStringRes _Const0003 = { _StringsDefault0, 0x000C };
 
 /* Color constant representing the main theme color of the widget kit. If you want 
    to change this color within your project, just create a variant of this color 
@@ -2931,187 +2921,6 @@ EW_END_OF_FONT_RES( FlatFontXL )
 /* Table with links to derived variants of the font resource : 'Flat::FontXL' */
 EW_RES_WITHOUT_VARIANTS( FlatFontXL )
 
-/* Initializer for the class 'Flat::ActionButton' */
-void FlatActionButton__Init( FlatActionButton _this, XObject aLink, XHandle aArg )
-{
-  /* At first initialize the super class ... */
-  CoreGroup__Init( &_this->_Super, aLink, aArg );
-
-  /* ... then construct all embedded objects */
-  CoreSimpleTouchHandler__Init( &_this->TouchHandler, &_this->_XObject, 0 );
-  ViewsFrame__Init( &_this->Frame, &_this->_XObject, 0 );
-  ViewsText__Init( &_this->CaptionText, &_this->_XObject, 0 );
-
-  /* Setup the VMT pointer */
-  _this->_VMT = EW_CLASS( FlatActionButton );
-
-  /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0000 );
-  CoreView_OnSetLayout((CoreView)&_this->TouchHandler, CoreLayoutAlignToBottom | 
-  CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
-  | CoreLayoutResizeVert );
-  CoreQuadView__OnSetPoint4( &_this->TouchHandler, _Const0001 );
-  CoreQuadView__OnSetPoint3( &_this->TouchHandler, _Const0002 );
-  CoreQuadView__OnSetPoint2( &_this->TouchHandler, _Const0003 );
-  CoreQuadView__OnSetPoint1( &_this->TouchHandler, _Const0004 );
-  CoreView_OnSetLayout((CoreView)&_this->Frame, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
-  | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
-  );
-  CoreRectView__OnSetBounds( &_this->Frame, _Const0000 );
-  ViewsFrame_OnSetColor( &_this->Frame, FlatColorOfTouch );
-  CoreView_OnSetLayout((CoreView)&_this->CaptionText, CoreLayoutAlignToBottom | 
-  CoreLayoutAlignToLeft | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz 
-  | CoreLayoutResizeVert );
-  CoreRectView__OnSetBounds( &_this->CaptionText, _Const0000 );
-  ViewsText_OnSetString( &_this->CaptionText, EwLoadString( &_Const0005 ));
-  ViewsText_OnSetColor( &_this->CaptionText, FlatColorOfBackground );
-  EwRetainString( &_this->Caption, EwLoadString( &_Const0005 ));
-  _this->ItemColor = FlatColorOfTouch;
-  _this->TextColor = FlatColorOfBackground;
-  _this->ItemColorActive = FlatColorOfTheme;
-  CoreGroup__Add( _this, ((CoreView)&_this->TouchHandler ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->Frame ), 0 );
-  CoreGroup__Add( _this, ((CoreView)&_this->CaptionText ), 0 );
-  _this->TouchHandler.OnLeave = EwNewSlot( _this, FlatActionButton_enterLeaveSlot 
-  );
-  _this->TouchHandler.OnEnter = EwNewSlot( _this, FlatActionButton_enterLeaveSlot 
-  );
-  _this->TouchHandler.OnRelease = EwNewSlot( _this, FlatActionButton_pressReleaseSlot 
-  );
-  _this->TouchHandler.OnPress = EwNewSlot( _this, FlatActionButton_pressReleaseSlot 
-  );
-  ViewsFrame_OnSetBitmap( &_this->Frame, EwLoadResource( &FlatFlatFrame, ResourcesBitmap 
-  ));
-  ViewsText_OnSetFont( &_this->CaptionText, EwLoadResource( &FlatFontM, ResourcesFont 
-  ));
-}
-
-/* Re-Initializer for the class 'Flat::ActionButton' */
-void FlatActionButton__ReInit( FlatActionButton _this )
-{
-  /* At first re-initialize the super class ... */
-  CoreGroup__ReInit( &_this->_Super );
-
-  /* ... then re-construct all embedded objects */
-  CoreSimpleTouchHandler__ReInit( &_this->TouchHandler );
-  ViewsFrame__ReInit( &_this->Frame );
-  ViewsText__ReInit( &_this->CaptionText );
-}
-
-/* Finalizer method for the class 'Flat::ActionButton' */
-void FlatActionButton__Done( FlatActionButton _this )
-{
-  /* Finalize this class */
-  _this->_VMT = EW_CLASS( FlatActionButton );
-
-  /* Finalize all embedded objects */
-  CoreSimpleTouchHandler__Done( &_this->TouchHandler );
-  ViewsFrame__Done( &_this->Frame );
-  ViewsText__Done( &_this->CaptionText );
-
-  /* Release all used strings */
-  EwReleaseString( &_this->Caption );
-
-  /* Don't forget to deinitialize the super class ... */
-  CoreGroup__Done( &_this->_Super );
-}
-
-/* Garbage Collector method for the class 'Flat::ActionButton' */
-void FlatActionButton__Mark( FlatActionButton _this )
-{
-  EwMarkSlot( _this->OnAction );
-  EwMarkObject( &_this->TouchHandler );
-  EwMarkObject( &_this->Frame );
-  EwMarkObject( &_this->CaptionText );
-
-  /* Give the super class a chance to mark its objects and references */
-  CoreGroup__Mark( &_this->_Super );
-}
-
-/* The method UpdateViewState() is invoked automatically after the state of the 
-   component has been changed. This method can be overridden and filled with logic 
-   to ensure the visual aspect of the component does reflect its current state. 
-   For example, the 'enabled' state of the component can affect its colors (disabled 
-   components may appear pale). In this case the logic of the method should modify 
-   the respective color properties accordingly to the current 'enabled' state. 
-   The current state of the component is passed as a set in the parameter aState. 
-   It reflects the very basic component state like its visibility or the ability 
-   to react to user inputs. Beside this common state, the method can also involve 
-   any other variables used in the component as long as they reflect its current 
-   state. For example, the toggle switch component can take in account its toggle 
-   state 'on' or 'off' and change accordingly the location of the slider, etc.
-   Usually, this method will be invoked automatically by the framework. Optionally 
-   you can request its invocation by using the method @InvalidateViewState(). */
-void FlatActionButton_UpdateViewState( FlatActionButton _this, XSet aState )
-{
-  if ((( aState & CoreViewStateEnabled ) == CoreViewStateEnabled ))
-  {
-    if ( _this->TouchHandler.Down && _this->TouchHandler.Inside )
-      ViewsFrame_OnSetColor( &_this->Frame, _this->ItemColorActive );
-    else
-      ViewsFrame_OnSetColor( &_this->Frame, _this->ItemColor );
-  }
-  else
-    ViewsFrame_OnSetColor( &_this->Frame, FlatColorOfDisabled );
-}
-
-/* This internal slot method is used to receive the corresponding signals form the 
-   touch handler. */
-void FlatActionButton_enterLeaveSlot( FlatActionButton _this, XObject sender )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( sender );
-
-  CoreGroup_InvalidateViewState((CoreGroup)_this );
-}
-
-/* This internal slot method is used to receive the corresponding signals form the 
-   touch handler. */
-void FlatActionButton_pressReleaseSlot( FlatActionButton _this, XObject sender )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( sender );
-
-  if ( !_this->TouchHandler.Down && _this->TouchHandler.Inside )
-  {
-    EwIdleSignal( _this->OnAction, ((XObject)_this ));
-  }
-}
-
-/* 'C' function for method : 'Flat::ActionButton.OnSetCaption()' */
-void FlatActionButton_OnSetCaption( FlatActionButton _this, XString value )
-{
-  EwRetainString( &_this->Caption, value );
-  ViewsText_OnSetString( &_this->CaptionText, value );
-}
-
-/* Variants derived from the class : 'Flat::ActionButton' */
-EW_DEFINE_CLASS_VARIANTS( FlatActionButton )
-EW_END_OF_CLASS_VARIANTS( FlatActionButton )
-
-/* Virtual Method Table (VMT) for the class : 'Flat::ActionButton' */
-EW_DEFINE_CLASS( FlatActionButton, CoreGroup, "Flat::ActionButton" )
-  CoreRectView_initLayoutContext,
-  CoreView_GetRoot,
-  CoreGroup_Draw,
-  CoreView_HandleEvent,
-  CoreGroup_CursorHitTest,
-  CoreRectView_ArrangeView,
-  CoreRectView_MoveView,
-  CoreRectView_GetExtent,
-  CoreGroup_ChangeViewState,
-  CoreGroup_OnSetBounds,
-  CoreGroup_OnSetFocus,
-  CoreGroup_OnSetBuffered,
-  CoreGroup_DispatchEvent,
-  CoreGroup_BroadcastEvent,
-  CoreGroup_UpdateLayout,
-  FlatActionButton_UpdateViewState,
-  CoreGroup_InvalidateArea,
-  CoreGroup_Restack,
-  CoreGroup_Add,
-EW_END_OF_CLASS( FlatActionButton )
-
 /* Bitmap resources used for the different widgets. If you want to change the bitmaps 
    within your project, just create a variant of these bitmap resources and define 
    the attributes of the bitmap resources according your design ideas. */
@@ -3369,16 +3178,16 @@ void FlatLabel__Init( FlatLabel _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( FlatLabel );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0006 );
+  CoreRectView__OnSetBounds( _this, _Const0000 );
   CoreView_OnSetLayout((CoreView)&_this->Label, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->Label, _Const0006 );
+  CoreRectView__OnSetBounds( &_this->Label, _Const0000 );
   ViewsText_OnSetAlignment( &_this->Label, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter 
   );
-  ViewsText_OnSetString( &_this->Label, EwLoadString( &_Const0007 ));
+  ViewsText_OnSetString( &_this->Label, EwLoadString( &_Const0001 ));
   ViewsText_OnSetColor( &_this->Label, FlatColorOfTheme );
-  EwRetainString( &_this->String, EwLoadString( &_Const0007 ));
+  EwRetainString( &_this->String, EwLoadString( &_Const0001 ));
   _this->TextColor = FlatColorOfTheme;
   CoreGroup__Add( _this, ((CoreView)&_this->Label ), 0 );
   ViewsText_OnSetFont( &_this->Label, EwLoadResource( &FlatFontM, ResourcesFont 
@@ -3474,16 +3283,16 @@ void FlatMinMaxText__Init( FlatMinMaxText _this, XObject aLink, XHandle aArg )
   _this->_VMT = EW_CLASS( FlatMinMaxText );
 
   /* ... and initialize objects, variables, properties, etc. */
-  CoreRectView__OnSetBounds( _this, _Const0008 );
+  CoreRectView__OnSetBounds( _this, _Const0002 );
   CoreView_OnSetLayout((CoreView)&_this->Label, CoreLayoutAlignToBottom | CoreLayoutAlignToLeft 
   | CoreLayoutAlignToRight | CoreLayoutAlignToTop | CoreLayoutResizeHorz | CoreLayoutResizeVert 
   );
-  CoreRectView__OnSetBounds( &_this->Label, _Const0008 );
+  CoreRectView__OnSetBounds( &_this->Label, _Const0002 );
   ViewsText_OnSetAlignment( &_this->Label, ViewsTextAlignmentAlignHorzLeft | ViewsTextAlignmentAlignVertCenter 
   );
-  ViewsText_OnSetString( &_this->Label, EwLoadString( &_Const0009 ));
+  ViewsText_OnSetString( &_this->Label, EwLoadString( &_Const0003 ));
   ViewsText_OnSetColor( &_this->Label, FlatColorOfTheme );
-  EwRetainString( &_this->String, EwLoadString( &_Const0009 ));
+  EwRetainString( &_this->String, EwLoadString( &_Const0003 ));
   _this->TextColor = FlatColorOfTheme;
   CoreGroup__Add( _this, ((CoreView)&_this->Label ), 0 );
   ViewsText_OnSetFont( &_this->Label, EwLoadResource( &FlatFontS, ResourcesFont 

@@ -711,6 +711,7 @@ class Well : Core::Group
 
 
 
+
   }
 
   // Stores all Well Parts
@@ -912,8 +913,8 @@ class Well : Core::Group
   slot onSampleCollected
   {
     var Device::SampleCollectedContext context = (Device::SampleCollectedContext)SampleCollected.Context;
-     
-    timeToWellPart(context.CircuitNumber,context.WellIndex.x,context.WellIndex.y,string(context.Day)+"."+string(context.Month)+"."+string(context.Year)+" "+string(context.Hour)+":"+string(context.Minute));
+
+    timeToWellPart(context.CircuitNumber,context.XPosition,context.YPosition,string(context.Day)+"."+string(context.Month)+"."+string(context.Year)+" "+string(context.Hour)+":"+string(context.Minute));
      
 
 
@@ -1128,7 +1129,6 @@ class WellPart : Core::Group
   $rect <90,50,290,90>
   onset TimeProperty
   {
-
     // Remember the property's new value.
     pure TimeProperty = value;
 
@@ -3770,19 +3770,19 @@ class Config : Core::Group
   $rect <870,290,1070,330>
   slot onBtn_Ok
   {
-    /*if(TextEditor.String.parse_int32(6)>6||TextEditor.String.parse_int32(6)<1){
-      Device::Device.NuOfCircuits=6;
-      trace "ERROR: Not allowed Number of Circuits";
+    if(TextEditor.String.parse_int32(200)<200||TextEditor.String.parse_int32(200)>2000){
+      trace "ERROR: Not allowed SampleVolume:"+string(TextEditor.String.parse_int32(200));
+      Device::Device.SampleVolume=200;
     }else{
-      Device::Device.NuOfCircuits=TextEditor.String.parse_int32(6);
-    }*/
+      Device::Device.SampleVolume=TextEditor.String.parse_int32(200);
+    }
     this.Enabled=false;
     this.Visible=false;
     ControllMenue.Enabled=true;
 
     var int32 i;
 
-    for(i=0;i<Device::Device.NuOfCircuits;i=i+1){
+    for(i=0;i<6;i=i+1){
       if(ControllMenue.SampleController[i].EnabledProperty==false){
         ControllMenue.SampleController[i].BtnStart.Enabled=true;
       }
@@ -3818,7 +3818,7 @@ class Config : Core::Group
   {
     preset Bounds = <60,10,690,120>;
     preset WrapText = true;
-    preset String = "Geben Sie die Anzahl der zu verwendenden Kreisläufe ein (Zahl von 1 bis 6)";
+    preset String = "Bitte geben sie das Volumen der zu entnehmenden Proben an (in ul)";
     preset Font = Flat::FontL;
   }
 
@@ -4462,31 +4462,6 @@ class ControllMenu : Core::Group
     preset Bounds = <610,120,750,180>;
   }
 
-  $rect <370,540,570,580>
-  object Core::PropertyObserver NuOfCircuitsObserver
-  {
-    preset OnEvent = onNuOfCircuits;
-    preset Outlet = ^Device::Device.NuOfCircuits;
-  }
-
-  // This slot method is executed when the associated property observer 'PropertyObserver' \
-  // is notified.
-  $rect <570,540,770,580>
-  slot onNuOfCircuits
-  {
-    var int32 i;
-    for(i=0;i<6;i=i+1){
-      SampleController[i].Visible=false;
-      SampleController[i].Enabled=false;
-    }
-
-    for(i=0;i<Device::Device.NuOfCircuits;i=i+1){
-      SampleController[i].Visible=true;
-      SampleController[i].Enabled=true;
-    }
-
-  }
-
   $rect <840,90,1040,130>
   array Application::SampleController SampleController[ 6 ] =
   (
@@ -4577,8 +4552,9 @@ class ControllMenu : Core::Group
   slot onRemainingTime
   {
     var Device::RemainingTimeContext context = (Device::RemainingTimeContext)RemainingTime.Context;
+    trace "CircuitNumberContext="+string(context.CircuitNumber)+" RemainingTimeContext="+string(context.RemainingTime);
     SampleController[context.CircuitNumber].RemainingTime=context.RemainingTime;
-    trace "ControllMenu: CircuitNumber="+string(context.CircuitNumber)+" RemainingTime="+string(context.RemainingTime);
+
 
   }
 
@@ -4597,7 +4573,7 @@ class ControllMenu : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Flat::ActionButton Btn_Test
+  object Application::AActionButton Btn_Test
   {
     preset Bounds = <70,10,140,40>;
     preset OnAction = onBtn_Test;
@@ -4607,15 +4583,21 @@ class ControllMenu : Core::Group
   $rect <840,20,1040,60>
   slot onBtn_Test
   {
+    var int32 x;
+    var int32 y;
+    var int32 i = 0;
+
+    for(y=0;y<6;y=y+1){
+      for(x=0;x<8;x=x+1){
+        Device::Device.onSampleCollected( x, y, i, 2018, 02, 01, 12, 08 ) ;
+        i=i+1;
+        if(i>5){
+          i=0;
+        }
+      }
+    }
 
 
-    Device::Device.onSampleCollected( <0,0>, 0, 2018, 01, 31, 19, 23 );
-    Device::Device.onSampleCollected( <1,0>, 1, 2018, 01, 31, 19, 23 );
-    Device::Device.onSampleCollected( <2,0>, 2, 2018, 01, 31, 19, 23 );
-    Device::Device.onSampleCollected( <3,0>, 3, 2018, 01, 31, 19, 23 );
-    Device::Device.onSampleCollected( <4,0>, 4, 2018, 01, 31, 19, 23 );
-    Device::Device.onSampleCollected( <5,0>, 5, 2018, 01, 31, 19, 23 );
-    Device::Device.onSampleCollected( <6,0>, 6, 2018, 01, 31, 19, 23 );
     Device::Device.onRemainingTime( 0, 0 );
     Device::Device.onRemainingTime( 1, 1 );
     Device::Device.onRemainingTime( 2, 2 );
@@ -4623,7 +4605,7 @@ class ControllMenu : Core::Group
     Device::Device.onRemainingTime( 4, 4 );
     Device::Device.onRemainingTime( 5, 5 );
     Device::Device.onTime( 2018, 01, 11, 20, 30 );
-    Device::Device.UpdateTemperature( -22.5 );
+    Device::Device.UpdateTemperature( -22.5 );  
   }
 }
 

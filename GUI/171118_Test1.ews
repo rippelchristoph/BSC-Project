@@ -1,12 +1,11 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,10>;
-attr codeInspector = Device::DeviceClass.OnSetNewWell;
-attr codeSelEnd = <4,11>;
-attr codeSelStart = <4,11>;
+attr codeFirstPos = <0,0>;
+attr codeInspector = Device::DeviceClass.getColor;
+attr codeSelEnd = <26,3>;
+attr codeSelStart = <26,3>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -30,87 +29,6 @@ attr search_WholeWords = false;
 attr search_WildCards = false;
 
 view Project
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view unit Application
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view unit Device
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = BSCHeader;
-  attr codeSelEnd = <18,2>;
-  attr codeSelStart = <18,2>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Device::DeviceClass
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,6>;
-  attr codeInspector = OnSetNewWell;
-  attr codeSelEnd = <4,11>;
-  attr codeSelStart = <4,11>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::ControllMenu
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,6>;
-  attr codeInspector = onBtn_Test;
-  attr codeSelEnd = <82,10>;
-  attr codeSelStart = <82,10>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::SampleController
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = OnSetRemainingTime;
-  attr codeSelEnd = <37,0>;
-  attr codeSelStart = <37,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.25;
-}
-
-view class Application::Well
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onNewWell;
-  attr codeSelEnd = <38,5>;
-  attr codeSelStart = <38,5>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::WellPart
 {
   attr enableGrid = true;
   attr grid = 10;
