@@ -75,6 +75,9 @@ newOrder (
 	retPtr->interval = aInterval;
 	time(&retPtr->lastExe);	//No Probe at Beginning
 
+	EwPrint("New Order: CN: aOrigin = %i, aInterval = %i", aOrigin, aInterval);
+
+
 	return retPtr;
 }
 

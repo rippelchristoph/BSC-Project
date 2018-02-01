@@ -302,7 +302,7 @@ ProcessBSCController (
 	
 
 	
-	//ProcessOrderController(aBSCController->Orders);
+	ProcessOrderController(aBSCController->Orders);
 	
 	time_t now = time(NULL);
 
@@ -404,7 +404,8 @@ BSCAddOrder (
   int aInterval,
   int aOrigin )
 {
-	OrderControllerAddOrder(BSCController->Orders, (time_t) aInterval, aOrigin);
+
+	OrderControllerAddOrder(BSCController->Orders, (time_t) (aInterval*60), aOrigin);
 }
 
 /****************************************************************************
@@ -430,6 +431,8 @@ UpdateRemainingTimes (
 	ListSetReadPointer(OrderList, 0);
 	while ((retOrder = ListGetNext(OrderList)))
 	{
+		EwPrint("CircuitNumber = %i, Remaining = %i\n", retOrder->Origin, OrderGetRemainingTime(retOrder));
+
 		DeviceDeviceClass_onRemainingTime(aController->EwDeviceObject, 
 			(XInt32) retOrder->Origin,
 			(XInt32) OrderGetRemainingTime(retOrder) / 60 
