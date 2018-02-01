@@ -5,6 +5,7 @@ inline BSCHeader
 {
   #include "BSCController.h"
   #include <stdlib.h>
+  #include <stdio.h>
 }
 
 $rect <60,70,260,110>
@@ -85,7 +86,7 @@ class DeviceClass : Templates::DeviceClass
     $if !$prototyper
       native ( value )
       {
-        System("scrot -b '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/home/share/screenshots'");
+        
 
       }
     $endif

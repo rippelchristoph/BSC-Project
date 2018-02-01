@@ -92,6 +92,7 @@ static const XStringRes _Const001F = { _StringsDefault0, 0x01C4 };
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 /* Initializer for the class 'Device::DeviceClass' */
 void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aArg )
@@ -204,7 +205,6 @@ void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value )
 
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNewWell, DeviceDeviceClass_OnSetNewWell 
     ), 0 );
-  System("scrot -b '%Y:%m:%d:%H:%M:%S.png' -e 'mv  ~/home/share/screenshots'");
   EwTrace( "%s", EwLoadString( &_Const0001 ));
 }
 

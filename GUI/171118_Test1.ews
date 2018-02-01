@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device;
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,0>;
-attr codeInspector = Device::BSCHeader;
-attr codeSelEnd = <19,1>;
-attr codeSelStart = <19,1>;
+attr codeFirstPos = <0,10>;
+attr codeInspector = Device::DeviceClass.OnSetNewWell;
+attr codeSelEnd = <4,11>;
+attr codeSelStart = <4,11>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -50,8 +50,8 @@ view unit Device
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
   attr codeInspector = BSCHeader;
-  attr codeSelEnd = <26,0>;
-  attr codeSelStart = <26,0>;
+  attr codeSelEnd = <18,2>;
+  attr codeSelStart = <18,2>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
