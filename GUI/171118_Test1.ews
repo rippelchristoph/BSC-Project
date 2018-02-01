@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::ControllMenu;
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,0>;
-attr codeInspector = Application::ControllMenu.onBtn_Test;
-attr codeSelEnd = <0,0>;
-attr codeSelStart = <0,0>;
+attr codeFirstPos = <0,6>;
+attr codeInspector = Device::DeviceClass.OnSetNewWell;
+attr codeSelEnd = <83,11>;
+attr codeSelStart = <83,11>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -74,10 +74,10 @@ view class Device::DeviceClass
 view class Application::ControllMenu
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,7>;
+  attr codeFirstPos = <0,6>;
   attr codeInspector = onBtn_Test;
-  attr codeSelEnd = <39,14>;
-  attr codeSelStart = <39,14>;
+  attr codeSelEnd = <82,10>;
+  attr codeSelStart = <82,10>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
