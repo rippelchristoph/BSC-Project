@@ -91,6 +91,7 @@ static const XStringRes _Const001F = { _StringsDefault0, 0x01C4 };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
+#include <stdlib.h>
 
 /* Initializer for the class 'Device::DeviceClass' */
 void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aArg )
