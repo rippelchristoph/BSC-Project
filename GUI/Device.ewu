@@ -84,11 +84,7 @@ class DeviceClass : Templates::DeviceClass
     // For target code generation you will use your specific device API 
     // to change the affected value.
     $if !$prototyper
-      native ( value )
-      {
-        
-
-      }
+     
     $endif
 
     trace "NewWell";
@@ -379,7 +375,7 @@ class DeviceClass : Templates::DeviceClass
       case 3  : return #0000FFFF;  
       case 4  : return #00FFFFFF; 
       case 5  : return #FF00FFFF;  
-      default : return #FF0000FF; //rot=ERROR
+      default : return #FF0000FF; //rot=ERROR           
     }
 
       

@@ -1354,7 +1354,7 @@ $output false
 class SampleController : Core::Group
 {
   $rect <20,550,220,590>
-  inherited property Bounds = <0,0,470,70>;
+  inherited property Bounds = <0,0,450,68>;
 
   $rect <20,630,220,670>
   inherited method UpdateLayout()
@@ -1513,7 +1513,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Views::Border Border
   {
-    preset Bounds = <0,1,460,69>;
+    preset Bounds = <0,0,450,68>;
     preset Width = 3;
     preset Color = #000000FF;
   }
@@ -1521,7 +1521,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Views::Text NameText
   {
-    preset Bounds = <0,1,30,31>;
+    preset Bounds = <0,0,30,30>;
     preset String = "1";
     preset Font = Flat::FontM;
     preset Color = #000000FF;
@@ -1530,7 +1530,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton BtnStart
   {
-    preset Bounds = <120,6,200,31>;
+    preset Bounds = <120,4,200,29>;
     preset Enabled = false;
     preset OnAction = onStart;
     preset Caption = "Start";
@@ -1539,7 +1539,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton BtnStop
   {
-    preset Bounds = <120,40,200,65>;
+    preset Bounds = <120,39,200,64>;
     preset Enabled = false;
     preset OnAction = onStop;
     preset Caption = "Stop";
@@ -1604,7 +1604,7 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Application::ATextEditor TextEditor
   {
-    preset Bounds = <30,20,70,60>;
+    preset Bounds = <30,19,70,59>;
     preset WrapText = false;
     preset String = "10";
     preset Color = #FFFFFFFF;
@@ -1613,8 +1613,8 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Views::Line Line
   {
-    preset Point2 = <110,45>;
-    preset Point1 = <30,45>;
+    preset Point2 = <110,49>;
+    preset Point1 = <30,49>;
     preset Width = 2;
     preset Color = #000000FF;
   }
@@ -1678,16 +1678,17 @@ class SampleController : Core::Group
   $rect <20,20,160,60>
   object Application::AHorzBar HorzBar
   {
-    preset Bounds = <210,10,440,60>;
+    preset Bounds = <215,9,430,60>;
     preset MaxValue = 10;
     preset CurrentValue = 5;
+    preset BackColor = Flat::ColorOfDisabled;
     preset TextColor = Flat::ColorOfBackground;
   }
 
   $rect <20,20,160,60>
   object Flat::Label Label
   {
-    preset Bounds = <70,20,110,50>;
+    preset Bounds = <70,19,110,49>;
     preset String = "min";
     preset TextColor = #000000FF;
   }
@@ -4087,7 +4088,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Application::AHorzSlider XSlider
   {
-    preset Bounds = <60,240,780,310>;
+    preset Bounds = <70,230,760,300>;
     preset CurrentValue = 0;
     preset OnChange = OnChangePos;
   }
@@ -4095,7 +4096,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Application::AHorzSlider YSlider
   {
-    preset Bounds = <60,310,780,370>;
+    preset Bounds = <70,300,760,360>;
     preset CurrentValue = 0;
     preset OnChange = OnChangePos;
   }
@@ -4111,7 +4112,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Application::AHorzSlider ZSlider
   {
-    preset Bounds = <60,370,780,430>;
+    preset Bounds = <70,360,760,420>;
     preset CurrentValue = 0;
     preset OnChange = OnChangePos;
   }
@@ -4166,6 +4167,14 @@ class ConfigPosition : Core::Group
     return pure Title;
   }
 
+  $rect <20,20,160,60>
+  object Views::Image Img_Help
+  {
+    preset Bounds = <10,10,790,430>;
+    preset Bitmap = null;
+    preset Visible = false;
+  }
+
   $rect <830,300,1030,340>
   slot onBtnNext
   {
@@ -4175,7 +4184,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Views::Text TextX
   {
-    preset Bounds = <10,250,50,300>;
+    preset Bounds = <20,240,60,290>;
     preset WrapText = true;
     preset String = "X";
     preset Font = Flat::FontL;
@@ -4184,7 +4193,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Views::Text TextY
   {
-    preset Bounds = <10,310,50,360>;
+    preset Bounds = <20,300,60,350>;
     preset WrapText = true;
     preset String = "Y";
     preset Font = Flat::FontL;
@@ -4193,7 +4202,7 @@ class ConfigPosition : Core::Group
   $rect <20,20,160,60>
   object Views::Text TextZ
   {
-    preset Bounds = <10,370,50,420>;
+    preset Bounds = <20,360,60,410>;
     preset WrapText = true;
     preset String = "Z";
     preset Font = Flat::FontL;
@@ -4239,14 +4248,6 @@ class ConfigPosition : Core::Group
     }else{
       Img_Help.Visible=false;
     }
-  }
-
-  $rect <20,20,160,60>
-  object Views::Image Img_Help
-  {
-    preset Bounds = <10,10,790,430>;
-    preset Bitmap = null;
-    preset Visible = false;
   }
 }
 
@@ -4394,7 +4395,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA0
   {
-    preset Bounds = <20,50,480,120>;
+    preset Bounds = <20,40,480,110>;
     preset Enabled = false;
     preset NameProperty = '1';
   }
@@ -4402,7 +4403,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA1
   {
-    preset Bounds = <20,120,480,190>;
+    preset Bounds = <20,110,480,180>;
     preset Enabled = false;
     preset NameProperty = '2';
   }
@@ -4410,7 +4411,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA2
   {
-    preset Bounds = <20,190,480,260>;
+    preset Bounds = <20,180,480,250>;
     preset Enabled = false;
     preset NameProperty = '3';
   }
@@ -4418,7 +4419,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA3
   {
-    preset Bounds = <20,260,480,330>;
+    preset Bounds = <20,250,480,320>;
     preset Enabled = false;
     preset NameProperty = '4';
   }
@@ -4426,7 +4427,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA4
   {
-    preset Bounds = <20,330,480,400>;
+    preset Bounds = <20,320,480,390>;
     preset Enabled = false;
     preset NameProperty = '5';
   }
@@ -4434,7 +4435,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::SampleController SCA5
   {
-    preset Bounds = <20,400,480,470>;
+    preset Bounds = <20,390,480,460>;
     preset Enabled = false;
     preset NameProperty = '6';
   }
@@ -4452,14 +4453,14 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::ANumKeyboard NumKeyboard
   {
-    preset Bounds = <570,260,780,469>;
+    preset Bounds = <590,270,770,459>;
     preset Enabled = false;
   }
 
   $rect <20,20,160,60>
   object Application::Temperature Temperature
   {
-    preset Bounds = <610,120,750,180>;
+    preset Bounds = <610,130,750,190>;
   }
 
   $rect <840,90,1040,130>
@@ -4476,7 +4477,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_Config
   {
-    preset Bounds = <570,180,780,210>;
+    preset Bounds = <590,190,770,220>;
     preset OnAction = onBtn_Config;
     preset Caption = "Einstellungen";
   }
@@ -4503,7 +4504,7 @@ class ControllMenu : Core::Group
   $rect <20,20,160,60>
   object Application::AActionButton Btn_NewWell
   {
-    preset Bounds = <570,220,780,250>;
+    preset Bounds = <590,230,770,260>;
     preset Enabled = false;
     preset OnAction = onBtn_NewWell;
     preset Caption = "Neues Well";
@@ -4559,25 +4560,11 @@ class ControllMenu : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Application::AActionButton btn_Exit
-  {
-    preset Bounds = <20,10,45,35>;
-    preset OnAction = onBtn_Exit;
-    preset Caption = "X";
-  }
-
-  $rect <830,270,1030,310>
-  slot onBtn_Exit
-  {
-    Device::Device.ExitApplication();
-  }
-
-  $rect <20,20,160,60>
   object Application::AActionButton Btn_Test
   {
-    preset Bounds = <70,10,140,40>;
+    preset Bounds = <30,0,55,25>;
     preset OnAction = onBtn_Test;
-    preset Caption = "Test";
+    preset Caption = "?";
   }
 
   $rect <840,20,1040,60>
@@ -4606,6 +4593,20 @@ class ControllMenu : Core::Group
     Device::Device.onRemainingTime( 5, 5 );
     Device::Device.onTime( 2018, 01, 11, 20, 30 );
     Device::Device.UpdateTemperature( -22.5 );  
+  }
+
+  $rect <20,20,160,60>
+  object Application::AActionButton btn_Exit
+  {
+    preset Bounds = <0,0,25,25>;
+    preset OnAction = onBtn_Exit;
+    preset Caption = "X";
+  }
+
+  $rect <830,140,1030,180>
+  slot onBtn_Exit
+  {
+    Device::Device.ExitApplication();
   }
 }
 
@@ -4984,7 +4985,7 @@ class AHorzBar : Core::Group
   // The property 'BackColor' defines the background color of the widget. The property \
   // is used to assign a color independent from the current theme color.
   $rect <370,180,550,220>
-  property color BackColor = Flat::ColorOfBody;
+  property color BackColor = Flat::ColorOfDisabled;
 
   $rect <370,220,550,260>
   onset BackColor
@@ -5086,7 +5087,7 @@ resource Resources::Bitmap ConfigWaste
 
 $rect <860,570,1070,610>
 $output false
-const color BackgroundColor = #8D8D8DFF;
+const color BackgroundColor = #A0A0A0FF;
 
 $rect <860,610,1070,650>
 $output false
