@@ -159,6 +159,9 @@ void ApplicationAHorzBar_OnSetbarPos( ApplicationAHorzBar _this, XInt32 value );
 XString ApplicationAHorzBar_formatValueString( ApplicationAHorzBar _this, XInt32 
   aValue );
 
+/* 'C' function for method : 'Application::AHorzBar.OnSetBackColor()' */
+void ApplicationAHorzBar_OnSetBackColor( ApplicationAHorzBar _this, XColor value );
+
 /* 'C' function for method : 'Application::AHorzBar.OnSetTextColor()' */
 void ApplicationAHorzBar_OnSetTextColor( ApplicationAHorzBar _this, XColor value );
 

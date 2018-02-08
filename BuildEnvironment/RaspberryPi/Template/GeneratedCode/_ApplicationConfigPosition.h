@@ -97,12 +97,12 @@ EW_DEFINE_FIELDS( ApplicationConfigPosition, CoreGroup )
   EW_OBJECT  ( ZSlider,         ApplicationAHorzSlider )
   EW_PROPERTY( onNext,          XSlot )
   EW_PROPERTY( Title,           XString )
+  EW_OBJECT  ( Img_Help,        ViewsImage )
   EW_OBJECT  ( TextX,           ViewsText )
   EW_OBJECT  ( TextY,           ViewsText )
   EW_OBJECT  ( TextZ,           ViewsText )
   EW_PROPERTY( Help,            ResourcesBitmap )
   EW_OBJECT  ( Btn_Help,        ApplicationAToggleButton )
-  EW_OBJECT  ( Img_Help,        ViewsImage )
 EW_END_OF_FIELDS( ApplicationConfigPosition )
 
 /* Virtual Method Table (VMT) for the class : 'Application::ConfigPosition' */

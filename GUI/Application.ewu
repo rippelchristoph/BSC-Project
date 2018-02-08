@@ -1353,10 +1353,10 @@ $rect <150,290,350,330>
 $output false
 class SampleController : Core::Group
 {
-  $rect <20,550,220,590>
+  $rect <20,420,220,460>
   inherited property Bounds = <0,0,450,68>;
 
-  $rect <20,630,220,670>
+  $rect <20,500,220,540>
   inherited method UpdateLayout()
   {
     // Always invoke the inherited method.
@@ -1385,7 +1385,7 @@ class SampleController : Core::Group
     */
   }
 
-  $rect <20,590,220,630>
+  $rect <20,460,220,500>
   inherited method UpdateViewState()
   {
     // Always invoke the inherited method.
@@ -4463,7 +4463,7 @@ class ControllMenu : Core::Group
     preset Bounds = <610,130,750,190>;
   }
 
-  $rect <840,90,1040,130>
+  $rect <830,50,1030,90>
   array Application::SampleController SampleController[ 6 ] =
   (
     Default[0] = SCA0;
@@ -4567,7 +4567,7 @@ class ControllMenu : Core::Group
     preset Caption = "?";
   }
 
-  $rect <840,20,1040,60>
+  $rect <830,110,1030,150>
   slot onBtn_Test
   {
     var int32 x;
@@ -4603,7 +4603,7 @@ class ControllMenu : Core::Group
     preset Caption = "X";
   }
 
-  $rect <830,140,1030,180>
+  $rect <830,150,1030,190>
   slot onBtn_Exit
   {
     Device::Device.ExitApplication();

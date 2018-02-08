@@ -105,8 +105,8 @@ EW_DEFINE_FIELDS( ApplicationControllMenu, CoreGroup )
   EW_OBJECT  ( Btn_NewWell,     ApplicationAActionButton )
   EW_PROPERTY( Config,          ApplicationConfig )
   EW_OBJECT  ( RemainingTime,   CoreSystemEventHandler )
-  EW_OBJECT  ( btn_Exit,        ApplicationAActionButton )
   EW_OBJECT  ( Btn_Test,        ApplicationAActionButton )
+  EW_OBJECT  ( btn_Exit,        ApplicationAActionButton )
 EW_END_OF_FIELDS( ApplicationControllMenu )
 
 /* Virtual Method Table (VMT) for the class : 'Application::ControllMenu' */
@@ -184,12 +184,12 @@ void ApplicationControllMenu_OnSetConfig( ApplicationControllMenu _this, Applica
 void ApplicationControllMenu_onRemainingTime( ApplicationControllMenu _this, XObject 
   sender );
 
-/* 'C' function for method : 'Application::ControllMenu.onBtn_Exit()' */
-void ApplicationControllMenu_onBtn_Exit( ApplicationControllMenu _this, XObject 
-  sender );
-
 /* 'C' function for method : 'Application::ControllMenu.onBtn_Test()' */
 void ApplicationControllMenu_onBtn_Test( ApplicationControllMenu _this, XObject 
+  sender );
+
+/* 'C' function for method : 'Application::ControllMenu.onBtn_Exit()' */
+void ApplicationControllMenu_onBtn_Exit( ApplicationControllMenu _this, XObject 
   sender );
 
 #ifdef __cplusplus
