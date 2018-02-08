@@ -156,10 +156,11 @@ ProcessOrderController (
 	while ((testOrder = ListGetNext(aOrderController->OrderList)) != NULL)
 	{
 		if ((retOrg = ProcessOrder(testOrder)) != -1) {
-			time(testOrder->lastExe);
+			testOrder->lastExe = time(NULL);
 			return retOrg;
 		}
 	}
+
 	return -1;
 }
 
