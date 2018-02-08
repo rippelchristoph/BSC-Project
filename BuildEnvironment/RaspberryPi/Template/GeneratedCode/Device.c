@@ -35,7 +35,7 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x000003E2, /* ratio 47.08 % */
+  0x000003AE, /* ratio 47.13 % */
   0xB8002300, 0x80000452, 0x00C20029, 0x0E000368, 0xCA003600, 0xE002B000, 0x750043CD,
   0xA0044616, 0x058020C3, 0x70020B03, 0xC0CEF1B2, 0x1A21108D, 0x20D210F4, 0x01093A42,
   0x130001C8, 0x0E8642A1, 0xE001A621, 0x0019C006, 0x00B40020, 0x4F09200A, 0xDA671B9A,
@@ -45,14 +45,13 @@ static const unsigned int _StringsDefault0[] =
   0x16A9C6E7, 0xBABC4A9B, 0xA2190018, 0x01628343, 0xD440C00B, 0x4415A42C, 0x2B254A0D,
   0x0D1D8943, 0xC2EA8816, 0x06826CE3, 0x1A8ECA83, 0x006E289B, 0x259ED163, 0x4CE4F83B,
   0x66A53EC3, 0x2ED58AB5, 0xBF5DBC51, 0x97F0FEF6, 0xBEE2606C, 0x4A25BB0B, 0x85432256,
-  0x4F867B3B, 0x6BE77ADE, 0x137F7ED2, 0xF1313E01, 0xBBC582D4, 0x747F046B, 0x1AF2CFFC,
-  0x18F0F625, 0x8B523262, 0xD386510E, 0xA681F645, 0x65745C9C, 0xD1561775, 0x755D3631,
-  0xDD9609C2, 0xB5C1DB71, 0x69CD5CDC, 0x7A0020C5, 0x541BD5B1, 0x000109BF, 0xD1400013,
-  0x39481CD6, 0xC57213B7, 0x01DBD68D, 0xDA8001AB, 0x416A318B, 0xB522881A, 0x16899646,
-  0x8A9308A1, 0x22D4F56D, 0xB5441669, 0x6E3E4296, 0x490023C4, 0x5122C902, 0xD9247A2E,
-  0x3465536F, 0xF5124CD3, 0x4D92D304, 0x5A6418A6, 0x10694400, 0x06B55105, 0x7A278960,
-  0x4397E3F9, 0x6FD026F6, 0xD0D779AD, 0x64C10A57, 0x19C546E5, 0x0541A384, 0x0020A1E1,
-  0xD969CC41, 0x99D5574E, 0x791E7215, 0x00001014, 0x00000000
+  0x4F867B3B, 0x6BE77ADE, 0x232621D2, 0x3290E8B5, 0x11E38BCE, 0x97100687, 0x77ACDD2D,
+  0x3C6746B1, 0xC170BABD, 0x1DB71DD9, 0xD5CDCB5C, 0x01FA569C, 0xBD5B17A0, 0x109BF541,
+  0x00013000, 0x81CD6D14, 0x213B7394, 0xBD68DC57, 0x001AB01D, 0xA1F875A8, 0x2839A416,
+  0x51646B52, 0x30859168, 0x4F56D861, 0x4166921B, 0xC4296B54, 0x022A46E2, 0x1A8BA370,
+  0x47A1C512, 0x5536FD92, 0x24CD3346, 0xE5304F51, 0x2F85E3B8, 0x8FC005A6, 0x55105106,
+  0x584DEC6B, 0x362D9321, 0x026F6319, 0x779AD6FD, 0x10A57D0D, 0x546E444C, 0x1A26419C,
+  0xF81E1054, 0x98441001, 0xD574ED96, 0xE7215998, 0x01014791, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -71,24 +70,23 @@ static const XStringRes _Const000B = { _StringsDefault0, 0x00BA };
 static const XStringRes _Const000C = { _StringsDefault0, 0x00BF };
 static const XStringRes _Const000D = { _StringsDefault0, 0x00DF };
 static const XStringRes _Const000E = { _StringsDefault0, 0x00FE };
-static const XStringRes _Const000F = { _StringsDefault0, 0x0118 };
-static const XStringRes _Const0010 = { _StringsDefault0, 0x0139 };
-static const XStringRes _Const0011 = { _StringsDefault0, 0x0158 };
-static const XStringRes _Const0012 = { _StringsDefault0, 0x016B };
-static const XStringRes _Const0013 = { _StringsDefault0, 0x0172 };
-static const XStringRes _Const0014 = { _StringsDefault0, 0x0179 };
-static const XStringRes _Const0015 = { _StringsDefault0, 0x018C };
-static const XStringRes _Const0016 = { _StringsDefault0, 0x01A2 };
-static const XStringRes _Const0017 = { _StringsDefault0, 0x01BA };
-static const XStringRes _Const0018 = { _StringsDefault0, 0x01CE };
-static const XColor _Const0019 = { 0xF3, 0x89, 0x00, 0xFF };
-static const XColor _Const001A = { 0x32, 0xCE, 0x00, 0xFF };
-static const XColor _Const001B = { 0x1E, 0x60, 0x33, 0xFF };
-static const XColor _Const001C = { 0x00, 0x00, 0xFF, 0xFF };
-static const XColor _Const001D = { 0x00, 0xFF, 0xFF, 0xFF };
-static const XColor _Const001E = { 0xFF, 0x00, 0xFF, 0xFF };
-static const XColor _Const001F = { 0xFF, 0x00, 0x00, 0xFF };
-static const XStringRes _Const0020 = { _StringsDefault0, 0x01DF };
+static const XStringRes _Const000F = { _StringsDefault0, 0x011F };
+static const XStringRes _Const0010 = { _StringsDefault0, 0x013E };
+static const XStringRes _Const0011 = { _StringsDefault0, 0x0151 };
+static const XStringRes _Const0012 = { _StringsDefault0, 0x0158 };
+static const XStringRes _Const0013 = { _StringsDefault0, 0x015F };
+static const XStringRes _Const0014 = { _StringsDefault0, 0x0172 };
+static const XStringRes _Const0015 = { _StringsDefault0, 0x0188 };
+static const XStringRes _Const0016 = { _StringsDefault0, 0x01A0 };
+static const XStringRes _Const0017 = { _StringsDefault0, 0x01B4 };
+static const XColor _Const0018 = { 0xF3, 0x89, 0x00, 0xFF };
+static const XColor _Const0019 = { 0x32, 0xCE, 0x00, 0xFF };
+static const XColor _Const001A = { 0x1E, 0x60, 0x33, 0xFF };
+static const XColor _Const001B = { 0x00, 0x00, 0xFF, 0xFF };
+static const XColor _Const001C = { 0x00, 0xFF, 0xFF, 0xFF };
+static const XColor _Const001D = { 0xFF, 0x00, 0xFF, 0xFF };
+static const XColor _Const001E = { 0xFF, 0x00, 0x00, 0xFF };
+static const XStringRes _Const001F = { _StringsDefault0, 0x01C5 };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
@@ -315,8 +313,6 @@ void DeviceDeviceClass_onRemainingTime( DeviceDeviceClass _this, XInt32 aCircuit
       aRemainingTime, 0, 10 )));
   }
 
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000E ), EwNewStringInt( aRemainingTime, 
-    0, 10 )));
   DeviceRemainingTimeContext_OnSetCircuitNumber( context, aCircuitNumber );
   DeviceRemainingTimeContext_OnSetRemainingTime( context, aRemainingTime );
   CoreSystemEvent_Trigger( &_this->RemainingTimeEvent, ((XObject)context ), 0 );
@@ -335,12 +331,12 @@ void DeviceDeviceClass_StopSampling( DeviceDeviceClass _this, XInt32 aCircuitNum
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000F ), EwNewStringInt( aCircuitNumber, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000E ), EwNewStringInt( aCircuitNumber, 
     0, 10 )));
 
   if (( aCircuitNumber < 0 ) || ( aCircuitNumber > 5 ))
   {
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0010 ), EwNewStringInt( 
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const000F ), EwNewStringInt( 
       aCircuitNumber, 0, 10 )));
     return;
   }
@@ -354,8 +350,8 @@ void DeviceDeviceClass_SetBLPosition( DeviceDeviceClass _this, XInt32 aX, XInt32
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0011 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
+    EwConcatString( EwLoadString( &_Const0010 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -367,8 +363,8 @@ void DeviceDeviceClass_SetTRPosition( DeviceDeviceClass _this, XInt32 aX, XInt32
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0014 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
+    EwConcatString( EwLoadString( &_Const0013 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -380,8 +376,8 @@ void DeviceDeviceClass_SetWastePosition( DeviceDeviceClass _this, XInt32 aX, XIn
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0015 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
+    EwConcatString( EwLoadString( &_Const0014 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -393,8 +389,8 @@ void DeviceDeviceClass_SetCurrentPosition( DeviceDeviceClass _this, XInt32 aX, X
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0016 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
+    EwConcatString( EwLoadString( &_Const0015 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -406,8 +402,8 @@ void DeviceDeviceClass_SetTopPosition( DeviceDeviceClass _this, XInt32 aX, XInt3
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0017 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
+    EwConcatString( EwLoadString( &_Const0016 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0011 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0012 )), 
     EwNewStringInt( aZ, 0, 10 )));
 }
 
@@ -418,7 +414,7 @@ void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value )
     return;
 
   _this->Temperature = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0018 ), EwNewStringFloat( 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0017 ), EwNewStringFloat( 
     _this->Temperature, 0, 6 )));
   {
     /*
@@ -446,8 +442,6 @@ void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewAr
   if ( aNewArgument != _this->Temperature )
   {
     _this->Temperature = aNewArgument;
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0018 ), EwNewStringFloat( 
-      _this->Temperature, 0, 6 )));
     EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetTemperature, DeviceDeviceClass_OnSetTemperature 
       ), 0 );
   }
@@ -468,25 +462,25 @@ XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumbe
   switch ( aCircuitNumber )
   {
     case 0 :
-      return _Const0019;
+      return _Const0018;
 
     case 1 :
-      return _Const001A;
+      return _Const0019;
 
     case 2 :
-      return _Const001B;
+      return _Const001A;
 
     case 3 :
-      return _Const001C;
+      return _Const001B;
 
     case 4 :
-      return _Const001D;
+      return _Const001C;
 
     case 5 :
-      return _Const001E;
+      return _Const001D;
 
     default : 
-      return _Const001F;
+      return _Const001E;
   }
 }
 
@@ -519,7 +513,7 @@ void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this )
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwLoadString( &_Const0020 ));
+  EwTrace( "%s", EwLoadString( &_Const001F ));
   BSCShutdown();
 }
 

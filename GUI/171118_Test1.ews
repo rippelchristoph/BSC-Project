@@ -3,10 +3,10 @@ $version 1.0
 attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,2>;
-attr codeInspector = Device::DeviceClass.onRemainingTime;
-attr codeSelEnd = <13,9>;
-attr codeSelStart = <13,9>;
+attr codeFirstPos = <0,0>;
+attr codeInspector = Application::SampleController.OnSetRemainingTime;
+attr codeSelEnd = <34,5>;
+attr codeSelStart = <34,5>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;

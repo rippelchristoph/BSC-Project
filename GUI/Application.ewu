@@ -1662,7 +1662,7 @@ class SampleController : Core::Group
     pure RemainingTime = value;
 
     HorzBar.CurrentValue=RemainingTime;
-    trace "SC: RemainingTime:"+string(RemainingTime);
+    //trace "SC: RemainingTime:"+string(RemainingTime);
 
     // TO DO:
     // 
@@ -4553,7 +4553,7 @@ class ControllMenu : Core::Group
   slot onRemainingTime
   {
     var Device::RemainingTimeContext context = (Device::RemainingTimeContext)RemainingTime.Context;
-    trace "CircuitNumberContext="+string(context.CircuitNumber)+" RemainingTimeContext="+string(context.RemainingTime);
+    //trace "CircuitNumberContext="+string(context.CircuitNumber)+" RemainingTimeContext="+string(context.RemainingTime);
     SampleController[context.CircuitNumber].RemainingTime=context.RemainingTime;
 
 
