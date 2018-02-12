@@ -293,20 +293,17 @@ PUBLIC int
 ProcessBSCController (
   TBSCController * aBSCController )
 {
-	//int retVal = -1;
-	//if ((retVal = ProcessOrderController(aBSCController->Orders)) != -1) {
-	//	SamplerAddToQueue(aBSCController->Sampler, retVal);
-	//}
+	int retVal = -1;
+	if ((retVal = ProcessOrderController(aBSCController->Orders)) != -1) {
+		EwPrint("Added to Queue: %i", retVal);
+		SamplerAddToQueue(aBSCController->Sampler, retVal);
+	}
 
 	//ProcessSampler(aBSCController->Sampler);
 	
-
-	
-	ProcessOrderController(aBSCController->Orders);
-	
 	time_t now = time(NULL);
 
-	if ((now - aBSCController->LastUpdate) >= 1) {
+	if ((now - aBSCController->LastUpdate) >= 5) {
 		aBSCController->LastUpdate = now;
 
 		UpdateTemperature(aBSCController);
@@ -404,8 +401,22 @@ BSCAddOrder (
   int aInterval,
   int aOrigin )
 {
-
 	OrderControllerAddOrder(BSCController->Orders, (time_t) (aInterval*60), aOrigin);
+}
+
+/****************************************************************************
+* FUNCTION: BSCRemoveOrder
+* DESCRIPTION:
+*   Wrapper function to add an Order to the OrderController of the
+*   BSCController
+****************************************************************************/
+
+PUBLIC void
+BSCRemoveOrder(
+	int aInterval,
+	int aOrigin)
+{
+	OrderControllerAddOrder(BSCController->Orders, (time_t)(aInterval * 60), aOrigin);
 }
 
 /****************************************************************************
@@ -431,8 +442,6 @@ UpdateRemainingTimes (
 	ListSetReadPointer(OrderList, 0);
 	while ((retOrder = ListGetNext(OrderList)))
 	{
-		EwPrint("CircuitNumber = %i, Remaining = %i\n", retOrder->Origin, OrderGetRemainingTime(retOrder));
-
 		DeviceDeviceClass_onRemainingTime(aController->EwDeviceObject, 
 			(XInt32) retOrder->Origin,
 			(XInt32) OrderGetRemainingTime(retOrder) / 60 

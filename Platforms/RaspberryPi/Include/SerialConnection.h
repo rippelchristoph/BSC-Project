@@ -1,15 +1,16 @@
 /****************************************************************************
-*
-* FILE: SerialConnection.h
-*
-* DESCRIPTION:
-*   This File handles a UART Connection
-*
-* PUBLIC FUNCTIONS:
-* UARTInit();
-* UARTTransmit();
-* UARTReceive();
-****************************************************************************/
+ *
+ * Bioreactor Sample Collector
+ * Written by Jakob Zuchna
+ *
+ ****************************************************************************
+ * FILE: SerialConnection.h
+ *
+ * PUBLIC FUNCTIONS:
+ *   newUART
+ *   UARTSendBytes
+ *   UARTReceiveBytes
+ ****************************************************************************/
 
 #ifndef SERIALCONNECTION_H
 #define SERIALCONNECTION_H
@@ -20,9 +21,7 @@
 * SECTION: #include
 ****************************************************************************/
 #include "HtlStdDef.h"
-/****************************************************************************
-* SECTION: #define
-****************************************************************************/
+#include "wiringSerial.h"
 
 /****************************************************************************
 * SECTION: typedef
@@ -35,6 +34,52 @@ typedef int UARTFilestream;
   extern "C" {
 #endif
 
+
+
+/****************************************************************************
+ * FUNCTION: newUART
+ *
+ *   DESCRIPTION:
+ *     Initializes the UART interface
+ *
+ *   PARAMETER:
+ ****************************************************************************/
+
+PUBLIC UARTFilestream *
+newUART ( void );
+
+
+/****************************************************************************
+ * FUNCTION: UARTSendBytes
+ *
+ *   DESCRIPTION:
+ *     Sends an Array of Bytes
+ ****************************************************************************/
+
+PUBLIC void
+UARTSendBytes (
+  UARTFilestream* aStream,
+  char *         aCharArra,
+  int            aLength );
+
+
+/****************************************************************************
+ * FUNCTION: UARTReceiveBytes
+ *
+ *   DESCRIPTION:
+ *     Reads up to 255 characters into the Buffer array if there are any RX
+ *     Bytes in the Stream
+ *
+ *   PARAMETER:
+ *     aStream	- The Stream the Receive aRelayState - The State that the
+ *     Relay of the Hydroport should have after function. e.g.
+ *     IEMiddlewareRelayStateON
+ ****************************************************************************/
+
+PUBLIC void
+UARTReceiveBytes (
+  UARTFilestream  aStream,
+  unsigned char * aBuffer );
 
 
 
