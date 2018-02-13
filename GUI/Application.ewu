@@ -1170,7 +1170,7 @@ class WellPart : Core::Group
   }
 }
 
-$rect <570,650,770,690>
+$rect <490,650,690,690>
 $output false
 resource Resources::Bitmap Oval
 {
@@ -1180,7 +1180,7 @@ resource Resources::Bitmap Oval
   attr framedelay FrameDelay;
 }
 
-$rect <560,440,760,480>
+$rect <480,440,680,480>
 $output false
 class Clock : Core::Group
 {
@@ -1747,7 +1747,7 @@ class SampleController : Core::Group
   $reorder OnSetEnabled 1
 }
 
-$rect <570,610,770,650>
+$rect <490,610,690,650>
 $output false
 resource Resources::Bitmap Logo
 {
@@ -1757,7 +1757,7 @@ resource Resources::Bitmap Logo
   attr framedelay FrameDelay;
 }
 
-$rect <570,570,770,610>
+$rect <490,570,690,610>
 $output false
 resource Resources::Font FontArial17
 {
@@ -1771,7 +1771,7 @@ resource Resources::Font FontArial17
 }
 
 // This component implements an editor.
-$rect <560,360,760,400>
+$rect <480,360,680,400>
 $output false
 class ATextEditor : Templates::TextEditor
 {
@@ -2713,7 +2713,7 @@ class ATextEditor : Templates::TextEditor
 }
 
 // This component implements a virtual keyboard.
-$rect <560,400,760,440>
+$rect <480,400,680,440>
 $output false
 class ANumKeyboard : Templates::NumKeyboard
 {
@@ -3236,7 +3236,7 @@ class ANumKeyboard : Templates::NumKeyboard
 // Resources
 note group Note
 {
-  attr Bounds = <460,540,1150,910>;
+  attr Bounds = <460,540,960,810>;
 }
 
 $rect <610,200,810,240>
@@ -4637,7 +4637,7 @@ note group Note5
 // Other Components
 note group Note6
 {
-  attr Bounds = <460,310,1150,530>;
+  attr Bounds = <460,310,960,530>;
 }
 
 note arrow Note1
@@ -4654,7 +4654,7 @@ note arrow Note7
 
 // Horizontal bar widget with a flat design. The widget is used to illustrate a value \
 // by using a colored horizontal bar, e.g. like a progress bar.
-$rect <560,480,760,520>
+$rect <480,480,680,520>
 $output false
 class AHorzBar : Core::Group
 {
@@ -5035,7 +5035,7 @@ class AHorzBar : Core::Group
   $reorder UpdateViewState 44
 }
 
-$rect <570,690,770,730>
+$rect <490,690,690,730>
 $output false
 resource Resources::Bitmap Coordinates
 {
@@ -5045,7 +5045,7 @@ resource Resources::Bitmap Coordinates
   attr framedelay FrameDelay;
 }
 
-$rect <570,730,770,770>
+$rect <490,730,690,770>
 $output false
 resource Resources::Bitmap ConfigTR
 {
@@ -5055,7 +5055,7 @@ resource Resources::Bitmap ConfigTR
   attr framedelay FrameDelay;
 }
 
-$rect <570,770,770,810>
+$rect <710,570,910,610>
 $output false
 resource Resources::Bitmap ConfigBL
 {
@@ -5065,7 +5065,7 @@ resource Resources::Bitmap ConfigBL
   attr framedelay FrameDelay;
 }
 
-$rect <570,810,770,850>
+$rect <710,610,910,650>
 $output false
 resource Resources::Bitmap ConfigTop
 {
@@ -5075,7 +5075,7 @@ resource Resources::Bitmap ConfigTop
   attr framedelay FrameDelay;
 }
 
-$rect <570,850,770,890>
+$rect <710,650,910,690>
 $output false
 resource Resources::Bitmap ConfigWaste
 {
@@ -5085,17 +5085,17 @@ resource Resources::Bitmap ConfigWaste
   attr framedelay FrameDelay;
 }
 
-$rect <860,570,1070,610>
+$rect <710,690,920,730>
 $output false
 const color BackgroundColor = #A0A0A0FF;
 
-$rect <860,610,1070,650>
+$rect <710,730,920,770>
 $output false
 const color WidgetColor = #FF9601FF;
 
 // Action button widget with a flat design. The widget is used as a simple push button \
 // with a text.
-$rect <800,360,980,400>
+$rect <720,360,900,400>
 $output false
 class AActionButton : Core::Group
 {
@@ -5253,7 +5253,7 @@ class AActionButton : Core::Group
 
 // Toggle button widget with a flat design. The widget is used to switch a boolean \
 // value on and off.
-$rect <800,400,980,440>
+$rect <720,400,900,440>
 $output false
 class AToggleButton : Core::Group
 {
@@ -5586,7 +5586,7 @@ class AToggleButton : Core::Group
 
 // Horizontal slider widget with a flat design. The widget allows the user to change \
 // a value by moving a thumb in horizontal direction.
-$rect <800,440,980,480>
+$rect <720,440,900,480>
 $output false
 class AHorzSlider : Core::Group
 {
@@ -6172,7 +6172,7 @@ class AHorzSlider : Core::Group
 }
 
 // Indicator widget with a flat design. The widget is used to display a boolean value.
-$rect <800,480,980,520>
+$rect <720,480,900,520>
 $output false
 class AIndicator : Core::Group
 {

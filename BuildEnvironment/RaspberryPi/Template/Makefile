@@ -46,9 +46,9 @@ include $(BSC_C_PATH)/BSCFiles.inc
 vpath %.c           $(EMWI_APP_PATH)                                        \
                     $(EMWI_RTE_PATH)                                        \
                     $(EMWI_GFX_PATH)                                        \
-					../../../Middleware/Source				    \
-					../../../Common/Source				    \
-					../../../Platforms/RaspberryPi/Source		    \
+					../../../Middleware/Source				    			\
+					../../../Common/Source				    				\
+					../../../Platforms/RaspberryPi/Source		    		\
 
 ##############################################################################
 # EMBEDDED WIZARD - APPLICATION DEMO
@@ -78,7 +78,7 @@ LIBS :=     m                                                                 \
             GLESv2                                                            \
             EGL                                                               \
             pthread 																													\
-	    wiringPi                                                          \
+			wiringPi                                                          \
             $(EMWI_RTE_LIB)                                                   \
             $(EMWI_GFX_LIB)                                                   \
 
@@ -111,9 +111,9 @@ APP_OBJ           := $(foreach file,$(APP_C),             $(OBJ_PATH)/$(strip $(
 APP_EMWI_OBJ      := $(foreach file,$(APP_EMWI_C),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
 RTE_EMWI_OBJ      := $(foreach file,$(RTE_EMWI_C),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
 GFX_EMWI_OBJ      := $(foreach file,$(GFX_EMWI_C),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
-COMMON_OBJ	  := $(foreach file,$(COMMONFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
-MIDDLEWARE_OBJ	  := $(foreach file,$(MIDDLEWAREFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
-PLATFORM_OBJ	  := $(foreach file,$(PLATFORMFILES),        $(OBJ_PATH)/$(strip $(basename $(file))).o)
+COMMON_OBJ	  	  := $(foreach file,$(COMMONFILES),       $(OBJ_PATH)/$(strip $(basename $(file))).o)
+MIDDLEWARE_OBJ	  := $(foreach file,$(MIDDLEWAREFILES),   $(OBJ_PATH)/$(strip $(basename $(file))).o)
+PLATFORM_OBJ	  := $(foreach file,$(PLATFORMFILES),     $(OBJ_PATH)/$(strip $(basename $(file))).o)
 
 OBJS := $(APP_OBJ) $(APP_EMWI_OBJ) $(RTE_EMWI_OBJ) $(GFX_EMWI_OBJ) $(COMMON_OBJ) $(MIDDLEWARE_OBJ) $(PLATFORM_OBJ) 
 

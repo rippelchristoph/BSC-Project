@@ -12,10 +12,10 @@ $rect <60,70,260,110>
 $output false
 class DeviceClass : Templates::DeviceClass
 {
-  $rect <920,80,1120,120>
+  $rect <930,80,1130,120>
   property int32 SampleVolume = 6;
 
-  $rect <1120,80,1320,120>
+  $rect <1130,80,1330,120>
   onset SampleVolume
   {
     // The property doesn't change -> nothing to do.
@@ -52,27 +52,10 @@ class DeviceClass : Templates::DeviceClass
     notifyobservers ^SampleVolume;
   }
 
-  // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
-  $rect <720,80,920,120>
-  $output true
-  method void UpdateSampleVolume( arg int32 aNewValue )
-  {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure SampleVolume )
-    {
-      // Remember the new value in the internal memory of the property.
-      pure SampleVolume = aNewValue;
-
-      // Notify all associated property observers.
-      notifyobservers ^SampleVolume;
-    }
-  }
-
-  $rect <240,80,440,120>
+  $rect <480,240,680,280>
   property bool NewWell = false;
 
-  $rect <440,80,640,120>
+  $rect <680,240,880,280>
   onset NewWell
   {
     // The property doesn't change -> nothing to do.
@@ -93,22 +76,8 @@ class DeviceClass : Templates::DeviceClass
 
   }
 
-  // This method is intended to be called by the device to notify the GUI application \
-  // about an alternation of its setting or state value.
-  $rect <40,80,240,120>
-  $output true
-  method void UpdateNewWell( arg bool aNewValue )
-  {
-    // Only if the reported value does differ from the one stored currently in the property.
-    if ( aNewValue != pure NewWell )
-    {
-     
-      notifyobservers ^NewWell;
-    }
-  }
-
   // intervall in seconds; circuitNumber from 1 to 6
-  $rect <40,180,240,220>
+  $rect <480,140,680,180>
   method void StartSampling( arg int32 aIntervall, arg int32 aCircuitNumber )
   {
     trace "StartSampling - Intervall:"+string(aIntervall)+" CircuitNumber:"+string(aCircuitNumber);
@@ -131,12 +100,12 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <240,280,440,320>
+  $rect <240,180,440,220>
   object Core::SystemEvent SampleCollectedEvent;
 
   // This method is intended to be called by the device to notify the GUI application \
   // about a particular system event.
-  $rect <40,280,240,320>
+  $rect <40,180,240,220>
   $output true
   method void onSampleCollected( arg int32 aXPosition, arg int32 aYPosition, arg int32 aCircuitNumber, arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
   {
@@ -168,12 +137,12 @@ class DeviceClass : Templates::DeviceClass
     SampleCollectedEvent.Trigger( context, false );
   }
 
-  $rect <240,330,440,370>
+  $rect <240,230,440,270>
   object Core::SystemEvent RemainingTimeEvent;
 
   // This method is intended to be called by the device to notify the GUI application \
   // about a particular system event.
-  $rect <40,330,240,370>
+  $rect <40,230,240,270>
   $output true
   method void onRemainingTime( arg int32 aCircuitNumber, arg int32 aRemainingTime )
   {
@@ -192,7 +161,7 @@ class DeviceClass : Templates::DeviceClass
     RemainingTimeEvent.Trigger( context, false );
   }
 
-  $rect <40,230,240,270>
+  $rect <480,190,680,230>
   method void StopSampling( arg int32 aCircuitNumber )
   {
     // The following code is used during prototyping only. It simply returns
@@ -210,7 +179,7 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <720,120,920,160>
+  $rect <930,120,1130,160>
   method void SetBLPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -225,7 +194,7 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <720,160,920,200>
+  $rect <930,160,1130,200>
   method void SetTRPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -241,7 +210,7 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <720,200,920,240>
+  $rect <930,200,1130,240>
   method void SetWastePosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -257,7 +226,7 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <720,280,920,320>
+  $rect <930,280,1130,320>
   method void SetCurrentPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -276,16 +245,16 @@ class DeviceClass : Templates::DeviceClass
   // Configuration
   note group Note
   {
-    attr Bounds = <700,40,1330,440>;
+    attr Bounds = <910,40,1340,340>;
   }
 
-  // Events
+  // Extern Events
   note group Note1
   {
-    attr Bounds = <20,40,650,490>;
+    attr Bounds = <20,40,450,350>;
   }
 
-  $rect <720,240,920,280>
+  $rect <930,240,1130,280>
   method void SetTopPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -303,42 +272,6 @@ class DeviceClass : Templates::DeviceClass
 
   $rect <240,130,440,170>
   property float Temperature = 0.0;
-
-  $rect <440,130,640,170>
-  onset Temperature
-  {
-    // The property doesn't change -> nothing to do.
-    if ( pure Temperature == value )
-      return;
-
-    // Remember the new value in the internal memory of the property.
-    pure Temperature = value;
-    trace "Temperature: "+string(Temperature);
-
-    // For target code generation you will use your specific device API 
-    // to change the affected value.
-    $if !$prototyper
-      native ( value )
-      {
-        /*
-           TO DO:
-
-           You can call a function of your own device API or you simply
-           modify a variable existing in your middleware to reflect the
-           new value:
-
-           YourDevice_SetSomeValue( value );
-
-           or
-
-           YourDevice_SomeVariable = value;
-        */
-      }
-    $endif
-
-    // Notify all associated property observers.
-    notifyobservers ^Temperature;
-  }
 
   // This method is intended to be called by the device to notify the GUI application \
   // about an alternation of its setting or state value.
@@ -384,12 +317,12 @@ class DeviceClass : Templates::DeviceClass
 
   }
 
-  $rect <240,380,440,420>
+  $rect <240,280,440,320>
   object Core::SystemEvent TimeEvent;
 
   // This method is intended to be called by the device to notify the GUI application \
   // about a particular system event.
-  $rect <40,380,240,420>
+  $rect <40,280,240,320>
   $output true
   method void onTime( arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
   {
@@ -406,7 +339,7 @@ class DeviceClass : Templates::DeviceClass
     TimeEvent.Trigger( context, false );
   }
 
-  $rect <40,430,240,470>
+  $rect <480,80,680,120>
   method void ExitApplication()
   {
     trace "ExitApplication";
@@ -421,6 +354,12 @@ class DeviceClass : Templates::DeviceClass
     }
     $endif
 
+  }
+
+  // Intern Events
+  note group Note3
+  {
+    attr Bounds = <460,40,890,310>;
   }
 }
 
@@ -680,7 +619,7 @@ class RemainingTimeContext
 // System Event Context
 note group Note
 {
-  attr Bounds = <340,20,640,320>;
+  attr Bounds = <340,20,640,220>;
 }
 
 // Device Interface

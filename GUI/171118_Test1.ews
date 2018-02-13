@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,0>;
-attr codeInspector = Application::SampleController.OnSetRemainingTime;
-attr codeSelEnd = <34,5>;
-attr codeSelStart = <34,5>;
+attr codeFirstPos = <0,12>;
+attr codeInspector = Application::ControllMenu.onBtn_Test;
+attr codeSelEnd = <72,1>;
+attr codeSelStart = <72,1>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -37,101 +37,7 @@ view Project
   attr zoom = 1.0;
 }
 
-view unit Device
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
 view unit Application
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Device::DeviceClass
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = OnSetNewWell;
-  attr codeSelEnd = <1,9>;
-  attr codeSelStart = <1,9>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::ControllMenu
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,12>;
-  attr codeInspector = onBtn_Test;
-  attr codeSelEnd = <72,1>;
-  attr codeSelStart = <72,1>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,127>;
-  attr zoom = 1.25;
-}
-
-view class Application::SampleController
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,5>;
-  attr codeInspector = UpdateViewState;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::ConfigPosition
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtnNext;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::AActionButton
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = UpdateViewState;
-  attr codeSelEnd = <36,9>;
-  attr codeSelStart = <36,9>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::AHorzBar
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = OnSetBarColor;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Application
 {
   attr enableGrid = true;
   attr grid = 10;
