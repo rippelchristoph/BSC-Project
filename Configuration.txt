@@ -1,19 +1,14 @@
-%	SYNTAX:
-% '%' for Comment
-%
-%
-% Number of holes in the well [1]
-NWELLX=6
-NWELLY=4
-% Z (Vertical) Position while placing a probe (down) or while moving (up)
-ZDOWN=25.2
-ZUP=40
-% Position of the 0|0 hole in the well [mm]
-WELLZEROX=100.0
-WELLZEROY=10.2
-% Position of the last hole (right had side, back) [mm]
-WELLENDX=125.3
-WELLENDY=10.2
-% Position in which the waist is extruded
-WAISTPOSX=30.0
-WAISTPOSZ=5.0
+MOVINGPOSZMM=80
+WAISTPOSXMM=250
+WAISTPOSZMM=19
+WAISTVOLUL=700
+FLOWULPS=40
+NEEDLEGAPMM=5
+STARTPOSXMM=10
+STARTPOSYMM=15
+STARTPOSZMM=40
+ENDPOSXMM=60
+ENDPOSYMM=95
+ENDPOSZMM=41
+NUMHOLESX=6
+NUMHOLESY=8

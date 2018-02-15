@@ -12,22 +12,24 @@
  *   PUBLIC FUNCTIONS:
  *
  * PUBLIC FUNCTIONS:
+ *   newBSCController
  *   destroyBSCController
  *   BSCReadConfiguration
+ *   BSCWriteConfiguration
  *   ProcessBSCController
  *   BSCShutdown
- *   BSCWriteConfiguration
  *   GetFormattedTime
  *   BSCAddOrder
+ *   BSCRemoveOrder
  ****************************************************************************/
 
 #ifndef BSCCONTROLLER_H
 #define BSCCONTROLLER_H
 
 
-/****************************************************************************
-* SECTION: #include
-****************************************************************************/
+  /****************************************************************************
+  * SECTION: #include
+  ****************************************************************************/
 #include "HtlStdDef.h"
 #include "BSCCommonTypes.h"
 #include "Device.h"
@@ -35,30 +37,13 @@
 #include "Sampler.h"
 #include <time.h>
 
-/****************************************************************************
-* SECTION: #define
-****************************************************************************/
+  /****************************************************************************
+  * SECTION: #define
+  ****************************************************************************/
 
-#define NWELLX		0
-#define NWELLY		1
-
-#define ZDOWN		2
-#define ZUP			3
-
-#define WELLZEROX	4
-#define WELLZEROY	5
-#define WELLENDX	6
-#define WELLENDY	7
-
-#define NORIGINS	8
-
-#define WAISTPOSX 9
-#define WAISTPOSZ 10
-
-
-/****************************************************************************
-* SECTION: typedef
-****************************************************************************/
+  /****************************************************************************
+  * SECTION: typedef
+  ****************************************************************************/
 
 typedef struct BSCController {
 	TBSCConfig* Configuration;
@@ -83,13 +68,13 @@ TBSCController* BSCController;
 
 
 /****************************************************************************
-* FUNCTION: newBSCController
-*
-* DESCRIPTION:
-*   Initializes a new BSC Controller
-* RETURN:
-Returns the new Address of the BSController
-****************************************************************************/
+ * FUNCTION: newBSCController
+ *
+ * DESCRIPTION:
+ *   Initializes a new BSC Controller
+ * RETURN:
+ *   Returns the new Address of the BSController
+ ****************************************************************************/
 
 PUBLIC TBSCController *
 newBSCController ( void );
@@ -118,6 +103,23 @@ BSCReadConfiguration (
 
 
 /****************************************************************************
+ * FUNCTION: BSCWriteConfiguration
+ *
+ * DESCRIPTION:
+ *   Writes the Configuration into the File Directory given.
+ * PARAMETER:
+ *   aConfiguration - The Configuration that is written
+ *   aFilePath      - The Drectory the Configuration is written to e.g:
+ *                    "C:\Data\Configuration.txt"
+ ****************************************************************************/
+
+PUBLIC void
+	  BSCWriteConfiguration(
+		  TBSCConfig * aConfiguration,
+		  char *       aFilePath);
+
+
+/****************************************************************************
  * FUNCTION: ProcessBSCController
  ****************************************************************************/
 
@@ -132,23 +134,6 @@ ProcessBSCController (
 
 PUBLIC void
 BSCShutdown ( void );
-
-
-/****************************************************************************
- * FUNCTION: BSCWriteConfiguration
- *
- *   DESCRIPTION:
- *     Writes the Configuration into the File Directory given.
- * PARAMETER:
- *   aConfiguration - The Configuration that is written
- *   aFilePath      - The Drectory the Configuration is written to e.g:
- *                    "C:\Data\Configuration.txt"
- ****************************************************************************/
-
-PUBLIC void
-BSCWriteConfiguration (
-  TBSCConfig * aConfiguration,
-  char *       aFilePath );
 
 
 /****************************************************************************
@@ -177,6 +162,19 @@ GetFormattedTime (
 
 PUBLIC void
 BSCAddOrder (
+  int aInterval,
+  int aOrigin );
+
+
+/****************************************************************************
+ * FUNCTION: BSCRemoveOrder
+ * DESCRIPTION:
+ *   Wrapper function to add an Order to the OrderController of the
+ *   BSCController
+ ****************************************************************************/
+
+PUBLIC void
+BSCRemoveOrder (
   int aInterval,
   int aOrigin );
 

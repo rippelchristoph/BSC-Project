@@ -60,6 +60,8 @@
               <in>_ApplicationAHorzBar.h</in>
               <in>_ApplicationAHorzSlider.h</in>
               <in>_ApplicationAIndicator.h</in>
+              <in>_ApplicationANumKeyboard.h</in>
+              <in>_ApplicationATextEditor.h</in>
               <in>_ApplicationAToggleButton.h</in>
               <in>_ApplicationApplication.h</in>
               <in>_ApplicationClock.h</in>
@@ -104,9 +106,12 @@
               <in>_CoreTime.h</in>
               <in>_CoreTimer.h</in>
               <in>_CoreView.h</in>
+              <in>_DeviceCurrentTimeContext.h</in>
               <in>_DeviceDeviceClass.h</in>
               <in>_DeviceRemainingTimeContext.h</in>
               <in>_DeviceSampleCollectedContext.h</in>
+              <in>_DeviceTimeContext.h</in>
+              <in>_DeviceTimeTillFullContext.h</in>
               <in>_EffectsBoolEffect.h</in>
               <in>_EffectsEffect.h</in>
               <in>_EffectsEffectTimerClass.h</in>
@@ -179,11 +184,17 @@
       <df name="Platforms">
         <df name="RaspberryPi">
           <df name="Include">
+            <in>DigIO.h</in>
+            <in>Linux-Serial.h</in>
             <in>SerialConnection.h</in>
+            <in>bcm2835.h</in>
             <in>i2c.h</in>
           </df>
           <df name="Source">
+            <in>DigIO.c</in>
+            <in>Linux-Serial.c</in>
             <in>SerialConnection.c</in>
+            <in>bcm2835.c</in>
             <in>i2c.c</in>
           </df>
         </df>

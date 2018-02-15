@@ -71,6 +71,10 @@ newOrder (
 {
 	TOrder* retPtr;
 	retPtr = (TOrder*)malloc(sizeof(TOrder));
+	if (retPtr == NULL) {
+		//TODO: Fehler Melden
+		return NULL;
+	}
 	retPtr->Origin = aOrigin;
 	retPtr->interval = aInterval;
 	time(&retPtr->lastExe);	//No Probe at Beginning
@@ -101,7 +105,7 @@ destroyOrder (
 		free(aOrder);
 		return retVal;
 	} else {
-		return 0;
+		return -1;
 	}
 }
 

@@ -18,6 +18,7 @@
  ****************************************************************************/
 
 #include "wiringPi.h"
+#define TemperaturePin 7
 
 /****************************************************************************
  * This Array declarates the wiringPi Pin the valves are assigned to
@@ -26,7 +27,6 @@
  *		0 - The bigger valve that can disrupt the primary circuit or 
  *		1 - The smaller valve that leads to the Well
  ****************************************************************************/
-#define TemperaturePin 7
 #define NCircuits 3
 const int ValveOutputPins[NCircuits][2] =	{	{0,2},
 												{12,13},

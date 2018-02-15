@@ -12,22 +12,23 @@
  *   PUBLIC FUNCTIONS:
  *
  * PUBLIC FUNCTIONS:
+ *   newBSCController
  *   destroyBSCController
  *   BSCReadConfiguration
+ *   BSCWriteConfiguration
  *   ProcessBSCController
  *   BSCShutdown
- *   BSCWriteConfiguration
  *   GetFormattedTime
  *   BSCAddOrder
+ *   BSCRemoveOrder
  *
  * PRIVATE FUNCTIONS:
  *   UpdateRemainingTimes
  *   UpdateTemperature
  *   UpdateDayTime
- *   getConfigByIndex
  ****************************************************************************/
 
- /****************************************************************************
+/****************************************************************************
  * SECTION: #include
  ****************************************************************************/
 #include "BSCController.h"
@@ -39,8 +40,8 @@
 #include "i2c.h"
 
 
- /** HEADER ******************************************************************
-  */
+/** HEADER ******************************************************************
+ */
 #ifndef  BSCCONTROLLER_H
 
   /****************************************************************************
@@ -56,23 +57,6 @@
   /****************************************************************************
   * SECTION: #define
   ****************************************************************************/
-
-#define NWELLX		0
-#define NWELLY		1
-
-#define ZDOWN		2
-#define ZUP			3
-
-#define WELLZEROX	4
-#define WELLZEROY	5
-#define WELLENDX	6
-#define WELLENDY	7
-
-#define NORIGINS	8
-
-#define WAISTPOSX 9
-#define WAISTPOSZ 10
-
 
   /****************************************************************************
   * SECTION: typedef
@@ -99,12 +83,27 @@ TBSCController* BSCController;
 
 
 
- /****************************************************************************
+/****************************************************************************
  * SECTION: #define
  ****************************************************************************/
-const char * const ConfigSyntaxWords[] = { "NWELLX", "NWELLY", "ZDOWN",
-"ZUP", "WELLZEROX", "WELLZEROY", "WELLENDX",
-"WELLENDY", "NORIGINS", "WAISTPOSX",  "WAISTPOSZ", NULL };
+//This Array HAS to be Null terminated for the ReadConfiguration Function
+const char * const ConfigSyntaxWords[] = {
+	"MOVINGPOSZMM",
+	"WAISTPOSXMM",
+	"WAISTPOSZMM",
+	"WAISTVOLUL",
+	"FLOWULPS",
+	"NEEDLEGAPMM",
+	"STARTPOSXMM",
+	"STARTPOSYMM",
+	"STARTPOSZMM",
+	"ENDPOSXMM",
+	"ENDPOSYMM",
+	"ENDPOSZMM",
+	"NUMHOLESX",
+	"NUMHOLESY",
+	NULL
+};
 
 /****************************************************************************
 * SECTION: typedef
@@ -114,37 +113,32 @@ const char * const ConfigSyntaxWords[] = { "NWELLX", "NWELLY", "ZDOWN",
  ****************************************************************************/
 
 PRIVATE void
-UpdateRemainingTimes(
-	TBSCController *              aController);
+UpdateRemainingTimes (
+  TBSCController *              aController );
 
 PRIVATE void
-UpdateTemperature(
-	TBSCController *              aController);
+UpdateTemperature (
+  TBSCController *              aController );
 
 PRIVATE void
-UpdateDayTime(
-	TBSCController *              aController);
-
-PRIVATE void *
-getConfigByIndex(
-	TBSCConfig *                  aConfiguration,
-	int                           aIndex);
+UpdateDayTime (
+  TBSCController *              aController );
 
 
 /****************************************************************************
  * SECTION: Implementation of public functions
  ****************************************************************************/
 
- /****************************************************************************
+/****************************************************************************
  * FUNCTION: newBSCController
  *
  * DESCRIPTION:
  *   Initializes a new BSC Controller
  * RETURN:
- Returns the new Address of the BSController
+ *   Returns the new Address of the BSController
  ****************************************************************************/
 PUBLIC TBSCController *
-newBSCController(void)
+newBSCController ( void )
 {
 	int i = 0;
 	int j = 0;
@@ -178,8 +172,8 @@ newBSCController(void)
  ****************************************************************************/
 
 PUBLIC void
-destroyBSCController(
-	TBSCController * aController)
+destroyBSCController (
+  TBSCController * aController )
 {
 	if (aController != NULL) {
 		int i = 0;
@@ -213,9 +207,9 @@ destroyBSCController(
  *     Sends a Command to the Plotter
  ****************************************************************************/
 PUBLIC void
-BSCReadConfiguration(
-	TBSCConfig * aConfiguration,
-	char *       fileDirectory)
+BSCReadConfiguration (
+  TBSCConfig * aConfiguration,
+  char *       fileDirectory )
 {
 	char line[256];
 	char* word;
@@ -249,56 +243,155 @@ BSCReadConfiguration(
 			if (strcmp(ConfigSyntaxWords[i], word) == 0) {
 				switch (i)
 				{
-				case NWELLX:
-					aConfiguration->NWellX = (int)dNumber;
+				case 0:
+					aConfiguration->MovingPosZMM = dNumber;
 					break;
-				case NWELLY:
-					aConfiguration->NWellY = (int)dNumber;
+				case 1:
+					aConfiguration->WaistPosXMM = dNumber;
 					break;
-				case ZDOWN:
-					aConfiguration->ZDown = dNumber;
+				case 2:
+					aConfiguration->WaistPosZMM = dNumber;
 					break;
-				case ZUP:
-					aConfiguration->ZUp = dNumber;
+				case 3:
+					aConfiguration->WaistVolUL = dNumber;
 					break;
-				case WELLZEROX:
-					aConfiguration->WellZeroX = dNumber;
+				case 4:
+					aConfiguration->FlowULPS = dNumber;
 					break;
-				case WELLZEROY:
-					aConfiguration->WellZeroY = dNumber;
+				case 5:
+					aConfiguration->NeedleGapMM = dNumber;
 					break;
-				case WELLENDX:
-					aConfiguration->WellEndX = dNumber;
+				case 6:
+					aConfiguration->StartPosXMM = dNumber;
 					break;
-				case WELLENDY:
-					aConfiguration->WellEndY = dNumber;
+				case 7:
+					aConfiguration->StartPosYMM = dNumber;
 					break;
-				case WAISTPOSX:
-					aConfiguration->WaistPosX = dNumber;
+				case 8:
+					aConfiguration->StartPosZMM = dNumber;
 					break;
-				case WAISTPOSZ:
-					aConfiguration->WaistPosZ = dNumber;
+				case 9:
+					aConfiguration->EndPosXMM = dNumber;
+					break;
+				case 10:
+					aConfiguration->EndPosYMM = dNumber;
+					break;
+				case 11:
+					aConfiguration->EndPosZMM = dNumber;
+					break;
+				case 12:
+					aConfiguration->NumHolesX = dNumber;
+					break;
+				case 13:
+					aConfiguration->NumHolesY = dNumber;
 					break;
 				default:
-					return;
+					break;
 				}
+				
 				break;
 			}
 			i++;
 		}
-
-		fclose(fp);
-		return;
 	}
+	
+	fclose(fp);
+	return;
 }
 
+/****************************************************************************
+ * FUNCTION: BSCWriteConfiguration
+ *
+ * DESCRIPTION:
+ *   Writes the Configuration into the File Directory given.
+ * PARAMETER:
+ *   aConfiguration - The Configuration that is written
+ *   aFilePath      - The Drectory the Configuration is written to e.g:
+ *                    "C:\Data\Configuration.txt"
+ ****************************************************************************/
+PUBLIC void
+BSCWriteConfiguration (
+  TBSCConfig * aConfiguration,
+  char *       aFilePath )
+{
+	  int i = 0;
+	  char line[80];
+
+	  FILE* fp;
+	  fp = fopen(aFilePath, "w");
+
+	  if (fp == NULL)
+	  {
+		  //TODO: Give Some Kind of Error Message to GUI
+		  fclose(fp);
+	  }
+
+	  while (ConfigSyntaxWords[i])
+	  {
+		  double value = 0.0;
+		  switch (i)
+		  {
+		  case 0:
+			  value = aConfiguration->MovingPosZMM;
+			  break;
+		  case 1:
+			  value = aConfiguration->WaistPosXMM;
+			  break;
+		  case 2:
+			  value = aConfiguration->WaistPosZMM;
+			  break;
+		  case 3:
+			  value = aConfiguration->WaistVolUL;
+			  break;
+		  case 4:
+			  value = aConfiguration->FlowULPS;
+			  break;
+		  case 5:
+			  value = aConfiguration->NeedleGapMM;
+			  break;
+		  case 6:
+			  value = aConfiguration->StartPosXMM;
+			  break;
+		  case 7:
+			  value = aConfiguration->StartPosYMM;
+			  break;
+		  case 8:
+			  value = aConfiguration->StartPosZMM;
+			  break;
+		  case 9:
+			  value = aConfiguration->EndPosXMM;
+			  break;
+		  case 10:
+			  value = aConfiguration->EndPosYMM;
+			  break;
+		  case 11:
+			  value = aConfiguration->EndPosZMM;
+			  break;
+		  case 12:
+			  value = aConfiguration->NumHolesX;
+			  break;
+		  case 13:
+			  value = aConfiguration->NumHolesY;
+			  break;
+		  default:
+			  break;
+		  }
+		  sprintf(line, "%s=%lf\n", ConfigSyntaxWords[i], value);
+		  fputs(line, fp);
+		  i++;
+	  }
+
+	  fclose(fp);
+
+	  return;
+  }
 
 /****************************************************************************
  * FUNCTION: ProcessBSCController
  ****************************************************************************/
 PUBLIC int
-ProcessBSCController(
-	TBSCController * aBSCController)
+ProcessBSCController (
+  TBSCController * aBSCController )
 {
 	int retVal = -1;
 	if ((retVal = ProcessOrderController(aBSCController->Orders)) != -1) {
@@ -325,48 +418,11 @@ ProcessBSCController(
  * FUNCTION: BSCShutdown
  ****************************************************************************/
 PUBLIC void
-BSCShutdown(void)
+BSCShutdown ( void )
 {
 	ShutdownBSCController = ETRUE;
 }
-/****************************************************************************
- * FUNCTION: BSCWriteConfiguration
- *
- *   DESCRIPTION:
- *     Writes the Configuration into the File Directory given.
- * PARAMETER:
- *   aConfiguration - The Configuration that is written
- *   aFilePath      - The Drectory the Configuration is written to e.g:
- *                    "C:\Data\Configuration.txt"
- ****************************************************************************/
-PUBLIC void
-BSCWriteConfiguration(
-	TBSCConfig * aConfiguration,
-	char *       aFilePath)
-{
 
-	int i = 0;
-	char line[80];
-
-	FILE* fp;
-	fp = fopen(aFilePath, "w");
-
-	if (fp == NULL)
-	{
-		//TODO: Give Some Kind of Error Message to GUI
-		fclose(fp);
-	}
-
-	while (ConfigSyntaxWords[i])
-	{
-		sprintf(line, "%s=%f", ConfigSyntaxWords[i], *((float*)getConfigByIndex(aConfiguration, i)));
-		fputs(line, fp);
-	}
-
-	fclose(fp);
-
-	return;
-}
 
 /****************************************************************************
  * FUNCTION: GetFormattedTime
@@ -380,9 +436,9 @@ BSCWriteConfiguration(
  ****************************************************************************/
 
 PUBLIC void
-GetFormattedTime(
-	time_t * aTimeStamp,
-	char *   aBuffer)
+GetFormattedTime (
+  time_t * aTimeStamp,
+  char *   aBuffer )
 {
 	struct tm * timeinfo = localtime(aTimeStamp);
 	strcpy(aBuffer, "");
@@ -404,24 +460,24 @@ GetFormattedTime(
  ****************************************************************************/
 
 PUBLIC void
-BSCAddOrder(
-	int aInterval,
-	int aOrigin)
+BSCAddOrder (
+  int aInterval,
+  int aOrigin )
 {
 	OrderControllerAddOrder(BSCController->Orders, (time_t)(aInterval * 60), aOrigin);
 }
 
 /****************************************************************************
-* FUNCTION: BSCRemoveOrder
-* DESCRIPTION:
-*   Wrapper function to add an Order to the OrderController of the
-*   BSCController
-****************************************************************************/
+ * FUNCTION: BSCRemoveOrder
+ * DESCRIPTION:
+ *   Wrapper function to add an Order to the OrderController of the
+ *   BSCController
+ ****************************************************************************/
 
 PUBLIC void
-BSCRemoveOrder(
-	int aInterval,
-	int aOrigin)
+BSCRemoveOrder (
+  int aInterval,
+  int aOrigin )
 {
 	OrderControllerAddOrder(BSCController->Orders, (time_t)(aInterval * 60), aOrigin);
 }
@@ -430,19 +486,19 @@ BSCRemoveOrder(
  * SECTION: Implementation of private Functions
  ****************************************************************************/
 
- /****************************************************************************
-  * FUNCTION: UpdateRemainingTimes
-  * DESCRIPTION:
-  *   Updates the Remaining Times of all Orders until next Execution.
-  *   Therefore it uses the NextPointer of the List that is a property of the
-  *   OrderController to make the Process faster
-  * PARAMETER:
-  *   aController - The Address of the Controller Device Object - //TODO:
-  ****************************************************************************/
+/****************************************************************************
+ * FUNCTION: UpdateRemainingTimes
+ * DESCRIPTION:
+ *   Updates the Remaining Times of all Orders until next Execution.
+ *   Therefore it uses the NextPointer of the List that is a property of the
+ *   OrderController to make the Process faster
+ * PARAMETER:
+ *   aController - The Address of the Controller Device Object - //TODO:
+ ****************************************************************************/
 
 PRIVATE void
-UpdateRemainingTimes(
-	TBSCController * aController)
+UpdateRemainingTimes (
+  TBSCController * aController )
 {
 	TListHeader* OrderList = aController->Orders->OrderList;
 	TOrder* retOrder;
@@ -467,8 +523,8 @@ UpdateRemainingTimes(
  ****************************************************************************/
 
 PRIVATE void
-UpdateTemperature(
-	TBSCController * aController)
+UpdateTemperature (
+  TBSCController * aController )
 {
 	unsigned char byteAdd[] = { 0x00 };
 	unsigned char buffer[2];
@@ -507,8 +563,8 @@ UpdateTemperature(
  ****************************************************************************/
 
 PRIVATE void
-UpdateDayTime(
-	TBSCController * aController)
+UpdateDayTime (
+  TBSCController * aController )
 {
 	time_t now = time(NULL);
 	struct tm* structTime = localtime(&now);
@@ -521,57 +577,4 @@ UpdateDayTime(
 		(XInt32)(structTime->tm_min)
 	);
 
-}
-
-/****************************************************************************
- * FUNCTION: getConfigByIndex
- * DESCRIPTION:
- *   Returns the Pointer to the Value of a Parameter of the Configuration.
- *   The Indexes are handled according to the defines
- * PARAMETER:
- *   aConfiguration - The Address of the Configuration
- *   aIndex         - The Index of which the Address is Returned.
- * RETURN:
- *   Returns the Address of the Parameter in the Configuration
- ****************************************************************************/
-PRIVATE void *
-getConfigByIndex(
-	TBSCConfig * aConfiguration,
-	int          aIndex)
-{
-	switch (aIndex)
-	{
-	case NWELLX:
-		return &(aConfiguration->NWellX);
-		break;
-	case NWELLY:
-		return &(aConfiguration->NWellY);
-		break;
-	case ZDOWN:
-		return &(aConfiguration->ZDown);
-		break;
-	case ZUP:
-		return &(aConfiguration->ZUp);
-		break;
-	case WELLZEROX:
-		return &(aConfiguration->WellZeroX);
-		break;
-	case WELLZEROY:
-		return &(aConfiguration->WellZeroY);
-		break;
-	case WELLENDX:
-		return &(aConfiguration->WellEndX);
-		break;
-	case WELLENDY:
-		return &(aConfiguration->WellEndY);
-		break;
-	case WAISTPOSX:
-		return &(aConfiguration->WaistPosX);
-		break;
-	case WAISTPOSZ:
-		return &(aConfiguration->WaistPosZ);
-		break;
-	default:
-		return NULL;
-	}
 }

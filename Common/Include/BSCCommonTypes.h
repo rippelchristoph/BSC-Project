@@ -42,23 +42,25 @@ typedef struct WellData {
 ****************************************************************************/
 
 typedef struct BSCConfig {
-	int NWellX;
-	int NWellY;
+	int MovingPosZMM;
+	
+	int WaistPosXMM;
+	int WaistPosZMM;
 
-	double ZDown;
-	double ZUp;
+	double WaistVolUL;
+	double FlowULPS;
+	double NeedleGapMM;
 
-	double WellZeroX;
-	double WellZeroY;
+	int StartPosXMM;
+	int StartPosYMM;
+	int StartPosZMM;
 
-	double WellEndX;
-	double WellEndY;
+	int EndPosXMM;
+	int EndPosYMM;
+	int EndPosZMM;
 
-	double WaistPosX;
-	double WaistPosY;
-	double WaistPosZ;
-
-	int NOrigins;
+	int NumHolesX;
+	int NumHolesY;
 } TBSCConfig;
 
 
