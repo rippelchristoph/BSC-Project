@@ -27,9 +27,9 @@
  *   getConfigByIndex
  ****************************************************************************/
 
-/****************************************************************************
-* SECTION: #include
-****************************************************************************/
+ /****************************************************************************
+ * SECTION: #include
+ ****************************************************************************/
 #include "BSCController.h"
 
 #include <stdlib.h>
@@ -39,13 +39,13 @@
 #include "i2c.h"
 
 
-/** HEADER ******************************************************************
- */
+ /** HEADER ******************************************************************
+  */
 #ifndef  BSCCONTROLLER_H
 
-/****************************************************************************
-* SECTION: #include
-****************************************************************************/
+  /****************************************************************************
+  * SECTION: #include
+  ****************************************************************************/
 #include "HtlStdDef.h"
 #include "BSCCommonTypes.h"
 #include "Device.h"
@@ -53,9 +53,9 @@
 #include "Sampler.h"
 #include <time.h>
 
-/****************************************************************************
-* SECTION: #define
-****************************************************************************/
+  /****************************************************************************
+  * SECTION: #define
+  ****************************************************************************/
 
 #define NWELLX		0
 #define NWELLY		1
@@ -74,9 +74,9 @@
 #define WAISTPOSZ 10
 
 
-/****************************************************************************
-* SECTION: typedef
-****************************************************************************/
+  /****************************************************************************
+  * SECTION: typedef
+  ****************************************************************************/
 
 typedef struct BSCController {
 	TBSCConfig* Configuration;
@@ -99,9 +99,9 @@ TBSCController* BSCController;
 
 
 
-/****************************************************************************
-* SECTION: #define
-****************************************************************************/
+ /****************************************************************************
+ * SECTION: #define
+ ****************************************************************************/
 const char * const ConfigSyntaxWords[] = { "NWELLX", "NWELLY", "ZDOWN",
 "ZUP", "WELLZEROX", "WELLZEROY", "WELLENDX",
 "WELLENDY", "NORIGINS", "WAISTPOSX",  "WAISTPOSZ", NULL };
@@ -114,37 +114,37 @@ const char * const ConfigSyntaxWords[] = { "NWELLX", "NWELLY", "ZDOWN",
  ****************************************************************************/
 
 PRIVATE void
-UpdateRemainingTimes (
-  TBSCController *              aController );
+UpdateRemainingTimes(
+	TBSCController *              aController);
 
 PRIVATE void
-UpdateTemperature (
-  TBSCController *              aController );
+UpdateTemperature(
+	TBSCController *              aController);
 
 PRIVATE void
-UpdateDayTime (
-  TBSCController *              aController );
+UpdateDayTime(
+	TBSCController *              aController);
 
 PRIVATE void *
-getConfigByIndex (
-  TBSCConfig *                  aConfiguration,
-  int                           aIndex );
+getConfigByIndex(
+	TBSCConfig *                  aConfiguration,
+	int                           aIndex);
 
 
 /****************************************************************************
  * SECTION: Implementation of public functions
  ****************************************************************************/
 
-/****************************************************************************
-* FUNCTION: newBSCController
-*
-* DESCRIPTION:
-*   Initializes a new BSC Controller
-* RETURN:
-Returns the new Address of the BSController
-****************************************************************************/
+ /****************************************************************************
+ * FUNCTION: newBSCController
+ *
+ * DESCRIPTION:
+ *   Initializes a new BSC Controller
+ * RETURN:
+ Returns the new Address of the BSController
+ ****************************************************************************/
 PUBLIC TBSCController *
-newBSCController ( void )
+newBSCController(void)
 {
 	int i = 0;
 	int j = 0;
@@ -178,24 +178,32 @@ newBSCController ( void )
  ****************************************************************************/
 
 PUBLIC void
-destroyBSCController (
-  TBSCController * aController )
+destroyBSCController(
+	TBSCController * aController)
 {
-	int i = 0;
+	if (aController != NULL) {
+		int i = 0;
+		if (aController->Orders != NULL)
+			destroyOrderController(aController->Orders);
 
-	destroyOrderController(aController->Orders);
-	destroySampler(aController->Sampler);
+		if (aController->Sampler != NULL)
+			destroySampler(aController->Sampler);
 
-	free(aController->Configuration);
+		if (aController->Configuration != NULL)
+			free(aController->Configuration);
 
-	
-	for (i = 0; i < aController->Configuration->NWellX; i++) {
-		free(aController->Well[i]);
+		if (aController->Well != NULL) {
+			for (i = 0; i < aController->Configuration->NWellX; i++) {
+				free(aController->Well[i]);
+			}
+
+			free(aController->Well);
+		}
+
+
+
+		free(aController);
 	}
-
-	free(aController->Well);
-
-	free(aController);
 }
 
 /****************************************************************************
@@ -205,9 +213,9 @@ destroyBSCController (
  *     Sends a Command to the Plotter
  ****************************************************************************/
 PUBLIC void
-BSCReadConfiguration (
-  TBSCConfig * aConfiguration,
-  char *       fileDirectory )
+BSCReadConfiguration(
+	TBSCConfig * aConfiguration,
+	char *       fileDirectory)
 {
 	char line[256];
 	char* word;
@@ -221,12 +229,11 @@ BSCReadConfiguration (
 
 	if (fp == NULL)
 	{
-		
+
 	}
 
 	while (1)
 	{
-
 		if (fgets(line, 50, fp) == NULL)	//End of File
 			break;
 		if (*line == '%')	//Comment
@@ -290,8 +297,8 @@ BSCReadConfiguration (
  * FUNCTION: ProcessBSCController
  ****************************************************************************/
 PUBLIC int
-ProcessBSCController (
-  TBSCController * aBSCController )
+ProcessBSCController(
+	TBSCController * aBSCController)
 {
 	int retVal = -1;
 	if ((retVal = ProcessOrderController(aBSCController->Orders)) != -1) {
@@ -300,7 +307,7 @@ ProcessBSCController (
 	}
 
 	//ProcessSampler(aBSCController->Sampler);
-	
+
 	time_t now = time(NULL);
 
 	if ((now - aBSCController->LastUpdate) >= 5) {
@@ -310,7 +317,7 @@ ProcessBSCController (
 		UpdateDayTime(aBSCController);
 		UpdateRemainingTimes(aBSCController);
 	}
-	
+
 	return ShutdownBSCController;
 }
 
@@ -318,7 +325,7 @@ ProcessBSCController (
  * FUNCTION: BSCShutdown
  ****************************************************************************/
 PUBLIC void
-BSCShutdown ( void )
+BSCShutdown(void)
 {
 	ShutdownBSCController = ETRUE;
 }
@@ -333,32 +340,32 @@ BSCShutdown ( void )
  *                    "C:\Data\Configuration.txt"
  ****************************************************************************/
 PUBLIC void
-BSCWriteConfiguration (
-  TBSCConfig * aConfiguration,
-  char *       aFilePath )
+BSCWriteConfiguration(
+	TBSCConfig * aConfiguration,
+	char *       aFilePath)
 {
 
-		int i = 0;
-		char line[80];
+	int i = 0;
+	char line[80];
 
-		FILE* fp;
-		fp = fopen(aFilePath, "w");
+	FILE* fp;
+	fp = fopen(aFilePath, "w");
 
-		if (fp == NULL)
-		{
-			//TODO: Give Some Kind of Error Message to GUI
-			fclose(fp);
-		}
-
-		while (ConfigSyntaxWords[i])
-		{
-			sprintf(line, "%s=%f", ConfigSyntaxWords[i], *((float*)getConfigByIndex(aConfiguration, i)));
-			fputs(line, fp);
-		}
-		
+	if (fp == NULL)
+	{
+		//TODO: Give Some Kind of Error Message to GUI
 		fclose(fp);
-			
-		return;
+	}
+
+	while (ConfigSyntaxWords[i])
+	{
+		sprintf(line, "%s=%f", ConfigSyntaxWords[i], *((float*)getConfigByIndex(aConfiguration, i)));
+		fputs(line, fp);
+	}
+
+	fclose(fp);
+
+	return;
 }
 
 /****************************************************************************
@@ -373,9 +380,9 @@ BSCWriteConfiguration (
  ****************************************************************************/
 
 PUBLIC void
-GetFormattedTime (
-  time_t * aTimeStamp,
-  char *   aBuffer )
+GetFormattedTime(
+	time_t * aTimeStamp,
+	char *   aBuffer)
 {
 	struct tm * timeinfo = localtime(aTimeStamp);
 	strcpy(aBuffer, "");
@@ -397,11 +404,11 @@ GetFormattedTime (
  ****************************************************************************/
 
 PUBLIC void
-BSCAddOrder (
-  int aInterval,
-  int aOrigin )
+BSCAddOrder(
+	int aInterval,
+	int aOrigin)
 {
-	OrderControllerAddOrder(BSCController->Orders, (time_t) (aInterval*60), aOrigin);
+	OrderControllerAddOrder(BSCController->Orders, (time_t)(aInterval * 60), aOrigin);
 }
 
 /****************************************************************************
@@ -423,28 +430,28 @@ BSCRemoveOrder(
  * SECTION: Implementation of private Functions
  ****************************************************************************/
 
-/****************************************************************************
- * FUNCTION: UpdateRemainingTimes
- * DESCRIPTION:
- *   Updates the Remaining Times of all Orders until next Execution.
- *   Therefore it uses the NextPointer of the List that is a property of the
- *   OrderController to make the Process faster
- * PARAMETER:
- *   aController - The Address of the Controller Device Object - //TODO:
- ****************************************************************************/
+ /****************************************************************************
+  * FUNCTION: UpdateRemainingTimes
+  * DESCRIPTION:
+  *   Updates the Remaining Times of all Orders until next Execution.
+  *   Therefore it uses the NextPointer of the List that is a property of the
+  *   OrderController to make the Process faster
+  * PARAMETER:
+  *   aController - The Address of the Controller Device Object - //TODO:
+  ****************************************************************************/
 
 PRIVATE void
-UpdateRemainingTimes (
-  TBSCController * aController )
+UpdateRemainingTimes(
+	TBSCController * aController)
 {
 	TListHeader* OrderList = aController->Orders->OrderList;
 	TOrder* retOrder;
 	ListSetReadPointer(OrderList, 0);
 	while ((retOrder = ListGetNext(OrderList)))
 	{
-		DeviceDeviceClass_onRemainingTime(aController->EwDeviceObject, 
-			(XInt32) retOrder->Origin,
-			(XInt32) OrderGetRemainingTime(retOrder) / 60 
+		DeviceDeviceClass_onRemainingTime(aController->EwDeviceObject,
+			(XInt32)retOrder->Origin,
+			(XInt32)OrderGetRemainingTime(retOrder) / 60
 		);
 	}
 }
@@ -460,8 +467,8 @@ UpdateRemainingTimes (
  ****************************************************************************/
 
 PRIVATE void
-UpdateTemperature (
-  TBSCController * aController )
+UpdateTemperature(
+	TBSCController * aController)
 {
 	unsigned char byteAdd[] = { 0x00 };
 	unsigned char buffer[2];
@@ -485,8 +492,8 @@ UpdateTemperature (
 	}
 
 	destroyI2C(dataStream);
-	DeviceDeviceClass__UpdateTemperature(aController->EwDeviceObject,((XFloat) updateVal));
-	
+	DeviceDeviceClass__UpdateTemperature(aController->EwDeviceObject, ((XFloat)updateVal));
+
 }
 
 /****************************************************************************
@@ -500,18 +507,18 @@ UpdateTemperature (
  ****************************************************************************/
 
 PRIVATE void
-UpdateDayTime (
-  TBSCController * aController )
+UpdateDayTime(
+	TBSCController * aController)
 {
 	time_t now = time(NULL);
 	struct tm* structTime = localtime(&now);
 
 	DeviceDeviceClass_onTime(aController->EwDeviceObject,
-		(XInt32) (structTime->tm_year + 1900),
-		(XInt32) (structTime->tm_mon + 1),
-		(XInt32) (structTime->tm_mday),
-		(XInt32) (structTime->tm_hour),
-		(XInt32) (structTime->tm_min)
+		(XInt32)(structTime->tm_year + 1900),
+		(XInt32)(structTime->tm_mon + 1),
+		(XInt32)(structTime->tm_mday),
+		(XInt32)(structTime->tm_hour),
+		(XInt32)(structTime->tm_min)
 	);
 
 }
@@ -528,9 +535,9 @@ UpdateDayTime (
  *   Returns the Address of the Parameter in the Configuration
  ****************************************************************************/
 PRIVATE void *
-getConfigByIndex (
-  TBSCConfig * aConfiguration,
-  int          aIndex )
+getConfigByIndex(
+	TBSCConfig * aConfiguration,
+	int          aIndex)
 {
 	switch (aIndex)
 	{

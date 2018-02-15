@@ -7,9 +7,10 @@
  * FILE: SerialConnection.h
  *
  * PUBLIC FUNCTIONS:
- *   newUART
- *   UARTSendBytes
- *   UARTReceiveBytes
+ *   newSerialConnection
+ *   destroySerialConnection
+ *   SerialSendBytes
+ *   SerialReadBytes
  ****************************************************************************/
 
 #ifndef SERIALCONNECTION_H
@@ -17,16 +18,37 @@
 
 
 
-/****************************************************************************
-* SECTION: #include
-****************************************************************************/
+  /****************************************************************************
+   * SECTION: #include
+   ****************************************************************************/
 #include "HtlStdDef.h"
-#include "wiringSerial.h"
+#include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/ioctl.h>
+#include <fcntl.h>
+#include <stdlib.h>
+#include <strings.h>
+#include <string.h>
+#include <poll.h>
+#include <unistd.h>
+#include <getopt.h>
+#include <time.h>
+#include <linux/serial.h>
+#include <errno.h>
 
-/****************************************************************************
-* SECTION: typedef
-****************************************************************************/
-typedef int UARTFilestream;
+   /****************************************************************************
+	* SECTION: typedef
+	****************************************************************************/
+typedef struct pollfd TPollfd;
+
+typedef struct
+{
+	TPollfd * serial_poll;
+	char* Port;
+} TSerialConnection;
 
 
 
@@ -37,49 +59,58 @@ typedef int UARTFilestream;
 
 
 /****************************************************************************
- * FUNCTION: newUART
+ * FUNCTION: newSerialConnection
  *
  *   DESCRIPTION:
- *     Initializes the UART interface
+ *     Initializes the Serial interface
  *
  *   PARAMETER:
  ****************************************************************************/
 
-PUBLIC UARTFilestream *
-newUART ( void );
+PUBLIC TSerialConnection *
+newSerialConnection (
+  char * aPort,
+  int    aBaud );
 
 
 /****************************************************************************
- * FUNCTION: UARTSendBytes
- *
- *   DESCRIPTION:
- *     Sends an Array of Bytes
+ * FUNCTION: destroySerialConnection
  ****************************************************************************/
 
-PUBLIC void
-UARTSendBytes (
-  UARTFilestream* aStream,
-  char *         aCharArra,
-  int            aLength );
+PUBLIC TBoolean
+destroySerialConnection ( void );
 
 
 /****************************************************************************
- * FUNCTION: UARTReceiveBytes
+ * FUNCTION: SerialSendBytes
  *
  *   DESCRIPTION:
- *     Reads up to 255 characters into the Buffer array if there are any RX
- *     Bytes in the Stream
- *
- *   PARAMETER:
- *     aStream	- The Stream the Receive aRelayState - The State that the
- *     Relay of the Hydroport should have after function. e.g.
- *     IEMiddlewareRelayStateON
+ *     Sends a Null Terminated String
  ****************************************************************************/
 
 PUBLIC void
-UARTReceiveBytes (
-  UARTFilestream  aStream,
-  unsigned char * aBuffer );
+SerialSendBytes (
+  TSerialConnection * aStream,
+  char *              aString );
+
+
+/****************************************************************************
+ * FUNCTION: SerialReadBytes
+ *
+ * DESCRIPTION:
+ *   Reads up to 255 characters into the Buffer array if there are any RX
+ *   Bytes in the Stream
+ * PARAMETER:
+ *   aStream	- The Stream the Receive aRelayState - The State that the Relay
+ *   of the Hydroport should have after function. e.g.
+ *   IEMiddlewareRelayStateON
+ ****************************************************************************/
+
+PUBLIC int
+SerialReadBytes (
+  TSerialConnection * aStream,
+  char *              aBuffer,
+  int                 aSize );
 
 
 

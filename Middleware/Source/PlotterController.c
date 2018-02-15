@@ -63,11 +63,8 @@
 * Y Axis is the axis in which the ground Plate is moving
 ****************************************************************************/
 typedef struct Plotter {
-	UARTFilestream filestream;
+	TSerialConnection filestream;
 	TBSCConfig* aConfiguration;
-
-
-
 } TPlotter;
 
 
@@ -107,9 +104,10 @@ PUBLIC TPlotter *
 newPlotter ( void )
 {
 	TPlotter* retPlot = malloc(sizeof(TPlotter));
-	//retPlot->filestream = newUART();
+	retPlot->filestream = newSerialConnection("/dev/serial", 256000);
 
 	PLTSendCommand(retPlot, SET_UNIT_MM);
+	PLTSendCommand(retPlot, ABSOLUTE_POS);
 
 	return retPlot;
 }
