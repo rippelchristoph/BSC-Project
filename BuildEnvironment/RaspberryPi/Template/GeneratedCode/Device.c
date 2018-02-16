@@ -35,7 +35,7 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x000003AE, /* ratio 47.13 % */
+  0x0000038C, /* ratio 47.14 % */
   0xB8002300, 0x80000452, 0x00C20029, 0x0E000368, 0xCA003600, 0xE002B000, 0x750043CD,
   0xA0044616, 0x058020C3, 0x70020B03, 0xC0CEF1B2, 0x1A21108D, 0x20D210F4, 0x01093A42,
   0x130001C8, 0x0E8642A1, 0xE001A621, 0x0019C006, 0x00B40020, 0x4F09200A, 0xDA671B9A,
@@ -50,8 +50,8 @@ static const unsigned int _StringsDefault0[] =
   0x00013000, 0x81CD6D14, 0x213B7394, 0xBD68DC57, 0x001AB01D, 0xA1F875A8, 0x2839A416,
   0x51646B52, 0x30859168, 0x4F56D861, 0x4166921B, 0xC4296B54, 0x022A46E2, 0x1A8BA370,
   0x47A1C512, 0x5536FD92, 0x24CD3346, 0xE5304F51, 0x2F85E3B8, 0x8FC005A6, 0x55105106,
-  0x584DEC6B, 0x362D9321, 0x026F6319, 0x779AD6FD, 0x10A57D0D, 0x546E444C, 0x1A26419C,
-  0xF81E1054, 0x98441001, 0xD574ED96, 0xE7215998, 0x01014791, 0x00000000
+  0x584DEC6B, 0x362D9321, 0x7F836319, 0x001F81E1, 0xA6243441, 0x942A064E, 0x791E7225,
+  0x00001014, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -78,15 +78,14 @@ static const XStringRes _Const0013 = { _StringsDefault0, 0x015F };
 static const XStringRes _Const0014 = { _StringsDefault0, 0x0172 };
 static const XStringRes _Const0015 = { _StringsDefault0, 0x0188 };
 static const XStringRes _Const0016 = { _StringsDefault0, 0x01A0 };
-static const XStringRes _Const0017 = { _StringsDefault0, 0x01B4 };
-static const XColor _Const0018 = { 0xF3, 0x89, 0x00, 0xFF };
-static const XColor _Const0019 = { 0x32, 0xCE, 0x00, 0xFF };
-static const XColor _Const001A = { 0x1E, 0x60, 0x33, 0xFF };
-static const XColor _Const001B = { 0x00, 0x00, 0xFF, 0xFF };
-static const XColor _Const001C = { 0x00, 0xFF, 0xFF, 0xFF };
-static const XColor _Const001D = { 0xFF, 0x00, 0xFF, 0xFF };
-static const XColor _Const001E = { 0xFF, 0x00, 0x00, 0xFF };
-static const XStringRes _Const001F = { _StringsDefault0, 0x01C5 };
+static const XColor _Const0017 = { 0xF3, 0x89, 0x00, 0xFF };
+static const XColor _Const0018 = { 0x32, 0xCE, 0x00, 0xFF };
+static const XColor _Const0019 = { 0x1E, 0x60, 0x33, 0xFF };
+static const XColor _Const001A = { 0x00, 0x00, 0xFF, 0xFF };
+static const XColor _Const001B = { 0x00, 0xFF, 0xFF, 0xFF };
+static const XColor _Const001C = { 0xFF, 0x00, 0xFF, 0xFF };
+static const XColor _Const001D = { 0xFF, 0x00, 0x00, 0xFF };
+static const XStringRes _Const001E = { _StringsDefault0, 0x01B4 };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
@@ -178,24 +177,6 @@ void DeviceDeviceClass_OnSetSampleVolume( DeviceDeviceClass _this, XInt32 value 
     ), 0 );
 }
 
-/* This method is intended to be called by the device to notify the GUI application 
-   about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateSampleVolume( DeviceDeviceClass _this, XInt32 aNewValue )
-{
-  if ( aNewValue != _this->SampleVolume )
-  {
-    _this->SampleVolume = aNewValue;
-    EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetSampleVolume, 
-      DeviceDeviceClass_OnSetSampleVolume ), 0 );
-  }
-}
-
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateSampleVolume()' */
-void DeviceDeviceClass__UpdateSampleVolume( void* _this, XInt32 aNewValue )
-{
-  DeviceDeviceClass_UpdateSampleVolume((DeviceDeviceClass)_this, aNewValue );
-}
-
 /* 'C' function for method : 'Device::DeviceClass.OnSetNewWell()' */
 void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value )
 {
@@ -205,23 +186,6 @@ void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value )
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNewWell, DeviceDeviceClass_OnSetNewWell 
     ), 0 );
   EwTrace( "%s", EwLoadString( &_Const0001 ));
-}
-
-/* This method is intended to be called by the device to notify the GUI application 
-   about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateNewWell( DeviceDeviceClass _this, XBool aNewValue )
-{
-  if ( aNewValue != _this->NewWell )
-  {
-    EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNewWell, DeviceDeviceClass_OnSetNewWell 
-      ), 0 );
-  }
-}
-
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateNewWell()' */
-void DeviceDeviceClass__UpdateNewWell( void* _this, XBool aNewValue )
-{
-  DeviceDeviceClass_UpdateNewWell((DeviceDeviceClass)_this, aNewValue );
 }
 
 /* intervall in seconds; circuitNumber from 1 to 6 */
@@ -407,34 +371,6 @@ void DeviceDeviceClass_SetTopPosition( DeviceDeviceClass _this, XInt32 aX, XInt3
     EwNewStringInt( aZ, 0, 10 )));
 }
 
-/* 'C' function for method : 'Device::DeviceClass.OnSetTemperature()' */
-void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value )
-{
-  if ( _this->Temperature == value )
-    return;
-
-  _this->Temperature = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0017 ), EwNewStringFloat( 
-    _this->Temperature, 0, 6 )));
-  {
-    /*
-       TO DO:
-
-       You can call a function of your own device API or you simply
-       modify a variable existing in your middleware to reflect the
-       new value:
-
-       YourDevice_SetSomeValue( value );
-
-       or
-
-       YourDevice_SomeVariable = value;
-    */
-  }
-  EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetTemperature, DeviceDeviceClass_OnSetTemperature 
-    ), 0 );
-}
-
 /* This method is intended to be called by the device to notify the GUI application 
    about an alternation of its setting or state value. */
 void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewArgument )
@@ -462,25 +398,25 @@ XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumbe
   switch ( aCircuitNumber )
   {
     case 0 :
-      return _Const0018;
+      return _Const0017;
 
     case 1 :
-      return _Const0019;
+      return _Const0018;
 
     case 2 :
-      return _Const001A;
+      return _Const0019;
 
     case 3 :
-      return _Const001B;
+      return _Const001A;
 
     case 4 :
-      return _Const001C;
+      return _Const001B;
 
     case 5 :
-      return _Const001D;
+      return _Const001C;
 
     default : 
-      return _Const001E;
+      return _Const001D;
   }
 }
 
@@ -513,7 +449,7 @@ void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this )
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwLoadString( &_Const001F ));
+  EwTrace( "%s", EwLoadString( &_Const001E ));
   BSCShutdown();
 }
 
@@ -533,6 +469,12 @@ XBool DeviceDeviceClass_OnGetNewWell( DeviceDeviceClass _this )
 XFloat DeviceDeviceClass_OnGetTemperature( DeviceDeviceClass _this )
 {
   return _this->Temperature;
+}
+
+/* Default onset method for the property 'Temperature' */
+void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value )
+{
+  _this->Temperature = value;
 }
 
 /* Variants derived from the class : 'Device::DeviceClass' */

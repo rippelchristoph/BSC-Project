@@ -132,7 +132,7 @@ const XPoint EwScreenSize = { 800, 480 };
 const XClass EwApplicationClass = EW_CLASS( ApplicationApplication );
 
 /* Global constant containing the user defined application title. */
-const char* EwApplicationTitle = "";
+const char* EwApplicationTitle = "BSC Controller";
 
 /* Initializer for the class 'Core::View' */
 void CoreView__Init( CoreView _this, XObject aLink, XHandle aArg )

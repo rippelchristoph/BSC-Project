@@ -69,28 +69,8 @@ EW_END_OF_METHODS( DeviceDeviceClass )
 /* 'C' function for method : 'Device::DeviceClass.OnSetSampleVolume()' */
 void DeviceDeviceClass_OnSetSampleVolume( DeviceDeviceClass _this, XInt32 value );
 
-/* This method is intended to be called by the device to notify the GUI application 
-   about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateSampleVolume( DeviceDeviceClass _this, XInt32 aNewValue );
-
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateSampleVolume()' */
-void DeviceDeviceClass__UpdateSampleVolume( void* _this, XInt32 aNewValue );
-
-/* The following define announces the presence of the method Device::DeviceClass.UpdateSampleVolume(). */
-#define _DeviceDeviceClass__UpdateSampleVolume_
-
 /* 'C' function for method : 'Device::DeviceClass.OnSetNewWell()' */
 void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value );
-
-/* This method is intended to be called by the device to notify the GUI application 
-   about an alternation of its setting or state value. */
-void DeviceDeviceClass_UpdateNewWell( DeviceDeviceClass _this, XBool aNewValue );
-
-/* Wrapper function for the non virtual method : 'Device::DeviceClass.UpdateNewWell()' */
-void DeviceDeviceClass__UpdateNewWell( void* _this, XBool aNewValue );
-
-/* The following define announces the presence of the method Device::DeviceClass.UpdateNewWell(). */
-#define _DeviceDeviceClass__UpdateNewWell_
 
 /* intervall in seconds; circuitNumber from 1 to 6 */
 void DeviceDeviceClass_StartSampling( DeviceDeviceClass _this, XInt32 aIntervall, 
@@ -145,9 +125,6 @@ void DeviceDeviceClass_SetCurrentPosition( DeviceDeviceClass _this, XInt32 aX, X
 void DeviceDeviceClass_SetTopPosition( DeviceDeviceClass _this, XInt32 aX, XInt32 
   aY, XInt32 aZ );
 
-/* 'C' function for method : 'Device::DeviceClass.OnSetTemperature()' */
-void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value );
-
 /* This method is intended to be called by the device to notify the GUI application 
    about an alternation of its setting or state value. */
 void DeviceDeviceClass_UpdateTemperature( DeviceDeviceClass _this, XFloat aNewArgument );
@@ -184,6 +161,9 @@ XBool DeviceDeviceClass_OnGetNewWell( DeviceDeviceClass _this );
 
 /* Default onget method for the property 'Temperature' */
 XFloat DeviceDeviceClass_OnGetTemperature( DeviceDeviceClass _this );
+
+/* Default onset method for the property 'Temperature' */
+void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value );
 
 #ifdef __cplusplus
   }

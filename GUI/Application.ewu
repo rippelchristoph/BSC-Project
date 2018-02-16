@@ -3,7 +3,7 @@ $version 6.60
 // This is the root component of the entire GUI application.
 $rect <360,20,560,60>
 $output false
-class ApplicationClass : Core::Root
+class Application : Core::Root
 {
   $rect <820,0,1020,40>
   inherited property Bounds = <0,0,800,480>;
@@ -69,7 +69,7 @@ class ApplicationClass : Core::Root
   }
 
   $rect <20,20,160,60>
-  object Application::MainMenu MainMenu
+  object Application::Tab1 MainMenu
   {
     preset Bounds = <49,720,849,1200>;
     preset Enabled = true;
@@ -78,7 +78,7 @@ class ApplicationClass : Core::Root
   }
 
   $rect <20,20,160,60>
-  object Application::Well WellObj
+  object Application::Tab2 WellObj
   {
     preset Bounds = <889,800,1689,1280>;
     preset Enabled = true;
@@ -104,7 +104,7 @@ class ApplicationClass : Core::Root
 
 $rect <130,120,330,160>
 $output false
-class MainMenu : Core::Group
+class Tab1 : Core::Group
 {
   $rect <10,600,210,640>
   inherited property Bounds = <0,0,800,480>;
@@ -254,7 +254,7 @@ class MainMenu : Core::Group
 
 $rect <580,120,780,160>
 $output false
-class Well : Core::Group
+class Tab2 : Core::Group
 {
   $rect <20,20,160,60>
   object Views::Rectangle Rectangle
@@ -3752,6 +3752,20 @@ class Config : Core::Group
     */
   }
 
+  $rect <840,0,980,40>
+  inherited method Init()
+  {
+    // TO DO: Write your code here ... 
+
+    Btn_Ok.Enabled=false;
+    Btn_Cancel.Enabled=false;
+    ConfigWaste.Bounds = <0,0,800,480>;
+    ConfigBL.Bounds = <0,0,800,480>;
+    ConfigTR.Bounds = <0,0,800,480>;
+    ConfigTop.Bounds = <0,0,800,480>;
+    ConfigSampleVolume.Bounds =  <0,0,800,480>;
+  }
+
   $rect <20,20,160,60>
   object Views::Rectangle Rectangle
   {
@@ -3760,29 +3774,61 @@ class Config : Core::Group
   }
 
   $rect <20,20,160,60>
+  object Application::AActionButton Btn_Cancel
+  {
+    preset Bounds = <230,120,350,150>;
+    preset Enabled = false;
+    preset OnAction = onBtn_Ok;
+    preset Caption = "Abbrechen";
+  }
+
+  $rect <20,20,160,60>
   object Application::AActionButton Btn_Ok
   {
-    preset Bounds = <670,439,790,469>;
+    preset Bounds = <410,120,530,150>;
     preset Enabled = false;
     preset OnAction = onBtn_Ok;
     preset Caption = "OK";
   }
 
-  $rect <850,700,1050,740>
+  $rect <810,440,1010,480>
   slot onBtn_Ok
   {
-    if(TextEditor.String.parse_int32(200)<200||TextEditor.String.parse_int32(200)>2000){
-      trace "ERROR: Not allowed SampleVolume:"+string(TextEditor.String.parse_int32(200));
+    if(ConfigSampleVolume.TextEditor.String.parse_int32(200)<200||ConfigSampleVolume.TextEditor.String.parse_int32(200)>2000){
+      trace "ERROR: Not allowed SampleVolume:"+string(ConfigSampleVolume.TextEditor.String.parse_int32(200));
       Device::Device.SampleVolume=200;
     }else{
-      Device::Device.SampleVolume=TextEditor.String.parse_int32(200);
+      Device::Device.SampleVolume=ConfigSampleVolume.TextEditor.String.parse_int32(200);
     }
+
+    Device::Device.SetWastePosition( ConfigWaste.XSlider.CurrentValue, ConfigWaste.YSlider.CurrentValue, ConfigWaste.ZSlider.CurrentValue );
+
+    Device::Device.SetTRPosition( ConfigTR.XSlider.CurrentValue, ConfigTR.YSlider.CurrentValue, ConfigTR.ZSlider.CurrentValue );
+
+    Device::Device.SetBLPosition( ConfigBL.XSlider.CurrentValue, ConfigBL.YSlider.CurrentValue, ConfigBL.ZSlider.CurrentValue );
+
+    Device::Device.SetTopPosition( ConfigTop.XSlider.CurrentValue, ConfigTop.YSlider.CurrentValue, ConfigTop.ZSlider.CurrentValue );
+
+
     this.Enabled=false;
     this.Visible=false;
+
+    ConfigBL.Visible=true;
+    ConfigTR.Visible=true;
+    ConfigWaste.Visible=true;
+    ConfigSampleVolume.Visible=true;
+    ConfigBL.Enabled=true;
+    ConfigTR.Enabled=true;
+    ConfigWaste.Enabled=true;
+    ConfigSampleVolume.Enabled=true;
+
+
     ControllMenu.Enabled=true;
 
     var int32 i;
 
+
+    //Set everything enabled after completing the Config Dialoge for the first time
     for(i=0;i<6;i=i+1){
       if(ControllMenu.SampleController[i].EnabledProperty==false){
         ControllMenu.SampleController[i].BtnStart.Enabled=true;
@@ -3799,34 +3845,18 @@ class Config : Core::Group
   }
 
   $rect <20,20,160,60>
-  object Application::ATextEditor TextEditor
-  {
-    preset Bounds = <330,110,470,170>;
-    preset Enabled = false;
-    preset String = "400";
-    preset Font = Flat::FontL;
-  }
-
-  $rect <20,20,160,60>
-  object Application::ANumKeyboard NumKeyboard
-  {
-    preset Bounds = <440,260,650,469>;
-    preset Enabled = false;
-  }
-
-  $rect <20,20,160,60>
   object Views::Text Text
   {
     preset Bounds = <60,10,690,120>;
     preset WrapText = true;
-    preset String = "Bitte geben sie das Volumen der zu entnehmenden Proben an (in ul)";
+    preset String = "Eingaben bestätigen?";
     preset Font = Flat::FontL;
   }
 
-  $rect <870,160,1070,200>
+  $rect <810,90,1010,130>
   property Application::ControllMenu ControllMenu = null;
 
-  $rect <870,200,1070,240>
+  $rect <810,130,1010,170>
   onset ControllMenu
   {
     // The value doesn't change - nothing to do.
@@ -3841,16 +3871,15 @@ class Config : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <870,240,1070,280>
+  $rect <810,170,1010,210>
   onget ControllMenu
   {
     return pure ControllMenu;
   }
 
-  $rect <850,540,1050,580>
+  $rect <810,280,1010,320>
   slot onNextWaste
   {
-    Device::Device.SetWastePosition( ConfigWaste.XSlider.CurrentValue, ConfigWaste.YSlider.CurrentValue, ConfigWaste.ZSlider.CurrentValue );
 
     ConfigWaste.Visible=false;
     ConfigWaste.Enabled=false;
@@ -3858,19 +3887,17 @@ class Config : Core::Group
 
   }
 
-  $rect <850,580,1050,620>
+  $rect <810,320,1010,360>
   slot onNextTR
   {
-    Device::Device.SetTRPosition( ConfigTR.XSlider.CurrentValue, ConfigTR.YSlider.CurrentValue, ConfigTR.ZSlider.CurrentValue );
 
     ConfigTR.Visible=false;
     ConfigTR.Enabled=false;
   }
 
-  $rect <850,620,1050,660>
+  $rect <810,360,1010,400>
   slot onNextBL
   {
-    Device::Device.SetBLPosition( ConfigBL.XSlider.CurrentValue, ConfigBL.YSlider.CurrentValue, ConfigBL.ZSlider.CurrentValue );
 
     ConfigBL.Visible=false;
     ConfigBL.Enabled=false;
@@ -3879,7 +3906,7 @@ class Config : Core::Group
   $rect <20,20,160,60>
   object Application::ConfigPosition ConfigTop
   {
-    preset Bounds = <0,0,800,480>;
+    preset Bounds = <1100,20,1900,500>;
     preset onNext = onNextTop;
     preset Title = "Bewegen sie den Schlauch so hoch, damit er die Kühlvorrichtung nicht berührt";
     preset Help = Application::ConfigTop;
@@ -3888,7 +3915,7 @@ class Config : Core::Group
   $rect <20,20,160,60>
   object Application::ConfigPosition ConfigTR
   {
-    preset Bounds = <0,0,800,480>;
+    preset Bounds = <1020,50,1820,530>;
     preset onNext = onNextTR;
     preset Title = "Bewegen Sie den Schluch über die Well Öffnung rechts hinten";
     preset Help = Application::ConfigTR;
@@ -3897,7 +3924,7 @@ class Config : Core::Group
   $rect <20,20,160,60>
   object Application::ConfigPosition ConfigBL
   {
-    preset Bounds = <0,0,800,480>;
+    preset Bounds = <1040,50,1840,530>;
     preset onNext = onNextBL;
     preset Title = "Bewegen Sie den Schluch über die Well Öffnung links vorne";
     preset Help = Application::ConfigBL;
@@ -3906,23 +3933,42 @@ class Config : Core::Group
   $rect <20,20,160,60>
   object Application::ConfigPosition ConfigWaste
   {
-    preset Bounds = <0,0,800,480>;
+    preset Bounds = <1230,30,2030,510>;
     preset Visible = true;
     preset onNext = onNextWaste;
     preset Title = "Bewegen Sie den Schlauch über den Waste Behälter";
     preset Help = Application::ConfigWaste;
   }
 
-  $rect <850,660,1050,700>
+  $rect <810,400,1010,440>
   slot onNextTop
   {
-    Device::Device.SetTopPosition( ConfigBL.XSlider.CurrentValue, ConfigBL.YSlider.CurrentValue, ConfigBL.ZSlider.CurrentValue );
 
     ConfigTop.Visible=false;
     ConfigTop.Enabled=false;
     Btn_Ok.Enabled=true;
-    NumKeyboard.Enabled=true;
-    TextEditor.Enabled=true;
+    Btn_Cancel.Enabled=true;
+
+  }
+
+  $rect <20,20,160,60>
+  object Application::ConfigInt ConfigSampleVolume
+  {
+    preset Bounds = <1580,30,2380,510>;
+    preset onNext = onNextVolume;
+    preset Title = "Geben sie das zu entnehmende Volumen an";
+  }
+
+  $rect <810,240,1010,280>
+  slot onNextVolume
+  {
+
+
+
+    ConfigSampleVolume.Visible=false;
+    ConfigSampleVolume.Enabled=false;
+
+
   }
 }
 
@@ -4485,18 +4531,9 @@ class ControllMenu : Core::Group
   $rect <830,190,1030,230>
   slot onBtn_Config
   {
-    Config.ConfigBL.Visible=true;
-    Config.ConfigTR.Visible=true;
-    Config.ConfigWaste.Visible=true;
-    Config.Visible=true;
-
-    Config.ConfigBL.Enabled=true;
-    Config.ConfigTR.Enabled=true;
-    Config.ConfigWaste.Enabled=true;
-    Config.Enabled=true;
-
     this.Enabled=false;
-
+    Config.Visible=true;
+    Config.Enabled=true;
     Config.Bounds.x1=0;
     Config.Bounds.y1=0;
   }
@@ -4540,7 +4577,7 @@ class ControllMenu : Core::Group
     return pure Config;
   }
 
-  $rect <370,500,570,540>
+  $rect <830,420,1030,460>
   object Core::SystemEventHandler RemainingTime
   {
     preset OnEvent = onRemainingTime;
@@ -4549,7 +4586,7 @@ class ControllMenu : Core::Group
 
   // This slot method is executed when the associated system event handler 'SystemEventHandler' \
   // receives an event.
-  $rect <570,500,770,540>
+  $rect <1030,420,1230,460>
   slot onRemainingTime
   {
     var Device::RemainingTimeContext context = (Device::RemainingTimeContext)RemainingTime.Context;
@@ -4625,7 +4662,7 @@ note group Note3
 // Configuration Menu
 note group Note4
 {
-  attr Bounds = <100,430,360,580>;
+  attr Bounds = <100,430,360,620>;
 }
 
 // Tab2: Well
@@ -6377,5 +6414,263 @@ class AIndicator : Core::Group
 
     /* ...and finally, force an update */
     InvalidateViewState();
+  }
+}
+
+$rect <150,550,350,590>
+$output false
+class ConfigInt : Core::Group
+{
+  $rect <10,540,210,580>
+  inherited property Bounds = <0,0,800,480>;
+
+  $rect <10,620,210,660>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,580,210,620>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,800,480>;
+    preset Color = Application::BackgroundColor;
+  }
+
+  $rect <20,20,160,60>
+  object Application::AActionButton Btn_Next
+  {
+    preset Bounds = <670,439,790,469>;
+    preset Enabled = true;
+    preset OnAction = onBtnNext;
+    preset Caption = "Next";
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text TextTitle
+  {
+    preset Bounds = <60,10,690,120>;
+    preset WrapText = true;
+    preset String = "Beispiel Text";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <830,20,1030,60>
+  property slot onNext = null;
+
+  $rect <830,60,1030,100>
+  onset onNext
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure onNext == value )
+      return;
+
+    // Remember the property's new value.
+    pure onNext = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <830,100,1030,140>
+  onget onNext
+  {
+    return pure onNext;
+  }
+
+  $rect <830,160,1030,200>
+  property string Title = "";
+
+  $rect <830,200,1030,240>
+  onset Title
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Title == value )
+      return;
+
+    // Remember the property's new value.
+    pure Title = value;
+
+    TextTitle.String=Title;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <830,240,1030,280>
+  onget Title
+  {
+    return pure Title;
+  }
+
+  $rect <830,300,1030,340>
+  slot onBtnNext
+  {
+    signal onNext;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ATextEditor TextEditor
+  {
+    preset Bounds = <330,110,470,170>;
+    preset Enabled = true;
+    preset String = "0";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <1050,20,1250,60>
+  property int32 DefaultValue = 0;
+
+  $rect <1050,60,1250,100>
+  onset DefaultValue
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure DefaultValue == value )
+      return;
+      
+    TextEditor.String=string(DefaultValue);
+
+    // Remember the property's new value.
+    pure DefaultValue = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <1050,100,1250,140>
+  onget DefaultValue
+  {
+    return pure DefaultValue;
+  }
+
+  $rect <20,20,160,60>
+  object Application::ANumKeyboard NumKeyboard
+  {
+    preset Bounds = <440,260,650,469>;
+    preset Enabled = false;
   }
 }

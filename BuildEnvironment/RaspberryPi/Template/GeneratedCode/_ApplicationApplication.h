@@ -42,8 +42,8 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
-#include "_ApplicationMainMenu.h"
-#include "_ApplicationWell.h"
+#include "_ApplicationTab1.h"
+#include "_ApplicationTab2.h"
 #include "_CoreOutline.h"
 #include "_CorePropertyObserver.h"
 #include "_CoreRoot.h"
@@ -97,8 +97,8 @@
 EW_DEFINE_FIELDS( ApplicationApplication, CoreRoot )
   EW_OBJECT  ( SlideTouchHandler, CoreSlideTouchHandler )
   EW_OBJECT  ( Outline,         CoreOutline )
-  EW_OBJECT  ( MainMenu,        ApplicationMainMenu )
-  EW_OBJECT  ( WellObj,         ApplicationWell )
+  EW_OBJECT  ( MainMenu,        ApplicationTab1 )
+  EW_OBJECT  ( WellObj,         ApplicationTab2 )
   EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
 EW_END_OF_FIELDS( ApplicationApplication )
 
