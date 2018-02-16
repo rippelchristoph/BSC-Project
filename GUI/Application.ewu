@@ -3,7 +3,7 @@ $version 6.60
 // This is the root component of the entire GUI application.
 $rect <360,20,560,60>
 $output false
-class Application : Core::Root
+class ApplicationClass : Core::Root
 {
   $rect <820,0,1020,40>
   inherited property Bounds = <0,0,800,480>;
@@ -248,7 +248,7 @@ class MainMenu : Core::Group
   {
     preset Bounds = <960,1210,1760,1690>;
     preset Visible = true;
-    preset ControllMenue = ControllMenu;
+    preset ControllMenu = ControllMenu;
   }
 }
 
@@ -398,7 +398,7 @@ class Well : Core::Group
   {
     preset Bounds = <70,50,140,120>;
     preset TimeProperty = "";
-    preset CircuitNumber = 0;
+    preset CircuitNumber = 4;
   }
 
   $rect <20,20,160,60>
@@ -436,7 +436,7 @@ class Well : Core::Group
   {
     preset Bounds = <140,50,210,120>;
     preset TimeProperty = "";
-    preset CircuitNumber = 1;
+    preset CircuitNumber = 3;
   }
 
   $rect <20,20,160,60>
@@ -474,7 +474,7 @@ class Well : Core::Group
   {
     preset Bounds = <210,50,280,120>;
     preset TimeProperty = "";
-    preset CircuitNumber = 2;
+    preset CircuitNumber = 5;
   }
 
   $rect <20,20,160,60>
@@ -512,7 +512,7 @@ class Well : Core::Group
   {
     preset Bounds = <280,50,350,120>;
     preset TimeProperty = "";
-    preset CircuitNumber = 3;
+    preset CircuitNumber = 4;
   }
 
   $rect <20,20,160,60>
@@ -550,7 +550,7 @@ class Well : Core::Group
   {
     preset Bounds = <350,50,420,120>;
     preset TimeProperty = "";
-    preset CircuitNumber = 4;
+    preset CircuitNumber = 3;
   }
 
   $rect <20,20,160,60>
@@ -698,7 +698,7 @@ class Well : Core::Group
   $rect <20,20,160,60>
   object Application::Clock Time
   {
-    preset Bounds = <670,400,790,470>;
+    preset Bounds = <660,400,790,470>;
   }
 
   // Writes the given Time in the chosen WellPart
@@ -1185,7 +1185,7 @@ $output false
 class Clock : Core::Group
 {
   $rect <10,310,210,350>
-  inherited property Bounds = <0,0,120,60>;
+  inherited property Bounds = <0,0,130,60>;
 
   $rect <10,390,210,430>
   inherited method UpdateLayout()
@@ -1317,10 +1317,10 @@ class Clock : Core::Group
   $rect <20,20,160,60>
   object Views::Text TimeText
   {
-    preset Bounds = <0,0,120,60>;
+    preset Bounds = <0,0,130,60>;
     preset AutoSize = false;
     preset WrapText = true;
-    preset String = "00.00.0000 00:00";
+    preset String = "dd.mm.yyyy hh:mm";
     preset Font = Flat::FontM;
   }
 
@@ -3618,7 +3618,7 @@ class Temperature : Core::Group
   }
 }
 
-$rect <120,540,320,580>
+$rect <120,470,320,510>
 $output false
 class Config : Core::Group
 {
@@ -3768,7 +3768,7 @@ class Config : Core::Group
     preset Caption = "OK";
   }
 
-  $rect <870,290,1070,330>
+  $rect <850,700,1050,740>
   slot onBtn_Ok
   {
     if(TextEditor.String.parse_int32(200)<200||TextEditor.String.parse_int32(200)>2000){
@@ -3779,20 +3779,20 @@ class Config : Core::Group
     }
     this.Enabled=false;
     this.Visible=false;
-    ControllMenue.Enabled=true;
+    ControllMenu.Enabled=true;
 
     var int32 i;
 
     for(i=0;i<6;i=i+1){
-      if(ControllMenue.SampleController[i].EnabledProperty==false){
-        ControllMenue.SampleController[i].BtnStart.Enabled=true;
+      if(ControllMenu.SampleController[i].EnabledProperty==false){
+        ControllMenu.SampleController[i].BtnStart.Enabled=true;
       }
-      ControllMenue.SampleController[i].Enabled=true;
+      ControllMenu.SampleController[i].Enabled=true;
     }
 
-    ControllMenue.Btn_NewWell.Enabled=true;
+    ControllMenu.Btn_NewWell.Enabled=true;
 
-    ControllMenue.NumKeyboard.Enabled=true;
+    ControllMenu.NumKeyboard.Enabled=true;
 
 
 
@@ -3803,7 +3803,7 @@ class Config : Core::Group
   {
     preset Bounds = <330,110,470,170>;
     preset Enabled = false;
-    preset String = "6";
+    preset String = "400";
     preset Font = Flat::FontL;
   }
 
@@ -3824,17 +3824,17 @@ class Config : Core::Group
   }
 
   $rect <870,160,1070,200>
-  property Application::ControllMenu ControllMenue = null;
+  property Application::ControllMenu ControllMenu = null;
 
   $rect <870,200,1070,240>
-  onset ControllMenue
+  onset ControllMenu
   {
     // The value doesn't change - nothing to do.
-    if ( pure ControllMenue == value )
+    if ( pure ControllMenu == value )
       return;
 
     // Remember the property's new value.
-    pure ControllMenue = value;
+    pure ControllMenu = value;
 
     // TO DO:
     // 
@@ -3842,9 +3842,9 @@ class Config : Core::Group
   }
 
   $rect <870,240,1070,280>
-  onget ControllMenue
+  onget ControllMenu
   {
-    return pure ControllMenue;
+    return pure ControllMenu;
   }
 
   $rect <850,540,1050,580>
@@ -3926,7 +3926,7 @@ class Config : Core::Group
   }
 }
 
-$rect <150,580,350,620>
+$rect <150,510,350,550>
 $output false
 class ConfigPosition : Core::Group
 {
@@ -4516,10 +4516,10 @@ class ControllMenu : Core::Group
     Device::Device.NewWell=true;
   }
 
-  $rect <830,320,1030,360>
+  $rect <830,290,1030,330>
   property Application::Config Config = null;
 
-  $rect <830,360,1030,400>
+  $rect <830,330,1030,370>
   onset Config
   {
     // The value doesn't change - nothing to do.
@@ -4534,7 +4534,7 @@ class ControllMenu : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <830,400,1030,440>
+  $rect <830,370,1030,410>
   onget Config
   {
     return pure Config;
@@ -4622,10 +4622,10 @@ note group Note3
   attr Bounds = <100,170,360,420>;
 }
 
-// Config
+// Configuration Menu
 note group Note4
 {
-  attr Bounds = <100,500,360,650>;
+  attr Bounds = <100,430,360,580>;
 }
 
 // Tab2: Well

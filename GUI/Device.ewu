@@ -12,10 +12,10 @@ $rect <60,70,260,110>
 $output false
 class DeviceClass : Templates::DeviceClass
 {
-  $rect <930,80,1130,120>
+  $rect <920,120,1120,160>
   property int32 SampleVolume = 6;
 
-  $rect <1130,80,1330,120>
+  $rect <1120,120,1320,160>
   onset SampleVolume
   {
     // The property doesn't change -> nothing to do.
@@ -52,10 +52,10 @@ class DeviceClass : Templates::DeviceClass
     notifyobservers ^SampleVolume;
   }
 
-  $rect <480,240,680,280>
+  $rect <480,260,680,300>
   property bool NewWell = false;
 
-  $rect <680,240,880,280>
+  $rect <680,260,880,300>
   onset NewWell
   {
     // The property doesn't change -> nothing to do.
@@ -77,7 +77,7 @@ class DeviceClass : Templates::DeviceClass
   }
 
   // intervall in seconds; circuitNumber from 1 to 6
-  $rect <480,140,680,180>
+  $rect <480,160,680,200>
   method void StartSampling( arg int32 aIntervall, arg int32 aCircuitNumber )
   {
     trace "StartSampling - Intervall:"+string(aIntervall)+" CircuitNumber:"+string(aCircuitNumber);
@@ -161,7 +161,7 @@ class DeviceClass : Templates::DeviceClass
     RemainingTimeEvent.Trigger( context, false );
   }
 
-  $rect <480,190,680,230>
+  $rect <480,210,680,250>
   method void StopSampling( arg int32 aCircuitNumber )
   {
     // The following code is used during prototyping only. It simply returns
@@ -179,7 +179,7 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <930,120,1130,160>
+  $rect <920,160,1120,200>
   method void SetBLPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -194,7 +194,7 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <930,160,1130,200>
+  $rect <920,200,1120,240>
   method void SetTRPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -210,7 +210,7 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <930,200,1130,240>
+  $rect <920,240,1120,280>
   method void SetWastePosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -226,7 +226,7 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <930,280,1130,320>
+  $rect <920,320,1120,360>
   method void SetCurrentPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -242,19 +242,13 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  // Configuration
-  note group Note
-  {
-    attr Bounds = <910,40,1340,340>;
-  }
-
-  // Extern Events
+  // Anwendungsseitige Events
   note group Note1
   {
-    attr Bounds = <20,40,450,350>;
+    attr Bounds = <20,40,450,390>;
   }
 
-  $rect <930,240,1130,280>
+  $rect <920,280,1120,320>
   method void SetTopPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -339,7 +333,7 @@ class DeviceClass : Templates::DeviceClass
     TimeEvent.Trigger( context, false );
   }
 
-  $rect <480,80,680,120>
+  $rect <480,100,680,140>
   method void ExitApplication()
   {
     trace "ExitApplication";
@@ -356,10 +350,16 @@ class DeviceClass : Templates::DeviceClass
 
   }
 
-  // Intern Events
+  // Anwenderseitige Events
   note group Note3
   {
-    attr Bounds = <460,40,890,310>;
+    attr Bounds = <460,40,1390,390>;
+  }
+
+  // Konfiguration
+  note group Note
+  {
+    attr Bounds = <900,80,1330,380>;
   }
 }
 

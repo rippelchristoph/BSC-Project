@@ -42,10 +42,11 @@ profile RasPi : RaspberryPi.OpenGL.RGBA8888
 {
   attr ScreenSize = <800,480>;
   attr Optimization = High;
-  attr ApplicationClass = Application::Application;
+  attr ApplicationClass = Application::ApplicationClass;
   attr CleanOutputDirectories = false;
   attr OutputDirectory = ../BuildEnvironment/RaspberryPi/Template/GeneratedCode;
   attr Verbose = false;
+  attr ApplicationTitle = BSC Controller;
 
   $rect <10,10,154,50>
   macro Author = "Oliver Peter";
