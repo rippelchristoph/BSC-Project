@@ -3778,7 +3778,7 @@ class Config : Core::Group
   {
     preset Bounds = <230,120,350,150>;
     preset Enabled = false;
-    preset OnAction = onBtn_Ok;
+    preset OnAction = onBtn_OkCancel;
     preset Caption = "Abbrechen";
   }
 
@@ -3787,27 +3787,14 @@ class Config : Core::Group
   {
     preset Bounds = <410,120,530,150>;
     preset Enabled = false;
-    preset OnAction = onBtn_Ok;
+    preset OnAction = onBtn_OkCancel;
     preset Caption = "OK";
   }
 
   $rect <810,440,1010,480>
-  slot onBtn_Ok
+  slot onBtn_OkCancel
   {
-    if(ConfigSampleVolume.TextEditor.String.parse_int32(200)<200||ConfigSampleVolume.TextEditor.String.parse_int32(200)>2000){
-      trace "ERROR: Not allowed SampleVolume:"+string(ConfigSampleVolume.TextEditor.String.parse_int32(200));
-      Device::Device.SampleVolume=200;
-    }else{
-      Device::Device.SampleVolume=ConfigSampleVolume.TextEditor.String.parse_int32(200);
-    }
 
-    Device::Device.SetWastePosition( ConfigWaste.XSlider.CurrentValue, ConfigWaste.YSlider.CurrentValue, ConfigWaste.ZSlider.CurrentValue );
-
-    Device::Device.SetTRPosition( ConfigTR.XSlider.CurrentValue, ConfigTR.YSlider.CurrentValue, ConfigTR.ZSlider.CurrentValue );
-
-    Device::Device.SetBLPosition( ConfigBL.XSlider.CurrentValue, ConfigBL.YSlider.CurrentValue, ConfigBL.ZSlider.CurrentValue );
-
-    Device::Device.SetTopPosition( ConfigTop.XSlider.CurrentValue, ConfigTop.YSlider.CurrentValue, ConfigTop.ZSlider.CurrentValue );
 
 
     this.Enabled=false;
@@ -3822,26 +3809,54 @@ class Config : Core::Group
     ConfigWaste.Enabled=true;
     ConfigSampleVolume.Enabled=true;
 
-
     ControllMenu.Enabled=true;
 
-    var int32 i;
 
 
-    //Set everything enabled after completing the Config Dialoge for the first time
-    for(i=0;i<6;i=i+1){
-      if(ControllMenu.SampleController[i].EnabledProperty==false){
-        ControllMenu.SampleController[i].BtnStart.Enabled=true;
+
+
+
+
+
+
+    if(sender == Btn_Ok){
+
+      if(ConfigSampleVolume.TextEditor.String.parse_int32(200)<200||ConfigSampleVolume.TextEditor.String.parse_int32(200)>2000){
+        trace "ERROR: Not allowed SampleVolume:"+string(ConfigSampleVolume.TextEditor.String.parse_int32(200));
+        Device::Device.SampleVolume=200;
+      }else{
+        Device::Device.SampleVolume=ConfigSampleVolume.TextEditor.String.parse_int32(200);
       }
-      ControllMenu.SampleController[i].Enabled=true;
+
+      Device::Device.SetWastePosition( ConfigWaste.XSlider.CurrentValue, ConfigWaste.YSlider.CurrentValue, ConfigWaste.ZSlider.CurrentValue );
+
+      Device::Device.SetTRPosition( ConfigTR.XSlider.CurrentValue, ConfigTR.YSlider.CurrentValue, ConfigTR.ZSlider.CurrentValue );
+
+      Device::Device.SetBLPosition( ConfigBL.XSlider.CurrentValue, ConfigBL.YSlider.CurrentValue, ConfigBL.ZSlider.CurrentValue );
+
+      Device::Device.SetTopPosition( ConfigTop.XSlider.CurrentValue, ConfigTop.YSlider.CurrentValue, ConfigTop.ZSlider.CurrentValue );
+
+
+
+
+      var int32 i;
+
+
+      //Set everything enabled after completing the Config Dialoge for the first time
+      for(i=0;i<6;i=i+1){
+        if(ControllMenu.SampleController[i].EnabledProperty==false){
+          ControllMenu.SampleController[i].BtnStart.Enabled=true;
+        }
+        ControllMenu.SampleController[i].Enabled=true;
+      }
+
+      ControllMenu.Btn_NewWell.Enabled=true;
+      ControllMenu.NumKeyboard.Enabled=true;
+
     }
 
-    ControllMenu.Btn_NewWell.Enabled=true;
 
-    ControllMenu.NumKeyboard.Enabled=true;
-
-
-
+           
   }
 
   $rect <20,20,160,60>
@@ -6671,6 +6686,6 @@ class ConfigInt : Core::Group
   object Application::ANumKeyboard NumKeyboard
   {
     preset Bounds = <440,260,650,469>;
-    preset Enabled = false;
+    preset Enabled = true;
   }
 }

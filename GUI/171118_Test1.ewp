@@ -46,7 +46,7 @@ profile RasPi : RaspberryPi.OpenGL.RGBA8888
   attr CleanOutputDirectories = false;
   attr OutputDirectory = ../BuildEnvironment/RaspberryPi/Template/GeneratedCode;
   attr Verbose = false;
-  attr ApplicationTitle = BSC Controller;
+  attr ApplicationTitle = "BSC Controller";
 
   $rect <10,10,154,50>
   macro Author = "Oliver Peter";

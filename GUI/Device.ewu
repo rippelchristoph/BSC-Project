@@ -353,13 +353,13 @@ class DeviceClass : Templates::DeviceClass
   // Anwenderseitige Events
   note group Note3
   {
-    attr Bounds = <460,40,1390,390>;
+    attr Bounds = <460,40,1390,530>;
   }
 
   // Konfiguration
   note group Note
   {
-    attr Bounds = <900,80,1330,380>;
+    attr Bounds = <900,80,1330,510>;
   }
 }
 
