@@ -24,8 +24,8 @@
 *
 *******************************************************************************/
 
-#ifndef _ApplicationConfig_H
-#define _ApplicationConfig_H
+#ifndef _ApplicationConfig2Int_H
+#define _ApplicationConfig2Int_H
 
 #ifdef __cplusplus
   extern "C"
@@ -43,23 +43,16 @@
 #endif
 
 #include "_ApplicationAActionButton.h"
-#include "_ApplicationConfig2Int.h"
-#include "_ApplicationConfigInt.h"
-#include "_ApplicationConfigPosition.h"
+#include "_ApplicationANumKeyboard.h"
+#include "_ApplicationATextEditor.h"
 #include "_CoreGroup.h"
 #include "_ViewsRectangle.h"
 #include "_ViewsText.h"
 
-/* Forward declaration of the class Application::Config */
-#ifndef _ApplicationConfig_
-  EW_DECLARE_CLASS( ApplicationConfig )
-#define _ApplicationConfig_
-#endif
-
-/* Forward declaration of the class Application::ControllMenu */
-#ifndef _ApplicationControllMenu_
-  EW_DECLARE_CLASS( ApplicationControllMenu )
-#define _ApplicationControllMenu_
+/* Forward declaration of the class Application::Config2Int */
+#ifndef _ApplicationConfig2Int_
+  EW_DECLARE_CLASS( ApplicationConfig2Int )
+#define _ApplicationConfig2Int_
 #endif
 
 /* Forward declaration of the class Core::KeyPressHandler */
@@ -87,26 +80,22 @@
 #endif
 
 
-/* Deklaration of class : 'Application::Config' */
-EW_DEFINE_FIELDS( ApplicationConfig, CoreGroup )
+/* Deklaration of class : 'Application::Config2Int' */
+EW_DEFINE_FIELDS( ApplicationConfig2Int, CoreGroup )
   EW_OBJECT  ( Rectangle,       ViewsRectangle )
-  EW_OBJECT  ( Btn_Cancel,      ApplicationAActionButton )
-  EW_OBJECT  ( Btn_Ok,          ApplicationAActionButton )
-  EW_OBJECT  ( Text,            ViewsText )
-  EW_PROPERTY( ControllMenu,    ApplicationControllMenu )
-  EW_OBJECT  ( ConfigTop,       ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigTR,        ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigBL,        ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigWaste,     ApplicationConfigPosition )
-  EW_OBJECT  ( ConfigSampleVolume, ApplicationConfigInt )
-  EW_OBJECT  ( ConfigFlowSpeed, ApplicationConfigInt )
-  EW_OBJECT  ( ConfigWasteVolume, ApplicationConfigInt )
-  EW_OBJECT  ( ConfigNeedleGap, ApplicationConfigInt )
-  EW_OBJECT  ( ConfigNumHoles,  ApplicationConfig2Int )
-EW_END_OF_FIELDS( ApplicationConfig )
+  EW_OBJECT  ( Btn_Next,        ApplicationAActionButton )
+  EW_OBJECT  ( TextTitle,       ViewsText )
+  EW_PROPERTY( onNext,          XSlot )
+  EW_PROPERTY( Title,           XString )
+  EW_OBJECT  ( TextEditorX,     ApplicationATextEditor )
+  EW_OBJECT  ( NumKeyboard,     ApplicationANumKeyboard )
+  EW_OBJECT  ( TextX,           ViewsText )
+  EW_OBJECT  ( TextY,           ViewsText )
+  EW_OBJECT  ( TextEditorY,     ApplicationATextEditor )
+EW_END_OF_FIELDS( ApplicationConfig2Int )
 
-/* Virtual Method Table (VMT) for the class : 'Application::Config' */
-EW_DEFINE_METHODS( ApplicationConfig, CoreGroup )
+/* Virtual Method Table (VMT) for the class : 'Application::Config2Int' */
+EW_DEFINE_METHODS( ApplicationConfig2Int, CoreGroup )
   EW_METHOD( initLayoutContext, void )( CoreRectView _this, XRect aBounds, CoreOutline 
     aOutline )
   EW_METHOD( GetRoot,           CoreRoot )( CoreView _this )
@@ -127,14 +116,14 @@ EW_DEFINE_METHODS( ApplicationConfig, CoreGroup )
   EW_METHOD( DispatchEvent,     XObject )( CoreGroup _this, CoreEvent aEvent )
   EW_METHOD( BroadcastEvent,    XObject )( CoreGroup _this, CoreEvent aEvent, XSet 
     aFilter )
-  EW_METHOD( UpdateLayout,      void )( ApplicationConfig _this, XPoint aSize )
-  EW_METHOD( UpdateViewState,   void )( ApplicationConfig _this, XSet aState )
+  EW_METHOD( UpdateLayout,      void )( ApplicationConfig2Int _this, XPoint aSize )
+  EW_METHOD( UpdateViewState,   void )( ApplicationConfig2Int _this, XSet aState )
   EW_METHOD( InvalidateArea,    void )( CoreGroup _this, XRect aArea )
   EW_METHOD( Restack,           void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
   EW_METHOD( Add,               void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
-EW_END_OF_METHODS( ApplicationConfig )
+EW_END_OF_METHODS( ApplicationConfig2Int )
 
 /* The method UpdateLayout() is invoked automatically after the size of the component 
    has been changed. This method can be overridden and filled with logic to perform 
@@ -143,7 +132,7 @@ EW_END_OF_METHODS( ApplicationConfig )
    Usually, all enclosed views are arranged automatically accordingly to their @Layout 
    property. UpdateLayout() gives the derived components a chance to extend this 
    automatism by a user defined algorithm. */
-void ApplicationConfig_UpdateLayout( ApplicationConfig _this, XPoint aSize );
+void ApplicationConfig2Int_UpdateLayout( ApplicationConfig2Int _this, XPoint aSize );
 
 /* The method UpdateViewState() is invoked automatically after the state of the 
    component has been changed. This method can be overridden and filled with logic 
@@ -159,27 +148,18 @@ void ApplicationConfig_UpdateLayout( ApplicationConfig _this, XPoint aSize );
    state 'on' or 'off' and change accordingly the location of the slider, etc.
    Usually, this method will be invoked automatically by the framework. Optionally 
    you can request its invocation by using the method @InvalidateViewState(). */
-void ApplicationConfig_UpdateViewState( ApplicationConfig _this, XSet aState );
+void ApplicationConfig2Int_UpdateViewState( ApplicationConfig2Int _this, XSet aState );
 
-/* The method Init() is invoked automatically after the component has been created. 
-   This method can be overridden and filled with logic containing additional initialization 
-   statements. */
-void ApplicationConfig_Init( ApplicationConfig _this, XHandle aArg );
+/* 'C' function for method : 'Application::Config2Int.OnSetTitle()' */
+void ApplicationConfig2Int_OnSetTitle( ApplicationConfig2Int _this, XString value );
 
-/* 'C' function for method : 'Application::Config.onBtn_OkCancel()' */
-void ApplicationConfig_onBtn_OkCancel( ApplicationConfig _this, XObject sender );
-
-/* 'C' function for method : 'Application::Config.OnSetControllMenu()' */
-void ApplicationConfig_OnSetControllMenu( ApplicationConfig _this, ApplicationControllMenu 
-  value );
-
-/* 'C' function for method : 'Application::Config.onLastElement()' */
-void ApplicationConfig_onLastElement( ApplicationConfig _this, XObject sender );
+/* 'C' function for method : 'Application::Config2Int.onBtnNext()' */
+void ApplicationConfig2Int_onBtnNext( ApplicationConfig2Int _this, XObject sender );
 
 #ifdef __cplusplus
   }
 #endif
 
-#endif /* _ApplicationConfig_H */
+#endif /* _ApplicationConfig2Int_H */
 
 /* Embedded Wizard */

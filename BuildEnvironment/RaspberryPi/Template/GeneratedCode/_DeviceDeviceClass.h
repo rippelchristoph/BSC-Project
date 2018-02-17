@@ -59,6 +59,9 @@ EW_DEFINE_FIELDS( DeviceDeviceClass, TemplatesDeviceClass )
   EW_OBJECT  ( RemainingTimeEvent, CoreSystemEvent )
   EW_PROPERTY( Temperature,     XFloat )
   EW_OBJECT  ( TimeEvent,       CoreSystemEvent )
+  EW_PROPERTY( FlowSpeed,       XInt32 )
+  EW_PROPERTY( WasteVolume,     XInt32 )
+  EW_PROPERTY( NeedleGap,       XInt32 )
   EW_PROPERTY( NewWell,         XBool )
 EW_END_OF_FIELDS( DeviceDeviceClass )
 
@@ -105,24 +108,12 @@ void DeviceDeviceClass__onRemainingTime( void* _this, XInt32 aCircuitNumber, XIn
 /* 'C' function for method : 'Device::DeviceClass.StopSampling()' */
 void DeviceDeviceClass_StopSampling( DeviceDeviceClass _this, XInt32 aCircuitNumber );
 
-/* 'C' function for method : 'Device::DeviceClass.SetBLPosition()' */
-void DeviceDeviceClass_SetBLPosition( DeviceDeviceClass _this, XInt32 aX, XInt32 
-  aY, XInt32 aZ );
-
-/* 'C' function for method : 'Device::DeviceClass.SetTRPosition()' */
-void DeviceDeviceClass_SetTRPosition( DeviceDeviceClass _this, XInt32 aX, XInt32 
-  aY, XInt32 aZ );
-
-/* 'C' function for method : 'Device::DeviceClass.SetWastePosition()' */
-void DeviceDeviceClass_SetWastePosition( DeviceDeviceClass _this, XInt32 aX, XInt32 
-  aY, XInt32 aZ );
+/* 'C' function for method : 'Device::DeviceClass.SetPosition()' */
+void DeviceDeviceClass_SetPosition( DeviceDeviceClass _this, XInt32 aIndex, XInt32 
+  aX, XInt32 aY, XInt32 aZ );
 
 /* 'C' function for method : 'Device::DeviceClass.SetCurrentPosition()' */
 void DeviceDeviceClass_SetCurrentPosition( DeviceDeviceClass _this, XInt32 aX, XInt32 
-  aY, XInt32 aZ );
-
-/* 'C' function for method : 'Device::DeviceClass.SetTopPosition()' */
-void DeviceDeviceClass_SetTopPosition( DeviceDeviceClass _this, XInt32 aX, XInt32 
   aY, XInt32 aZ );
 
 /* This method is intended to be called by the device to notify the GUI application 
@@ -153,6 +144,21 @@ void DeviceDeviceClass__onTime( void* _this, XInt32 aYear, XInt32 aMonth, XInt32
 /* 'C' function for method : 'Device::DeviceClass.ExitApplication()' */
 void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this );
 
+/* 'C' function for method : 'Device::DeviceClass.StartConfig()' */
+void DeviceDeviceClass_StartConfig( DeviceDeviceClass _this );
+
+/* 'C' function for method : 'Device::DeviceClass.OnSetFlowSpeed()' */
+void DeviceDeviceClass_OnSetFlowSpeed( DeviceDeviceClass _this, XInt32 value );
+
+/* 'C' function for method : 'Device::DeviceClass.OnSetWasteVolume()' */
+void DeviceDeviceClass_OnSetWasteVolume( DeviceDeviceClass _this, XInt32 value );
+
+/* 'C' function for method : 'Device::DeviceClass.OnSetNeedleGap()' */
+void DeviceDeviceClass_OnSetNeedleGap( DeviceDeviceClass _this, XInt32 value );
+
+/* 'C' function for method : 'Device::DeviceClass.SetNumHoles()' */
+void DeviceDeviceClass_SetNumHoles( DeviceDeviceClass _this, XInt32 aX, XInt32 aY );
+
 /* Default onget method for the property 'SampleVolume' */
 XInt32 DeviceDeviceClass_OnGetSampleVolume( DeviceDeviceClass _this );
 
@@ -164,6 +170,15 @@ XFloat DeviceDeviceClass_OnGetTemperature( DeviceDeviceClass _this );
 
 /* Default onset method for the property 'Temperature' */
 void DeviceDeviceClass_OnSetTemperature( DeviceDeviceClass _this, XFloat value );
+
+/* Default onget method for the property 'FlowSpeed' */
+XInt32 DeviceDeviceClass_OnGetFlowSpeed( DeviceDeviceClass _this );
+
+/* Default onget method for the property 'WasteVolume' */
+XInt32 DeviceDeviceClass_OnGetWasteVolume( DeviceDeviceClass _this );
+
+/* Default onget method for the property 'NeedleGap' */
+XInt32 DeviceDeviceClass_OnGetNeedleGap( DeviceDeviceClass _this );
 
 #ifdef __cplusplus
   }

@@ -3,10 +3,10 @@ $version 1.0
 attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,0>;
-attr codeInspector = Device::DeviceClass.SetBLPosition;
-attr codeSelEnd = <0,0>;
-attr codeSelStart = <0,0>;
+attr codeFirstPos = <0,1>;
+attr codeInspector = Device::DeviceClass.SetPosition;
+attr codeSelEnd = <2,9>;
+attr codeSelStart = <2,9>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -69,10 +69,9 @@ view class Application::Application
 view class Application::Config
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,32>;
-  attr codeInspector = onBtn_OkCancel;
-  attr codeSelEnd = <2,44>;
-  attr codeSelStart = <2,44>;
+  attr codeFirstPos = <0,0>;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -83,9 +82,9 @@ view class Application::ConfigInt
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtnNext;
-  attr codeSelEnd = <68,0>;
-  attr codeSelStart = <68,0>;
+  attr codeInspector = UpdateViewState;
+  attr codeSelEnd = <100,2>;
+  attr codeSelStart = <100,2>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -96,7 +95,7 @@ view class Application::ControllMenu
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtn_Config;
+  attr codeInspector = onRemainingTime;
   attr codeSelEnd = <0,0>;
   attr codeSelStart = <0,0>;
   attr enableGrid = true;
@@ -107,6 +106,37 @@ view class Application::ControllMenu
 
 view class Device::DeviceClass
 {
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = StartConfig;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::ConfigPosition
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = OnChangePos;
+  attr codeSelEnd = <0,1>;
+  attr codeSelStart = <0,1>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::Config2Int
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onBtnNext;
+  attr codeSelEnd = <0,0>;
+  attr codeSelStart = <0,0>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;

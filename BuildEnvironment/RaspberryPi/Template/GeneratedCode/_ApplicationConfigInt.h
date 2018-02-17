@@ -89,6 +89,9 @@ EW_DEFINE_FIELDS( ApplicationConfigInt, CoreGroup )
   EW_PROPERTY( Title,           XString )
   EW_OBJECT  ( TextEditor,      ApplicationATextEditor )
   EW_OBJECT  ( NumKeyboard,     ApplicationANumKeyboard )
+  EW_PROPERTY( MaxValue,        XInt32 )
+  EW_PROPERTY( MinValue,        XInt32 )
+  EW_PROPERTY( Unit,            XString )
 EW_END_OF_FIELDS( ApplicationConfigInt )
 
 /* Virtual Method Table (VMT) for the class : 'Application::ConfigInt' */
@@ -155,6 +158,19 @@ void ApplicationConfigInt_OnSetTitle( ApplicationConfigInt _this, XString value 
 
 /* 'C' function for method : 'Application::ConfigInt.onBtnNext()' */
 void ApplicationConfigInt_onBtnNext( ApplicationConfigInt _this, XObject sender );
+
+/* 'C' function for method : 'Application::ConfigInt.onTextEditorChange()' */
+void ApplicationConfigInt_onTextEditorChange( ApplicationConfigInt _this, XObject 
+  sender );
+
+/* 'C' function for method : 'Application::ConfigInt.OnSetMaxValue()' */
+void ApplicationConfigInt_OnSetMaxValue( ApplicationConfigInt _this, XInt32 value );
+
+/* 'C' function for method : 'Application::ConfigInt.OnSetMinValue()' */
+void ApplicationConfigInt_OnSetMinValue( ApplicationConfigInt _this, XInt32 value );
+
+/* 'C' function for method : 'Application::ConfigInt.OnSetUnit()' */
+void ApplicationConfigInt_OnSetUnit( ApplicationConfigInt _this, XString value );
 
 #ifdef __cplusplus
   }

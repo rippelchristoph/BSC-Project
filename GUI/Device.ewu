@@ -13,7 +13,7 @@ $output false
 class DeviceClass : Templates::DeviceClass
 {
   $rect <920,120,1120,160>
-  property int32 SampleVolume = 6;
+  property int32 SampleVolume = 0;
 
   $rect <1120,120,1320,160>
   onset SampleVolume
@@ -32,19 +32,7 @@ class DeviceClass : Templates::DeviceClass
     $if !$prototyper
       native ( value )
       {
-        /*
-           TO DO:
-
-           You can call a function of your own device API or you simply
-           modify a variable existing in your middleware to reflect the
-           new value:
-
-           YourDevice_SetSomeValue( value );
-
-           or
-
-           YourDevice_SomeVariable = value;
-        */
+        BSCSetSampleVolume(SampleVolume);//ul
       }
     $endif
 
@@ -179,54 +167,24 @@ class DeviceClass : Templates::DeviceClass
     $endif
   }
 
-  $rect <920,160,1120,200>
-  method void SetBLPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
+  $rect <920,280,1120,320>
+  method void SetPosition( arg int32 aIndex, arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
     // a dummy value. No device specific API is used during prototyping.
     $if $prototyper
     $endif
 
-    trace "BLPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+    trace "Postition - Index:"+string(aIndex)+" X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
 
     $if !$prototyper
-     
+    native{
+      BSCSetPosition(aIndex, aX, aY, aZ);
+    }
     $endif
   }
 
-  $rect <920,200,1120,240>
-  method void SetTRPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
-  {
-    // The following code is used during prototyping only. It simply returns
-    // a dummy value. No device specific API is used during prototyping.
-    $if $prototyper
-     
-    $endif
-
-    trace "TRPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
-
-    $if !$prototyper
-     
-    $endif
-  }
-
-  $rect <920,240,1120,280>
-  method void SetWastePosition( arg int32 aX, arg int32 aY, arg int32 aZ )
-  {
-    // The following code is used during prototyping only. It simply returns
-    // a dummy value. No device specific API is used during prototyping.
-    $if $prototyper
-
-    $endif
-
-    trace "WastePostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
-
-    $if !$prototyper
-     
-    $endif
-  }
-
-  $rect <920,320,1120,360>
+  $rect <920,360,1120,400>
   method void SetCurrentPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
   {
     // The following code is used during prototyping only. It simply returns
@@ -238,7 +196,9 @@ class DeviceClass : Templates::DeviceClass
     trace "CurrentPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
 
     $if !$prototyper
-     
+    native{
+      BSCSetCurrentPosition(aX,aY,aZ);  
+    } 
     $endif
   }
 
@@ -246,22 +206,6 @@ class DeviceClass : Templates::DeviceClass
   note group Note1
   {
     attr Bounds = <20,40,450,390>;
-  }
-
-  $rect <920,280,1120,320>
-  method void SetTopPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
-  {
-    // The following code is used during prototyping only. It simply returns
-    // a dummy value. No device specific API is used during prototyping.
-    $if $prototyper
-
-    $endif
-
-    trace "TopPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
-
-    $if !$prototyper
-     
-    $endif
   }
 
   $rect <240,130,440,170>
@@ -360,6 +304,119 @@ class DeviceClass : Templates::DeviceClass
   note group Note
   {
     attr Bounds = <900,80,1330,510>;
+  }
+
+  $rect <920,400,1120,440>
+  method void StartConfig()
+  {
+    trace "StartConfig";
+
+    $if !$prototyper
+    native{
+      BSCStartConfig();
+    }
+    $endif
+  }
+
+  $rect <920,160,1120,200>
+  property int32 FlowSpeed = 0;
+
+  $rect <1120,160,1320,200>
+  onset FlowSpeed
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure FlowSpeed == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure FlowSpeed = value;
+    trace "FlowSpeed:"+string(FlowSpeed);
+
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        BSCSetFlowSpeed(FlowSpeed); //ul/s
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^FlowSpeed;
+  }
+
+  $rect <920,200,1120,240>
+  property int32 WasteVolume = 0;
+
+  $rect <1120,200,1320,240>
+  onset WasteVolume
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure WasteVolume == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure WasteVolume = value;
+    trace "WasteVolume:"+string(WasteVolume);
+
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        BSCSetWasteVolume(WasteVolume); //ul
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^WasteVolume;
+  }
+
+  $rect <920,240,1120,280>
+  property int32 NeedleGap = 0;
+
+  $rect <1120,240,1320,280>
+  onset NeedleGap
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure NeedleGap == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure NeedleGap = value;
+    trace "NeedleGap:"+string(NeedleGap);
+
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        BSCSetNeedleGap(NeedleGap); //um
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^NeedleGap;
+  }
+
+  $rect <920,320,1120,360>
+  method void SetNumHoles( arg int32 aX, arg int32 aY )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+    $endif
+
+    trace "NumHoles - #X:"+string(aX)+" #Y:"+string(aY);
+
+    $if !$prototyper
+    native{
+      BSCSetNumHoles(aX,aY);
+    } 
+    $endif
   }
 }
 
@@ -758,3 +815,25 @@ note group Note2
 {
   attr Bounds = <10,230,310,340>;
 }
+
+$rect <720,60,920,100>
+$output false
+const int32 I_TR = 0;
+
+// SetPositionIndizes
+note group Note3
+{
+  attr Bounds = <660,20,960,230>;
+}
+
+$rect <720,100,920,140>
+$output false
+const int32 I_BL = 1;
+
+$rect <720,140,920,180>
+$output false
+const int32 I_Waste = 3;
+
+$rect <720,180,920,220>
+$output false
+const int32 I_Top = 4;

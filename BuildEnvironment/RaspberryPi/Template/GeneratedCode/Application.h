@@ -51,6 +51,7 @@
 #include "_ApplicationApplication.h"
 #include "_ApplicationClock.h"
 #include "_ApplicationConfig.h"
+#include "_ApplicationConfig2Int.h"
 #include "_ApplicationConfigInt.h"
 #include "_ApplicationConfigPosition.h"
 #include "_ApplicationControllMenu.h"
