@@ -113,6 +113,7 @@ void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aA
 
   /* ... and initialize objects, variables, properties, etc. */
   _this->Temperature = 0.000000f;
+  _this->WellViewEnabled = 1;
 }
 
 /* Re-Initializer for the class 'Device::DeviceClass' */
@@ -233,8 +234,12 @@ void DeviceDeviceClass_onSampleCollected( DeviceDeviceClass _this, XInt32 aXPosi
   DeviceSampleCollectedContext_OnSetMinute( context, aMinute );
   DeviceSampleCollectedContext_OnSetXPosition( context, aXPosition );
   DeviceSampleCollectedContext_OnSetYPosition( context, aYPosition );
-  CoreSystemEvent_Trigger( &_this->SampleCollectedEvent, ((XObject)context ), 0 
-  );
+
+  if ( _this->WellViewEnabled == 1 )
+  {
+    CoreSystemEvent_Trigger( &_this->SampleCollectedEvent, ((XObject)context ), 
+    0 );
+  }
 }
 
 /* Wrapper function for the non virtual method : 'Device::DeviceClass.onSampleCollected()' */
@@ -471,6 +476,32 @@ void DeviceDeviceClass_SetNumHoles( DeviceDeviceClass _this, XInt32 aX, XInt32 a
   BSCSetNumHoles(aX,aY);
 }
 
+/* 'C' function for method : 'Device::DeviceClass.OnSetWellViewEnabled()' */
+void DeviceDeviceClass_OnSetWellViewEnabled( DeviceDeviceClass _this, XBool value )
+{
+  if ( _this->WellViewEnabled == value )
+    return;
+
+  _this->WellViewEnabled = value;
+  {
+    /*
+       TO DO:
+
+       You can call a function of your own device API or you simply
+       modify a variable existing in your middleware to reflect the
+       new value:
+
+       YourDevice_SetSomeValue( value );
+
+       or
+
+       YourDevice_SomeVariable = value;
+    */
+  }
+  EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetWellViewEnabled, 
+    DeviceDeviceClass_OnSetWellViewEnabled ), 0 );
+}
+
 /* Default onget method for the property 'SampleVolume' */
 XInt32 DeviceDeviceClass_OnGetSampleVolume( DeviceDeviceClass _this )
 {
@@ -511,6 +542,12 @@ XInt32 DeviceDeviceClass_OnGetWasteVolume( DeviceDeviceClass _this )
 XInt32 DeviceDeviceClass_OnGetNeedleGap( DeviceDeviceClass _this )
 {
   return _this->NeedleGap;
+}
+
+/* Default onget method for the property 'WellViewEnabled' */
+XBool DeviceDeviceClass_OnGetWellViewEnabled( DeviceDeviceClass _this )
+{
+  return _this->WellViewEnabled;
 }
 
 /* Variants derived from the class : 'Device::DeviceClass' */

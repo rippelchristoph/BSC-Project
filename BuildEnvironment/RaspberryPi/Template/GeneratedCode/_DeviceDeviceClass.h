@@ -62,6 +62,7 @@ EW_DEFINE_FIELDS( DeviceDeviceClass, TemplatesDeviceClass )
   EW_PROPERTY( FlowSpeed,       XInt32 )
   EW_PROPERTY( WasteVolume,     XInt32 )
   EW_PROPERTY( NeedleGap,       XInt32 )
+  EW_PROPERTY( WellViewEnabled, XBool )
   EW_PROPERTY( NewWell,         XBool )
 EW_END_OF_FIELDS( DeviceDeviceClass )
 
@@ -159,6 +160,9 @@ void DeviceDeviceClass_OnSetNeedleGap( DeviceDeviceClass _this, XInt32 value );
 /* 'C' function for method : 'Device::DeviceClass.SetNumHoles()' */
 void DeviceDeviceClass_SetNumHoles( DeviceDeviceClass _this, XInt32 aX, XInt32 aY );
 
+/* 'C' function for method : 'Device::DeviceClass.OnSetWellViewEnabled()' */
+void DeviceDeviceClass_OnSetWellViewEnabled( DeviceDeviceClass _this, XBool value );
+
 /* Default onget method for the property 'SampleVolume' */
 XInt32 DeviceDeviceClass_OnGetSampleVolume( DeviceDeviceClass _this );
 
@@ -179,6 +183,9 @@ XInt32 DeviceDeviceClass_OnGetWasteVolume( DeviceDeviceClass _this );
 
 /* Default onget method for the property 'NeedleGap' */
 XInt32 DeviceDeviceClass_OnGetNeedleGap( DeviceDeviceClass _this );
+
+/* Default onget method for the property 'WellViewEnabled' */
+XBool DeviceDeviceClass_OnGetWellViewEnabled( DeviceDeviceClass _this );
 
 #ifdef __cplusplus
   }

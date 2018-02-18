@@ -3236,7 +3236,7 @@ class ANumKeyboard : Templates::NumKeyboard
 // Resources
 note group Note
 {
-  attr Bounds = <460,540,960,810>;
+  attr Bounds = <460,540,960,860>;
 }
 
 $rect <610,200,810,240>
@@ -3752,7 +3752,7 @@ class Config : Core::Group
     */
   }
 
-  $rect <310,510,450,550>
+  $rect <1100,30,1240,70>
   inherited method Init()
   {
   }
@@ -3785,9 +3785,6 @@ class Config : Core::Group
   $rect <840,70,1040,110>
   slot onBtn_OkCancel
   {
-
-
-
     this.Enabled=false;
     this.Visible=false;
     Btn_Ok.Enabled=false;
@@ -3838,7 +3835,7 @@ class Config : Core::Group
     if(sender == Btn_Ok){
       
       Device::Device.SetNumHoles( ConfigNumHoles.TextEditorX.String.parse_int32( 6 ), ConfigNumHoles.TextEditorY.String.parse_int32( 8 ) );
-      
+
       Device::Device.NeedleGap=ConfigNeedleGap.TextEditor.String.parse_int32( 1000 );
       
       Device::Device.WasteVolume=ConfigWasteVolume.TextEditor.String.parse_int32( 1000 );
@@ -3848,7 +3845,13 @@ class Config : Core::Group
       Device::Device.SampleVolume=ConfigSampleVolume.TextEditor.String.parse_int32(200);
 
       
+      //look if the WellView is Enabled 
 
+      if((ConfigNumHoles.TextEditorX.String.parse_int32( 6 )==6)&&(ConfigNumHoles.TextEditorY.String.parse_int32( 8 )==8)){
+        Device::Device.WellViewEnabled=true;
+      }else{
+        Device::Device.WellViewEnabled=false;
+      }
 
 
       
@@ -3958,7 +3961,6 @@ class Config : Core::Group
   $rect <840,30,1040,70>
   slot onLastElement
   {
-
     Btn_Ok.Enabled=true;
     Btn_Cancel.Enabled=true;
 
@@ -4011,7 +4013,7 @@ class Config : Core::Group
   object Application::Config2Int ConfigNumHoles
   {
     preset Bounds = <0,0,800,480>;
-    preset Title = "Bitte geben sie die Anzahl der Wellöffnungen in X und Y Richtung an";
+    preset Title = "Bitte geben sie die Anzahl der Wellöffnungen in X und Y Richtung an (Wellübersicht ist nur bei X=6 und Y=8 verfügbar)";
   }
 }
 

@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application::Config;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,1>;
-attr codeInspector = Device::DeviceClass.SetPosition;
-attr codeSelEnd = <2,9>;
-attr codeSelStart = <2,9>;
+attr codeFirstPos = <0,56>;
+attr codeInspector = Application::Config.onBtn_OkCancel;
+attr codeSelEnd = <40,65>;
+attr codeSelStart = <40,65>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -69,9 +69,10 @@ view class Application::Application
 view class Application::Config
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeFirstPos = <0,47>;
+  attr codeInspector = onBtn_OkCancel;
+  attr codeSelEnd = <135,49>;
+  attr codeSelStart = <135,49>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -94,10 +95,10 @@ view class Application::ConfigInt
 view class Application::ControllMenu
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onRemainingTime;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeFirstPos = <0,5>;
+  attr codeInspector = onBtn_Config;
+  attr codeSelEnd = <31,11>;
+  attr codeSelStart = <31,11>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -107,10 +108,10 @@ view class Application::ControllMenu
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = StartConfig;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeFirstPos = <0,17>;
+  attr codeInspector = onSampleCollected;
+  attr codeSelEnd = <2,25>;
+  attr codeSelStart = <2,25>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;

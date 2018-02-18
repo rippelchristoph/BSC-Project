@@ -121,8 +121,9 @@ class DeviceClass : Templates::DeviceClass
 
 
 
-
-    SampleCollectedEvent.Trigger( context, false );
+    if(WellViewEnabled==true){
+      SampleCollectedEvent.Trigger( context, false );
+    }
   }
 
   $rect <240,230,440,270>
@@ -229,13 +230,13 @@ class DeviceClass : Templates::DeviceClass
     }
   }
 
-  // GUI intern
+  // Statt dem ein Konstanten Array in der Application Unit machen
   note group Note2
   {
     attr Bounds = <20,500,310,630>;
   }
 
-  $rect <40,540,240,580>
+  $rect <40,570,240,610>
   method color getColor( arg int32 aCircuitNumber )
   {
     switch ( aCircuitNumber )
@@ -297,13 +298,13 @@ class DeviceClass : Templates::DeviceClass
   // Anwenderseitige Events
   note group Note3
   {
-    attr Bounds = <460,40,1390,530>;
+    attr Bounds = <460,40,1390,490>;
   }
 
   // Konfiguration
   note group Note
   {
-    attr Bounds = <900,80,1330,510>;
+    attr Bounds = <900,80,1330,460>;
   }
 
   $rect <920,400,1120,440>
@@ -417,6 +418,44 @@ class DeviceClass : Templates::DeviceClass
       BSCSetNumHoles(aX,aY);
     } 
     $endif
+  }
+
+  $rect <480,310,680,350>
+  property bool WellViewEnabled = true;
+
+  $rect <680,310,880,350>
+  onset WellViewEnabled
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure WellViewEnabled == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure WellViewEnabled = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^WellViewEnabled;
   }
 }
 
@@ -820,10 +859,10 @@ $rect <720,60,920,100>
 $output false
 const int32 I_TR = 0;
 
-// SetPositionIndizes
+// SetPositionIndex
 note group Note3
 {
-  attr Bounds = <660,20,960,230>;
+  attr Bounds = <660,20,960,240>;
 }
 
 $rect <720,100,920,140>

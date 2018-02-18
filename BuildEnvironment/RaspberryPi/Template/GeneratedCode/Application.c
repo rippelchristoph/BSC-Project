@@ -108,21 +108,23 @@ static const unsigned int _StringsDefault0[] =
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault1[] =
 {
-  0x000002DC, /* ratio 50.82 % */
+  0x00000340, /* ratio 51.44 % */
   0xB8000D00, 0x80000452, 0x18D8005A, 0x6062B004, 0x00470041, 0x46200194, 0x00370022,
   0x02980040, 0x8D458D20, 0x047E3A64, 0x80212460, 0xA4E6003A, 0xA2C67004, 0xD00031CA,
   0x1223B800, 0x2D8F4863, 0x48F458D7, 0x8BCEE327, 0x70220D3E, 0xC2A11068, 0x8E0D2B17,
   0x62D10A20, 0x351889C5, 0x1138F472, 0x2B308024, 0xBAB95E35, 0x005567B2, 0x31BC0056,
   0xC58DB289, 0x1A313FA8, 0xE234C18C, 0xA540A7C4, 0x121AFC8A, 0x1420CFAA, 0xE9B572BB,
   0x914CCF53, 0xF59E632F, 0x002E3759, 0x2B0B5C27, 0xA3D13B44, 0x0902005A, 0xD6600516,
-  0x00C94460, 0xE9EC8884, 0xB7CB67D5, 0xA4AA3583, 0x5DEE784A, 0xCAB17EA0, 0xA2756854,
-  0x275B9F1C, 0x0F68542A, 0x40DB1980, 0x6CFC6251, 0x2C4FB1D8, 0x0803753E, 0x4F8B31A9,
-  0xCA612229, 0xA5BC29EC, 0x878FAC46, 0x113C4662, 0x069E800F, 0xDCD53023, 0xD31C2578,
-  0xB15001AC, 0x803B1D68, 0x1B814C02, 0xF8D98F44, 0x165AA67A, 0xC4887F4A, 0xD9EFC2A2,
-  0xADF41699, 0x93ECF3B2, 0x98F6F140, 0x07514C03, 0x692A44E0, 0xEF499F65, 0x42C3F661,
-  0x03543D91, 0xC7C83000, 0xF9664694, 0xDB029066, 0x5899C801, 0xC1841940, 0x90A00085,
-  0xBD166C16, 0x7E4693D6, 0x6051E4D1, 0x91A5D932, 0x28900941, 0xB10B711C, 0x0B0A50F7,
-  0x001018F5, 0x00000000
+  0x42A61E60, 0xEAF4F644, 0xC1DBE5B3, 0x2552551A, 0x502EF73C, 0x2A6558BF, 0x8E513AB4,
+  0x1513ADCF, 0xC007B42A, 0x28A06D4C, 0xEC367A31, 0x9F1627D8, 0xD48401B9, 0x14A7C598,
+  0xF6653091, 0x2352DE0C, 0x0628B456, 0x800D945A, 0x2BD6DE5F, 0xD007263D, 0x9547A353,
+  0x700371DD, 0x47AE11AD, 0x007BBF8D, 0xE81C01B0, 0xD5C50070, 0xC769F0E3, 0xD6DB6BA2,
+  0xEAC4565B, 0xA1C2C53A, 0x11661D92, 0x142DDC1E, 0xA93F6601, 0xAB694704, 0x80C54001,
+  0x00541A05, 0xC849BF53, 0x06167154, 0x4C7FC5A8, 0x001D3121, 0x60741A0B, 0x06F50580,
+  0x310A87DE, 0x0E419837, 0x44D88530, 0x92A44D28, 0x342E2856, 0x2C3F8061, 0x3543D914,
+  0x87030000, 0x56646A01, 0x8029066F, 0x899B4A20, 0x18419405, 0x7451A530, 0xDB06198D,
+  0xE46A0578, 0x01DF4D17, 0x1A5D9DB0, 0x93809419, 0x1417B927, 0xE43E3700, 0x050B42DF,
+  0x00000004, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -298,20 +300,20 @@ static const XStringRes _Const00A8 = { _StringsDefault1, 0x005F };
 static const XStringRes _Const00A9 = { _StringsDefault1, 0x0090 };
 static const XStringRes _Const00AA = { _StringsDefault1, 0x0096 };
 static const XRect _Const00AB = {{ 670, 439 }, { 790, 469 }};
-static const XStringRes _Const00AC = { _StringsDefault1, 0x00DD };
-static const XStringRes _Const00AD = { _StringsDefault1, 0x00E5 };
+static const XStringRes _Const00AC = { _StringsDefault1, 0x010F };
+static const XStringRes _Const00AD = { _StringsDefault1, 0x0117 };
 static const XRect _Const00AE = {{ 70, 230 }, { 760, 300 }};
 static const XRect _Const00AF = {{ 70, 300 }, { 760, 360 }};
 static const XRect _Const00B0 = {{ 70, 360 }, { 760, 420 }};
 static const XRect _Const00B1 = {{ 10, 10 }, { 790, 430 }};
 static const XRect _Const00B2 = {{ 20, 240 }, { 60, 290 }};
-static const XStringRes _Const00B3 = { _StringsDefault1, 0x00F6 };
+static const XStringRes _Const00B3 = { _StringsDefault1, 0x0128 };
 static const XRect _Const00B4 = {{ 20, 300 }, { 60, 350 }};
-static const XStringRes _Const00B5 = { _StringsDefault1, 0x00FB };
+static const XStringRes _Const00B5 = { _StringsDefault1, 0x012D };
 static const XRect _Const00B6 = {{ 20, 360 }, { 60, 410 }};
-static const XStringRes _Const00B7 = { _StringsDefault1, 0x0100 };
+static const XStringRes _Const00B7 = { _StringsDefault1, 0x0132 };
 static const XRect _Const00B8 = {{ 550, 439 }, { 650, 469 }};
-static const XStringRes _Const00B9 = { _StringsDefault1, 0x0105 };
+static const XStringRes _Const00B9 = { _StringsDefault1, 0x0137 };
 static const XRect _Const00BA = {{ 20, 40 }, { 480, 110 }};
 static const XRect _Const00BB = {{ 20, 110 }, { 480, 180 }};
 static const XRect _Const00BC = {{ 20, 180 }, { 480, 250 }};
@@ -321,23 +323,23 @@ static const XRect _Const00BF = {{ 20, 390 }, { 480, 460 }};
 static const XRect _Const00C0 = {{ 590, 270 }, { 770, 459 }};
 static const XRect _Const00C1 = {{ 610, 130 }, { 750, 190 }};
 static const XRect _Const00C2 = {{ 590, 190 }, { 770, 220 }};
-static const XStringRes _Const00C3 = { _StringsDefault1, 0x010D };
+static const XStringRes _Const00C3 = { _StringsDefault1, 0x013F };
 static const XRect _Const00C4 = {{ 590, 230 }, { 770, 260 }};
-static const XStringRes _Const00C5 = { _StringsDefault1, 0x011E };
+static const XStringRes _Const00C5 = { _StringsDefault1, 0x0150 };
 static const XRect _Const00C6 = {{ 30, 0 }, { 55, 25 }};
-static const XStringRes _Const00C7 = { _StringsDefault1, 0x012C };
+static const XStringRes _Const00C7 = { _StringsDefault1, 0x015E };
 static const XRect _Const00C8 = {{ 0, 0 }, { 25, 25 }};
 static const XRect _Const00C9 = {{ 0, 0 }, { 160, 50 }};
 static const XRect _Const00CA = {{ 0, 0 }, { 160, 20 }};
 static const XRect _Const00CB = {{ 0, 0 }, { 90, 20 }};
 static const XRect _Const00CC = {{ 80, 20 }, { 98, 40 }};
-static const XStringRes _Const00CD = { _StringsDefault1, 0x0131 };
-static const XStringRes _Const00CE = { _StringsDefault1, 0x0137 };
+static const XStringRes _Const00CD = { _StringsDefault1, 0x0163 };
+static const XStringRes _Const00CE = { _StringsDefault1, 0x0169 };
 static const XRect _Const00CF = {{ 0, 0 }, { 120, 30 }};
 static const XPoint _Const00D0 = { 0, 30 };
 static const XPoint _Const00D1 = { 120, 30 };
 static const XPoint _Const00D2 = { 120, 0 };
-static const XStringRes _Const00D3 = { _StringsDefault1, 0x013F };
+static const XStringRes _Const00D3 = { _StringsDefault1, 0x0171 };
 static const XRect _Const00D4 = {{ 0, 0 }, { 140, 30 }};
 static const XPoint _Const00D5 = { 140, 30 };
 static const XPoint _Const00D6 = { 140, 0 };
@@ -353,9 +355,9 @@ static const XRect _Const00DF = {{ 60, 0 }, { 100, 30 }};
 static const XRect _Const00E0 = {{ 0, 0 }, { 100, 34 }};
 static const XRect _Const00E1 = {{ 330, 110 }, { 470, 170 }};
 static const XRect _Const00E2 = {{ 440, 260 }, { 650, 469 }};
-static const XStringRes _Const00E3 = { _StringsDefault1, 0x0149 };
-static const XStringRes _Const00E4 = { _StringsDefault1, 0x0161 };
-static const XStringRes _Const00E5 = { _StringsDefault1, 0x016A };
+static const XStringRes _Const00E3 = { _StringsDefault1, 0x017B };
+static const XStringRes _Const00E4 = { _StringsDefault1, 0x0193 };
+static const XStringRes _Const00E5 = { _StringsDefault1, 0x019C };
 static const XRect _Const00E6 = {{ 260, 110 }, { 300, 160 }};
 static const XRect _Const00E7 = {{ 260, 170 }, { 300, 220 }};
 static const XRect _Const00E8 = {{ 330, 170 }, { 470, 230 }};
@@ -5973,6 +5975,20 @@ void ApplicationConfig_onBtn_OkCancel( ApplicationConfig _this, XObject sender )
     DeviceDeviceClass_OnSetSampleVolume( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
     ), EwStringParseInt32( ApplicationATextEditor_OnGetString( &_this->ConfigSampleVolume.TextEditor 
     ), 200, 10 ));
+
+    if (( EwStringParseInt32( ApplicationATextEditor_OnGetString( &_this->ConfigNumHoles.TextEditorX 
+        ), 6, 10 ) == 6 ) && ( EwStringParseInt32( ApplicationATextEditor_OnGetString( 
+        &_this->ConfigNumHoles.TextEditorY ), 8, 10 ) == 8 ))
+    {
+      DeviceDeviceClass_OnSetWellViewEnabled( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
+      ), 1 );
+    }
+    else
+    {
+      DeviceDeviceClass_OnSetWellViewEnabled( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
+      ), 0 );
+    }
+
     DeviceDeviceClass_SetPosition( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
     ), 3, _this->ConfigWaste.XSlider.CurrentValue, _this->ConfigWaste.YSlider.CurrentValue, 
     _this->ConfigWaste.ZSlider.CurrentValue );
