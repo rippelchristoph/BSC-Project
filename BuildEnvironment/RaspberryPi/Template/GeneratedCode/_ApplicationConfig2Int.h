@@ -156,6 +156,10 @@ void ApplicationConfig2Int_OnSetTitle( ApplicationConfig2Int _this, XString valu
 /* 'C' function for method : 'Application::Config2Int.onBtnNext()' */
 void ApplicationConfig2Int_onBtnNext( ApplicationConfig2Int _this, XObject sender );
 
+/* 'C' function for method : 'Application::Config2Int.onChangeTextEditor()' */
+void ApplicationConfig2Int_onChangeTextEditor( ApplicationConfig2Int _this, XObject 
+  sender );
+
 #ifdef __cplusplus
   }
 #endif

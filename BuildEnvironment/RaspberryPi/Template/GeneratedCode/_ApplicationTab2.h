@@ -150,9 +150,12 @@ EW_DEFINE_FIELDS( ApplicationTab2, CoreGroup )
   EW_OBJECT  ( WellLabelE,      ApplicationWellLabel )
   EW_OBJECT  ( WellLabelF,      ApplicationWellLabel )
   EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
-  EW_ARRAY   ( WellLabelArray,  ApplicationWellLabel, [6])
+  EW_ARRAY   ( WellLabelArrayX, ApplicationWellLabel, [6])
   EW_OBJECT  ( SampleCollected, CoreSystemEventHandler )
   EW_OBJECT  ( Logo,            ViewsWarpImage )
+  EW_OBJECT  ( NumHolesXObserver, CorePropertyObserver )
+  EW_OBJECT  ( NumHolesYObserver, CorePropertyObserver )
+  EW_ARRAY   ( WellLabelArrayY, ApplicationWellLabel, [8])
 EW_END_OF_FIELDS( ApplicationTab2 )
 
 /* Virtual Method Table (VMT) for the class : 'Application::Tab2' */
@@ -222,6 +225,14 @@ void ApplicationTab2_onNewWell( ApplicationTab2 _this, XObject sender );
 /* This slot method is executed when the associated system event handler 'SystemEventHandler' 
    receives an event. */
 void ApplicationTab2_onSampleCollected( ApplicationTab2 _this, XObject sender );
+
+/* This slot method is executed when the associated property observer 'PropertyObserver' 
+   is notified. */
+void ApplicationTab2_onNumHolesX( ApplicationTab2 _this, XObject sender );
+
+/* This slot method is executed when the associated property observer 'PropertyObserver' 
+   is notified. */
+void ApplicationTab2_onNumHolesY( ApplicationTab2 _this, XObject sender );
 
 #ifdef __cplusplus
   }

@@ -100,6 +100,22 @@ class Application : Core::Root
   {
     Outline.ScrollOffset.x=-800;
   }
+
+  $rect <810,130,1010,170>
+  object Core::PropertyObserver WellViewEnabledObserver
+  {
+    preset OnEvent = onWellViewEnabled;
+    preset Outlet = ^Device::Device.WellViewEnabled;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <1010,130,1210,170>
+  slot onWellViewEnabled
+  {
+    WellObj.Enabled=Device::Device.WellViewEnabled;
+    WellObj.Visible=Device::Device.WellViewEnabled;
+  }
 }
 
 $rect <130,120,330,160>
@@ -702,7 +718,7 @@ class Tab2 : Core::Group
   }
 
   // Writes the given Time in the chosen WellPart
-  $rect <1210,300,1410,340>
+  $rect <820,350,1020,390>
   method void timeToWellPart( arg int32 aCircuitNumber, arg int32 aColumn, arg int32 aRow, arg string aTime )
   {
     WellPartArray[aColumn,aRow].TimeProperty=aTime;
@@ -772,101 +788,101 @@ class Tab2 : Core::Group
   object Application::WellLabel WellLabel
   {
     preset Bounds = <70,10,140,50>;
-    preset TextString = "1";
+    preset TextString = "Y1";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabel1
   {
     preset Bounds = <140,10,210,50>;
-    preset TextString = "2";
+    preset TextString = "Y2";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabel2
   {
     preset Bounds = <210,10,280,50>;
-    preset TextString = "3";
+    preset TextString = "Y3";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabel3
   {
     preset Bounds = <280,10,350,50>;
-    preset TextString = "4";
+    preset TextString = "Y4";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabel4
   {
     preset Bounds = <350,10,420,50>;
-    preset TextString = "5";
+    preset TextString = "Y5";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabel5
   {
     preset Bounds = <420,10,490,50>;
-    preset TextString = "6";
+    preset TextString = "Y6";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabel6
   {
     preset Bounds = <490,10,560,50>;
-    preset TextString = "7";
+    preset TextString = "Y7";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabel7
   {
     preset Bounds = <560,10,630,50>;
-    preset TextString = "8";
+    preset TextString = "Y8";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelA
   {
     preset Bounds = <0,60,70,100>;
-    preset TextString = "A";
+    preset TextString = "X1";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelB
   {
     preset Bounds = <0,130,70,170>;
-    preset TextString = "B";
+    preset TextString = "X2";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelC
   {
     preset Bounds = <0,200,70,240>;
-    preset TextString = "C";
+    preset TextString = "X3";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelD
   {
     preset Bounds = <0,270,70,310>;
-    preset TextString = "D";
+    preset TextString = "X4";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelE
   {
     preset Bounds = <0,340,70,380>;
-    preset TextString = "E";
+    preset TextString = "X5";
   }
 
   $rect <20,20,160,60>
   object Application::WellLabel WellLabelF
   {
     preset Bounds = <0,410,70,450>;
-    preset TextString = "F";
+    preset TextString = "X6";
   }
 
-  $rect <820,190,1020,230>
+  $rect <820,180,1020,220>
   object Core::PropertyObserver NewWellObserver
   {
     preset OnEvent = onNewWell;
@@ -875,7 +891,7 @@ class Tab2 : Core::Group
 
   // This slot method is executed when the associated property observer 'PropertyObserver' \
   // is notified.
-  $rect <1020,190,1220,230>
+  $rect <1020,180,1220,220>
   slot onNewWell
   {
     var int32 r;
@@ -890,7 +906,7 @@ class Tab2 : Core::Group
   }
 
   $rect <1030,80,1230,120>
-  array Application::WellLabel WellLabelArray[ 6 ] =
+  array Application::WellLabel WellLabelArrayX[ 6 ] =
   (
     Default[0] = WellLabelA;
     Default[1] = WellLabelB;
@@ -929,6 +945,151 @@ class Tab2 : Core::Group
     preset Point1 = <730,10>;
     preset Bitmap = Application::Logo;
   }
+
+  $rect <820,220,1020,260>
+  object Core::PropertyObserver NumHolesXObserver
+  {
+    preset OnEvent = onNumHolesX;
+    preset Outlet = ^Device::Device.NumHolesX;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <1020,220,1220,260>
+  slot onNumHolesX
+  {
+    var int32 y;
+    var int32 x;
+
+    //Make all WellParts Visible
+    for(y=0; y<8; y=y+1){
+        for(x=0; x<6; x=x+1){
+          WellPartArray[y,x].Visible=true;
+        } 
+
+    }
+
+    //Make all WellLabel Visible
+    for(x=0; x<6; x=x+1){
+          WellLabelArrayX[x].Visible=true;
+    }
+
+    for(y=0; y<8; y=y+1){
+          WellLabelArrayY[y].Visible=true;
+    }  
+
+
+
+    if(Device::Device.WellViewEnabled){
+
+      //Disable WellLabel
+      for(x=Device::Device.NumHolesX; x<6; x=x+1){
+          WellLabelArrayX[x].Visible=false;
+      }
+
+      for(y=Device::Device.NumHolesY; y<8; y=y+1){
+          WellLabelArrayY[y].Visible=false;
+      }
+
+
+      //Disable in X direction
+      for(y=0; y<8; y=y+1){
+        for(x=Device::Device.NumHolesX; x<6; x=x+1){
+          WellPartArray[y,x].Visible=false;
+        } 
+
+      }
+
+      //Disable in Y Direction
+      for(x=0; x<6; x=x+1){
+        for(y=Device::Device.NumHolesY; y<8; y=y+1){
+          WellPartArray[y,x].Visible=false;
+       
+        } 
+
+      }
+
+    }
+  }
+
+  $rect <820,260,1020,300>
+  object Core::PropertyObserver NumHolesYObserver
+  {
+    preset OnEvent = onNumHolesY;
+    preset Outlet = ^Device::Device.NumHolesY;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <1020,260,1220,300>
+  slot onNumHolesY
+  {
+    var int32 y;
+    var int32 x;
+
+    //Make all WellParts Visible
+    for(y=0; y<8; y=y+1){
+        for(x=0; x<6; x=x+1){
+          WellPartArray[y,x].Visible=true;
+        } 
+
+    }
+
+    //Make all WellLabel Visible
+    for(x=0; x<6; x=x+1){
+          WellLabelArrayX[x].Visible=true;
+    }
+
+    for(y=0; y<8; y=y+1){
+          WellLabelArrayY[y].Visible=true;
+    }  
+
+
+
+    if(Device::Device.WellViewEnabled){
+
+      //Disable WellLabel
+      for(x=Device::Device.NumHolesX; x<6; x=x+1){
+          WellLabelArrayX[x].Visible=false;
+      }
+
+      for(y=Device::Device.NumHolesY; y<8; y=y+1){
+          WellLabelArrayY[y].Visible=false;
+      }
+
+
+      //Disable in X direction
+      for(y=0; y<8; y=y+1){
+        for(x=Device::Device.NumHolesX; x<6; x=x+1){
+          WellPartArray[y,x].Visible=false;
+        } 
+
+      }
+
+      //Disable in Y Direction
+      for(x=0; x<6; x=x+1){
+        for(y=Device::Device.NumHolesY; y<8; y=y+1){
+          WellPartArray[y,x].Visible=false;
+       
+        } 
+
+      }
+
+    }
+  }
+
+  $rect <1030,120,1230,160>
+  array Application::WellLabel WellLabelArrayY[ 8 ] =
+  (
+    Default[0] = WellLabel;
+    Default[1] = WellLabel1;
+    Default[2] = WellLabel2;
+    Default[3] = WellLabel3;
+    Default[4] = WellLabel4;
+    Default[5] = WellLabel5;
+    Default[6] = WellLabel6;
+    Default[7] = WellLabel7;
+  );
 
   $reorder Rectangle 76
 }
@@ -3833,9 +3994,11 @@ class Config : Core::Group
 
 
     if(sender == Btn_Ok){
-      
-      Device::Device.SetNumHoles( ConfigNumHoles.TextEditorX.String.parse_int32( 6 ), ConfigNumHoles.TextEditorY.String.parse_int32( 8 ) );
 
+      Device::Device.NumHolesX=ConfigNumHoles.TextEditorX.String.parse_int32( 6 );
+      trace Device::Device.NumHolesX;
+      Device::Device.NumHolesY=ConfigNumHoles.TextEditorY.String.parse_int32( 8 );
+      trace Device::Device.NumHolesY;
       Device::Device.NeedleGap=ConfigNeedleGap.TextEditor.String.parse_int32( 1000 );
       
       Device::Device.WasteVolume=ConfigWasteVolume.TextEditor.String.parse_int32( 1000 );
@@ -3845,13 +4008,7 @@ class Config : Core::Group
       Device::Device.SampleVolume=ConfigSampleVolume.TextEditor.String.parse_int32(200);
 
       
-      //look if the WellView is Enabled 
-
-      if((ConfigNumHoles.TextEditorX.String.parse_int32( 6 )==6)&&(ConfigNumHoles.TextEditorY.String.parse_int32( 8 )==8)){
-        Device::Device.WellViewEnabled=true;
-      }else{
-        Device::Device.WellViewEnabled=false;
-      }
+     
 
 
       
@@ -4013,7 +4170,7 @@ class Config : Core::Group
   object Application::Config2Int ConfigNumHoles
   {
     preset Bounds = <0,0,800,480>;
-    preset Title = "Bitte geben sie die Anzahl der Wellöffnungen in X und Y Richtung an (Wellübersicht ist nur bei X=6 und Y=8 verfügbar)";
+    preset Title = "Bitte geben sie die Anzahl der Wellöffnungen in X und Y Richtung an (Wellübersicht ist nur bei X<=6 und Y<=8 verfügbar)";
   }
 }
 
@@ -7024,6 +7181,7 @@ class Config2Int : Core::Group
   {
     preset Bounds = <330,110,470,170>;
     preset Enabled = true;
+    preset OnChange = onChangeTextEditor;
     preset String = "6";
     preset Font = Flat::FontL;
   }
@@ -7086,7 +7244,19 @@ class Config2Int : Core::Group
   {
     preset Bounds = <330,170,470,230>;
     preset Enabled = true;
+    preset OnChange = onChangeTextEditor;
     preset String = "8";
     preset Font = Flat::FontL;
+  }
+
+  $rect <830,360,1030,400>
+  slot onChangeTextEditor
+  {
+    if(TextEditorY.String.parse_int32( 0)<1||TextEditorX.String.parse_int32( 0)<1){
+      Btn_Next.Enabled=false;
+    }else{
+      Btn_Next.Enabled=true;
+    }
+
   }
 }

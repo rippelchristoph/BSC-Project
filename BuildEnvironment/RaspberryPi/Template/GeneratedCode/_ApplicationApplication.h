@@ -100,6 +100,7 @@ EW_DEFINE_FIELDS( ApplicationApplication, CoreRoot )
   EW_OBJECT  ( MainMenu,        ApplicationTab1 )
   EW_OBJECT  ( WellObj,         ApplicationTab2 )
   EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
+  EW_OBJECT  ( WellViewEnabledObserver, CorePropertyObserver )
 EW_END_OF_FIELDS( ApplicationApplication )
 
 /* Virtual Method Table (VMT) for the class : 'Application::Application' */
@@ -139,6 +140,11 @@ void ApplicationApplication_Init( ApplicationApplication _this, XHandle aArg );
 /* This slot method is executed when the associated property observer 'PropertyObserver' 
    is notified. */
 void ApplicationApplication_onNewWell( ApplicationApplication _this, XObject sender );
+
+/* This slot method is executed when the associated property observer 'PropertyObserver' 
+   is notified. */
+void ApplicationApplication_onWellViewEnabled( ApplicationApplication _this, XObject 
+  sender );
 
 #ifdef __cplusplus
   }

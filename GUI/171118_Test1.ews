@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::Config;
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,56>;
-attr codeInspector = Application::Config.onBtn_OkCancel;
-attr codeSelEnd = <40,65>;
-attr codeSelStart = <40,65>;
+attr codeFirstPos = <0,18>;
+attr codeInspector = Device::DeviceClass.OnSetNumHolesY;
+attr codeSelEnd = <42,24>;
+attr codeSelStart = <42,24>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -57,9 +57,9 @@ view class Application::Application
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = onNewWell;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeInspector = onWellViewEnabled;
+  attr codeSelEnd = <15,1>;
+  attr codeSelStart = <15,1>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -71,8 +71,8 @@ view class Application::Config
   attr codeColSelect = false;
   attr codeFirstPos = <0,47>;
   attr codeInspector = onBtn_OkCancel;
-  attr codeSelEnd = <135,49>;
-  attr codeSelStart = <135,49>;
+  attr codeSelEnd = <49,51>;
+  attr codeSelStart = <49,51>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -108,10 +108,10 @@ view class Application::ControllMenu
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,17>;
-  attr codeInspector = onSampleCollected;
-  attr codeSelEnd = <2,25>;
-  attr codeSelStart = <2,25>;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = OnSetWellViewEnabled;
+  attr codeSelEnd = <0,6>;
+  attr codeSelStart = <0,6>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -135,7 +135,20 @@ view class Application::Config2Int
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtnNext;
+  attr codeInspector = onChangeTextEditor;
+  attr codeSelEnd = <74,0>;
+  attr codeSelStart = <74,0>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::Tab2
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = onNumHolesY;
   attr codeSelEnd = <0,0>;
   attr codeSelStart = <0,0>;
   attr enableGrid = true;

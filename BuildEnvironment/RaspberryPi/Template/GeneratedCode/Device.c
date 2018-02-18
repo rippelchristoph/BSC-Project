@@ -35,7 +35,7 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x000003D0, /* ratio 48.36 % */
+  0x000003D4, /* ratio 48.16 % */
   0xB8002300, 0x80000452, 0x00C20029, 0x0E000368, 0xCA003600, 0xE002B000, 0x750043CD,
   0xA0044616, 0x058020C3, 0x70020B03, 0xC0CEF1B2, 0x1A21108D, 0x20D210F4, 0x01093A42,
   0x130001C8, 0x0E8642A1, 0xE001A621, 0x0019C006, 0x00B40020, 0x4F09200A, 0xDA671B9A,
@@ -51,8 +51,8 @@ static const unsigned int _StringsDefault0[] =
   0x6A2088DA, 0xBF649A41, 0x4CD1954D, 0x13D44933, 0x245A104C, 0xB6144C21, 0x227153D5,
   0x8757F53E, 0xD0D105CE, 0xA8193A90, 0x7A3A8E10, 0x307A80F4, 0x4C133429, 0x46651D98,
   0xE4193F56, 0x5C465440, 0x08499164, 0x44912439, 0x4106F59F, 0x74296B54, 0x651446E3,
-  0x1E6C2096, 0x491BF95D, 0x91767A5F, 0xE4C44744, 0x44126F50, 0x48001D05, 0x449105B4,
-  0xD4485E12, 0x86922108, 0x9E848800, 0x01A2D1E8, 0x00000001, 0x00000000
+  0x1E6C2096, 0x491BF95D, 0x91767A5F, 0xE4C44744, 0x8A6E6F50, 0x48001D04, 0x449105B4,
+  0x66D89E12, 0xA9F67B54, 0x9221A026, 0x010011E6, 0x00000001, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -90,7 +90,7 @@ static const XStringRes _Const001E = { _StringsDefault0, 0x01A3 };
 static const XStringRes _Const001F = { _StringsDefault0, 0x01B1 };
 static const XStringRes _Const0020 = { _StringsDefault0, 0x01C1 };
 static const XStringRes _Const0021 = { _StringsDefault0, 0x01CF };
-static const XStringRes _Const0022 = { _StringsDefault0, 0x01E1 };
+static const XStringRes _Const0022 = { _StringsDefault0, 0x01DD };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
@@ -464,18 +464,6 @@ void DeviceDeviceClass_OnSetNeedleGap( DeviceDeviceClass _this, XInt32 value )
     ), 0 );
 }
 
-/* 'C' function for method : 'Device::DeviceClass.SetNumHoles()' */
-void DeviceDeviceClass_SetNumHoles( DeviceDeviceClass _this, XInt32 aX, XInt32 aY )
-{
-  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
-  EW_UNUSED_ARG( _this );
-
-  EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0021 
-    ), EwNewStringInt( aX, 0, 10 )), EwLoadString( &_Const0022 )), EwNewStringInt( 
-    aY, 0, 10 )));
-  BSCSetNumHoles(aX,aY);
-}
-
 /* 'C' function for method : 'Device::DeviceClass.OnSetWellViewEnabled()' */
 void DeviceDeviceClass_OnSetWellViewEnabled( DeviceDeviceClass _this, XBool value )
 {
@@ -500,6 +488,54 @@ void DeviceDeviceClass_OnSetWellViewEnabled( DeviceDeviceClass _this, XBool valu
   }
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetWellViewEnabled, 
     DeviceDeviceClass_OnSetWellViewEnabled ), 0 );
+}
+
+/* 'C' function for method : 'Device::DeviceClass.OnSetNumHolesY()' */
+void DeviceDeviceClass_OnSetNumHolesY( DeviceDeviceClass _this, XInt32 value )
+{
+  if ( _this->NumHolesY == value )
+    return;
+
+  _this->NumHolesY = value;
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0021 ), EwNewStringInt( _this->NumHolesY, 
+    0, 10 )));
+
+  if (( _this->NumHolesX < 7 ) && ( _this->NumHolesY < 9 ))
+  {
+    DeviceDeviceClass_OnSetWellViewEnabled( _this, 1 );
+  }
+  else
+  {
+    DeviceDeviceClass_OnSetWellViewEnabled( _this, 0 );
+  }
+
+  BSCSetNumHolesY(value);
+  EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNumHolesY, DeviceDeviceClass_OnSetNumHolesY 
+    ), 0 );
+}
+
+/* 'C' function for method : 'Device::DeviceClass.OnSetNumHolesX()' */
+void DeviceDeviceClass_OnSetNumHolesX( DeviceDeviceClass _this, XInt32 value )
+{
+  if ( _this->NumHolesX == value )
+    return;
+
+  _this->NumHolesX = value;
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0022 ), EwNewStringInt( _this->NumHolesX, 
+    0, 10 )));
+
+  if (( _this->NumHolesX < 7 ) && ( _this->NumHolesY < 9 ))
+  {
+    DeviceDeviceClass_OnSetWellViewEnabled( _this, 1 );
+  }
+  else
+  {
+    DeviceDeviceClass_OnSetWellViewEnabled( _this, 0 );
+  }
+
+  BSCSetNumHolesX(value);
+  EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNumHolesX, DeviceDeviceClass_OnSetNumHolesX 
+    ), 0 );
 }
 
 /* Default onget method for the property 'SampleVolume' */
@@ -548,6 +584,18 @@ XInt32 DeviceDeviceClass_OnGetNeedleGap( DeviceDeviceClass _this )
 XBool DeviceDeviceClass_OnGetWellViewEnabled( DeviceDeviceClass _this )
 {
   return _this->WellViewEnabled;
+}
+
+/* Default onget method for the property 'NumHolesY' */
+XInt32 DeviceDeviceClass_OnGetNumHolesY( DeviceDeviceClass _this )
+{
+  return _this->NumHolesY;
+}
+
+/* Default onget method for the property 'NumHolesX' */
+XInt32 DeviceDeviceClass_OnGetNumHolesX( DeviceDeviceClass _this )
+{
+  return _this->NumHolesX;
 }
 
 /* Variants derived from the class : 'Device::DeviceClass' */
