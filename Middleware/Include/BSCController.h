@@ -52,6 +52,7 @@ typedef struct BSCController {
 	TSampler* Sampler;
 	DeviceDeviceClass EwDeviceObject;
 	time_t LastUpdate;
+	char* WorkingDirectory;
 } TBSCController;
 
 /****************************************************************************
@@ -114,9 +115,9 @@ BSCReadConfiguration (
  ****************************************************************************/
 
 PUBLIC void
-	  BSCWriteConfiguration(
-		  TBSCConfig * aConfiguration,
-		  char *       aFilePath);
+BSCWriteConfiguration (
+  TBSCConfig * aConfiguration,
+  char *       aFilePath );
 
 
 /****************************************************************************

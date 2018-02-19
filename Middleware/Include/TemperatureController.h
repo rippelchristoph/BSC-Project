@@ -4,39 +4,33 @@
  * Written by Jakob Zuchna
  *
  ****************************************************************************
- * FILE: i2c.h
- *
- *   DESCRIPTION:
- *
- *
- *   PUBLIC FUNCTIONS: UARTInit(); UARTTransmit(); UARTReceive();
+ * FILE: TemperatureController.h
  *
  * PUBLIC FUNCTIONS:
- *   newI2C
- *   destroyI2C
- *   I2CReadBytes
- *   I2CWriteBytes
+ *   newTemperatureController
+ *   destroyTemperatureController
+ *   ProcessTemperatureController
  ****************************************************************************/
 
-#ifndef I2C_H
-#define I2C_H
-
+#ifndef TEMPERATURECONTROLLER_H
+#define TEMPERATURECONTROLLER_H
 
 
 /****************************************************************************
-* SECTION: #include
-****************************************************************************/
+ * SECTION: #include
+ ****************************************************************************/
 #include "HtlStdDef.h"
-/****************************************************************************
-* SECTION: #define
-****************************************************************************/
+#include "BSCCommonTypes.h"
+#include "TemperatureReader.h"
 
 /****************************************************************************
-* SECTION: typedef
-****************************************************************************/
-typedef struct I2C {
-	int file;
-}TI2C;
+ * SECTION: typedef
+ ****************************************************************************/
+typedef struct TemperatureController {
+	TTemperatureReader* TempReader;
+	double Hysteresis;
+	double SetValue;
+}TTemperatureController;
 
 
 #ifdef __cplusplus
@@ -46,44 +40,32 @@ typedef struct I2C {
 
 
 /****************************************************************************
- * FUNCTION: newI2C
+ * FUNCTION: newTemperatureController
  ****************************************************************************/
 
-PUBLIC TI2C *
-newI2C (
-  unsigned char aAddr,
-	int aI2CNumber);
+PUBLIC TTemperatureController *
+newTemperatureController (
+  unsigned char aSensorAddress,
+  double        aHysteresis,
+  double        aSetValue );
 
 
 /****************************************************************************
- * FUNCTION: destroyI2C
+ * FUNCTION: destroyTemperatureController
  ****************************************************************************/
 
 PUBLIC TBoolean
-destroyI2C (
-  TI2C * aI2C );
+destroyTemperatureController (
+  TTemperatureController * aTempContr );
 
 
 /****************************************************************************
- * FUNCTION: I2CReadBytes
+ * FUNCTION: ProcessTemperatureController
  ****************************************************************************/
 
 PUBLIC TBoolean
-I2CReadBytes (
-  TI2C *          aI2C,
-  unsigned char * aBuffer,
-  int             aLength );
-
-
-/****************************************************************************
- * FUNCTION: I2CWriteBytes
- ****************************************************************************/
-
-PUBLIC TBoolean
-I2CWriteBytes (
-  TI2C *          aI2C,
-  unsigned char * aBuffer,
-  int             aLength );
+ProcessTemperatureController (
+  TTemperatureController * aTempContr );
 
 
 
@@ -91,7 +73,7 @@ I2CWriteBytes (
   }
 #endif
 
-#endif /* I2C_H */
+#endif /* TEMPERATURECONTROLLER_H */
 
 /* This Headerfile was generated with C2H.exe ( C2H ) */
 /* (c) 2006 by TARA Systems GmbH Munich */

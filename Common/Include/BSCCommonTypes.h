@@ -48,6 +48,7 @@ typedef struct BSCConfig {
 	int WaistPosZMM;
 
 	double WaistVolUL;
+	double ProbeVolUL;
 	double FlowULPS;
 	double NeedleGapMM;
 

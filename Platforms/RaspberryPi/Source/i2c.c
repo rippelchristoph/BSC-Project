@@ -28,6 +28,7 @@
 #include <sys/ioctl.h>			//Needed for I2C port
 #include <linux/i2c-dev.h>		//Needed for I2C port
 #include <stdlib.h>
+#include <string.h>
 
 /** HEADER ******************************************************************
  */
@@ -78,24 +79,37 @@ typedef struct I2C {
  ****************************************************************************/
 PUBLIC TI2C *
 newI2C (
-  unsigned char aAddr )
+  unsigned char aAddr,
+  int           aI2CNumber )
 {
 	TI2C* retPtr = malloc(sizeof(TI2C));
 	
 	//----- OPEN THE I2C BUS -----
-	char *filename = (char*)"/dev/i2c-1";
-	if ((retPtr->file = open(filename, O_RDWR)) < 0)
+	char filename[50];
+	switch (aI2CNumber)
 	{
-		//ERROR HANDLING: you can check errno to see what went wrong
-
+	case 0:
+		strcpy(filename, "/dev/i2c-1");
+		break;
+	case 1:
+		strcpy(filename, "/dev/i2c-2"); //-2 Nicht sicher???
+		break;
+	default:
+		free(retPtr);
 		return NULL;
 	}
 
-	        //<<<<<The I2C address of the slave
+	if ((retPtr->file = open(filename, O_RDWR)) < 0)
+	{
+		//ERROR HANDLING: you can check errno to see what went wrong
+		free(retPtr);
+		return NULL;
+	}
+
 	if (ioctl(retPtr->file, I2C_SLAVE, aAddr) < 0)
 	{
-		
 		//ERROR HANDLING; you can check errno to see what went wrong
+		free(retPtr);
 		return NULL;
 	}
 
@@ -109,8 +123,11 @@ PUBLIC TBoolean
 destroyI2C (
   TI2C * aI2C )
 {
-	free(aI2C);
-	
+	if (aI2C != NULL) {
+		close(aI2C->file);
+		free(aI2C);
+	}
+
 	return ETRUE;
 }
 
@@ -125,7 +142,9 @@ I2CReadBytes (
   int             aLength )
 {
 	//----- READ BYTES -----
-	if (read(aI2C->file, aBuffer, aLength) != aLength)		//read() returns the number of bytes actually read, if it doesn't match then an error occurred (e.g. no response from the device)
+	//read() returns the number of bytes actually read, 
+	//if it doesn't match then an error occurred (e.g. no response from the device)
+	if (read(aI2C->file, aBuffer, aLength) != aLength)		
 	{
 		return EFALSE;
 	}

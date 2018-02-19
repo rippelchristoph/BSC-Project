@@ -37,7 +37,6 @@
 #include <string.h>
 #include <stdio.h>
 
-#include "i2c.h"
 
 
 /** HEADER ******************************************************************
@@ -69,6 +68,7 @@ typedef struct BSCController {
 	TSampler* Sampler;
 	DeviceDeviceClass EwDeviceObject;
 	time_t LastUpdate;
+	char* WorkingDirectory;
 } TBSCController;
 
 /****************************************************************************
@@ -92,6 +92,7 @@ const char * const ConfigSyntaxWords[] = {
 	"WAISTPOSXMM",
 	"WAISTPOSZMM",
 	"WAISTVOLUL",
+	"PROBEVOLUL",
 	"FLOWULPS",
 	"NEEDLEGAPMM",
 	"STARTPOSXMM",
@@ -146,19 +147,27 @@ newBSCController ( void )
 	retPtr = malloc(sizeof(TBSCController));
 	time(&retPtr->LastUpdate);
 	retPtr->Orders = newOrderController();
-	//retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well);
-	//
-	////retPtr->Configuration = malloc(sizeof(TBSCConfig));
-	////BSCReadConfiguration(retPtr->Configuration, NULL); //TODO: Configuration Path
-	////
-	////Allocate Storage for multidimensional array
-	//retPtr->Well = malloc(retPtr->Configuration->NWellX * sizeof(TWellData*));
-	//for (i = 0; i < retPtr->Configuration->NWellX; i++) {
-	//	retPtr->Well[i] = malloc(retPtr->Configuration->NWellY * sizeof(TWellData));
-	//	for (j = 0; j < retPtr->Configuration->NWellY; j++) {
-	//		retPtr->Well[i][j].Status = EMPTY;
-	//	}
-	//}
+
+	retPtr->WorkingDirectory = strdup("/home/pi/Desktop");
+
+	char ConfigPath[80];
+	strcpy(ConfigPath, retPtr->WorkingDirectory);
+	strcat(ConfigPath, "/Configuration.txt");
+	retPtr->Configuration = malloc(sizeof(TBSCConfig));
+	BSCReadConfiguration(retPtr->Configuration, ConfigPath);
+	
+
+	//Allocate Storage for multidimensional array
+	retPtr->Well = malloc(retPtr->Configuration->NumHolesX * sizeof(TWellData*));
+	for (i = 0; i < retPtr->Configuration->NumHolesX; i++) {
+		retPtr->Well[i] = malloc(retPtr->Configuration->NumHolesY * sizeof(TWellData));
+		for (j = 0; j < retPtr->Configuration->NumHolesY; j++) {
+			retPtr->Well[i][j].Status = EMPTY;
+		}
+	}
+
+	
+	retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well);
 
 	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, DeviceDeviceClass);
 
@@ -187,7 +196,7 @@ destroyBSCController (
 			free(aController->Configuration);
 
 		if (aController->Well != NULL) {
-			for (i = 0; i < aController->Configuration->NWellX; i++) {
+			for (i = 0; i < aController->Configuration->NumHolesX; i++) {
 				free(aController->Well[i]);
 			}
 
@@ -256,33 +265,36 @@ BSCReadConfiguration (
 					aConfiguration->WaistVolUL = dNumber;
 					break;
 				case 4:
-					aConfiguration->FlowULPS = dNumber;
+					aConfiguration->ProbeVolUL = dNumber;
 					break;
 				case 5:
-					aConfiguration->NeedleGapMM = dNumber;
+					aConfiguration->FlowULPS = dNumber;
 					break;
 				case 6:
-					aConfiguration->StartPosXMM = dNumber;
+					aConfiguration->NeedleGapMM = dNumber;
 					break;
 				case 7:
-					aConfiguration->StartPosYMM = dNumber;
+					aConfiguration->StartPosXMM = dNumber;
 					break;
 				case 8:
-					aConfiguration->StartPosZMM = dNumber;
+					aConfiguration->StartPosYMM = dNumber;
 					break;
 				case 9:
-					aConfiguration->EndPosXMM = dNumber;
+					aConfiguration->StartPosZMM = dNumber;
 					break;
 				case 10:
-					aConfiguration->EndPosYMM = dNumber;
+					aConfiguration->EndPosXMM = dNumber;
 					break;
 				case 11:
-					aConfiguration->EndPosZMM = dNumber;
+					aConfiguration->EndPosYMM = dNumber;
 					break;
 				case 12:
-					aConfiguration->NumHolesX = dNumber;
+					aConfiguration->EndPosZMM = dNumber;
 					break;
 				case 13:
+					aConfiguration->NumHolesX = dNumber;
+					break;
+				case 14:
 					aConfiguration->NumHolesY = dNumber;
 					break;
 				default:
