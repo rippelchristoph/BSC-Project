@@ -26,7 +26,6 @@ typedef enum WellStatus {
 * _TYPE: WellData
 *****************************************************************************/
 typedef struct WellData {
-	struct tm* Timestamp;
 	EWellStatus Status;
 	int Origin;
 } TWellData;

@@ -17,6 +17,9 @@
  * SECTION: typedef
  ****************************************************************************/
 typedef struct Sample {
-	
+	time_t Time;
+	int aCiruitNumber;
+	int WellPosX;
+	int WellPosY;
 }TSample;
 #endif // !1

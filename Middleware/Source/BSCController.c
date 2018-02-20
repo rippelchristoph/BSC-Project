@@ -51,11 +51,9 @@
 #include "Device.h"
 #include "OrderController.h"
 #include "Sampler.h"
+#include "Logger.h"
 #include <time.h>
 
-  /****************************************************************************
-  * SECTION: #define
-  ****************************************************************************/
 
   /****************************************************************************
   * SECTION: typedef
@@ -63,6 +61,7 @@
 
 typedef struct BSCController {
 	TBSCConfig* Configuration;
+	TLogger* Logger;
 	TWellData** Well;
 	TOrderController* Orders;
 	TSampler* Sampler;
@@ -150,6 +149,8 @@ newBSCController ( void )
 
 	retPtr->WorkingDirectory = strdup("/home/pi/Desktop");
 
+	retPtr->Logger = newLogger(retPtr->WorkingDirectory);
+	
 	char ConfigPath[80];
 	strcpy(ConfigPath, retPtr->WorkingDirectory);
 	strcat(ConfigPath, "/Configuration.txt");

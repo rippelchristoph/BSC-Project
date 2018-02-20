@@ -35,11 +35,9 @@
 #include "Device.h"
 #include "OrderController.h"
 #include "Sampler.h"
+#include "Logger.h"
 #include <time.h>
 
-  /****************************************************************************
-  * SECTION: #define
-  ****************************************************************************/
 
   /****************************************************************************
   * SECTION: typedef
@@ -47,6 +45,7 @@
 
 typedef struct BSCController {
 	TBSCConfig* Configuration;
+	TLogger* Logger;
 	TWellData** Well;
 	TOrderController* Orders;
 	TSampler* Sampler;
