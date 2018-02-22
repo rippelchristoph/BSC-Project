@@ -13,8 +13,9 @@
  * PUBLIC FUNCTIONS:
  *   newPlotter
  *   PLTSendCommand
- *   PLTSendCommandAndOK
  *   PLTHomeAxis
+ *   PLTHomeYAxis
+ *   PLTGoTo
  ****************************************************************************/
 
 #ifndef PLOTTERCONTROLLER_H
@@ -25,8 +26,9 @@
  * SECTION: #include
  ****************************************************************************/
 #include "HtlStdDef.h"
-#include "SerialConnection.h"
 #include "BSCCommonTypes.h"
+#include "SerialConnection.h"
+
 
 /****************************************************************************
 * SECTION: #define
@@ -54,11 +56,8 @@
 * Y Axis is the axis in which the ground Plate is moving
 ****************************************************************************/
 typedef struct Plotter {
-	UARTFilestream filestream;
+	TSerialConnection* filestream;
 	TBSCConfig* aConfiguration;
-
-
-
 } TPlotter;
 
 
@@ -95,20 +94,6 @@ PLTSendCommand (
 
 
 /****************************************************************************
- * FUNCTION: PLTSendCommandAndOK
- *
- *   DESCRIPTION:
- *     Sends a Command to the Plotter and waits until it returns "ok" if
- *     something else is returned the Function returns False
- ****************************************************************************/
-
-PUBLIC void
-PLTSendCommandAndOK (
-  TPlotter * aPlotter,
-  char *     aCommand );
-
-
-/****************************************************************************
  * FUNCTION: PLTHomeAxis
  *
  *   DESCRIPTION:
@@ -123,6 +108,27 @@ PLTSendCommandAndOK (
 PUBLIC void
 PLTHomeAxis (
   TPlotter * aPlotter );
+
+
+/****************************************************************************
+ * FUNCTION: PLTHomeYAxis
+ ****************************************************************************/
+
+PUBLIC void
+PLTHomeYAxis (
+  TPlotter * aPlotter );
+
+
+/****************************************************************************
+ * FUNCTION: PLTGoTo
+ ****************************************************************************/
+
+PUBLIC void
+PLTGoTo (
+  TPlotter * aPlotter,
+  double     aX,
+  double     aY,
+  double     aZ );
 
 
 

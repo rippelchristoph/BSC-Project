@@ -21,6 +21,7 @@
  *   ListAdd
  *   ListSetReadPointer
  *   ListGetNext
+ *   ListGetByIndex
  *   ListRemoveByIndex
  *   ListRemoveByDataPointer
  *   ListIsNotEmty
@@ -236,6 +237,18 @@ ListGetNext (
 	}
 
 	return retPtr->Data;
+}
+
+/****************************************************************************
+ * FUNCTION: ListGetByIndex
+ ****************************************************************************/
+PUBLIC void *
+ListGetByIndex (
+  TListHeader * aList,
+  int           aIndex )
+{
+	ListSetReadPointer(aList, aIndex);
+	return ListGetNext(aList);
 }
 
 /****************************************************************************

@@ -78,7 +78,8 @@ newSerialConnection (
  ****************************************************************************/
 
 PUBLIC TBoolean
-destroySerialConnection ( void );
+destroySerialConnection (
+  TSerialConnection * aSerialConnection );
 
 
 /****************************************************************************
@@ -109,7 +110,7 @@ SerialSendBytes (
 PUBLIC int
 SerialReadBytes (
   TSerialConnection * aStream,
-  char *              aBuffer,
+  unsigned char *              aBuffer,
   int                 aSize );
 
 

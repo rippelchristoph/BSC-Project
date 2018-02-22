@@ -15,6 +15,9 @@
  *   destroySampler
  *   SamplerAddToQueue
  *   ProcessSampler
+ *   SamplerStartConfig
+ *   SamplerEndConfig
+ *   SamplerConfigSetPlotter
  *
  * PRIVATE FUNCTIONS:
  *   EnterStateWait
@@ -39,6 +42,8 @@
  *   StateDrawerClose
  *   EnterStateERROR
  *   StateERROR
+ *   GetNextHoleX
+ *   GetNextHoleY
  ****************************************************************************/
 
 /****************************************************************************
@@ -46,7 +51,10 @@
  ****************************************************************************/
 
 #include <stdlib.h>
-#include "BSCController.h"
+#include "DigIO.h"
+#include <time.h>
+
+#define MILLION 1000000
 
 /** HEADER ******************************************************************
  */
@@ -79,9 +87,12 @@ typedef enum SamplerStates {
 	BackOut,
 	DrawerClose,
 
+	Config,
+
 	Sampler_ERROR
 }ESamplerStates;
  
+
  /****************************************************************************
  *	_TYPE: TSampler
  ****************************************************************************/
@@ -91,8 +102,9 @@ typedef struct Sampler {
 	TListHeader* Queue;
 	ESamplerStates State;
 	TWellData** Well;
-	time_t* Time;
+	struct timespec* Timestamp;
 	char* ErrorMessage;
+	int ConfX, ConfY, ConfZ;
 }TSampler;
 
 #endif
@@ -180,7 +192,7 @@ PRIVATE void
 EnterStateDrawerClose (
   TSampler *                    aSampler );
 
-PRIVATE void
+PRIVATE int
 StateDrawerClose (
   TSampler *                    aSampler );
 
@@ -190,6 +202,14 @@ EnterStateERROR (
 
 PRIVATE void
 StateERROR (
+  TSampler *                    aSampler );
+
+PRIVATE int
+GetNextHoleX (
+  TSampler *                    aSampler );
+
+PRIVATE int
+GetNextHoleY (
   TSampler *                    aSampler );
 
 
@@ -212,7 +232,8 @@ newSampler (
 	TSampler* retSampler;
 	retSampler = malloc(sizeof(TSampler));
 
-	retSampler->Time = malloc(sizeof(time_t));
+	retSampler->Timestamp = malloc(sizeof(struct timespec));
+	timespec_get(retSampler->Timestamp, TIME_UTC);
 	retSampler->Well = aWell;
 	retSampler->Queue = newList();
 	retSampler->Plotter = newPlotter();
@@ -239,7 +260,7 @@ destroySampler (
 		free(retInt);
 	}
 	destroyList(aSampler->Queue);
-	free(aSampler->Time);
+	free(aSampler->Timestamp);
 
 	free(aSampler);
 }
@@ -275,6 +296,7 @@ PUBLIC int
 ProcessSampler (
   TSampler * aSampler )
 {
+	int retVal = -1;
 	switch (aSampler->State)
 	{
 	case Wait:
@@ -302,7 +324,7 @@ ProcessSampler (
 		StateFlow(aSampler);
 		break;
 	case BackOut:
-		StateBackOut(aSampler);
+		retVal = StateBackOut(aSampler);
 		break;
 	case DrawerClose:
 		StateDrawerClose(aSampler);
@@ -310,10 +332,83 @@ ProcessSampler (
 	case Sampler_ERROR:
 		StateERROR(aSampler);
 		break;
+	case Config:
+		break;
 	default:
 		break;
 	}
 	return ETRUE;
+}
+
+/****************************************************************************
+ * FUNCTION: SamplerStartConfig
+ ****************************************************************************/
+PUBLIC void
+SamplerStartConfig (
+  TSampler * aSampler )
+{
+	int* retPtr;
+	while (retPtr = ListRemoveByIndex(aSampler->Queue, 0) != NULL)
+		free(retPtr);
+
+
+	aSampler->State = Config;
+	DigIOCloseCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
+	PLTGoTo(aSampler->Plotter,
+		-1.0,
+		-1.0,
+		aSampler->Config->MovingPosZMM);
+
+	PLTHomeYAxis(aSampler->Plotter);
+	PLTHomeAxis(aSampler);
+	timespec_get(aSampler->Timestamp, TIME_UTC);
+	aSampler->Timestamp->tv_sec -= 10;
+}
+
+/****************************************************************************
+ * FUNCTION: SamplerEndConfig
+ ****************************************************************************/
+PUBLIC void
+SamplerEndConfig (
+  TSampler * aSampler )
+{
+	PLTGoTo(aSampler->Plotter,
+		-1.0,
+		-1.0,
+		aSampler->Config->MovingPosZMM);
+
+	PLTHomeYAxis(aSampler->Plotter);
+	PLTHomeAxis(aSampler->Plotter);
+
+	EnterStateWait(aSampler);
+}
+
+/****************************************************************************
+ * FUNCTION: SamplerConfigSetPlotter
+ ****************************************************************************/
+PUBLIC void
+SamplerConfigSetPlotter (
+  TSampler * aSampler,
+  int        aX,
+  int        aY,
+  int        aZ )
+{
+	aSampler->ConfX = aX;
+	aSampler->ConfY = aY;
+	aSampler->ConfZ = aZ;
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
+
+	if (aSampler->Timestamp->tv_sec < now.tv_sec) {
+		if (aSampler->State == Config) {
+			PLTGoTo(aSampler->Plotter,
+				aX, aY, aZ);
+		}
+		else {
+			return;
+		}
+	}
+	return;
 }
 
 /****************************************************************************
@@ -332,12 +427,7 @@ PRIVATE void
 EnterStateWait (
   TSampler * aSampler )
 {
-	//TODO: Ventile Schalten
 	aSampler->State = Wait;
-	if (aSampler->Plotter == NULL) {
-		EnterStateERROR(aSampler);
-	}
-	
 }
 
 /****************************************************************************
@@ -369,7 +459,10 @@ PRIVATE void
 EnterStateHome (
   TSampler * aSampler )
 {
-	//TODO: Send Home Commands to 3d Plotter
+	PLTSendCommand(aSampler->Plotter, HOMEX);
+	PLTSendCommand(aSampler->Plotter, HOMEY);
+	PLTSendCommand(aSampler->Plotter, HOMEZ);
+	timespec_get(aSampler->Timestamp, TIME_UTC);
 }
 
 /****************************************************************************
@@ -383,10 +476,11 @@ PRIVATE void
 StateHome (
   TSampler * aSampler )
 {
-	if (EFALSE) {//Ok from Printer
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
+	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
 		EnterStateWaistPos(aSampler);
-	}	
-	//TODO Check for ok´s for homes
+	}
 }
 
 /****************************************************************************
@@ -400,7 +494,13 @@ PRIVATE void
 EnterStateWaistPos (
   TSampler * aSampler )
 {
-	//Plotter go to WaistPos
+	PLTGoTo(aSampler->Plotter,
+		aSampler->Config->WaistPosXMM,
+		-1.0,
+		aSampler->Config->WaistPosZMM);
+
+	//Don´t use Y Axis (-1.0)
+	timespec_get(aSampler->Timestamp, TIME_UTC);
 }
 
 /****************************************************************************
@@ -414,7 +514,9 @@ PRIVATE void
 StateWaistPos (
   TSampler * aSampler )
 {
-	if (EFALSE) { //Ok from Plotter
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
+	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
 		EnterStateWaist(aSampler);
 	}
 }
@@ -430,8 +532,8 @@ PRIVATE void
 EnterStateWaist (
   TSampler * aSampler )
 {
-	//Open Valves
-	time(aSampler->Time);
+	DigIOOpenCircuit( *((int*) ListGetByIndex(aSampler->Queue, 0)));
+	timespec_get(aSampler->Timestamp, TIME_UTC);
 }
 
 /****************************************************************************
@@ -445,11 +547,17 @@ PRIVATE void
 StateWaist (
   TSampler * aSampler )
 {
-	time_t now;
-	time(&now);
 
-	if ((now - *(aSampler->Time)) > 5) {
-		//Close Valves
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
+
+	long waistTimeMS = 1000 * ((aSampler->Config->WaistVolUL) / (aSampler->Config->FlowULPS));
+
+	long elapsedTimeMS = ((now.tv_nsec / MILLION) + (now.tv_sec * 1000)) -
+		((aSampler->Timestamp->tv_nsec / MILLION) + (aSampler->Timestamp->tv_sec * 1000));
+
+
+	if (elapsedTimeMS >= waistTimeMS) {
 		EnterStateOverPos(aSampler);
 	}
 }
@@ -464,7 +572,14 @@ PRIVATE void
 EnterStateOverPos (
   TSampler * aSampler )
 {
-	//Send Plotter Command to go to Over Pos
+	DigIOCloseCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
+	
+	PLTGoTo(aSampler->Plotter,
+		aSampler->Config->StartPosXMM,
+		-1.0,
+		aSampler->Config->MovingPosZMM);
+
+	timespec_get(aSampler->Timestamp, TIME_UTC);
 }
 
 /****************************************************************************
@@ -478,7 +593,9 @@ PRIVATE void
 StateOverPos (
   TSampler * aSampler )
 {
-	if (EFALSE) { //Potter OK?
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
+	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
 		EnterStateDrawerOpen(aSampler);
 	}
 }
@@ -493,7 +610,21 @@ PRIVATE void
 EnterStateDrawerOpen (
   TSampler * aSampler )
 {
-	//Send Plotter Command to open Cooler Drawer
+	TBSCConfig* c = aSampler->Config;
+	double XPos = 0, YPos = 0;
+	XPos =	c->StartPosXMM + (double) GetNextHoleX(aSampler) * 
+		((c->EndPosXMM - c->StartPosXMM) / ((double)c->NumHolesX));
+
+	YPos = c->StartPosYMM + (double)GetNextHoleY(aSampler) *
+		((c->EndPosYMM - c->StartPosYMM) / ((double)c->NumHolesY));
+
+
+	PLTGoTo(aSampler->Plotter,
+		XPos,
+		YPos,
+		-1.0);
+
+	timespec_get(aSampler->Timestamp, TIME_UTC);
 }
 
 /****************************************************************************
@@ -507,8 +638,10 @@ PRIVATE void
 StateDrawerOpen (
   TSampler * aSampler )
 {
-	if (EFALSE) { //Plotter Ok?
-		EnterStateDropPos(aSampler);
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
+	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
+		EnterStateDrawerOpen(aSampler);
 	}
 }
 /****************************************************************************
@@ -522,7 +655,19 @@ PRIVATE void
 EnterStateDropPos (
   TSampler * aSampler )
 {
-	//Plotter Command to go to DropPos
+	TBSCConfig* c = aSampler->Config;
+	double ZPos = 0;
+
+	ZPos = c->StartPosZMM
+		+ GetNextHoleX(aSampler) * (c->EndPosZMM - c->StartPosZMM) / (double)c->NumHolesX	//X Correction
+		+ GetNextHoleY(aSampler) * (c->EndPosZMM - c->StartPosZMM) / (double)c->NumHolesY;	//Y Correction
+
+	PLTGoTo(aSampler->Plotter,
+		-1.0,
+		-1.0,
+		ZPos);
+
+	timespec_get(aSampler->Timestamp, TIME_UTC);
 }
 
 /****************************************************************************
@@ -536,8 +681,10 @@ PRIVATE void
 StateDropPos (
   TSampler * aSampler )
 {
-	if (EFALSE) { //Plotter Ok?
-		EnterStateFlow(aSampler);
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
+	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
+		EnterStateDrawerOpen(aSampler);
 	}
 }
 /****************************************************************************
@@ -551,8 +698,8 @@ PRIVATE void
 EnterStateFlow (
   TSampler * aSampler )
 {
-	//Open Valves
-	time(aSampler->Time);
+	DigIOOpenCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
+	timespec_get(aSampler->Timestamp, TIME_UTC);
 }
 
 /****************************************************************************
@@ -566,10 +713,16 @@ PRIVATE void
 StateFlow (
   TSampler * aSampler )
 {
-	time_t now;
-	time(&now);
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
 
-	if ((now - *(aSampler->Time)) > 5) {
+	long waistTimeMS = 1000 * ((aSampler->Config->ProbeVolUL) / (aSampler->Config->FlowULPS));
+
+	long elapsedTimeMS = ((now.tv_nsec / MILLION) + (now.tv_sec * 1000)) -
+		((aSampler->Timestamp->tv_nsec / MILLION) + (aSampler->Timestamp->tv_sec * 1000));
+
+
+	if (elapsedTimeMS >= waistTimeMS) {
 		EnterStateBackOut(aSampler);
 	}
 }
@@ -584,7 +737,15 @@ PRIVATE void
 EnterStateBackOut (
   TSampler * aSampler )
 {
-	//Send Plotter Command
+	DigIOCloseCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
+	PLTGoTo(aSampler->Plotter,
+		-1.0,
+		-1.0,
+		aSampler->Config->MovingPosZMM);
+	
+	
+
+	timespec_get(aSampler->Timestamp, TIME_UTC);
 }
 
 /****************************************************************************
@@ -594,13 +755,21 @@ EnterStateBackOut (
  *     Function is called periodically when the State is 'Wait' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
-PRIVATE void
+PRIVATE int
 StateBackOut (
   TSampler * aSampler )
 {
-	if (EFALSE) { //Plotter Ok?
+	struct timespec now;
+	int* retPtr;
+	int retVal = -1;
+	timespec_get(&now, TIME_UTC);
+	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
+		retPtr = ListRemoveByIndex(aSampler->Queue, 0);
+		retVal = *retPtr;
+		free(retPtr);
 		EnterStateDrawerClose(aSampler);
 	}
+	return retVal;
 }
 /****************************************************************************
  * FUNCTION: EnterStateDrawerClose
@@ -613,7 +782,10 @@ PRIVATE void
 EnterStateDrawerClose (
   TSampler * aSampler )
 {
-	//Send Plotter Command
+	PLTHomeAxis(aSampler->Plotter);
+	//Order: YXZ
+
+	timespec_get(aSampler->Timestamp, TIME_UTC);
 }
 
 /****************************************************************************
@@ -623,11 +795,13 @@ EnterStateDrawerClose (
  *     Function is called periodically when the State is 'Wait' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
-PRIVATE void
+PRIVATE int
 StateDrawerClose (
   TSampler * aSampler )
 {
-	if (EFALSE) { //Plotter Ok?
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
+	if (now.tv_sec - 15 > aSampler->Timestamp->tv_sec) {
 		EnterStateWait(aSampler);
 	}
 }
@@ -657,3 +831,40 @@ StateERROR (
 {
 
 }
+
+/****************************************************************************
+ * FUNCTION: GetNextHoleX
+ ****************************************************************************/
+PRIVATE int
+GetNextHoleX (
+  TSampler * aSampler )
+{
+	int i = 0, j = 0;
+	for (; i < aSampler->Config->NumHolesX; i++) {
+		for (; j < aSampler->Config->NumHolesY; j++) {
+			if (aSampler->Well[i][j].Status == EMPTY) {
+				return i;
+			}
+		}
+	}
+	return -1;
+}
+
+/****************************************************************************
+ * FUNCTION: GetNextHoleY
+ ****************************************************************************/
+PRIVATE int
+GetNextHoleY (
+  TSampler * aSampler )
+{
+	int i = 0, j = 0;
+	for (; i < aSampler->Config->NumHolesX; i++) {
+		for (; j < aSampler->Config->NumHolesY; j++) {
+			if (aSampler->Well[i][j].Status == EMPTY) {
+				return j;
+			}
+		}
+	}
+	return -1;
+}
+

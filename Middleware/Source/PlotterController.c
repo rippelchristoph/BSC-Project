@@ -13,8 +13,9 @@
  * PUBLIC FUNCTIONS:
  *   newPlotter
  *   PLTSendCommand
- *   PLTSendCommandAndOK
  *   PLTHomeAxis
+ *   PLTHomeYAxis
+ *   PLTGoTo
  ****************************************************************************/
 
 /****************************************************************************
@@ -63,7 +64,7 @@
 * Y Axis is the axis in which the ground Plate is moving
 ****************************************************************************/
 typedef struct Plotter {
-	TSerialConnection filestream;
+	TSerialConnection* filestream;
 	TBSCConfig* aConfiguration;
 } TPlotter;
 
@@ -104,10 +105,14 @@ PUBLIC TPlotter *
 newPlotter ( void )
 {
 	TPlotter* retPlot = malloc(sizeof(TPlotter));
-	retPlot->filestream = newSerialConnection("/dev/serial", 256000);
+	retPlot->filestream = newSerialConnection("/dev/ttyUSB0", 256000);
 
 	PLTSendCommand(retPlot, SET_UNIT_MM);
 	PLTSendCommand(retPlot, ABSOLUTE_POS);
+	PLTSendCommand(retPlot, HOMEX);
+	PLTSendCommand(retPlot, HOMEY);
+	PLTSendCommand(retPlot, HOMEZ);
+
 
 	return retPlot;
 }
@@ -119,7 +124,7 @@ newPlotter ( void )
  *     Sends a Command to the Plotter
  ****************************************************************************/
 PUBLIC void
-PLTSendCommand(
+PLTSendCommand (
   TPlotter * aPlotter,
   char *     aCommand )
 {
@@ -127,26 +132,7 @@ PLTSendCommand(
 	strcpy(sendString, aCommand);
 	strcat(sendString, "\r\n");
 
-	//UARTSendBytes(aPlotter->filestream, sendString, strlen(sendString));
-}
-
-/****************************************************************************
- * FUNCTION: PLTSendCommandAndOK
- *
- *   DESCRIPTION:
- *     Sends a Command to the Plotter and waits until it returns "ok" if
- *     something else is returned the Function returns False
- ****************************************************************************/
-
-PUBLIC void
-PLTSendCommandAndOK (
-  TPlotter * aPlotter,
-  char *     aCommand )
-{
-	/*char aString[30];*/
-	PLTSendCommand(aPlotter, aCommand);
-	//UARTReceiveBytes(aPlotter->filestream, aString);
-
+	SerialSendBytes(aPlotter->filestream, sendString);
 }
 
 /****************************************************************************
@@ -164,15 +150,49 @@ PUBLIC void
 PLTHomeAxis (
   TPlotter * aPlotter )
 {
-	PLTSendCommandAndOK(aPlotter, HOMEX);
-	PLTSendCommandAndOK(aPlotter, HOMEY);
-	PLTSendCommandAndOK(aPlotter, HOMEZ);
-
+	PLTSendCommand(aPlotter, HOMEY);
+	PLTSendCommand(aPlotter, HOMEX);
+	PLTSendCommand(aPlotter, HOMEZ);
 }
 
+/****************************************************************************
+ * FUNCTION: PLTHomeYAxis
+ ****************************************************************************/
+PUBLIC void
+PLTHomeYAxis (
+  TPlotter * aPlotter )
+{
+	PLTSendCommand(aPlotter, HOMEY);
+}
 
+/****************************************************************************
+ * FUNCTION: PLTGoTo
+ ****************************************************************************/
+PUBLIC void
+PLTGoTo (
+  TPlotter * aPlotter,
+  double     aX,
+  double     aY,
+  double     aZ )
+{
+	char cmd[100];
+	char exp[50];
+	strcpy(cmd, CONTROLLED_MOVEMENT);
+	if (aX > 0.0) {
+		sprintf(exp, " X%lf", aX);
+		strcat(cmd, exp);
+	}
+	if (aY > 0.0) {
+		sprintf(exp, " Y%lf", aY);
+		strcat(cmd, exp);
+	}
+	if (aZ > 0.0) {
+		sprintf(exp, " Z%lf", aZ);
+		strcat(cmd, exp);
+	}
 
-
+	PLTSendCommand(aPlotter, cmd);
+}
 
 /****************************************************************************
  * SECTION: Implementation of private functions

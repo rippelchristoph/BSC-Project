@@ -15,6 +15,9 @@
  *   destroySampler
  *   SamplerAddToQueue
  *   ProcessSampler
+ *   SamplerStartConfig
+ *   SamplerEndConfig
+ *   SamplerConfigSetPlotter
  ****************************************************************************/
 
 #ifndef SAMPLER_H
@@ -48,9 +51,12 @@ typedef enum SamplerStates {
 	BackOut,
 	DrawerClose,
 
+	Config,
+
 	Sampler_ERROR
 }ESamplerStates;
  
+
  /****************************************************************************
  *	_TYPE: TSampler
  ****************************************************************************/
@@ -60,8 +66,9 @@ typedef struct Sampler {
 	TListHeader* Queue;
 	ESamplerStates State;
 	TWellData** Well;
-	time_t* Time;
+	struct timespec* Timestamp;
 	char* ErrorMessage;
+	int ConfX, ConfY, ConfZ;
 }TSampler;
 
 
@@ -127,6 +134,36 @@ SamplerAddToQueue (
 PUBLIC int
 ProcessSampler (
   TSampler * aSampler );
+
+
+/****************************************************************************
+ * FUNCTION: SamplerStartConfig
+ ****************************************************************************/
+
+PUBLIC void
+SamplerStartConfig (
+  TSampler * aSampler );
+
+
+/****************************************************************************
+ * FUNCTION: SamplerEndConfig
+ ****************************************************************************/
+
+PUBLIC void
+SamplerEndConfig (
+  TSampler * aSampler );
+
+
+/****************************************************************************
+ * FUNCTION: SamplerConfigSetPlotter
+ ****************************************************************************/
+
+PUBLIC void
+SamplerConfigSetPlotter (
+  TSampler * aSampler,
+  int        aX,
+  int        aY,
+  int        aZ );
 
 
 

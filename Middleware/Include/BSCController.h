@@ -21,6 +21,16 @@
  *   GetFormattedTime
  *   BSCAddOrder
  *   BSCRemoveOrder
+ *   BSCSetSampleVolume
+ *   BSCSetFlowSpeed
+ *   BSCSetWasteVolume
+ *   BSCSetNeedleGap
+ *   BSCSetNumHolesX
+ *   BSCSetNumHolesY
+ *   BSCSetPosition
+ *   BSCSetCurrentPosition
+ *   BSCStartConfig
+ *   BSCEndConfig
  ****************************************************************************/
 
 #ifndef BSCCONTROLLER_H
@@ -37,6 +47,11 @@
 #include "Sampler.h"
 #include "Logger.h"
 #include <time.h>
+
+#define CONFIG_STARTPOS 0
+#define CONFIG_ENDPOS 1
+#define CONFIG_WASTEPOS 2
+#define CONFIG_MOVINGPOS 3
 
 
   /****************************************************************************
@@ -110,7 +125,7 @@ BSCReadConfiguration (
  * PARAMETER:
  *   aConfiguration - The Configuration that is written
  *   aFilePath      - The Drectory the Configuration is written to e.g:
- *                    "C:\Data\Configuration.txt"
+ *                    "/Data/Configuration.txt"
  ****************************************************************************/
 
 PUBLIC void
@@ -177,6 +192,99 @@ PUBLIC void
 BSCRemoveOrder (
   int aInterval,
   int aOrigin );
+
+
+/****************************************************************************
+ * FUNCTION: BSCSetSampleVolume
+ ****************************************************************************/
+
+PUBLIC void
+BSCSetSampleVolume (
+  int aSampleVolUL );
+
+
+/****************************************************************************
+ * FUNCTION: BSCSetFlowSpeed
+ ****************************************************************************/
+
+PUBLIC void
+BSCSetFlowSpeed (
+  int aSpeedULPS );
+
+
+/****************************************************************************
+ * FUNCTION: BSCSetWasteVolume
+ ****************************************************************************/
+
+PUBLIC void
+BSCSetWasteVolume (
+  int aWastVolUL );
+
+
+/****************************************************************************
+ * FUNCTION: BSCSetNeedleGap
+ ****************************************************************************/
+
+PUBLIC void
+BSCSetNeedleGap (
+  int aNeedleGapum );
+
+
+/****************************************************************************
+ * FUNCTION: BSCSetNumHolesX
+ ****************************************************************************/
+
+PUBLIC void
+BSCSetNumHolesX (
+  int aNumHolesX );
+
+
+/****************************************************************************
+ * FUNCTION: BSCSetNumHolesY
+ ****************************************************************************/
+
+PUBLIC void
+BSCSetNumHolesY (
+  int aNumHolesY );
+
+
+/****************************************************************************
+ * FUNCTION: BSCSetPosition
+ ****************************************************************************/
+
+PUBLIC void
+BSCSetPosition (
+  int aIndex,
+  int aX,
+  int aY,
+  int aZ );
+
+
+/****************************************************************************
+ * FUNCTION: BSCSetCurrentPosition
+ ****************************************************************************/
+
+PUBLIC void
+BSCSetCurrentPosition (
+  int aX,
+  int aY,
+  int aZ );
+
+
+/****************************************************************************
+ * FUNCTION: BSCStartConfig
+ ****************************************************************************/
+
+PUBLIC void
+BSCStartConfig ( void );
+
+
+/****************************************************************************
+ * FUNCTION: BSCStopConfig
+ ****************************************************************************/
+
+PUBLIC void
+BSCStopConfig ( void );
 
 
 

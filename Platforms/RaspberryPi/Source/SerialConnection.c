@@ -139,12 +139,13 @@ newSerialConnection (
  ****************************************************************************/
 
 PUBLIC TBoolean
-destroySerialConnection ( TSerialConnection* aSerialConnection )
+destroySerialConnection (
+  TSerialConnection * aSerialConnection )
 {
 	if (aSerialConnection != NULL) {
 		tcdrain(aSerialConnection->serial_poll->fd);		//Flush Tx
 		tcflush(aSerialConnection->serial_poll->fd, TCIOFLUSH);	//Discard Rx
-		fclose(aSerialConnection->serial_poll->fd);
+	
 
 		if(aSerialConnection->Port!=NULL)
 			free(aSerialConnection->Port);
@@ -196,10 +197,10 @@ SerialSendBytes (
 PUBLIC int
 SerialReadBytes (
   TSerialConnection * aStream,
-  char *              aBuffer,
+  unsigned char *     aBuffer,
   int                 aSize )
 {
-	int c;
+	int c=0;
 	int retval = poll(aStream->serial_poll, 1, 200);
 	if (retval == -1) {
 		printf("An Error Occured while executing poll function\n");
@@ -211,7 +212,7 @@ SerialReadBytes (
 	}
 	else if (aStream->serial_poll->revents & POLLIN) {
 		c = read(aStream->serial_poll->fd, &aBuffer, aSize);
-
+		printf("Read Command Executed!\n");
 		if (c <= 0) {
 			printf("c = %d\n", c);
 		}
@@ -284,22 +285,6 @@ setupSerialPort (
 	/* now clean the modem line and activate the settings for the port */
 	tcflush(*aFd, TCIOFLUSH);
 	tcsetattr(*aFd, TCSANOW, &newtio);
-
-	/* enable rs485 direction control */
-	//if (_cl_rs485_delay >= 0) {
-	//	struct serial_rs485 rs485;
-	//	if (ioctl(_fd, TIOCGRS485, &rs485) < 0) {
-	//		printf("Error getting rs485 mode\n");
-	//	}
-	//	else {
-	//		rs485.flags |= SER_RS485_ENABLED | SER_RS485_RTS_ON_SEND | SER_RS485_RTS_AFTER_SEND;
-	//		rs485.delay_rts_after_send = _cl_rs485_delay;
-	//		rs485.delay_rts_before_send = 0;
-	//		if (ioctl(_fd, TIOCSRS485, &rs485) < 0) {
-	//			printf("Error setting rs485 mode\n");
-	//		}
-	//	}
-	//}
 }
 
 /****************************************************************************

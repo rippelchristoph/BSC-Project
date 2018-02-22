@@ -21,6 +21,7 @@
  *   ListAdd
  *   ListSetReadPointer
  *   ListGetNext
+ *   ListGetByIndex
  *   ListRemoveByIndex
  *   ListRemoveByDataPointer
  *   ListIsNotEmty
@@ -149,6 +150,15 @@ ListSetReadPointer (
 PUBLIC void *
 ListGetNext (
   TListHeader * aList );
+
+
+/****************************************************************************
+ * FUNCTION: ListGetByIndex
+ ****************************************************************************/
+
+PUBLIC void *
+ListGetByIndex (
+  TListHeader * aList, int aIndex );
 
 
 /****************************************************************************

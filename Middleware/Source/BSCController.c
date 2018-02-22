@@ -21,6 +21,16 @@
  *   GetFormattedTime
  *   BSCAddOrder
  *   BSCRemoveOrder
+ *   BSCSetSampleVolume
+ *   BSCSetFlowSpeed
+ *   BSCSetWasteVolume
+ *   BSCSetNeedleGap
+ *   BSCSetNumHolesX
+ *   BSCSetNumHolesY
+ *   BSCSetPosition
+ *   BSCSetCurrentPosition
+ *   BSCStartConfig
+ *   BSCStopConfig
  *
  * PRIVATE FUNCTIONS:
  *   UpdateRemainingTimes
@@ -53,6 +63,11 @@
 #include "Sampler.h"
 #include "Logger.h"
 #include <time.h>
+
+#define CONFIG_STARTPOS 0
+#define CONFIG_ENDPOS 1
+#define CONFIG_WASTEPOS 2
+#define CONFIG_MOVINGPOS 3
 
 
   /****************************************************************************
@@ -320,7 +335,7 @@ BSCReadConfiguration (
  * PARAMETER:
  *   aConfiguration - The Configuration that is written
  *   aFilePath      - The Drectory the Configuration is written to e.g:
- *                    "C:\Data\Configuration.txt"
+ *                    "/Data/Configuration.txt"
  ****************************************************************************/
 PUBLIC void
 BSCWriteConfiguration (
@@ -493,6 +508,126 @@ BSCRemoveOrder (
   int aOrigin )
 {
 	OrderControllerAddOrder(BSCController->Orders, (time_t)(aInterval * 60), aOrigin);
+}
+
+
+/****************************************************************************
+ * FUNCTION: BSCSetSampleVolume
+ ****************************************************************************/
+PUBLIC void
+BSCSetSampleVolume (
+  int aSampleVolUL )
+{
+	BSCController->Configuration->ProbeVolUL = aSampleVolUL;
+}
+/****************************************************************************
+ * FUNCTION: BSCSetFlowSpeed
+ ****************************************************************************/
+PUBLIC void
+BSCSetFlowSpeed (
+  int aSpeedULPS )
+{
+	BSCController->Configuration->FlowULPS = aSpeedULPS;
+}
+/****************************************************************************
+ * FUNCTION: BSCSetWasteVolume
+ ****************************************************************************/
+PUBLIC void
+BSCSetWasteVolume (
+  int aWastVolUL )
+{
+	BSCController->Configuration->WaistVolUL = aWastVolUL;
+}
+/****************************************************************************
+ * FUNCTION: BSCSetNeedleGap
+ ****************************************************************************/
+PUBLIC void
+BSCSetNeedleGap (
+  int aNeedleGapum )
+{
+	BSCController->Configuration->NeedleGapMM =(double) aNeedleGapum / (double) 1000;
+}
+/****************************************************************************
+ * FUNCTION: BSCSetNumHolesX
+ ****************************************************************************/
+PUBLIC void
+BSCSetNumHolesX (
+  int aNumHolesX )
+{
+	BSCController->Configuration->NumHolesX = aNumHolesX;
+}
+/****************************************************************************
+ * FUNCTION: BSCSetNumHolesY
+ ****************************************************************************/
+PUBLIC void
+BSCSetNumHolesY (
+  int aNumHolesY )
+{
+	BSCController->Configuration->NumHolesY = aNumHolesY;
+}
+/****************************************************************************
+ * FUNCTION: BSCSetPosition
+ ****************************************************************************/
+PUBLIC void
+BSCSetPosition (
+  int aIndex,
+  int aX,
+  int aY,
+  int aZ )
+{
+	switch (aIndex)
+	{
+	case CONFIG_STARTPOS:
+		BSCController->Configuration->StartPosXMM = aX;
+		BSCController->Configuration->StartPosYMM = aY;
+		BSCController->Configuration->StartPosZMM = aZ;
+		break;
+	case CONFIG_ENDPOS:
+		BSCController->Configuration->EndPosXMM = aX;
+		BSCController->Configuration->EndPosYMM = aY;
+		BSCController->Configuration->EndPosZMM = aZ;
+		break;
+	case CONFIG_WASTEPOS:
+		BSCController->Configuration->WaistPosXMM = aX;
+		BSCController->Configuration->WaistPosZMM = aZ;
+		break;
+	case CONFIG_MOVINGPOS:
+		BSCController->Configuration->MovingPosZMM = aZ;
+		break;
+	default:
+		break;
+	}
+}
+/****************************************************************************
+ * FUNCTION: BSCSetCurrentPosition
+ ****************************************************************************/
+PUBLIC void
+BSCSetCurrentPosition (
+  int aX,
+  int aY,
+  int aZ )
+{
+
+}
+/****************************************************************************
+ * FUNCTION: BSCStartConfig
+ ****************************************************************************/
+PUBLIC void
+BSCStartConfig ( void )
+{
+	SamplerStartConfig(BSCController->Sampler);
+}
+/****************************************************************************
+ * FUNCTION: BSCStopConfig
+ ****************************************************************************/
+PUBLIC void
+BSCStopConfig ( void )
+{
+	char directory[100];
+	strcpy(directory, BSCController->WorkingDirectory);
+	strcat(directory, "/Configuration.txt");
+	BSCWriteConfiguration(BSCController->Configuration, directory);
+	SamplerEndConfig(BSCController->Sampler);
 }
 
 /****************************************************************************
