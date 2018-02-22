@@ -27,6 +27,7 @@
 #include "ewlocale.h"
 #include "_CoreSystemEvent.h"
 #include "_DeviceDeviceClass.h"
+#include "_DeviceErrorContext.h"
 #include "_DeviceRemainingTimeContext.h"
 #include "_DeviceSampleCollectedContext.h"
 #include "_DeviceTimeContext.h"
@@ -35,7 +36,7 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x000003D4, /* ratio 48.16 % */
+  0x000003E8, /* ratio 47.20 % */
   0xB8002300, 0x80000452, 0x00C20029, 0x0E000368, 0xCA003600, 0xE002B000, 0x750043CD,
   0xA0044616, 0x058020C3, 0x70020B03, 0xC0CEF1B2, 0x1A21108D, 0x20D210F4, 0x01093A42,
   0x130001C8, 0x0E8642A1, 0xE001A621, 0x0019C006, 0x00B40020, 0x4F09200A, 0xDA671B9A,
@@ -52,7 +53,7 @@ static const unsigned int _StringsDefault0[] =
   0x8757F53E, 0xD0D105CE, 0xA8193A90, 0x7A3A8E10, 0x307A80F4, 0x4C133429, 0x46651D98,
   0xE4193F56, 0x5C465440, 0x08499164, 0x44912439, 0x4106F59F, 0x74296B54, 0x651446E3,
   0x1E6C2096, 0x491BF95D, 0x91767A5F, 0xE4C44744, 0x8A6E6F50, 0x48001D04, 0x449105B4,
-  0x66D89E12, 0xA9F67B54, 0x9221A026, 0x010011E6, 0x00000001, 0x00000000
+  0x66D89E12, 0xA9F67B54, 0xA621A026, 0xA475DFE6, 0x40400479, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -91,6 +92,7 @@ static const XStringRes _Const001F = { _StringsDefault0, 0x01B1 };
 static const XStringRes _Const0020 = { _StringsDefault0, 0x01C1 };
 static const XStringRes _Const0021 = { _StringsDefault0, 0x01CF };
 static const XStringRes _Const0022 = { _StringsDefault0, 0x01DD };
+static const XStringRes _Const0023 = { _StringsDefault0, 0x01EB };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
@@ -107,6 +109,7 @@ void DeviceDeviceClass__Init( DeviceDeviceClass _this, XObject aLink, XHandle aA
   CoreSystemEvent__Init( &_this->SampleCollectedEvent, &_this->_XObject, 0 );
   CoreSystemEvent__Init( &_this->RemainingTimeEvent, &_this->_XObject, 0 );
   CoreSystemEvent__Init( &_this->TimeEvent, &_this->_XObject, 0 );
+  CoreSystemEvent__Init( &_this->ErrorEvent, &_this->_XObject, 0 );
 
   /* Setup the VMT pointer */
   _this->_VMT = EW_CLASS( DeviceDeviceClass );
@@ -126,6 +129,7 @@ void DeviceDeviceClass__ReInit( DeviceDeviceClass _this )
   CoreSystemEvent__ReInit( &_this->SampleCollectedEvent );
   CoreSystemEvent__ReInit( &_this->RemainingTimeEvent );
   CoreSystemEvent__ReInit( &_this->TimeEvent );
+  CoreSystemEvent__ReInit( &_this->ErrorEvent );
 }
 
 /* Finalizer method for the class 'Device::DeviceClass' */
@@ -138,6 +142,7 @@ void DeviceDeviceClass__Done( DeviceDeviceClass _this )
   CoreSystemEvent__Done( &_this->SampleCollectedEvent );
   CoreSystemEvent__Done( &_this->RemainingTimeEvent );
   CoreSystemEvent__Done( &_this->TimeEvent );
+  CoreSystemEvent__Done( &_this->ErrorEvent );
 
   /* Don't forget to deinitialize the super class ... */
   TemplatesDeviceClass__Done( &_this->_Super );
@@ -149,6 +154,7 @@ void DeviceDeviceClass__Mark( DeviceDeviceClass _this )
   EwMarkObject( &_this->SampleCollectedEvent );
   EwMarkObject( &_this->RemainingTimeEvent );
   EwMarkObject( &_this->TimeEvent );
+  EwMarkObject( &_this->ErrorEvent );
 
   /* Give the super class a chance to mark its objects and references */
   TemplatesDeviceClass__Mark( &_this->_Super );
@@ -538,6 +544,32 @@ void DeviceDeviceClass_OnSetNumHolesX( DeviceDeviceClass _this, XInt32 value )
     ), 0 );
 }
 
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void DeviceDeviceClass_onError( DeviceDeviceClass _this, XString aErrorMessage )
+{
+  DeviceErrorContext context = EwNewObject( DeviceErrorContext, 0 );
+
+  DeviceErrorContext_OnSetErrorMessage( context, aErrorMessage );
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0023 ), aErrorMessage ));
+  CoreSystemEvent_Trigger( &_this->ErrorEvent, ((XObject)context ), 0 );
+}
+
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.onError()' */
+void DeviceDeviceClass__onError( void* _this, XString aErrorMessage )
+{
+  DeviceDeviceClass_onError((DeviceDeviceClass)_this, aErrorMessage );
+}
+
+/* 'C' function for method : 'Device::DeviceClass.StopConfig()' */
+void DeviceDeviceClass_StopConfig( DeviceDeviceClass _this )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( _this );
+
+  BSCStopConfig();
+}
+
 /* Default onget method for the property 'SampleVolume' */
 XInt32 DeviceDeviceClass_OnGetSampleVolume( DeviceDeviceClass _this )
 {
@@ -889,5 +921,59 @@ EW_END_OF_CLASS_VARIANTS( DeviceTimeContext )
 /* Virtual Method Table (VMT) for the class : 'Device::TimeContext' */
 EW_DEFINE_CLASS( DeviceTimeContext, XObject, "Device::TimeContext" )
 EW_END_OF_CLASS( DeviceTimeContext )
+
+/* Initializer for the class 'Device::ErrorContext' */
+void DeviceErrorContext__Init( DeviceErrorContext _this, XObject aLink, XHandle aArg )
+{
+  /* At first initialize the super class ... */
+  XObject__Init( &_this->_Super, aLink, aArg );
+
+  /* Setup the VMT pointer */
+  _this->_VMT = EW_CLASS( DeviceErrorContext );
+}
+
+/* Re-Initializer for the class 'Device::ErrorContext' */
+void DeviceErrorContext__ReInit( DeviceErrorContext _this )
+{
+  /* At first re-initialize the super class ... */
+  XObject__ReInit( &_this->_Super );
+}
+
+/* Finalizer method for the class 'Device::ErrorContext' */
+void DeviceErrorContext__Done( DeviceErrorContext _this )
+{
+  /* Finalize this class */
+  _this->_VMT = EW_CLASS( DeviceErrorContext );
+
+  /* Release all used strings */
+  EwReleaseString( &_this->ErrorMessage );
+
+  /* Don't forget to deinitialize the super class ... */
+  XObject__Done( &_this->_Super );
+}
+
+/* Garbage Collector method for the class 'Device::ErrorContext' */
+void DeviceErrorContext__Mark( DeviceErrorContext _this )
+{
+  /* Give the super class a chance to mark its objects and references */
+  XObject__Mark( &_this->_Super );
+}
+
+/* 'C' function for method : 'Device::ErrorContext.OnSetErrorMessage()' */
+void DeviceErrorContext_OnSetErrorMessage( DeviceErrorContext _this, XString value )
+{
+  if ( !EwCompString( _this->ErrorMessage, value ))
+    return;
+
+  EwRetainString( &_this->ErrorMessage, value );
+}
+
+/* Variants derived from the class : 'Device::ErrorContext' */
+EW_DEFINE_CLASS_VARIANTS( DeviceErrorContext )
+EW_END_OF_CLASS_VARIANTS( DeviceErrorContext )
+
+/* Virtual Method Table (VMT) for the class : 'Device::ErrorContext' */
+EW_DEFINE_CLASS( DeviceErrorContext, XObject, "Device::ErrorContext" )
+EW_END_OF_CLASS( DeviceErrorContext )
 
 /* Embedded Wizard */

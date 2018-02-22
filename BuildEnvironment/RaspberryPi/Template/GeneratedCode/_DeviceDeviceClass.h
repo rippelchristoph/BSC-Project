@@ -64,6 +64,7 @@ EW_DEFINE_FIELDS( DeviceDeviceClass, TemplatesDeviceClass )
   EW_PROPERTY( NeedleGap,       XInt32 )
   EW_PROPERTY( NumHolesY,       XInt32 )
   EW_PROPERTY( NumHolesX,       XInt32 )
+  EW_OBJECT  ( ErrorEvent,      CoreSystemEvent )
   EW_PROPERTY( WellViewEnabled, XBool )
   EW_PROPERTY( NewWell,         XBool )
 EW_END_OF_FIELDS( DeviceDeviceClass )
@@ -167,6 +168,19 @@ void DeviceDeviceClass_OnSetNumHolesY( DeviceDeviceClass _this, XInt32 value );
 
 /* 'C' function for method : 'Device::DeviceClass.OnSetNumHolesX()' */
 void DeviceDeviceClass_OnSetNumHolesX( DeviceDeviceClass _this, XInt32 value );
+
+/* This method is intended to be called by the device to notify the GUI application 
+   about a particular system event. */
+void DeviceDeviceClass_onError( DeviceDeviceClass _this, XString aErrorMessage );
+
+/* Wrapper function for the non virtual method : 'Device::DeviceClass.onError()' */
+void DeviceDeviceClass__onError( void* _this, XString aErrorMessage );
+
+/* The following define announces the presence of the method Device::DeviceClass.onError(). */
+#define _DeviceDeviceClass__onError_
+
+/* 'C' function for method : 'Device::DeviceClass.StopConfig()' */
+void DeviceDeviceClass_StopConfig( DeviceDeviceClass _this );
 
 /* Default onget method for the property 'SampleVolume' */
 XInt32 DeviceDeviceClass_OnGetSampleVolume( DeviceDeviceClass _this );

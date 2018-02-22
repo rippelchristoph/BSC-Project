@@ -161,11 +161,6 @@ void ApplicationConfig_UpdateLayout( ApplicationConfig _this, XPoint aSize );
    you can request its invocation by using the method @InvalidateViewState(). */
 void ApplicationConfig_UpdateViewState( ApplicationConfig _this, XSet aState );
 
-/* The method Init() is invoked automatically after the component has been created. 
-   This method can be overridden and filled with logic containing additional initialization 
-   statements. */
-void ApplicationConfig_Init( ApplicationConfig _this, XHandle aArg );
-
 /* 'C' function for method : 'Application::Config.onBtn_OkCancel()' */
 void ApplicationConfig_onBtn_OkCancel( ApplicationConfig _this, XObject sender );
 

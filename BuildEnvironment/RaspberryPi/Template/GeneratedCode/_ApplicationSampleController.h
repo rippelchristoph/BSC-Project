@@ -46,7 +46,6 @@
 #include "_ApplicationAHorzBar.h"
 #include "_ApplicationATextEditor.h"
 #include "_CoreGroup.h"
-#include "_CorePropertyObserver.h"
 #include "_FlatLabel.h"
 #include "_ViewsBorder.h"
 #include "_ViewsLine.h"
@@ -91,12 +90,11 @@ EW_DEFINE_FIELDS( ApplicationSampleController, CoreGroup )
   EW_OBJECT  ( BtnStop,         ApplicationAActionButton )
   EW_OBJECT  ( TextEditor,      ApplicationATextEditor )
   EW_OBJECT  ( Line,            ViewsLine )
-  EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
   EW_PROPERTY( RemainingTime,   XInt32 )
   EW_OBJECT  ( HorzBar,         ApplicationAHorzBar )
   EW_OBJECT  ( Label,           FlatLabel )
-  EW_PROPERTY( NameProperty,    XChar )
-  EW_PROPERTY( EnabledProperty, XBool )
+  EW_PROPERTY( CircuitNumber,   XChar )
+  EW_PROPERTY( Active,          XBool )
 EW_END_OF_FIELDS( ApplicationSampleController )
 
 /* Virtual Method Table (VMT) for the class : 'Application::SampleController' */
@@ -159,30 +157,29 @@ void ApplicationSampleController_UpdateLayout( ApplicationSampleController _this
 void ApplicationSampleController_UpdateViewState( ApplicationSampleController _this, 
   XSet aState );
 
-/* 'C' function for method : 'Application::SampleController.OnSetNameProperty()' */
-void ApplicationSampleController_OnSetNameProperty( ApplicationSampleController _this, 
+/* 'C' function for method : 'Application::SampleController.OnSetCircuitNumber()' */
+void ApplicationSampleController_OnSetCircuitNumber( ApplicationSampleController _this, 
   XChar value );
 
-/* 'C' function for method : 'Application::SampleController.onStart()' */
-void ApplicationSampleController_onStart( ApplicationSampleController _this, XObject 
-  sender );
+/* 'C' function for method : 'Application::SampleController.onBtn_Start()' */
+void ApplicationSampleController_onBtn_Start( ApplicationSampleController _this, 
+  XObject sender );
 
-/* 'C' function for method : 'Application::SampleController.OnSetEnabledProperty()' */
-void ApplicationSampleController_OnSetEnabledProperty( ApplicationSampleController _this, 
+/* 'C' function for method : 'Application::SampleController.OnSetActive()' */
+void ApplicationSampleController_OnSetActive( ApplicationSampleController _this, 
   XBool value );
 
-/* 'C' function for method : 'Application::SampleController.onStop()' */
-void ApplicationSampleController_onStop( ApplicationSampleController _this, XObject 
-  sender );
-
-/* This slot method is executed when the associated property observer 'PropertyObserver' 
-   is notified. */
-void ApplicationSampleController_onNewWell( ApplicationSampleController _this, XObject 
-  sender );
+/* 'C' function for method : 'Application::SampleController.onBtn_Stop()' */
+void ApplicationSampleController_onBtn_Stop( ApplicationSampleController _this, 
+  XObject sender );
 
 /* 'C' function for method : 'Application::SampleController.OnSetRemainingTime()' */
 void ApplicationSampleController_OnSetRemainingTime( ApplicationSampleController _this, 
   XInt32 value );
+
+/* 'C' function for method : 'Application::SampleController.onChangeEditor()' */
+void ApplicationSampleController_onChangeEditor( ApplicationSampleController _this, 
+  XObject sender );
 
 #ifdef __cplusplus
   }

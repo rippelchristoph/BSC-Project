@@ -42,6 +42,7 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
+#include "_ApplicationError.h"
 #include "_ApplicationTab1.h"
 #include "_ApplicationTab2.h"
 #include "_CoreOutline.h"
@@ -101,6 +102,7 @@ EW_DEFINE_FIELDS( ApplicationApplication, CoreRoot )
   EW_OBJECT  ( WellObj,         ApplicationTab2 )
   EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
   EW_OBJECT  ( WellViewEnabledObserver, CorePropertyObserver )
+  EW_OBJECT  ( Error,           ApplicationError )
 EW_END_OF_FIELDS( ApplicationApplication )
 
 /* Virtual Method Table (VMT) for the class : 'Application::Application' */

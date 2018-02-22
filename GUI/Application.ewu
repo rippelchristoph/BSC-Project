@@ -116,6 +116,14 @@ class Application : Core::Root
     WellObj.Enabled=Device::Device.WellViewEnabled;
     WellObj.Visible=Device::Device.WellViewEnabled;
   }
+
+  $rect <20,20,160,60>
+  object Application::Error Error
+  {
+    preset Bounds = <50,130,750,330>;
+    preset Enabled = false;
+    preset Visible = false;
+  }
 }
 
 $rect <130,120,330,160>
@@ -731,7 +739,7 @@ class Tab2 : Core::Group
   }
 
   // Stores all Well Parts
-  $rect <820,80,1020,120>
+  $rect <820,40,1020,80>
   array Application::WellPart WellPartArray[ 8,6 ] =
   (
     Default[0, 0] = A1;
@@ -905,7 +913,7 @@ class Tab2 : Core::Group
 
   }
 
-  $rect <1030,80,1230,120>
+  $rect <820,80,1020,120>
   array Application::WellLabel WellLabelArrayX[ 6 ] =
   (
     Default[0] = WellLabelA;
@@ -1078,7 +1086,7 @@ class Tab2 : Core::Group
     }
   }
 
-  $rect <1030,120,1230,160>
+  $rect <820,120,1020,160>
   array Application::WellLabel WellLabelArrayY[ 8 ] =
   (
     Default[0] = WellLabel;
@@ -1098,7 +1106,7 @@ $rect <610,160,810,200>
 $output false
 class WellPart : Core::Group
 {
-  $rect <10,230,210,270>
+  $rect <10,310,210,350>
   inherited property Bounds = <0,0,70,70>;
 
   $rect <10,390,210,430>
@@ -1228,38 +1236,6 @@ class WellPart : Core::Group
     */
   }
 
-  // To do:
-  // 
-  // - Adjust the visible size of your component (the thick blue border).
-  // 
-  // - The simplest way to compose the appearance of the component is to use the \
-  // 'Views' and 'Widget Sets' from the Gallery.
-  // 
-  // - To react to touch or keyboard events use the templates from the Gallery folder \
-  // 'Event Handlers'.
-  // 
-  // - To perform transitions (animations) use the templates from the Gallery folder \
-  // 'Effects'.
-  // 
-  // - To implement the interface of the component use the 'Property' template from \
-  // the Gallery folder 'Chora'.
-  // 
-  // - To store values use the 'Variable' and 'Array' templates available in the \
-  // Gallery folder 'Chora'.
-  // 
-  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
-  // in the Gallery folder 'Chora'.
-  // 
-  // - In the method 'UpdateViewState()' you can put code to update the state of \
-  // views enclosed in your component.
-  // 
-  // - In the method 'UpdateLayout()' you can put code to perform sophisticated layout \
-  // calculation for enclosed views.
-  note legend Note1
-  {
-    attr Bounds = <220,230,1000,550>;
-  }
-
   $rect <20,20,160,60>
   object Views::WarpImage WarpImage
   {
@@ -1284,10 +1260,10 @@ class WellPart : Core::Group
     preset Color = #FFFFFFFF;
   }
 
-  $rect <90,10,290,50>
+  $rect <90,0,290,40>
   property string TimeProperty = "";
 
-  $rect <90,50,290,90>
+  $rect <90,40,290,80>
   onset TimeProperty
   {
     // Remember the property's new value.
@@ -1301,16 +1277,16 @@ class WellPart : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <90,90,290,130>
+  $rect <90,80,290,120>
   onget TimeProperty
   {
     return pure TimeProperty;
   }
 
-  $rect <530,10,730,50>
+  $rect <300,0,500,40>
   property int32 CircuitNumber = 0;
 
-  $rect <530,50,730,90>
+  $rect <300,40,500,80>
   onset CircuitNumber
   {
     Text.Color=Device::Device.getColor( value );
@@ -1324,7 +1300,7 @@ class WellPart : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <530,90,730,130>
+  $rect <300,80,500,120>
   onget CircuitNumber
   {
     return pure CircuitNumber;
@@ -1485,7 +1461,7 @@ class Clock : Core::Group
     preset Font = Flat::FontM;
   }
 
-  $rect <190,10,390,50>
+  $rect <140,10,340,50>
   object Core::SystemEventHandler TimeHandler
   {
     preset OnEvent = onTime;
@@ -1494,7 +1470,7 @@ class Clock : Core::Group
 
   // This slot method is executed when the associated system event handler 'SystemEventHandler' \
   // receives an event.
-  $rect <390,10,590,50>
+  $rect <340,10,540,50>
   slot onTime
   {
       var Device::TimeContext context = (Device::TimeContext )TimeHandler.Context;
@@ -1644,20 +1620,20 @@ class SampleController : Core::Group
     */
   }
 
-  $rect <310,130,510,170>
-  property char NameProperty = 0;
+  $rect <480,0,680,40>
+  property char CircuitNumber = 0;
 
-  $rect <310,170,510,210>
-  onset NameProperty
+  $rect <480,40,680,80>
+  onset CircuitNumber
   {
     // The value doesn't change - nothing to do.
-    if ( pure NameProperty == value )
+    if ( pure CircuitNumber == value )
       return;
 
     // Remember the property's new value.
-    pure NameProperty = value;
+    pure CircuitNumber = value;
 
-    NameText.String=NameProperty;
+    NameText.String=CircuitNumber;
     NameText.Color=Device::Device.getColor( NameText.String.parse_int32( -1 )-1 );
 
     // TO DO:
@@ -1665,10 +1641,10 @@ class SampleController : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <310,210,510,250>
-  onget NameProperty
+  $rect <480,80,680,120>
+  onget CircuitNumber
   {
-    return pure NameProperty;
+    return pure CircuitNumber;
   }
 
   $rect <20,20,160,60>
@@ -1693,7 +1669,7 @@ class SampleController : Core::Group
   {
     preset Bounds = <120,4,200,29>;
     preset Enabled = false;
-    preset OnAction = onStart;
+    preset OnAction = onBtn_Start;
     preset Caption = "Start";
   }
 
@@ -1702,38 +1678,40 @@ class SampleController : Core::Group
   {
     preset Bounds = <120,39,200,64>;
     preset Enabled = false;
-    preset OnAction = onStop;
+    preset OnAction = onBtn_Stop;
     preset Caption = "Stop";
   }
 
-  $rect <30,180,230,220>
-  slot onStart
+  $rect <20,170,220,210>
+  slot onBtn_Start
   {
     if(TextEditor.String.parse_int32(0)>0){ //User has to enter a Integer > 0
       HorzBar.MaxValue=TextEditor.String.parse_int32( 0 );
       HorzBar.CurrentValue=TextEditor.String.parse_int32( 0 );
-      EnabledProperty=true;
-      Device::Device.StartSampling( TextEditor.String.parse_int32(1), string(NameProperty).parse_int32(0) -1);
+      Active=true;
+      Device::Device.StartSampling( TextEditor.String.parse_int32(1), string(CircuitNumber).parse_int32(0) -1);
     }
 
+
+     //Device::Device.onError( "abcdefg Error abc absdnkf" );
 
 
 
   }
 
-  $rect <310,270,510,310>
-  property bool EnabledProperty = false;
+  $rect <480,130,680,170>
+  property bool Active = false;
 
-  $rect <310,310,510,350>
-  onset EnabledProperty
+  $rect <480,170,680,210>
+  onset Active
   {
     // The value doesn't change - nothing to do.
-    if ( pure EnabledProperty == value )
+    if ( pure Active == value )
       return;
 
     // Remember the property's new value.
-    pure EnabledProperty = value;
-    if(EnabledProperty){
+    pure Active = value;
+    if(Active){
       BtnStart.Enabled=false;
       BtnStop.Enabled=true;
       HorzBar.TextColor=Application::WidgetColor;
@@ -1748,17 +1726,17 @@ class SampleController : Core::Group
     //Indicator.Active=EnabledProperty;
   }
 
-  $rect <310,350,510,390>
-  onget EnabledProperty
+  $rect <480,210,680,250>
+  onget Active
   {
-    return pure EnabledProperty;
+    return pure Active;
   }
 
-  $rect <30,140,230,180>
-  slot onStop
+  $rect <20,130,220,170>
+  slot onBtn_Stop
   {
-    EnabledProperty=false;
-    Device::Device.StopSampling( string(NameProperty).parse_int32(0) -1 );
+    Active=false;
+    Device::Device.StopSampling( string(CircuitNumber).parse_int32(0) -1 );
 
   }
 
@@ -1766,6 +1744,7 @@ class SampleController : Core::Group
   object Application::ATextEditor TextEditor
   {
     preset Bounds = <30,19,70,59>;
+    preset OnChange = onChangeEditor;
     preset WrapText = false;
     preset String = "10";
     preset Color = #FFFFFFFF;
@@ -1780,43 +1759,10 @@ class SampleController : Core::Group
     preset Color = #000000FF;
   }
 
-  $rect <590,110,790,150>
-  object Core::PropertyObserver NewWellObserver
-  {
-    preset OnEvent = onNewWell;
-    preset Outlet = ^Device::Device.NewWell;
-  }
-
-  // This slot method is executed when the associated property observer 'PropertyObserver' \
-  // is notified.
-  $rect <590,150,790,190>
-  slot onNewWell
-  {
-    if(!EnabledProperty){ //So that you cant activate the Start Button while its already running
-      BtnStart.Enabled=true;
-    }
-
-
-
-
-  }
-
-  // Properties
-  note group Note
-  {
-    attr Bounds = <280,90,540,540>;
-  }
-
-  // Timing
-  note group Note1
-  {
-    attr Bounds = <10,90,260,250>;
-  }
-
-  $rect <310,400,510,440>
+  $rect <260,130,460,170>
   property int32 RemainingTime = 0;
 
-  $rect <310,440,510,480>
+  $rect <260,170,460,210>
   onset RemainingTime
   {
     // Remember the property's new value.
@@ -1830,7 +1776,7 @@ class SampleController : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <310,480,510,520>
+  $rect <260,210,460,250>
   onget RemainingTime
   {
     return pure RemainingTime;
@@ -1852,6 +1798,16 @@ class SampleController : Core::Group
     preset Bounds = <70,19,110,49>;
     preset String = "min";
     preset TextColor = #000000FF;
+  }
+
+  $rect <20,210,220,250>
+  slot onChangeEditor
+  {
+    if((TextEditor.String.parse_int32(0)>0)&&(TextEditor.String.parse_int32(0)<1000)){
+      BtnStart.Enabled=true;
+    } else{
+      BtnStart.Enabled=false;
+    }
   }
 
   $reorder OnSetOpacity 8
@@ -1896,14 +1852,14 @@ class SampleController : Core::Group
   $reorder Embedded 9
   $reorder AlphaBlended 9
   $reorder Visible 9
-  $reorder NameProperty 9
-  $reorder OnSetNameProperty 9
-  $reorder OnGetNameProperty 9
+  $reorder CircuitNumber 9
+  $reorder OnSetCircuitNumber 9
+  $reorder OnGetCircuitNumber 9
   $reorder Border 9
   $reorder NameText 9
   $reorder BtnStart 9
   $reorder BtnStop 9
-  $reorder onStart 9
+  $reorder onBtn_Start 9
   $reorder Enabled 5
   $reorder OnSetEnabled 1
 }
@@ -3397,7 +3353,7 @@ class ANumKeyboard : Templates::NumKeyboard
 // Resources
 note group Note
 {
-  attr Bounds = <460,540,960,860>;
+  attr Bounds = <460,540,960,790>;
 }
 
 $rect <610,200,810,240>
@@ -3703,23 +3659,15 @@ class Temperature : Core::Group
     */
   }
 
-  $rect <140,10,340,50>
-  object Core::Timer Timer
-  {
-    preset OnTrigger = onEvent;
-    preset Period = 1000;
-    preset Enabled = true;
-  }
-
   $rect <20,20,160,60>
   object Views::Text Text
   {
     preset Bounds = <0,0,130,60>;
-    preset String = "25°C";
+    preset String = "0.0°C";
     preset Font = Flat::FontXL;
   }
 
-  $rect <90,120,290,160>
+  $rect <150,10,350,50>
   object Core::PropertyObserver PropertyObserver
   {
     preset OnEvent = onEvent;
@@ -3727,53 +3675,9 @@ class Temperature : Core::Group
 
   // This slot method is executed when the associated property observer 'PropertyObserver' \
   // is notified.
-  $rect <290,120,490,160>
+  $rect <350,10,550,50>
   slot onEvent
   {
-    /*
-    var int32 aNum  =0 ;
-
-    native (aNum) {
-
-    	int file_i2c;
-    	int length;
-    	unsigned char buffer[60] = {0};
-          
-            
-    	//----- OPEN THE I2C BUS -----
-    	char* filename = (char*)"/dev/i2c-1";
-    	if ((file_i2c = open(filename, O_RDWR)) < 0)
-    	{
-    		//ERROR HANDLING: you can check errno to see what went wrong
-    		printf("Failed to open the i2c bus");
-    		return;
-    	}
-    	
-    	int addr = (0x4f);          //<<<<<The I2C address of the slave
-    	if (ioctl(file_i2c, I2C_SLAVE, addr) < 0)
-    	{
-    		printf("Failed to acquire bus access and/or talk to slave.\n");
-    		//ERROR HANDLING; you can check errno to see what went wrong
-    		return;
-    	}
-    	
-                //----- READ BYTES -----
-                length = 1;			//<<< Number of bytes to read
-                if (read(file_i2c, buffer, length) != length)		//read() returns the number of bytes actually read, if it doesn't match then an error occurred (e.g. no response from the device)
-                {                                                                                                    
-                        //ERROR HANDLING: i2c transaction failed
-                        //printf("Failed to read from the i2c bus.\n");
-                }
-                else
-                {
-                         aNum = buffer[0];
-                }
-    }
-
-
-    Device::Device.Temperature=aNum;
-    */
-
     Text.String=string(Device::Device.Temperature,0,1)+"°C";
 
   }
@@ -3913,11 +3817,6 @@ class Config : Core::Group
     */
   }
 
-  $rect <1100,30,1240,70>
-  inherited method Init()
-  {
-  }
-
   $rect <20,20,160,60>
   object Views::Rectangle Rectangle
   {
@@ -3996,9 +3895,9 @@ class Config : Core::Group
     if(sender == Btn_Ok){
 
       Device::Device.NumHolesX=ConfigNumHoles.TextEditorX.String.parse_int32( 6 );
-      trace Device::Device.NumHolesX;
+
       Device::Device.NumHolesY=ConfigNumHoles.TextEditorY.String.parse_int32( 8 );
-      trace Device::Device.NumHolesY;
+
       Device::Device.NeedleGap=ConfigNeedleGap.TextEditor.String.parse_int32( 1000 );
       
       Device::Device.WasteVolume=ConfigWasteVolume.TextEditor.String.parse_int32( 1000 );
@@ -4023,14 +3922,14 @@ class Config : Core::Group
       Device::Device.SetPosition( Device::I_Top,ConfigTop.XSlider.CurrentValue, ConfigTop.YSlider.CurrentValue, ConfigTop.ZSlider.CurrentValue );
 
       
-
+      Device::Device.StopConfig();
 
       var int32 i;
 
 
       //Set everything enabled after completing the Config Dialoge for the first time
       for(i=0;i<6;i=i+1){
-        if(ControllMenu.SampleController[i].EnabledProperty==false){
+        if(ControllMenu.SampleController[i].Active==false){
           ControllMenu.SampleController[i].BtnStart.Enabled=true;
         }
         ControllMenu.SampleController[i].Enabled=true;
@@ -4111,7 +4010,7 @@ class Config : Core::Group
     preset Bounds = <0,0,800,480>;
     preset Visible = true;
     preset onNext = null;
-    preset Title = "Bewegen Sie den Schlauch über den Waste Behälter";
+    preset Title = "Bewegen Sie die erste Kanüle über den Abfallbehälter";
     preset Help = Application::ConfigWaste;
   }
 
@@ -4129,7 +4028,7 @@ class Config : Core::Group
     preset Bounds = <0,0,800,480>;
     preset onNext = null;
     preset Title = "Geben sie das zu entnehmende Volumen an";
-    preset MaxValue = 800;
+    preset MaxValue = 5000;
     preset MinValue = 50;
     preset Unit = "µl";
   }
@@ -4140,7 +4039,7 @@ class Config : Core::Group
     preset Bounds = <0,0,800,480>;
     preset onNext = null;
     preset Title = "Geben Sie die Flussgeschwindigkeit ein ";
-    preset MaxValue = 1000;
+    preset MaxValue = 50000;
     preset MinValue = 10;
     preset Unit = "µl/s";
   }
@@ -4151,6 +4050,7 @@ class Config : Core::Group
     preset Bounds = <0,0,800,480>;
     preset onNext = null;
     preset Title = "Geben Sie das Waste Volumen ein";
+    preset MaxValue = 50000;
     preset MinValue = 200;
     preset Unit = "µl";
   }
@@ -4162,7 +4062,7 @@ class Config : Core::Group
     preset onNext = null;
     preset Title = "Geben Sie den Abstand zwischen den Nadeln ein";
     preset MaxValue = 100000;
-    preset MinValue = 10;
+    preset MinValue = 500;
     preset Unit = "µm";
   }
 
@@ -4647,7 +4547,7 @@ class ControllMenu : Core::Group
   {
     preset Bounds = <20,40,480,110>;
     preset Enabled = false;
-    preset NameProperty = '1';
+    preset CircuitNumber = '1';
   }
 
   $rect <20,20,160,60>
@@ -4655,7 +4555,7 @@ class ControllMenu : Core::Group
   {
     preset Bounds = <20,110,480,180>;
     preset Enabled = false;
-    preset NameProperty = '2';
+    preset CircuitNumber = '2';
   }
 
   $rect <20,20,160,60>
@@ -4663,7 +4563,7 @@ class ControllMenu : Core::Group
   {
     preset Bounds = <20,180,480,250>;
     preset Enabled = false;
-    preset NameProperty = '3';
+    preset CircuitNumber = '3';
   }
 
   $rect <20,20,160,60>
@@ -4671,7 +4571,7 @@ class ControllMenu : Core::Group
   {
     preset Bounds = <20,250,480,320>;
     preset Enabled = false;
-    preset NameProperty = '4';
+    preset CircuitNumber = '4';
   }
 
   $rect <20,20,160,60>
@@ -4679,7 +4579,7 @@ class ControllMenu : Core::Group
   {
     preset Bounds = <20,320,480,390>;
     preset Enabled = false;
-    preset NameProperty = '5';
+    preset CircuitNumber = '5';
   }
 
   $rect <20,20,160,60>
@@ -4687,7 +4587,7 @@ class ControllMenu : Core::Group
   {
     preset Bounds = <20,390,480,460>;
     preset Enabled = false;
-    preset NameProperty = '6';
+    preset CircuitNumber = '6';
   }
 
   $rect <20,20,160,60>
@@ -4745,8 +4645,8 @@ class ControllMenu : Core::Group
     //Stop all active SampleController
     var int32 i;
     for(i=0;i<6;i=i+1){
-      if(SampleController[i].EnabledProperty==true){
-          signal SampleController[i].onStop;
+      if(SampleController[i].Active==true){
+          signal SampleController[i].onBtn_Stop;
         }
       
     }
@@ -4777,10 +4677,10 @@ class ControllMenu : Core::Group
     Device::Device.NewWell=true;
   }
 
-  $rect <830,290,1030,330>
+  $rect <830,340,1030,380>
   property Application::Config Config = null;
 
-  $rect <830,330,1030,370>
+  $rect <830,380,1030,420>
   onset Config
   {
     // The value doesn't change - nothing to do.
@@ -4795,13 +4695,13 @@ class ControllMenu : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <830,370,1030,410>
+  $rect <830,420,1030,460>
   onget Config
   {
     return pure Config;
   }
 
-  $rect <830,420,1030,460>
+  $rect <830,280,1030,320>
   object Core::SystemEventHandler RemainingTime
   {
     preset OnEvent = onRemainingTime;
@@ -4810,7 +4710,7 @@ class ControllMenu : Core::Group
 
   // This slot method is executed when the associated system event handler 'SystemEventHandler' \
   // receives an event.
-  $rect <1030,420,1230,460>
+  $rect <1030,280,1230,320>
   slot onRemainingTime
   {
     var Device::RemainingTimeContext context = (Device::RemainingTimeContext)RemainingTime.Context;
@@ -4820,15 +4720,7 @@ class ControllMenu : Core::Group
 
   }
 
-  $rect <20,20,160,60>
-  object Application::AActionButton Btn_Test
-  {
-    preset Bounds = <30,0,55,25>;
-    preset OnAction = onBtn_Test;
-    preset Caption = "?";
-  }
-
-  $rect <830,110,1030,150>
+  $rect <1320,130,1520,170>
   slot onBtn_Test
   {
     var int32 x;
@@ -6860,10 +6752,10 @@ class ConfigInt : Core::Group
   $rect <20,20,160,60>
   object Application::ATextEditor TextEditor
   {
-    preset Bounds = <330,110,470,170>;
+    preset Bounds = <330,140,470,200>;
     preset Enabled = true;
     preset OnChange = onTextEditorChange;
-    preset String = "0";
+    preset String = "";
     preset Font = Flat::FontL;
   }
 
@@ -6956,6 +6848,15 @@ class ConfigInt : Core::Group
   onget Unit
   {
     return pure Unit;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Line Line
+  {
+    preset Point2 = <470,180>;
+    preset Point1 = <330,180>;
+    preset Width = 2;
+    preset Color = #000000FF;
   }
 }
 
@@ -7179,7 +7080,7 @@ class Config2Int : Core::Group
   $rect <20,20,160,60>
   object Application::ATextEditor TextEditorX
   {
-    preset Bounds = <330,110,470,170>;
+    preset Bounds = <330,130,470,190>;
     preset Enabled = true;
     preset OnChange = onChangeTextEditor;
     preset String = "6";
@@ -7224,7 +7125,7 @@ class Config2Int : Core::Group
   $rect <20,20,160,60>
   object Views::Text TextX
   {
-    preset Bounds = <260,110,300,160>;
+    preset Bounds = <260,130,300,180>;
     preset WrapText = true;
     preset String = "X";
     preset Font = Flat::FontL;
@@ -7233,7 +7134,7 @@ class Config2Int : Core::Group
   $rect <20,20,160,60>
   object Views::Text TextY
   {
-    preset Bounds = <260,170,300,220>;
+    preset Bounds = <260,190,300,240>;
     preset WrapText = true;
     preset String = "Y";
     preset Font = Flat::FontL;
@@ -7242,7 +7143,7 @@ class Config2Int : Core::Group
   $rect <20,20,160,60>
   object Application::ATextEditor TextEditorY
   {
-    preset Bounds = <330,170,470,230>;
+    preset Bounds = <330,190,470,250>;
     preset Enabled = true;
     preset OnChange = onChangeTextEditor;
     preset String = "8";
@@ -7260,3 +7161,209 @@ class Config2Int : Core::Group
 
   }
 }
+
+$rect <900,110,1100,150>
+$output false
+class Error : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,700,200>;
+
+  $rect <10,390,210,430>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,350,210,390>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,700,200>;
+    preset Color = #B80005FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Title
+  {
+    preset Bounds = <0,0,700,40>;
+    preset WrapText = true;
+    preset String = "An unexpected Error accured!";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Application::AActionButton Btn_Ok
+  {
+    preset Bounds = <570,160,690,190>;
+    preset OnAction = onBtn_Ok;
+    preset Caption = "Ok";
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text MessageText
+  {
+    preset Bounds = <0,40,700,160>;
+    preset WrapText = true;
+    preset String = "";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <420,230,620,270>
+  slot onBtn_Ok
+  {
+    this.Enabled=false;
+    this.Visible=false;
+    Application::ApplicationObj.WellObj.Enabled=true;
+    Application::ApplicationObj.MainMenu.Enabled=true;
+  }
+
+  $rect <720,10,920,50>
+  object Core::SystemEventHandler ErrorHandler
+  {
+    preset OnEvent = onError;
+    preset Event = Device::Device.ErrorEvent;
+  }
+
+  // This slot method is executed when the associated system event handler 'SystemEventHandler' \
+  // receives an event.
+  $rect <920,10,1120,50>
+  slot onError
+  {
+    var Device::ErrorContext context = (Device::ErrorContext)ErrorHandler.Context;
+    MessageText.String=context.ErrorMessage;
+
+    Application::ApplicationObj.WellObj.Enabled=false;
+    Application::ApplicationObj.MainMenu.Enabled=false;
+
+
+    this.Visible=true;
+    this.Enabled=true;
+
+
+  }
+}
+
+$rect <610,20,810,60>
+$output false
+autoobject Application::Application ApplicationObj;

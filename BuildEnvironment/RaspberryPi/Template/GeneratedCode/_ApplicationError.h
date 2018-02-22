@@ -24,8 +24,8 @@
 *
 *******************************************************************************/
 
-#ifndef _ApplicationTemperature_H
-#define _ApplicationTemperature_H
+#ifndef _ApplicationError_H
+#define _ApplicationError_H
 
 #ifdef __cplusplus
   extern "C"
@@ -42,14 +42,16 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
+#include "_ApplicationAActionButton.h"
 #include "_CoreGroup.h"
-#include "_CorePropertyObserver.h"
+#include "_CoreSystemEventHandler.h"
+#include "_ViewsRectangle.h"
 #include "_ViewsText.h"
 
-/* Forward declaration of the class Application::Temperature */
-#ifndef _ApplicationTemperature_
-  EW_DECLARE_CLASS( ApplicationTemperature )
-#define _ApplicationTemperature_
+/* Forward declaration of the class Application::Error */
+#ifndef _ApplicationError_
+  EW_DECLARE_CLASS( ApplicationError )
+#define _ApplicationError_
 #endif
 
 /* Forward declaration of the class Core::KeyPressHandler */
@@ -77,14 +79,17 @@
 #endif
 
 
-/* Deklaration of class : 'Application::Temperature' */
-EW_DEFINE_FIELDS( ApplicationTemperature, CoreGroup )
-  EW_OBJECT  ( Text,            ViewsText )
-  EW_OBJECT  ( PropertyObserver, CorePropertyObserver )
-EW_END_OF_FIELDS( ApplicationTemperature )
+/* Deklaration of class : 'Application::Error' */
+EW_DEFINE_FIELDS( ApplicationError, CoreGroup )
+  EW_OBJECT  ( Rectangle,       ViewsRectangle )
+  EW_OBJECT  ( Title,           ViewsText )
+  EW_OBJECT  ( Btn_Ok,          ApplicationAActionButton )
+  EW_OBJECT  ( MessageText,     ViewsText )
+  EW_OBJECT  ( ErrorHandler,    CoreSystemEventHandler )
+EW_END_OF_FIELDS( ApplicationError )
 
-/* Virtual Method Table (VMT) for the class : 'Application::Temperature' */
-EW_DEFINE_METHODS( ApplicationTemperature, CoreGroup )
+/* Virtual Method Table (VMT) for the class : 'Application::Error' */
+EW_DEFINE_METHODS( ApplicationError, CoreGroup )
   EW_METHOD( initLayoutContext, void )( CoreRectView _this, XRect aBounds, CoreOutline 
     aOutline )
   EW_METHOD( GetRoot,           CoreRoot )( CoreView _this )
@@ -105,14 +110,14 @@ EW_DEFINE_METHODS( ApplicationTemperature, CoreGroup )
   EW_METHOD( DispatchEvent,     XObject )( CoreGroup _this, CoreEvent aEvent )
   EW_METHOD( BroadcastEvent,    XObject )( CoreGroup _this, CoreEvent aEvent, XSet 
     aFilter )
-  EW_METHOD( UpdateLayout,      void )( ApplicationTemperature _this, XPoint aSize )
-  EW_METHOD( UpdateViewState,   void )( ApplicationTemperature _this, XSet aState )
+  EW_METHOD( UpdateLayout,      void )( ApplicationError _this, XPoint aSize )
+  EW_METHOD( UpdateViewState,   void )( ApplicationError _this, XSet aState )
   EW_METHOD( InvalidateArea,    void )( CoreGroup _this, XRect aArea )
   EW_METHOD( Restack,           void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
   EW_METHOD( Add,               void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
-EW_END_OF_METHODS( ApplicationTemperature )
+EW_END_OF_METHODS( ApplicationError )
 
 /* The method UpdateLayout() is invoked automatically after the size of the component 
    has been changed. This method can be overridden and filled with logic to perform 
@@ -121,7 +126,7 @@ EW_END_OF_METHODS( ApplicationTemperature )
    Usually, all enclosed views are arranged automatically accordingly to their @Layout 
    property. UpdateLayout() gives the derived components a chance to extend this 
    automatism by a user defined algorithm. */
-void ApplicationTemperature_UpdateLayout( ApplicationTemperature _this, XPoint aSize );
+void ApplicationError_UpdateLayout( ApplicationError _this, XPoint aSize );
 
 /* The method UpdateViewState() is invoked automatically after the state of the 
    component has been changed. This method can be overridden and filled with logic 
@@ -137,17 +142,19 @@ void ApplicationTemperature_UpdateLayout( ApplicationTemperature _this, XPoint a
    state 'on' or 'off' and change accordingly the location of the slider, etc.
    Usually, this method will be invoked automatically by the framework. Optionally 
    you can request its invocation by using the method @InvalidateViewState(). */
-void ApplicationTemperature_UpdateViewState( ApplicationTemperature _this, XSet 
-  aState );
+void ApplicationError_UpdateViewState( ApplicationError _this, XSet aState );
 
-/* This slot method is executed when the associated property observer 'PropertyObserver' 
-   is notified. */
-void ApplicationTemperature_onEvent( ApplicationTemperature _this, XObject sender );
+/* 'C' function for method : 'Application::Error.onBtn_Ok()' */
+void ApplicationError_onBtn_Ok( ApplicationError _this, XObject sender );
+
+/* This slot method is executed when the associated system event handler 'SystemEventHandler' 
+   receives an event. */
+void ApplicationError_onError( ApplicationError _this, XObject sender );
 
 #ifdef __cplusplus
   }
 #endif
 
-#endif /* _ApplicationTemperature_H */
+#endif /* _ApplicationError_H */
 
 /* Embedded Wizard */

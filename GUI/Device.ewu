@@ -206,7 +206,7 @@ class DeviceClass : Templates::DeviceClass
   // Anwendungsseitige Events
   note group Note1
   {
-    attr Bounds = <20,40,450,390>;
+    attr Bounds = <20,40,450,410>;
   }
 
   $rect <240,130,440,170>
@@ -298,13 +298,13 @@ class DeviceClass : Templates::DeviceClass
   // Anwenderseitige Events
   note group Note3
   {
-    attr Bounds = <460,40,1390,540>;
+    attr Bounds = <460,40,1390,580>;
   }
 
   // Konfiguration
   note group Note
   {
-    attr Bounds = <900,80,1330,500>;
+    attr Bounds = <900,80,1330,560>;
   }
 
   $rect <920,440,1120,480>
@@ -515,6 +515,71 @@ class DeviceClass : Templates::DeviceClass
 
     // Notify all associated property observers.
     notifyobservers ^NumHolesX;
+  }
+
+  $rect <240,330,440,370>
+  object Core::SystemEvent ErrorEvent;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about a particular system event.
+  $rect <40,330,240,370>
+  $output true
+  method void onError( arg string aErrorMessage )
+  {
+    var Device::ErrorContext context = new Device::ErrorContext;
+
+    context.ErrorMessage=aErrorMessage;
+
+    trace "ERROR:" + aErrorMessage;
+
+    ErrorEvent.Trigger( context, false );
+
+  }
+
+  $rect <920,480,1120,520>
+  method void StopConfig()
+  {
+    $if $prototyper
+      /*
+         TO DO:
+
+         List all parameters of this method not used explicitly. This will
+         suppress the Chora warnings because of unused parameters.
+      */
+
+
+      /*
+         TO DO:
+
+         The following code is necessary for command methods intended to
+         return a value. It can be removed if the method is declared with
+         'void' as its return data type.
+
+         In the case a return value is desired, adapt the 'return' statement
+         to match the method's return data type. The value is just a dummy
+         used during prototyping only.
+      */
+
+    $endif
+
+    // For target code generation you will use your specific device API 
+    // to perform the command in the device.
+    $if !$prototyper
+      
+
+      native 
+      {
+       
+        BSCStopConfig();
+      }
+
+      /*
+         TO DO:
+
+         The following 'return' statement is needed only when the command method
+         is declared to return a value. Otherwise you can remove the statement.
+      */
+    $endif
   }
 }
 
@@ -774,7 +839,7 @@ class RemainingTimeContext
 // System Event Context
 note group Note
 {
-  attr Bounds = <340,20,640,220>;
+  attr Bounds = <340,20,640,280>;
 }
 
 // Device Interface
@@ -935,3 +1000,32 @@ const int32 I_Waste = 3;
 $rect <720,180,920,220>
 $output false
 const int32 I_Top = 4;
+
+$rect <400,190,600,230>
+$output false
+class ErrorContext
+{
+  $rect <40,20,240,60>
+  property string ErrorMessage = "";
+
+  $rect <40,60,240,100>
+  onset ErrorMessage
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure ErrorMessage == value )
+      return;
+
+    // Remember the property's new value.
+    pure ErrorMessage = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <40,100,240,140>
+  onget ErrorMessage
+  {
+    return pure ErrorMessage;
+  }
+}

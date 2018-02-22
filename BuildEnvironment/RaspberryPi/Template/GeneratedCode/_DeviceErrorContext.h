@@ -24,8 +24,8 @@
 *
 *******************************************************************************/
 
-#ifndef Device_H
-#define Device_H
+#ifndef _DeviceErrorContext_H
+#define _DeviceErrorContext_H
 
 #ifdef __cplusplus
   extern "C"
@@ -42,19 +42,29 @@
   #error Wrong version of Embedded Wizard Graphics Engine.
 #endif
 
-#include "_DeviceDeviceClass.h"
-#include "_DeviceErrorContext.h"
-#include "_DeviceRemainingTimeContext.h"
-#include "_DeviceSampleCollectedContext.h"
-#include "_DeviceTimeContext.h"
+/* Forward declaration of the class Device::ErrorContext */
+#ifndef _DeviceErrorContext_
+  EW_DECLARE_CLASS( DeviceErrorContext )
+#define _DeviceErrorContext_
+#endif
 
-/* User defined auto object: 'Device::Device' */
-EW_DECLARE_AUTOOBJECT( DeviceDevice, DeviceDeviceClass )
+
+/* Deklaration of class : 'Device::ErrorContext' */
+EW_DEFINE_FIELDS( DeviceErrorContext, XObject )
+  EW_PROPERTY( ErrorMessage,    XString )
+EW_END_OF_FIELDS( DeviceErrorContext )
+
+/* Virtual Method Table (VMT) for the class : 'Device::ErrorContext' */
+EW_DEFINE_METHODS( DeviceErrorContext, XObject )
+EW_END_OF_METHODS( DeviceErrorContext )
+
+/* 'C' function for method : 'Device::ErrorContext.OnSetErrorMessage()' */
+void DeviceErrorContext_OnSetErrorMessage( DeviceErrorContext _this, XString value );
 
 #ifdef __cplusplus
   }
 #endif
 
-#endif /* Device_H */
+#endif /* _DeviceErrorContext_H */
 
 /* Embedded Wizard */

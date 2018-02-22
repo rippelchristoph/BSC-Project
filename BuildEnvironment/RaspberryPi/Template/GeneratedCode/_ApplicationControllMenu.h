@@ -105,7 +105,6 @@ EW_DEFINE_FIELDS( ApplicationControllMenu, CoreGroup )
   EW_OBJECT  ( Btn_NewWell,     ApplicationAActionButton )
   EW_PROPERTY( Config,          ApplicationConfig )
   EW_OBJECT  ( RemainingTime,   CoreSystemEventHandler )
-  EW_OBJECT  ( Btn_Test,        ApplicationAActionButton )
   EW_OBJECT  ( btn_Exit,        ApplicationAActionButton )
 EW_END_OF_FIELDS( ApplicationControllMenu )
 
@@ -182,10 +181,6 @@ void ApplicationControllMenu_OnSetConfig( ApplicationControllMenu _this, Applica
 /* This slot method is executed when the associated system event handler 'SystemEventHandler' 
    receives an event. */
 void ApplicationControllMenu_onRemainingTime( ApplicationControllMenu _this, XObject 
-  sender );
-
-/* 'C' function for method : 'Application::ControllMenu.onBtn_Test()' */
-void ApplicationControllMenu_onBtn_Test( ApplicationControllMenu _this, XObject 
   sender );
 
 /* 'C' function for method : 'Application::ControllMenu.onBtn_Exit()' */

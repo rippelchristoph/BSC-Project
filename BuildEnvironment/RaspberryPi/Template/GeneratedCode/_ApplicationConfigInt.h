@@ -46,6 +46,7 @@
 #include "_ApplicationANumKeyboard.h"
 #include "_ApplicationATextEditor.h"
 #include "_CoreGroup.h"
+#include "_ViewsLine.h"
 #include "_ViewsRectangle.h"
 #include "_ViewsText.h"
 
@@ -92,6 +93,7 @@ EW_DEFINE_FIELDS( ApplicationConfigInt, CoreGroup )
   EW_PROPERTY( MaxValue,        XInt32 )
   EW_PROPERTY( MinValue,        XInt32 )
   EW_PROPERTY( Unit,            XString )
+  EW_OBJECT  ( Line,            ViewsLine )
 EW_END_OF_FIELDS( ApplicationConfigInt )
 
 /* Virtual Method Table (VMT) for the class : 'Application::ConfigInt' */

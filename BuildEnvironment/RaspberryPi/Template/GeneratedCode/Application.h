@@ -55,6 +55,7 @@
 #include "_ApplicationConfigInt.h"
 #include "_ApplicationConfigPosition.h"
 #include "_ApplicationControllMenu.h"
+#include "_ApplicationError.h"
 #include "_ApplicationSampleController.h"
 #include "_ApplicationTab1.h"
 #include "_ApplicationTab2.h"
@@ -88,6 +89,9 @@ extern const XColor ApplicationBackgroundColor;
 
 /* User defined constant: 'Application::WidgetColor' */
 extern const XColor ApplicationWidgetColor;
+
+/* User defined auto object: 'Application::ApplicationObj' */
+EW_DECLARE_AUTOOBJECT( ApplicationApplicationObj, ApplicationApplication )
 
 #ifdef __cplusplus
   }
