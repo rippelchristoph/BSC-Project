@@ -62,6 +62,7 @@
 #include "OrderController.h"
 #include "Sampler.h"
 #include "Logger.h"
+#include "TemperatureController.h"
 #include <time.h>
 
 #define CONFIG_STARTPOS 0
@@ -77,6 +78,7 @@
 typedef struct BSCController {
 	TBSCConfig* Configuration;
 	TLogger* Logger;
+	TTemperatureController* TempContr;
 	TWellData** Well;
 	TOrderController* Orders;
 	TSampler* Sampler;
@@ -184,6 +186,7 @@ newBSCController ( void )
 
 	
 	retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well);
+	retPtr->TempContr = newTemperatureController(0x4F, 0.5, -22.0);
 
 	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, DeviceDeviceClass);
 
@@ -674,30 +677,8 @@ PRIVATE void
 UpdateTemperature (
   TBSCController * aController )
 {
-	unsigned char byteAdd[] = { 0x00 };
-	unsigned char buffer[2];
-	float updateVal = 0;
-	short complement;
-	int decValue;
-	TI2C* dataStream = newI2C(0x4F);
-	I2CWriteBytes(dataStream, byteAdd, 1);
-	I2CReadBytes(dataStream, buffer, 2);
-
-
-
-	if ((buffer[0] & (1 << 7)) == 0) { //Positiv
-		decValue = buffer[0] << 3 | buffer[1] >> 5;
-		updateVal = (float)decValue * 0.125f;
-	}
-	else {
-		complement = buffer[0] << 3 | buffer[1] >> 5;
-		complement ^= 0x7FF;
-		updateVal = -1.0 * ((float)complement) * 0.125f;
-	}
-
-	destroyI2C(dataStream);
-	DeviceDeviceClass__UpdateTemperature(aController->EwDeviceObject, ((XFloat)updateVal));
-
+	double updateVal = TemperatureReaderGetTemperature(aController->TempContr->TempReader);
+	DeviceDeviceClass__UpdateTemperature(aController->EwDeviceObject, ((XFloat) updateVal));
 }
 
 /****************************************************************************

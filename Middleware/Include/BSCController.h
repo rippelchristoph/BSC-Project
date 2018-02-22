@@ -30,7 +30,7 @@
  *   BSCSetPosition
  *   BSCSetCurrentPosition
  *   BSCStartConfig
- *   BSCEndConfig
+ *   BSCStopConfig
  ****************************************************************************/
 
 #ifndef BSCCONTROLLER_H
@@ -46,6 +46,7 @@
 #include "OrderController.h"
 #include "Sampler.h"
 #include "Logger.h"
+#include "TemperatureController.h"
 #include <time.h>
 
 #define CONFIG_STARTPOS 0
@@ -61,6 +62,7 @@
 typedef struct BSCController {
 	TBSCConfig* Configuration;
 	TLogger* Logger;
+	TTemperatureController* TempContr;
 	TWellData** Well;
 	TOrderController* Orders;
 	TSampler* Sampler;
