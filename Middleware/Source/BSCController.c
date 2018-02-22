@@ -157,6 +157,7 @@ UpdateDayTime (
 PUBLIC TBSCController *
 newBSCController ( void )
 {
+	printf("BSCInit");
 	int i = 0;
 	int j = 0;
 	TBSCController* retPtr;
@@ -176,6 +177,7 @@ newBSCController ( void )
 	
 
 	//Allocate Storage for multidimensional array
+	printf("Well init");
 	retPtr->Well = malloc(retPtr->Configuration->NumHolesX * sizeof(TWellData*));
 	for (i = 0; i < retPtr->Configuration->NumHolesX; i++) {
 		retPtr->Well[i] = malloc(retPtr->Configuration->NumHolesY * sizeof(TWellData));
@@ -251,7 +253,7 @@ BSCReadConfiguration (
 
 	if (fp == NULL)
 	{
-
+		return;
 	}
 
 	while (1)

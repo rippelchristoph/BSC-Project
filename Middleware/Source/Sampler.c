@@ -51,8 +51,11 @@
  ****************************************************************************/
 
 #include <stdlib.h>
-#include "DigIO.h"
 #include <time.h>
+#include "DigIO.h"
+
+
+#define TIME_UTC 1
 
 #define MILLION 1000000
 
@@ -184,7 +187,7 @@ PRIVATE void
 EnterStateBackOut (
   TSampler *                    aSampler );
 
-PRIVATE void
+PRIVATE int
 StateBackOut (
   TSampler *                    aSampler );
 
@@ -192,7 +195,7 @@ PRIVATE void
 EnterStateDrawerClose (
   TSampler *                    aSampler );
 
-PRIVATE int
+PRIVATE void
 StateDrawerClose (
   TSampler *                    aSampler );
 
@@ -229,6 +232,7 @@ newSampler (
   TBSCConfig * aConfiguration,
   TWellData ** aWell )
 {
+	printf("Sampler Init");
 	TSampler* retSampler;
 	retSampler = malloc(sizeof(TSampler));
 
@@ -347,8 +351,9 @@ PUBLIC void
 SamplerStartConfig (
   TSampler * aSampler )
 {
+	//Remove all Circuit in Queue
 	int* retPtr;
-	while (retPtr = ListRemoveByIndex(aSampler->Queue, 0) != NULL)
+	while ((retPtr = ListRemoveByIndex(aSampler->Queue, 0)) != NULL)
 		free(retPtr);
 
 
@@ -360,7 +365,7 @@ SamplerStartConfig (
 		aSampler->Config->MovingPosZMM);
 
 	PLTHomeYAxis(aSampler->Plotter);
-	PLTHomeAxis(aSampler);
+	PLTHomeAxis(aSampler->Plotter);
 	timespec_get(aSampler->Timestamp, TIME_UTC);
 	aSampler->Timestamp->tv_sec -= 10;
 }
@@ -641,7 +646,7 @@ StateDrawerOpen (
 	struct timespec now;
 	timespec_get(&now, TIME_UTC);
 	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
-		EnterStateDrawerOpen(aSampler);
+		EnterStateDropPos(aSampler);
 	}
 }
 /****************************************************************************
@@ -684,7 +689,7 @@ StateDropPos (
 	struct timespec now;
 	timespec_get(&now, TIME_UTC);
 	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
-		EnterStateDrawerOpen(aSampler);
+		EnterStateFlow(aSampler);
 	}
 }
 /****************************************************************************
@@ -795,7 +800,7 @@ EnterStateDrawerClose (
  *     Function is called periodically when the State is 'Wait' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
-PRIVATE int
+PRIVATE void
 StateDrawerClose (
   TSampler * aSampler )
 {

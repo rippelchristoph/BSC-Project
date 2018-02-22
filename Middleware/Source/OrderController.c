@@ -75,6 +75,7 @@ typedef struct OrderController {
 PUBLIC TOrderController *
 newOrderController ( void )
 {
+	printf("OC Init");
 	TOrderController* retPtr;
 	retPtr = (TOrderController*)malloc(sizeof(TOrderController));
 	retPtr->OrderList = newList();

@@ -46,6 +46,7 @@ newTemperatureController (
   double        aHysteresis,
   double        aSetValue )
 {
+	printf("TC Init");
 	TTemperatureController* retPtr = malloc(sizeof(TTemperatureController));
 	retPtr->TempReader = newTemperatureReader(aSensorAddress);
 	retPtr->Hysteresis = aHysteresis;
@@ -65,6 +66,7 @@ destroyTemperatureController (
 		destroyTemperatureReader(aTempContr->TempReader);
 		free(aTempContr);
 	}
+	return EFALSE;
 }
 
 /****************************************************************************
@@ -83,4 +85,6 @@ ProcessTemperatureController (
 	if (Temp < (aTempContr->SetValue - aTempContr->Hysteresis)) {
 		DigIOSetPeltier(1.0f);
 	}
+
+	return EFALSE;
 }

@@ -98,6 +98,7 @@ freeNode (
 PUBLIC TListHeader *
 newList ( void )
 {
+	printf("List Init");
 	TListHeader * aList;
 	if ((aList = (TListHeader*) malloc(sizeof(TListHeader))) != NULL) {
 		aList->Len = 0;

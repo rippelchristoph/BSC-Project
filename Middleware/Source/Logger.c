@@ -54,6 +54,7 @@ PUBLIC TLogger *
 newLogger (
   char * aWorkingDirectory )
 {
+	printf("Logger Init");
 	TLogger* retPtr = malloc(sizeof(TLogger));
 	if (retPtr == NULL) {
 		return NULL;
@@ -64,6 +65,8 @@ newLogger (
 		free(retPtr);
 		return NULL;
 	}
+
+	return retPtr;
 }
 
 /****************************************************************************
@@ -78,6 +81,7 @@ destroyLogger (
 		free(aLogger->WorkingDirectory);
 		free(aLogger);
 	}
+	return EFALSE;
 }
 
 /****************************************************************************
@@ -88,12 +92,12 @@ LoggerNewWell (
   TLogger * aLogger )
 {
 	time_t now = time(NULL);
-	struct tm* formatTime = localtime(time(NULL));
+	struct tm* formatTime = localtime(&now);
 	FILE* filePointer;
 	LoggerCloseWell(aLogger);
 
 	char fileName[150];
-	sprintf_s(fileName, 150, "%s/%d-%02d-%02d_%02d-%02d.txt",
+	sprintf(fileName,  "%s/%d-%02d-%02d_%02d-%02d.txt",
 		aLogger->WorkingDirectory,
 		formatTime->tm_year + 1900,
 		formatTime->tm_mon + 1,
@@ -103,7 +107,7 @@ LoggerNewWell (
 
 	aLogger->CurrentLogFile = strdup(fileName);
 	filePointer = fopen(aLogger->CurrentLogFile, "w");
-	sprintf_s(fileName, 150, "Started at %d.%02d.%02d, %02d:%02d:%02d\n",
+	sprintf(fileName, "Started at %d.%02d.%02d, %02d:%02d:%02d\n",
 		formatTime->tm_mday,
 		formatTime->tm_mon + 1,
 		formatTime->tm_year + 1900,
@@ -113,6 +117,7 @@ LoggerNewWell (
 
 	fputs(fileName, filePointer);
 	fclose(filePointer);
+	return EFALSE;
 }
 
 
@@ -129,11 +134,11 @@ LoggerAddSample (
 {
 	FILE* filePointer;
 	time_t now = time(NULL);
-	struct tm * formatTime = localtime(now);
+	struct tm * formatTime = localtime(&now);
 	char line[150];
 
 	filePointer = fopen(aLogger->CurrentLogFile, "a");
-	sprintf_s(line, 150, "%c%i, Circuit: %i, %02d.%02d-%02d:%02d",
+	sprintf(line, "%c%i, Circuit: %i, %02d.%02d-%02d:%02d",
 		(char)('A' + aWellX),
 		aWellY,
 		aOrigin,
@@ -141,6 +146,9 @@ LoggerAddSample (
 		formatTime->tm_mon + 1,
 		formatTime->tm_hour,
 		formatTime->tm_min);
+
+	fputs(line, filePointer);
+	return EFALSE;
 }
 /****************************************************************************
  * SECTION: Implementation of private functions
@@ -155,13 +163,12 @@ LoggerCloseWell (
 	FILE* filePointer;
 	char line[150];
 	time_t now = time(NULL);
-	struct tm* formatTime = localtime(time(NULL));
+	struct tm* formatTime = localtime(&now);
 
 	if (aLogger->CurrentLogFile != NULL) {
 		//Add End Messge to last Log
 		filePointer = fopen(aLogger->CurrentLogFile, "a"); //Append
-		sprintf_s(line, 150, "\n\nThis is the End of the Log File for this Well\n");
-		sprintf_s(line, (150 - 48), "It was closed on %02d.%02d.%d, %02d:%02d:%02d\n",
+		sprintf(line, "\n\nThis is the End of the Log File for this Well\nIt was closed on %02d.%02d.%d, %02d:%02d:%02d\n",
 			formatTime->tm_mday,
 			formatTime->tm_mon + 1,
 			formatTime->tm_year + 1900,
@@ -173,4 +180,6 @@ LoggerCloseWell (
 		fclose(filePointer);
 		free(aLogger->CurrentLogFile);
 	}
+
+	return EFALSE;
 }

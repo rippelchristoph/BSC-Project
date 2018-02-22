@@ -36,11 +36,14 @@ typedef struct TemperatureReader {
  ****************************************************************************/
 
 PUBLIC TTemperatureReader *
-newTemperatureReader ( unsigned char aSensorAddress )
+newTemperatureReader (
+  unsigned char aSensorAddress )
 {
 	TTemperatureReader* retPtr = malloc(sizeof(TTemperatureReader));
 	retPtr->I2CConnection = newI2C(0x4F, 0);
 	retPtr->Timeout = 0;	//Some Timestamp long ago
+
+	return retPtr;
 }
 
 /****************************************************************************
@@ -54,6 +57,7 @@ destroyTemperatureReader (
 		destroyI2C(aTempReader->I2CConnection);
 		free(aTempReader);
 	}
+	return EFALSE;
 }
 
 /****************************************************************************
@@ -72,7 +76,7 @@ TemperatureReaderGetTemperature (
 
 	//Read New Value only if last value was 5 seconds ago
 	if (now > (TempReader->Timeout + 3)) {		
-		TI2C* dataStream = newI2C(0x4F);
+		TI2C* dataStream = newI2C(0x4F, 0);
 		I2CWriteBytes(dataStream, byteAdd, 1);
 		I2CReadBytes(dataStream, buffer, 2);
 

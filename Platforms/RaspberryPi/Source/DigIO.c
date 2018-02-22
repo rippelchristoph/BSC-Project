@@ -18,6 +18,7 @@
  ****************************************************************************/
 
 #include "wiringPi.h"
+#include "DigIO.h"
 #define TemperaturePin 7
 
 /****************************************************************************
@@ -101,6 +102,7 @@ setupDigIO ( void )
 	}
 	pinMode(TemperaturePin, OUTPUT);
 	DigIOSetDefault();
+	return EFALSE;
 }
 
 /****************************************************************************
@@ -111,6 +113,7 @@ DigIOOpenCircuit (
   int aCircuitNumber )
 {
 	DigIOSetCircuit(aCircuitNumber, CIRCUIT_OPEN);
+	return EFALSE;
 }
 
 /****************************************************************************
@@ -121,6 +124,7 @@ DigIOCloseCircuit (
   int aCircuitNumber )
 {
 	DigIOSetCircuit(aCircuitNumber, CIRCUIT_CLOSED);
+	return EFALSE;
 }
 
 /****************************************************************************
@@ -136,6 +140,7 @@ DigIOSetPeltier (
 	else {
 		digitalWrite(TemperaturePin, LOW);
 	}
+	return EFALSE;
 }
 
 /****************************************************************************
