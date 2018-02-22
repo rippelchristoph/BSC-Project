@@ -169,7 +169,7 @@ void DeviceDeviceClass_OnSetSampleVolume( DeviceDeviceClass _this, XInt32 value 
   _this->SampleVolume = value;
   EwTrace( "%s", EwConcatString( EwLoadString( &_Const0000 ), EwNewStringInt( _this->SampleVolume, 
     0, 10 )));
-  BSCSetSampleVolume(SampleVolume);//ul
+  BSCSetSampleVolume(value);//ul
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetSampleVolume, DeviceDeviceClass_OnSetSampleVolume 
     ), 0 );
 }
@@ -437,7 +437,7 @@ void DeviceDeviceClass_OnSetFlowSpeed( DeviceDeviceClass _this, XInt32 value )
   _this->FlowSpeed = value;
   EwTrace( "%s", EwConcatString( EwLoadString( &_Const001E ), EwNewStringInt( _this->FlowSpeed, 
     0, 10 )));
-  BSCSetFlowSpeed(FlowSpeed); //ul/s
+  BSCSetFlowSpeed(value); //ul/s
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetFlowSpeed, DeviceDeviceClass_OnSetFlowSpeed 
     ), 0 );
 }
@@ -451,7 +451,7 @@ void DeviceDeviceClass_OnSetWasteVolume( DeviceDeviceClass _this, XInt32 value )
   _this->WasteVolume = value;
   EwTrace( "%s", EwConcatString( EwLoadString( &_Const001F ), EwNewStringInt( _this->WasteVolume, 
     0, 10 )));
-  BSCSetWasteVolume(WasteVolume); //ul
+  BSCSetWasteVolume(value); //ul
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetWasteVolume, DeviceDeviceClass_OnSetWasteVolume 
     ), 0 );
 }
@@ -465,7 +465,7 @@ void DeviceDeviceClass_OnSetNeedleGap( DeviceDeviceClass _this, XInt32 value )
   _this->NeedleGap = value;
   EwTrace( "%s", EwConcatString( EwLoadString( &_Const0020 ), EwNewStringInt( _this->NeedleGap, 
     0, 10 )));
-  BSCSetNeedleGap(NeedleGap); //um
+  BSCSetNeedleGap(value); //um
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNeedleGap, DeviceDeviceClass_OnSetNeedleGap 
     ), 0 );
 }

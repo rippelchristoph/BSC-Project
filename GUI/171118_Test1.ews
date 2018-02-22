@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::SampleController;
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,0>;
-attr codeInspector = Application::SampleController.onBtn_Start;
-attr codeSelEnd = <3,8>;
-attr codeSelStart = <3,8>;
+attr codeFirstPos = <0,27>;
+attr codeInspector = Device::DeviceClass.StopConfig;
+attr codeSelEnd = <0,0>;
+attr codeSelStart = <0,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -102,8 +102,8 @@ view class Application::SampleController
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
   attr codeInspector = onBtn_Start;
-  attr codeSelEnd = <55,8>;
-  attr codeSelStart = <55,8>;
+  attr codeSelEnd = <3,8>;
+  attr codeSelStart = <3,8>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
