@@ -32,7 +32,7 @@ class DeviceClass : Templates::DeviceClass
     $if !$prototyper
       native ( value )
       {
-        BSCSetSampleVolume(SampleVolume);//ul
+        BSCSetSampleVolume(value);//ul
       }
     $endif
 
@@ -179,7 +179,7 @@ class DeviceClass : Templates::DeviceClass
     trace "Postition - Index:"+string(aIndex)+" X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
 
     $if !$prototyper
-    native{
+    native(aIndex, aX, aY, aZ){
       BSCSetPosition(aIndex, aX, aY, aZ);
     }
     $endif
@@ -197,7 +197,7 @@ class DeviceClass : Templates::DeviceClass
     trace "CurrentPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
 
     $if !$prototyper
-    native{
+    native(aX,aY,aZ){
       BSCSetCurrentPosition(aX,aY,aZ);  
     } 
     $endif
@@ -339,7 +339,7 @@ class DeviceClass : Templates::DeviceClass
     $if !$prototyper
       native ( value )
       {
-        BSCSetFlowSpeed(FlowSpeed); //ul/s
+        BSCSetFlowSpeed(value); //ul/s
       }
     $endif
 
@@ -367,7 +367,7 @@ class DeviceClass : Templates::DeviceClass
     $if !$prototyper
       native ( value )
       {
-        BSCSetWasteVolume(WasteVolume); //ul
+        BSCSetWasteVolume(value); //ul
       }
     $endif
 
@@ -395,7 +395,7 @@ class DeviceClass : Templates::DeviceClass
     $if !$prototyper
       native ( value )
       {
-        BSCSetNeedleGap(NeedleGap); //um
+        BSCSetNeedleGap(value); //um
       }
     $endif
 
