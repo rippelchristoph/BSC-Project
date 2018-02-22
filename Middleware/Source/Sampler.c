@@ -271,7 +271,7 @@ SamplerAddToQueue (
  * PARAMETER:
  *   aSampler - The Address of the Sampler
  ****************************************************************************/
-PUBLIC TBoolean
+PUBLIC int
 ProcessSampler (
   TSampler * aSampler )
 {

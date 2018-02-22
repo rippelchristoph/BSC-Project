@@ -4,39 +4,31 @@
  * Written by Jakob Zuchna
  *
  ****************************************************************************
- * FILE: i2c.h
- *
- *   DESCRIPTION:
- *
- *
- *   PUBLIC FUNCTIONS: UARTInit(); UARTTransmit(); UARTReceive();
+ * FILE: Logger.h
  *
  * PUBLIC FUNCTIONS:
- *   newI2C
- *   destroyI2C
- *   I2CReadBytes
- *   I2CWriteBytes
+ *   newLogger
+ *   destroyLogger
+ *   LoggerNewWell
+ *   LoggerAddSample
  ****************************************************************************/
 
-#ifndef I2C_H
-#define I2C_H
+#ifndef LOGGER_H
+#define LOGGER_H
 
-
-
-/****************************************************************************
-* SECTION: #include
-****************************************************************************/
+ /****************************************************************************
+  * SECTION: Include
+  ****************************************************************************/
 #include "HtlStdDef.h"
-/****************************************************************************
-* SECTION: #define
-****************************************************************************/
 
-/****************************************************************************
-* SECTION: typedef
-****************************************************************************/
-typedef struct I2C {
-	int file;
-}TI2C;
+  /****************************************************************************
+   * SECTION: typedef
+   ****************************************************************************/
+typedef struct Logger {
+	char* WorkingDirectory;
+	char* CurrentLogFile;
+} TLogger;
+
 
 
 #ifdef __cplusplus
@@ -46,44 +38,42 @@ typedef struct I2C {
 
 
 /****************************************************************************
- * FUNCTION: newI2C
+ * FUNCTION: newLogger
  ****************************************************************************/
 
-PUBLIC TI2C *
-newI2C (
-  unsigned char aAddr,
-	int aI2CNumber);
+PUBLIC TLogger *
+newLogger (
+  char * aWorkingDirectory );
 
 
 /****************************************************************************
- * FUNCTION: destroyI2C
+ * FUNCTION: destroyLogger
  ****************************************************************************/
 
 PUBLIC TBoolean
-destroyI2C (
-  TI2C * aI2C );
+destroyLogger (
+  TLogger * aLogger );
 
 
 /****************************************************************************
- * FUNCTION: I2CReadBytes
+ * FUNCTION: LoggerNewWell
  ****************************************************************************/
 
 PUBLIC TBoolean
-I2CReadBytes (
-  TI2C *          aI2C,
-  unsigned char * aBuffer,
-  int             aLength );
+LoggerNewWell (
+  TLogger * aLogger );
 
 
 /****************************************************************************
- * FUNCTION: I2CWriteBytes
+ * FUNCTION: LoggerAddSample
  ****************************************************************************/
 
 PUBLIC TBoolean
-I2CWriteBytes (
-  TI2C *          aI2C,
-  unsigned char * aBuffer,
-  int             aLength );
+LoggerAddSample (
+  TLogger * aLogger,
+  int       aOrigin,
+  int       aWellX,
+  int       aWellY );
 
 
 
@@ -91,7 +81,7 @@ I2CWriteBytes (
   }
 #endif
 
-#endif /* I2C_H */
+#endif /* LOGGER_H */
 
 /* This Headerfile was generated with C2H.exe ( C2H ) */
 /* (c) 2006 by TARA Systems GmbH Munich */

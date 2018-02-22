@@ -144,7 +144,8 @@ destroySerialConnection ( TSerialConnection* aSerialConnection )
 	if (aSerialConnection != NULL) {
 		tcdrain(aSerialConnection->serial_poll->fd);		//Flush Tx
 		tcflush(aSerialConnection->serial_poll->fd, TCIOFLUSH);	//Discard Rx
-		
+		fclose(aSerialConnection->serial_poll->fd);
+
 		if(aSerialConnection->Port!=NULL)
 			free(aSerialConnection->Port);
 		

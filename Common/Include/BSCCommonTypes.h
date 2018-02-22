@@ -26,7 +26,6 @@ typedef enum WellStatus {
 * _TYPE: WellData
 *****************************************************************************/
 typedef struct WellData {
-	struct tm* Timestamp;
 	EWellStatus Status;
 	int Origin;
 } TWellData;
@@ -48,6 +47,7 @@ typedef struct BSCConfig {
 	int WaistPosZMM;
 
 	double WaistVolUL;
+	double ProbeVolUL;
 	double FlowULPS;
 	double NeedleGapMM;
 
