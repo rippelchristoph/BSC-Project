@@ -15,6 +15,7 @@
  *   destroySampler
  *   SamplerAddToQueue
  *   ProcessSampler
+ *   SamplerNewWell
  *   SamplerStartConfig
  *   SamplerEndConfig
  *   SamplerConfigSetPlotter
@@ -31,7 +32,8 @@
 #include "List.h"
 #include "BSCCommonTypes.h"
 #include "PlotterController.h"
-
+#include "Sample.h"
+#include "Logger.h"
 
 /****************************************************************************
  * SECTION: typedef
@@ -52,6 +54,7 @@ typedef enum SamplerStates {
 	DrawerClose,
 
 	Config,
+	NewWell,
 
 	Sampler_ERROR
 }ESamplerStates;
@@ -63,12 +66,14 @@ typedef enum SamplerStates {
 typedef struct Sampler {
 	TBSCConfig* Config;
 	TPlotter* Plotter;
+	TLogger* Logger;
 	TListHeader* Queue;
 	ESamplerStates State;
 	TWellData** Well;
 	struct timespec* Timestamp;
 	char* ErrorMessage;
 	int ConfX, ConfY, ConfZ;
+
 }TSampler;
 
 
@@ -91,7 +96,8 @@ typedef struct Sampler {
 PUBLIC TSampler *
 newSampler (
   TBSCConfig * aConfiguration,
-  TWellData ** aWell );
+  TWellData ** aWell,
+  char *       WorkingDirectory );
 
 
 /****************************************************************************
@@ -131,9 +137,17 @@ SamplerAddToQueue (
  *   aSampler - The Address of the Sampler
  ****************************************************************************/
 
-PUBLIC int
+PUBLIC TBoolean
 ProcessSampler (
   TSampler * aSampler );
+
+
+/****************************************************************************
+ * FUNCTION: SamplerNewWell
+ ****************************************************************************/
+
+PUBLIC void
+SamplerNewWell ( void );
 
 
 /****************************************************************************

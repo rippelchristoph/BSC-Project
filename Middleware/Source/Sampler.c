@@ -15,6 +15,7 @@
  *   destroySampler
  *   SamplerAddToQueue
  *   ProcessSampler
+ *   SamplerNewWell
  *   SamplerStartConfig
  *   SamplerEndConfig
  *   SamplerConfigSetPlotter
@@ -55,6 +56,7 @@
 #include "DigIO.h"
 
 
+
 #define TIME_UTC 1
 
 #define MILLION 1000000
@@ -70,7 +72,8 @@
 #include "List.h"
 #include "BSCCommonTypes.h"
 #include "PlotterController.h"
-
+#include "Sample.h"
+#include "Logger.h"
 
 /****************************************************************************
  * SECTION: typedef
@@ -91,6 +94,7 @@ typedef enum SamplerStates {
 	DrawerClose,
 
 	Config,
+	NewWell,
 
 	Sampler_ERROR
 }ESamplerStates;
@@ -102,12 +106,14 @@ typedef enum SamplerStates {
 typedef struct Sampler {
 	TBSCConfig* Config;
 	TPlotter* Plotter;
+	TLogger* Logger;
 	TListHeader* Queue;
 	ESamplerStates State;
 	TWellData** Well;
 	struct timespec* Timestamp;
 	char* ErrorMessage;
 	int ConfX, ConfY, ConfZ;
+
 }TSampler;
 
 #endif
@@ -187,7 +193,7 @@ PRIVATE void
 EnterStateBackOut (
   TSampler *                    aSampler );
 
-PRIVATE int
+PRIVATE void
 StateBackOut (
   TSampler *                    aSampler );
 
@@ -230,12 +236,14 @@ GetNextHoleY (
 PUBLIC TSampler *
 newSampler (
   TBSCConfig * aConfiguration,
-  TWellData ** aWell )
+  TWellData ** aWell,
+  char *       WorkingDirectory )
 {
 	printf("Sampler Init");
 	TSampler* retSampler;
 	retSampler = malloc(sizeof(TSampler));
 
+	retSampler->Logger = newLogger(WorkingDirectory);
 	retSampler->Timestamp = malloc(sizeof(struct timespec));
 	timespec_get(retSampler->Timestamp, TIME_UTC);
 	retSampler->Well = aWell;
@@ -263,6 +271,9 @@ destroySampler (
 	{
 		free(retInt);
 	}
+
+	destroyLogger(aSampler->Logger);
+
 	destroyList(aSampler->Queue);
 	free(aSampler->Timestamp);
 
@@ -296,11 +307,10 @@ SamplerAddToQueue (
  * PARAMETER:
  *   aSampler - The Address of the Sampler
  ****************************************************************************/
-PUBLIC int
+PUBLIC TBoolean
 ProcessSampler (
   TSampler * aSampler )
 {
-	int retVal = -1;
 	switch (aSampler->State)
 	{
 	case Wait:
@@ -328,7 +338,7 @@ ProcessSampler (
 		StateFlow(aSampler);
 		break;
 	case BackOut:
-		retVal = StateBackOut(aSampler);
+		StateBackOut(aSampler);
 		break;
 	case DrawerClose:
 		StateDrawerClose(aSampler);
@@ -338,10 +348,21 @@ ProcessSampler (
 		break;
 	case Config:
 		break;
+	case NewWell:
+		break;
 	default:
 		break;
 	}
-	return ETRUE;
+	return EFALSE;
+}
+
+/****************************************************************************
+ * FUNCTION: SamplerNewWell
+ ****************************************************************************/
+PUBLIC void
+SamplerNewWell ( TSampler* aSampler )
+{
+
 }
 
 /****************************************************************************
@@ -618,7 +639,8 @@ EnterStateDrawerOpen (
 	TBSCConfig* c = aSampler->Config;
 	double XPos = 0, YPos = 0;
 	XPos =	c->StartPosXMM + (double) GetNextHoleX(aSampler) * 
-		((c->EndPosXMM - c->StartPosXMM) / ((double)c->NumHolesX));
+		((c->EndPosXMM - c->StartPosXMM) / ((double)c->NumHolesX))
+		+ c->NeedleGapMM * *((int*)ListGetByIndex(aSampler->Queue, 0));
 
 	YPos = c->StartPosYMM + (double)GetNextHoleY(aSampler) *
 		((c->EndPosYMM - c->StartPosYMM) / ((double)c->NumHolesY));
@@ -760,21 +782,26 @@ EnterStateBackOut (
  *     Function is called periodically when the State is 'Wait' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
-PRIVATE int
+PRIVATE void
 StateBackOut (
   TSampler * aSampler )
 {
 	struct timespec now;
 	int* retPtr;
-	int retVal = -1;
 	timespec_get(&now, TIME_UTC);
 	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
+		int x = GetNextHoleX(aSampler);
+		int y = GetNextHoleY(aSampler);
+		//Remove executed sample from Queue
 		retPtr = ListRemoveByIndex(aSampler->Queue, 0);
-		retVal = *retPtr;
+		
+		LoggerAddSample(aSampler->Logger, *retPtr, x, y);
+		
 		free(retPtr);
 		EnterStateDrawerClose(aSampler);
 	}
-	return retVal;
+
+	return;
 }
 /****************************************************************************
  * FUNCTION: EnterStateDrawerClose

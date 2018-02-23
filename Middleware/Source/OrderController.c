@@ -13,7 +13,7 @@
  * PUBLIC FUNCTIONS:
  *   newOrderController
  *   destroyOrderController
- *   addOrder
+ *   OrderControllerAddOrder
  *   ProcessOrderController
  *   OrderControllerAddOrder
  *   OrderControllerRemoveOrder
@@ -96,18 +96,20 @@ PUBLIC void
 destroyOrderController (
   TOrderController * aController )
 {
-	//Remove and destroy all Orders
-	while (destroyOrder(ListRemoveByIndex(aController->OrderList, 0)))
-		;
-	
-	//Destroy Now Empty List
-	destroyList(aController->OrderList);
+	if (aController != NULL) {
+		//Remove and destroy all Orders
+		while (destroyOrder(ListRemoveByIndex(aController->OrderList, 0)) != -1)
+			;
 
-	free(aController);
+		//Destroy Now Empty List
+		destroyList(aController->OrderList);
+
+		free(aController);
+	}
 }
 
 /****************************************************************************
- * FUNCTION: addOrder
+ * FUNCTION: OrderControllerAddOrder
  * DESCRIPTION:
  *   The Function creates another Order according to the Parameters and adds
  *   it to the OrderList
@@ -119,7 +121,7 @@ destroyOrderController (
  ****************************************************************************/
 
 PUBLIC TBoolean
-addOrder (
+OrderControllerAddOrder (
   TOrderController * aOrderController,
   int                aOrigin,
   int                aInterval )
@@ -171,8 +173,8 @@ ProcessOrderController (
  *   Adds a new Order to the OrderList
  * PARAMETER:
  *   aOrderController - The Pointer of the OrderController
- *   aInterval        - The Interval of the new Order
- *   aOrigin          - The Origin of the new Order
+ *   aInterval        - The Interval of the new Order [s]
+ *   aOrigin          - The Origin of the new Order [0..5]
  ****************************************************************************/
 PUBLIC void
 OrderControllerAddOrder (
@@ -191,7 +193,7 @@ OrderControllerAddOrder (
  * PARAMETER:
  *   aOrderController - The Pointer of the OrderController
  *   aOrigin          - The Origin of which all orders should be removed
- *                      (beginning with 1)
+ *                      [0..5]
  ****************************************************************************/
 PUBLIC void
 OrderControllerRemoveOrder (

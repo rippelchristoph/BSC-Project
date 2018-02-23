@@ -463,7 +463,7 @@ int main( int argc, char** argv )
   system("sudo date -s \"$(wget -qSO- --max-redirect=0 google.com 2>&1 | grep Date: | cut -d' ' -f5-8)Z\"");
   
 
-  BSCController = newBSCController();
+  ControllerObj = newBSCController();
   
   /* start the EmWi main loop and process all user inputs, timers and signals */
   EwPrint( "Start EmWi Main Loop...                      " );
@@ -486,7 +486,7 @@ int main( int argc, char** argv )
       events |= CoreRoot__DriveKeyboardHitting( rootObject, cmd, 0, 0 );
     }
 
-	if (ProcessBSCController(BSCController)) {
+	if (ProcessBSCController(ControllerObj)) {
 		cmd = CoreKeyCodePower;
 	}
 
@@ -546,7 +546,7 @@ int main( int argc, char** argv )
       usleep( 1 );
   }
 
-  destroyBSCController(BSCController);
+  destroyBSCController(ControllerObj);
 
   EwPrint( "Terminate EmWi Main Loop...                  " );
   ShutDown = 1;

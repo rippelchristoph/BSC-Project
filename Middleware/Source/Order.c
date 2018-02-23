@@ -12,8 +12,8 @@
  * PUBLIC FUNCTIONS:
  *   newOrder
  *   destroyOrder
- *   OrderGetRemainingTime
  *   OrderGetNextExecution
+ *   OrderGetRemainingTime
  *   ProcessOrder
  ****************************************************************************/
 
@@ -60,9 +60,11 @@ typedef struct Order {
 
 /****************************************************************************
  * FUNCTION: newOrder
- *
  * DESCRIPTION:
- *   Initializes a new Order and allocates Storage for it
+ *   Initializes a new Order and allocates Storage for it.
+ * PARAMETER:
+ *   aOrigin   - The Circutinumber of the Order [0..5]
+ *   aInterval - The Interval of the Order in seconds
  ****************************************************************************/
 PUBLIC TOrder *
 newOrder (
@@ -72,16 +74,14 @@ newOrder (
 	TOrder* retPtr;
 	retPtr = (TOrder*)malloc(sizeof(TOrder));
 	if (retPtr == NULL) {
-		//TODO: Fehler Melden
 		return NULL;
 	}
+
 	retPtr->Origin = aOrigin;
 	retPtr->interval = aInterval;
-	time(&retPtr->lastExe);	//No Probe at Beginning
+	retPtr->lastExe = time(NULL);
 
 	EwPrint("New Order: CN: aOrigin = %i, aInterval = %i", aOrigin, aInterval);
-
-
 	return retPtr;
 }
 

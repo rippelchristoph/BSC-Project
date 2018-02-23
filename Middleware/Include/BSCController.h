@@ -6,10 +6,9 @@
  ****************************************************************************
  * FILE: BSCController.h
  *
- *   DESCRIPTION:
- *
- *
- *   PUBLIC FUNCTIONS:
+ * DESCRIPTION:
+ *   This Class is the top-class, that handles all subcomponents. It is the
+ *   Interface to the GUI.
  *
  * PUBLIC FUNCTIONS:
  *   newBSCController
@@ -18,7 +17,6 @@
  *   BSCWriteConfiguration
  *   ProcessBSCController
  *   BSCShutdown
- *   GetFormattedTime
  *   BSCAddOrder
  *   BSCRemoveOrder
  *   BSCSetSampleVolume
@@ -75,7 +73,7 @@ typedef struct BSCController {
  * SECTION: Declaration of Global Variables
  ****************************************************************************/
 TBoolean ShutdownBSCController;
-TBSCController* BSCController;
+TBSCController* ControllerObj;
 
 
 #ifdef __cplusplus
@@ -88,7 +86,7 @@ TBSCController* BSCController;
  * FUNCTION: newBSCController
  *
  * DESCRIPTION:
- *   Initializes a new BSC Controller
+ *   Initializes a new BSC Controller and all it´s Components
  * RETURN:
  *   Returns the new Address of the BSController
  ****************************************************************************/
@@ -99,6 +97,13 @@ newBSCController ( void );
 
 /****************************************************************************
  * FUNCTION: destroyBSCController
+ * DESCRIPTION:
+ *   Deinitializes the BSCController and all its sub-components. It also
+ *   frees all allocated Storage
+ * PARAMETER:
+ *   aController - The Pointer of the Controller
+ * RETURN:
+ *   EFALSE if it was successful and ETRUE if the function was not successful
  ****************************************************************************/
 
 PUBLIC void
@@ -109,11 +114,19 @@ destroyBSCController (
 /****************************************************************************
  * FUNCTION: BSCReadConfiguration
  *
- *   DESCRIPTION:
- *     Sends a Command to the Plotter
+ * DESCRIPTION:
+ *   Reads a Configuration from a .txt File to the Address that is given. If
+ *   the File cannot be found/opened the Function will not change the
+ *   Configuration.
+ * PARAMETER:
+ *   aConfiguration - The Address of the Configuaration which the values of
+ *                    the file should be assigned to.
+ * RETURN:
+ *   ETRUE if the File was not found and the Configuration was not changed.
+ *   EFALSE if the File was opened successful.
  ****************************************************************************/
 
-PUBLIC void
+PUBLIC TBoolean
 BSCReadConfiguration (
   TBSCConfig * aConfiguration,
   char *       fileDirectory );
@@ -128,9 +141,12 @@ BSCReadConfiguration (
  *   aConfiguration - The Configuration that is written
  *   aFilePath      - The Drectory the Configuration is written to e.g:
  *                    "/Data/Configuration.txt"
+ * RETURN:
+ *   ETRUE if the File was not found and the Configuration was not changed.
+ *   EFALSE if the File was opened successful.
  ****************************************************************************/
 
-PUBLIC void
+PUBLIC TBoolean
 BSCWriteConfiguration (
   TBSCConfig * aConfiguration,
   char *       aFilePath );
@@ -138,6 +154,12 @@ BSCWriteConfiguration (
 
 /****************************************************************************
  * FUNCTION: ProcessBSCController
+ * DESCRIPTION:
+ *   This function is called periodically and processes all Components of the
+ *   BSCController.
+ * RETURN:
+ *   The Function returns a Boolean Variable that, when returned ETRUE, will
+ *   shut down the MainLoop of the EmWi Application
  ****************************************************************************/
 
 PUBLIC int
@@ -147,6 +169,8 @@ ProcessBSCController (
 
 /****************************************************************************
  * FUNCTION: BSCShutdown
+ * DESCRIPTION:
+ *   The Variable set in this function will shut down the EmWi - MainLoop
  ****************************************************************************/
 
 PUBLIC void
@@ -154,27 +178,16 @@ BSCShutdown ( void );
 
 
 /****************************************************************************
- * FUNCTION: GetFormattedTime
- * DESCRIPTION:
- *   Writes the given Timestamp formatted as a string into the Buffer.
- *   Format: DD.MM.YYYY HH.MM.SS
- * PARAMETER:
- *   aTimeStamp - The Timestamp that should be formatted aBuffer - Address of
- *                already allocated Storage. There should be at least space
- *                for 20 characters
- ****************************************************************************/
-
-PUBLIC void
-GetFormattedTime (
-  time_t * aTimeStamp,
-  char *   aBuffer );
-
-
-/****************************************************************************
  * FUNCTION: BSCAddOrder
  * DESCRIPTION:
  *   Wrapper function to add an Order to the OrderController of the
  *   BSCController
+ * PARAMETER:
+ *   aInterval - The Interval of the Order in minutes. If the Interval is 0,
+ *               the Order will not be added to the OrderController, but is
+ *               added to the Queue of the Sampler.
+ *   aOrigin   - The CircuitNumber of which the Probes should be collected
+ *               [0..5]
  ****************************************************************************/
 
 PUBLIC void
@@ -186,18 +199,24 @@ BSCAddOrder (
 /****************************************************************************
  * FUNCTION: BSCRemoveOrder
  * DESCRIPTION:
- *   Wrapper function to add an Order to the OrderController of the
+ *   Wrapper function to remove an Order to the OrderController of the
  *   BSCController
+ * PARAMETER:
+ *   aOrigin - The CircuitNumber of which all Orders will be removed.
  ****************************************************************************/
 
 PUBLIC void
 BSCRemoveOrder (
-  int aInterval,
   int aOrigin );
 
 
 /****************************************************************************
  * FUNCTION: BSCSetSampleVolume
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Volume
+ *   of a Single Sampler [µl].
+ * PARAMETER:
+ *   aSamplerVolUL - The Volume of a Sample in µl
  ****************************************************************************/
 
 PUBLIC void
@@ -207,6 +226,11 @@ BSCSetSampleVolume (
 
 /****************************************************************************
  * FUNCTION: BSCSetFlowSpeed
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Flow
+ *   Speed with which the serum flows [µl/s]
+ * PARAMETER:
+ *   aSpeedULPS - The Flow Speed
  ****************************************************************************/
 
 PUBLIC void
@@ -216,6 +240,11 @@ BSCSetFlowSpeed (
 
 /****************************************************************************
  * FUNCTION: BSCSetWasteVolume
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Volume
+ *   that is wasted before taking a probe [µl].
+ * PARAMETER:
+ *   aWastVolUL - The Volume that is wasted.
  ****************************************************************************/
 
 PUBLIC void
@@ -225,6 +254,12 @@ BSCSetWasteVolume (
 
 /****************************************************************************
  * FUNCTION: BSCSetNeedleGap
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Distance
+ *   between the needles. The Distance between the Needles have to be the
+ *   same between every needle.
+ * PARAMETER:
+ *   aNeedleGapum - The Distance between two Needles [µl].
  ****************************************************************************/
 
 PUBLIC void
@@ -234,6 +269,11 @@ BSCSetNeedleGap (
 
 /****************************************************************************
  * FUNCTION: BSCSetNumHolesX
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Number
+ *   of holes in the well in X-Direction
+ * PARAMETER:
+ *   aNumHolesX - Number of holes in x-Direction
  ****************************************************************************/
 
 PUBLIC void
@@ -243,6 +283,11 @@ BSCSetNumHolesX (
 
 /****************************************************************************
  * FUNCTION: BSCSetNumHolesY
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Number
+ *   of holes in the well in Y-Direction
+ * PARAMETER:
+ *   aNumHolesX - Number of holes in Y-Direction
  ****************************************************************************/
 
 PUBLIC void
@@ -252,6 +297,15 @@ BSCSetNumHolesY (
 
 /****************************************************************************
  * FUNCTION: BSCSetPosition
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets a Position
+ *   of the Configuration
+ * PARAMETER:
+ *   aIndex - The index indicates which Position is set: CONFIG_STARTPOS 0,
+ *            CONFIG_ENDPOS 1, CONFIG_WASTEPOS 2, CONFIG_MOVINGPOS 3
+ *   aX     - The absolute X-Position
+ *   aY     - The absolute Y-Position
+ *   aZ     - The absolute Z-Position
  ****************************************************************************/
 
 PUBLIC void
@@ -264,6 +318,15 @@ BSCSetPosition (
 
 /****************************************************************************
  * FUNCTION: BSCSetCurrentPosition
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It is used, to
+ *   operate the Plotter manually and by that be possible to set the
+ *   Positions of the Configuration. Before Calling this Function, the
+ *   StartConfig-Function has to be called.
+ * PARAMETER:
+ *   aX - The absolute X-Position
+ *   aY - The absolute Y-Position
+ *   aZ - The absolute Z-Position
  ****************************************************************************/
 
 PUBLIC void
@@ -275,6 +338,10 @@ BSCSetCurrentPosition (
 
 /****************************************************************************
  * FUNCTION: BSCStartConfig
+ * DESCRIPTION:
+ *   This Function Starts the Configuration Process. It sets the State of the
+ *   Sampler to "Config" and by that enables the manual Control of the
+ *   Plotter.
  ****************************************************************************/
 
 PUBLIC void
@@ -283,10 +350,21 @@ BSCStartConfig ( void );
 
 /****************************************************************************
  * FUNCTION: BSCStopConfig
+ * DESCRIPTION:
+ *   This Function Ends the Configuration Process. It Ends the Config State
+ *   of the Sampler and writes the Configuration to a txt file. It is written
+ *   to <WorkingDirectory>/Configuration.txt
  ****************************************************************************/
 
 PUBLIC void
 BSCStopConfig ( void );
+
+
+/**
+ * FUNCTION: BSCNewWell
+*/
+
+PUBLIC void BSCNewWell();
 
 
 

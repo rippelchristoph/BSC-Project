@@ -6,10 +6,9 @@
  ****************************************************************************
  * FILE: BSCController.c
  *
- *   DESCRIPTION:
- *
- *
- *   PUBLIC FUNCTIONS:
+ * DESCRIPTION:
+ *   This Class is the top-class, that handles all subcomponents. It is the
+ *   Interface to the GUI.
  *
  * PUBLIC FUNCTIONS:
  *   newBSCController
@@ -18,7 +17,6 @@
  *   BSCWriteConfiguration
  *   ProcessBSCController
  *   BSCShutdown
- *   GetFormattedTime
  *   BSCAddOrder
  *   BSCRemoveOrder
  *   BSCSetSampleVolume
@@ -31,6 +29,7 @@
  *   BSCSetCurrentPosition
  *   BSCStartConfig
  *   BSCStopConfig
+ *   BSCNewWell
  *
  * PRIVATE FUNCTIONS:
  *   UpdateRemainingTimes
@@ -42,6 +41,7 @@
  * SECTION: #include
  ****************************************************************************/
 #include "BSCController.h"
+#include "Sample.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -61,7 +61,6 @@
 #include "Device.h"
 #include "OrderController.h"
 #include "Sampler.h"
-#include "Logger.h"
 #include "TemperatureController.h"
 #include <time.h>
 
@@ -77,7 +76,6 @@
 
 typedef struct BSCController {
 	TBSCConfig* Configuration;
-	TLogger* Logger;
 	TTemperatureController* TempContr;
 	TWellData** Well;
 	TOrderController* Orders;
@@ -91,7 +89,7 @@ typedef struct BSCController {
  * SECTION: Declaration of Global Variables
  ****************************************************************************/
 TBoolean ShutdownBSCController;
-TBSCController* BSCController;
+TBSCController* ControllerObj;
 #endif
 
 /*
@@ -150,32 +148,41 @@ UpdateDayTime (
  * FUNCTION: newBSCController
  *
  * DESCRIPTION:
- *   Initializes a new BSC Controller
+ *   Initializes a new BSC Controller and all it´s Components
  * RETURN:
  *   Returns the new Address of the BSController
  ****************************************************************************/
 PUBLIC TBSCController *
 newBSCController ( void )
 {
+	//All Components:
+	//time_t LastUpdate;
+	//TOrderController* Orders;
+	//char* WorkingDirectory;
+	//TBSCConfig* Configuration;
+	//TWellData** Well;
+	//TSampler* Sampler;
+	//TTemperatureController* TempContr;
+	//DeviceDeviceClass EwDeviceObject;
+	
 	printf("BSCInit");
 	int i = 0;
 	int j = 0;
+	//Allocate Storage for Controller itself
 	TBSCController* retPtr;
 	retPtr = malloc(sizeof(TBSCController));
 	time(&retPtr->LastUpdate);
+	//Initialize OrderController
 	retPtr->Orders = newOrderController();
-
+	//Initialize Workingdirectory
 	retPtr->WorkingDirectory = strdup("/home/pi/Desktop");
 
-	retPtr->Logger = newLogger(retPtr->WorkingDirectory);
-	
+	//Initialize and read Configuration 
 	char ConfigPath[80];
 	strcpy(ConfigPath, retPtr->WorkingDirectory);
 	strcat(ConfigPath, "/Configuration.txt");
 	retPtr->Configuration = malloc(sizeof(TBSCConfig));
 	BSCReadConfiguration(retPtr->Configuration, ConfigPath);
-	
-
 	//Allocate Storage for multidimensional array
 	printf("Well init");
 	retPtr->Well = malloc(retPtr->Configuration->NumHolesX * sizeof(TWellData*));
@@ -185,11 +192,11 @@ newBSCController ( void )
 			retPtr->Well[i][j].Status = EMPTY;
 		}
 	}
-
-	
+	//Initialize Sampler
 	retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well);
+	//Initialize TemperatureController
 	retPtr->TempContr = newTemperatureController(0x4F, 0.5, -22.0);
-
+	//Get DeviceObject from Embedded Wizard
 	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, DeviceDeviceClass);
 
 	ShutdownBSCController = EFALSE;
@@ -199,19 +206,36 @@ newBSCController ( void )
 
 /****************************************************************************
  * FUNCTION: destroyBSCController
+ * DESCRIPTION:
+ *   Deinitializes the BSCController and all its sub-components. It also
+ *   frees all allocated Storage
+ * PARAMETER:
+ *   aController - The Pointer of the Controller
+ * RETURN:
+ *   EFALSE if it was successful and ETRUE if the function was not successful
  ****************************************************************************/
 
 PUBLIC void
 destroyBSCController (
   TBSCController * aController )
 {
+	//All Components:
+	//time_t LastUpdate;
+	//TOrderController* Orders;
+	//char* WorkingDirectory;
+	//TBSCConfig* Configuration;
+	//TWellData** Well;
+	//TSampler* Sampler;
+	//TTemperatureController* TempContr;
+	//DeviceDeviceClass EwDeviceObject;
+
 	if (aController != NULL) {
 		int i = 0;
 		if (aController->Orders != NULL)
 			destroyOrderController(aController->Orders);
 
-		if (aController->Sampler != NULL)
-			destroySampler(aController->Sampler);
+		if (aController->WorkingDirectory != NULL)
+			free(aController->WorkingDirectory);
 
 		if (aController->Configuration != NULL)
 			free(aController->Configuration);
@@ -220,23 +244,39 @@ destroyBSCController (
 			for (i = 0; i < aController->Configuration->NumHolesX; i++) {
 				free(aController->Well[i]);
 			}
-
 			free(aController->Well);
 		}
 
+		if (aController->Sampler != NULL)
+			destroySampler(aController->Sampler);
 
+		if (aController->TempContr != NULL)
+			destroyTemperatureController(aController->TempContr);
 
 		free(aController);
 	}
+	else {
+		return ETRUE;
+	}
+
+	return EFALSE;
 }
 
 /****************************************************************************
  * FUNCTION: BSCReadConfiguration
  *
- *   DESCRIPTION:
- *     Sends a Command to the Plotter
+ * DESCRIPTION:
+ *   Reads a Configuration from a .txt File to the Address that is given. If
+ *   the File cannot be found/opened the Function will not change the
+ *   Configuration.
+ * PARAMETER:
+ *   aConfiguration - The Address of the Configuaration which the values of
+ *                    the file should be assigned to.
+ * RETURN:
+ *   ETRUE if the File was not found and the Configuration was not changed.
+ *   EFALSE if the File was opened successful.
  ****************************************************************************/
-PUBLIC void
+PUBLIC TBoolean
 BSCReadConfiguration (
   TBSCConfig * aConfiguration,
   char *       fileDirectory )
@@ -249,11 +289,9 @@ BSCReadConfiguration (
 	FILE* fp;
 	fp = fopen(fileDirectory, "r");
 
-
-
 	if (fp == NULL)
 	{
-		return;
+		return ETRUE;
 	}
 
 	while (1)
@@ -329,7 +367,7 @@ BSCReadConfiguration (
 	}
 	
 	fclose(fp);
-	return;
+	return EFALSE;
 }
 
 /****************************************************************************
@@ -341,8 +379,11 @@ BSCReadConfiguration (
  *   aConfiguration - The Configuration that is written
  *   aFilePath      - The Drectory the Configuration is written to e.g:
  *                    "/Data/Configuration.txt"
+ * RETURN:
+ *   ETRUE if the File was not found and the Configuration was not changed.
+ *   EFALSE if the File was opened successful.
  ****************************************************************************/
-PUBLIC void
+PUBLIC TBoolean
 BSCWriteConfiguration (
   TBSCConfig * aConfiguration,
   char *       aFilePath )
@@ -355,8 +396,7 @@ BSCWriteConfiguration (
 
 	  if (fp == NULL)
 	  {
-		  //TODO: Give Some Kind of Error Message to GUI
-		  fclose(fp);
+		  return ETRUE;
 	  }
 
 	  while (ConfigSyntaxWords[i])
@@ -416,26 +456,46 @@ BSCWriteConfiguration (
 
 	  fclose(fp);
 
-	  return;
+	  return EFALSE;
   }
 
 /****************************************************************************
  * FUNCTION: ProcessBSCController
+ * DESCRIPTION:
+ *   This function is called periodically and processes all Components of the
+ *   BSCController.
+ * RETURN:
+ *   The Function returns a Boolean Variable that, when returned ETRUE, will
+ *   shut down the MainLoop of the EmWi Application
  ****************************************************************************/
 PUBLIC int
 ProcessBSCController (
   TBSCController * aBSCController )
 {
+	//All Components:
+	//TOrderController* Orders;
+	//TSampler* Sampler;
+	//TTemperatureController* TempContr;
+	//DeviceDeviceClass EwDeviceObject;
+	//time_t LastUpdate;
+
+	//Process the Order Controller
+	//If the OrderControlle returns something else than -1 
+	//the according CircuitNumber is added to the Queue of the Sampler
 	int retVal = -1;
 	if ((retVal = ProcessOrderController(aBSCController->Orders)) != -1) {
 		EwPrint("Added to Queue: %i", retVal);
 		SamplerAddToQueue(aBSCController->Sampler, retVal);
 	}
+	//Process Sampler, that Controls the Plotter and the Valves
+	ProcessSampler(aBSCController->Sampler);
 
-	//ProcessSampler(aBSCController->Sampler);
+	//Process TemperatureController that controls the Peltier
+	//and reads the Temperature
+	ProcessTemperatureController(aBSCController->TempContr);
 
+	//Update the Values on the Screen every 5 seconds
 	time_t now = time(NULL);
-
 	if ((now - aBSCController->LastUpdate) >= 5) {
 		aBSCController->LastUpdate = now;
 
@@ -449,6 +509,8 @@ ProcessBSCController (
 
 /****************************************************************************
  * FUNCTION: BSCShutdown
+ * DESCRIPTION:
+ *   The Variable set in this function will shut down the EmWi - MainLoop
  ****************************************************************************/
 PUBLIC void
 BSCShutdown ( void )
@@ -456,40 +518,17 @@ BSCShutdown ( void )
 	ShutdownBSCController = ETRUE;
 }
 
-
-/****************************************************************************
- * FUNCTION: GetFormattedTime
- * DESCRIPTION:
- *   Writes the given Timestamp formatted as a string into the Buffer.
- *   Format: DD.MM.YYYY HH.MM.SS
- * PARAMETER:
- *   aTimeStamp - The Timestamp that should be formatted aBuffer - Address of
- *                already allocated Storage. There should be at least space
- *                for 20 characters
- ****************************************************************************/
-
-PUBLIC void
-GetFormattedTime (
-  time_t * aTimeStamp,
-  char *   aBuffer )
-{
-	struct tm * timeinfo = localtime(aTimeStamp);
-	strcpy(aBuffer, "");
-
-	sprintf(aBuffer, "%02d.%02d.%d %02d:%02d:%02d",
-		timeinfo->tm_mday,
-		(timeinfo->tm_mon + 1),
-		(timeinfo->tm_year + 1900),
-		timeinfo->tm_hour,
-		timeinfo->tm_min,
-		timeinfo->tm_sec);
-}
-
 /****************************************************************************
  * FUNCTION: BSCAddOrder
  * DESCRIPTION:
  *   Wrapper function to add an Order to the OrderController of the
  *   BSCController
+ * PARAMETER:
+ *   aInterval - The Interval of the Order in minutes. If the Interval is 0,
+ *               the Order will not be added to the OrderController, but is
+ *               added to the Queue of the Sampler.
+ *   aOrigin   - The CircuitNumber of which the Probes should be collected
+ *               [0..5]
  ****************************************************************************/
 
 PUBLIC void
@@ -497,81 +536,130 @@ BSCAddOrder (
   int aInterval,
   int aOrigin )
 {
-	OrderControllerAddOrder(BSCController->Orders, (time_t)(aInterval * 60), aOrigin);
+	if (aInterval <= 0) {
+		SamplerAddToQueue(ControllerObj->Sampler, aOrigin);
+	}
+	OrderControllerAddOrder(ControllerObj->Orders, (time_t)(aInterval * 60), aOrigin);
 }
 
 /****************************************************************************
  * FUNCTION: BSCRemoveOrder
  * DESCRIPTION:
- *   Wrapper function to add an Order to the OrderController of the
+ *   Wrapper function to remove an Order to the OrderController of the
  *   BSCController
+ * PARAMETER:
+ *   aOrigin - The CircuitNumber of which all Orders will be removed.
  ****************************************************************************/
 
 PUBLIC void
 BSCRemoveOrder (
-  int aInterval,
   int aOrigin )
 {
-	OrderControllerAddOrder(BSCController->Orders, (time_t)(aInterval * 60), aOrigin);
+	OrderControllerRemoveOrder(ControllerObj->Orders, aOrigin);
 }
-
 
 /****************************************************************************
  * FUNCTION: BSCSetSampleVolume
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Volume
+ *   of a Single Sampler [µl].
+ * PARAMETER:
+ *   aSamplerVolUL - The Volume of a Sample in µl
  ****************************************************************************/
 PUBLIC void
 BSCSetSampleVolume (
   int aSampleVolUL )
 {
-	BSCController->Configuration->ProbeVolUL = aSampleVolUL;
+	ControllerObj->Configuration->ProbeVolUL = aSampleVolUL;
 }
+
 /****************************************************************************
  * FUNCTION: BSCSetFlowSpeed
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Flow
+ *   Speed with which the serum flows [µl/s]
+ * PARAMETER:
+ *   aSpeedULPS - The Flow Speed
  ****************************************************************************/
 PUBLIC void
 BSCSetFlowSpeed (
   int aSpeedULPS )
 {
-	BSCController->Configuration->FlowULPS = aSpeedULPS;
+	ControllerObj->Configuration->FlowULPS = aSpeedULPS;
 }
+
 /****************************************************************************
  * FUNCTION: BSCSetWasteVolume
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Volume
+ *   that is wasted before taking a probe [µl].
+ * PARAMETER:
+ *   aWastVolUL - The Volume that is wasted.
  ****************************************************************************/
 PUBLIC void
 BSCSetWasteVolume (
   int aWastVolUL )
 {
-	BSCController->Configuration->WaistVolUL = aWastVolUL;
+	ControllerObj->Configuration->WaistVolUL = aWastVolUL;
 }
+
 /****************************************************************************
  * FUNCTION: BSCSetNeedleGap
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Distance
+ *   between the needles. The Distance between the Needles have to be the
+ *   same between every needle.
+ * PARAMETER:
+ *   aNeedleGapum - The Distance between two Needles [µl].
  ****************************************************************************/
 PUBLIC void
 BSCSetNeedleGap (
   int aNeedleGapum )
 {
-	BSCController->Configuration->NeedleGapMM =(double) aNeedleGapum / (double) 1000;
+	ControllerObj->Configuration->NeedleGapMM =(double) aNeedleGapum / (double) 1000;
 }
+
 /****************************************************************************
  * FUNCTION: BSCSetNumHolesX
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Number
+ *   of holes in the well in X-Direction
+ * PARAMETER:
+ *   aNumHolesX - Number of holes in x-Direction
  ****************************************************************************/
 PUBLIC void
 BSCSetNumHolesX (
   int aNumHolesX )
 {
-	BSCController->Configuration->NumHolesX = aNumHolesX;
+	ControllerObj->Configuration->NumHolesX = aNumHolesX;
 }
+
 /****************************************************************************
  * FUNCTION: BSCSetNumHolesY
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets the Number
+ *   of holes in the well in Y-Direction
+ * PARAMETER:
+ *   aNumHolesX - Number of holes in Y-Direction
  ****************************************************************************/
 PUBLIC void
 BSCSetNumHolesY (
   int aNumHolesY )
 {
-	BSCController->Configuration->NumHolesY = aNumHolesY;
+	ControllerObj->Configuration->NumHolesY = aNumHolesY;
 }
+
 /****************************************************************************
  * FUNCTION: BSCSetPosition
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It sets a Position
+ *   of the Configuration
+ * PARAMETER:
+ *   aIndex - The index indicates which Position is set: CONFIG_STARTPOS 0,
+ *            CONFIG_ENDPOS 1, CONFIG_WASTEPOS 2, CONFIG_MOVINGPOS 3
+ *   aX     - The absolute X-Position
+ *   aY     - The absolute Y-Position
+ *   aZ     - The absolute Z-Position
  ****************************************************************************/
 PUBLIC void
 BSCSetPosition (
@@ -583,28 +671,38 @@ BSCSetPosition (
 	switch (aIndex)
 	{
 	case CONFIG_STARTPOS:
-		BSCController->Configuration->StartPosXMM = aX;
-		BSCController->Configuration->StartPosYMM = aY;
-		BSCController->Configuration->StartPosZMM = aZ;
+		ControllerObj->Configuration->StartPosXMM = aX;
+		ControllerObj->Configuration->StartPosYMM = aY;
+		ControllerObj->Configuration->StartPosZMM = aZ;
 		break;
 	case CONFIG_ENDPOS:
-		BSCController->Configuration->EndPosXMM = aX;
-		BSCController->Configuration->EndPosYMM = aY;
-		BSCController->Configuration->EndPosZMM = aZ;
+		ControllerObj->Configuration->EndPosXMM = aX;
+		ControllerObj->Configuration->EndPosYMM = aY;
+		ControllerObj->Configuration->EndPosZMM = aZ;
 		break;
 	case CONFIG_WASTEPOS:
-		BSCController->Configuration->WaistPosXMM = aX;
-		BSCController->Configuration->WaistPosZMM = aZ;
+		ControllerObj->Configuration->WaistPosXMM = aX;
+		ControllerObj->Configuration->WaistPosZMM = aZ;
 		break;
 	case CONFIG_MOVINGPOS:
-		BSCController->Configuration->MovingPosZMM = aZ;
+		ControllerObj->Configuration->MovingPosZMM = aZ;
 		break;
 	default:
 		break;
 	}
 }
+
 /****************************************************************************
  * FUNCTION: BSCSetCurrentPosition
+ * DESCRIPTION:
+ *   This Function is part of the Configuration Process. It is used, to
+ *   operate the Plotter manually and by that be possible to set the
+ *   Positions of the Configuration. Before Calling this Function, the
+ *   StartConfig-Function has to be called.
+ * PARAMETER:
+ *   aX - The absolute X-Position
+ *   aY - The absolute Y-Position
+ *   aZ - The absolute Z-Position
  ****************************************************************************/
 PUBLIC void
 BSCSetCurrentPosition (
@@ -612,28 +710,48 @@ BSCSetCurrentPosition (
   int aY,
   int aZ )
 {
-
+	SamplerConfigSetPlotter(ControllerObj->Sampler, aX, aY, aZ);
 }
 /****************************************************************************
  * FUNCTION: BSCStartConfig
+ * DESCRIPTION:
+ *   This Function Starts the Configuration Process. It sets the State of the
+ *   Sampler to "Config" and by that enables the manual Control of the
+ *   Plotter.
  ****************************************************************************/
 PUBLIC void
 BSCStartConfig ( void )
 {
-	SamplerStartConfig(BSCController->Sampler);
+	SamplerStartConfig(ControllerObj->Sampler);
 }
 /****************************************************************************
  * FUNCTION: BSCStopConfig
+ * DESCRIPTION:
+ *   This Function Ends the Configuration Process. It Ends the Config State
+ *   of the Sampler and writes the Configuration to a txt file. It is written
+ *   to <WorkingDirectory>/Configuration.txt
  ****************************************************************************/
 PUBLIC void
 BSCStopConfig ( void )
 {
 	char directory[100];
-	strcpy(directory, BSCController->WorkingDirectory);
+	strcpy(directory, ControllerObj->WorkingDirectory);
 	strcat(directory, "/Configuration.txt");
-	BSCWriteConfiguration(BSCController->Configuration, directory);
-	SamplerEndConfig(BSCController->Sampler);
+	BSCWriteConfiguration(ControllerObj->Configuration, directory);
+	SamplerEndConfig(ControllerObj->Sampler);
 }
+
+/****************************************************************************
+ * FUNCTION: BSCNewWell
+ ****************************************************************************/
+PUBLIC void
+BSCNewWell ( void )
+{
+	SamplerNewWell(ControllerObj->Sampler);
+
+}
+
+
 
 /****************************************************************************
  * SECTION: Implementation of private Functions
@@ -646,7 +764,7 @@ BSCStopConfig ( void )
  *   Therefore it uses the NextPointer of the List that is a property of the
  *   OrderController to make the Process faster
  * PARAMETER:
- *   aController - The Address of the Controller Device Object - //TODO:
+ *   aController - The Address of the Controller Device Object
  ****************************************************************************/
 
 PRIVATE void
@@ -658,6 +776,7 @@ UpdateRemainingTimes (
 	ListSetReadPointer(OrderList, 0);
 	while ((retOrder = ListGetNext(OrderList)))
 	{
+		//Update is Called in Minutes, the Remaining time is returned in seconds.
 		DeviceDeviceClass_onRemainingTime(aController->EwDeviceObject,
 			(XInt32)retOrder->Origin,
 			(XInt32)OrderGetRemainingTime(retOrder) / 60

@@ -12,8 +12,8 @@
  * PUBLIC FUNCTIONS:
  *   newOrder
  *   destroyOrder
- *   OrderGetRemainingTime
  *   OrderGetNextExecution
+ *   OrderGetRemainingTime
  *   ProcessOrder
  ****************************************************************************/
 
@@ -76,6 +76,22 @@ destroyOrder (
 
 
 /****************************************************************************
+ * FUNCTION: OrderGetNextExecution
+ *
+ * DESCRIPTION:
+ *   Returns the timestamp of the Next time the Order will be executed
+ * PARAMETER:
+ *   aOrder - The Adress of Order
+ * RETURN:
+ *   Returns the absolute Time stamp of the Next Execution in seconds
+ ****************************************************************************/
+
+PUBLIC time_t
+OrderGetNextExecution (
+  TOrder * aOrder );
+
+
+/****************************************************************************
  * FUNCTION: OrderGetRemainingTime
  *
  * DESCRIPTION:
@@ -89,22 +105,6 @@ destroyOrder (
 
 PUBLIC time_t
 OrderGetRemainingTime (
-  TOrder * aOrder );
-
-
-/****************************************************************************
- * FUNCTION: OrderGetNextExecution
- *
- * DESCRIPTION:
- *   Returns the timestamp of the Next time the Order will be executed
- * PARAMETER:
- *   aOrder - The Adress of Order
- * RETURN:
- *   Returns the absolute Time stamp of the Next Execution in seconds
- ****************************************************************************/
-
-PUBLIC time_t
-OrderGetNextExecution (
   TOrder * aOrder );
 
 
