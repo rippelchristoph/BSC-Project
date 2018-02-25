@@ -20,3 +20,4 @@ GUI/171118_Test1.ewp.bak
 
 Platforms/RaspberryPi/Include/Linux-Serial.h
 Platforms/RaspberryPi/Source/Linux-Serial.c
+*.exe

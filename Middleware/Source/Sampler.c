@@ -360,7 +360,8 @@ ProcessSampler (
  * FUNCTION: SamplerNewWell
  ****************************************************************************/
 PUBLIC void
-SamplerNewWell ( TSampler* aSampler )
+SamplerNewWell (
+  TSampler * aSampler )
 {
 
 }
@@ -657,9 +658,10 @@ EnterStateDrawerOpen (
 /****************************************************************************
  * FUNCTION: StateDrawerOpen
  *
- *   DESCRIPTION:
- *     Function is called periodically when the State is 'Wait' PARAMETER:
- *     aSampler - The Address of the Sampler
+ * DESCRIPTION:
+ *   Function is called periodically when the State is 'DrawerOpen'
+ * PARAMETER:
+ *   aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
 StateDrawerOpen (
@@ -674,9 +676,10 @@ StateDrawerOpen (
 /****************************************************************************
  * FUNCTION: EnterStateDropPos
  *
- *   DESCRIPTION:
- *     Function is called when beginning the State 'Wait' PARAMETER:
- *     aSampler - The Address of the Sampler
+ * DESCRIPTION:
+ *   Function is called when beginning the State 'DropPos'
+ * PARAMETER:
+ *   aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
 EnterStateDropPos (
@@ -866,6 +869,11 @@ StateERROR (
 
 /****************************************************************************
  * FUNCTION: GetNextHoleX
+ * DESCRIPTION:
+ *   Function looks for the First Hole in the Well with the Status EMPTY.
+ * RETURN:
+ *   Returns the Index (beginning with 0) if an empty one is found. If not,
+ *   the return is -1;
  ****************************************************************************/
 PRIVATE int
 GetNextHoleX (
@@ -884,6 +892,11 @@ GetNextHoleX (
 
 /****************************************************************************
  * FUNCTION: GetNextHoleY
+ * DESCRIPTION:
+ *   Function looks for the First Hole in the Well with the Status EMPTY.
+ * RETURN:
+ *   Returns the Index (beginning with 0) if an empty one is found. If not,
+ *   the return is -1;
  ****************************************************************************/
 PRIVATE int
 GetNextHoleY (

@@ -8,7 +8,7 @@
  *
  * DESCRIPTION:
  *   This is a Common Type. With the functions you can set up a Singly Linked
- *   List The 'ReadPointer' in the header is used to save time when
+ *   List. The 'ReadPointer' in the header is used to save time when
  *   itterating over every single element. It can NOT be assured that the
  *   readPointer stays the same after calling a different function
  *
@@ -37,8 +37,6 @@
 
 #include <stdlib.h>
 
-/** HEADER ******************************************************************
- */
 #ifndef  LIST_H
 
 /****************************************************************************
@@ -70,8 +68,8 @@ typedef struct ListHeader {
 
 #endif
 
-/*
- ** HEADER ******************************************************************/
+/** HEADER ******************************************************************
+ */
 
 /****************************************************************************
  * SECTION: Declaration of private functions
@@ -91,7 +89,8 @@ freeNode (
  * FUNCTION: newList
  *
  * DESCRIPTION:
- *   Initializes a new List by creating a Header.
+ *   Initializes a new List by creating a Header and allocating storage for
+ *   it.
  * RETURN:
  *   Returns the Pointer of the new allocated TListHeader
  ****************************************************************************/
@@ -115,7 +114,8 @@ newList ( void )
  * DESCRIPTION:
  *   Before calling this function all Nodes have to be deleted by repeatedly
  *   calling ListRemove(TListHeader*, 0) until it
- *   returns NULL
+ *   returns NULL. That is because otherwise the dataPointers woulf not be
+ *   free´d.
  * PARAMETER:
  *   aList - The Adress of the TListHeader that should be destroyed
  ****************************************************************************/
@@ -242,6 +242,13 @@ ListGetNext (
 
 /****************************************************************************
  * FUNCTION: ListGetByIndex
+ * DESCRIPTION:
+ *   The Function returns the data Pointer of the Node with the given index.
+ * PARAMETER:
+ *   aList  - The Adress of the List header.
+ *   aIndex - The index of the node (beginning with 0)
+ * RETURN:
+ *   Returns the data Pointer of the given node.
  ****************************************************************************/
 PUBLIC void *
 ListGetByIndex (

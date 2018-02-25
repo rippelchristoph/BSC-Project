@@ -49,6 +49,13 @@ LoggerCloseWell (
 
 /****************************************************************************
  * FUNCTION: newLogger
+ * DESCRIPTION:
+ *   This Function creates a new Logger by allocating storage for it.
+ * PARAMETER:
+ *   aWorkingDirectory - The Directory in which the files should be created.
+ *                       The Storage of the String has to be allocated
+ *                       somewhere else and must not be freed before
+ *                       destroying the logger.
  ****************************************************************************/
 PUBLIC TLogger *
 newLogger (
@@ -60,17 +67,18 @@ newLogger (
 		return NULL;
 	}
 
-	retPtr->WorkingDirectory = strdup(aWorkingDirectory);
-	if (retPtr->WorkingDirectory == NULL) {
-		free(retPtr);
-		return NULL;
-	}
+	retPtr->WorkingDirectory = aWorkingDirectory;
 
 	return retPtr;
 }
 
 /****************************************************************************
  * FUNCTION: destroyLogger
+ * DESCRIPTION:
+ *   This function destroyes the Logger and deallocates the storage. It also
+ *   finishes the last Well-File and closes it.
+ * PARAMETER:
+ *   aLogger - The Address of the Logger
  ****************************************************************************/
 PUBLIC TBoolean
 destroyLogger (
@@ -78,7 +86,6 @@ destroyLogger (
 {
 	if (aLogger != NULL) {
 		LoggerCloseWell(aLogger);
-		free(aLogger->WorkingDirectory);
 		free(aLogger);
 	}
 	return EFALSE;
@@ -86,6 +93,12 @@ destroyLogger (
 
 /****************************************************************************
  * FUNCTION: LoggerNewWell
+ * DESCRIPTION:
+ *   After adding a short footnote to the Well-File before (if existing),
+ *   This Function creates a new file named according to the time of its
+ *   creation. Then it writes a short header into the file.
+ * PARAMETER:
+ *   aLogger - The Address of the Logger
  ****************************************************************************/
 PUBLIC TBoolean
 LoggerNewWell (
@@ -124,6 +137,13 @@ LoggerNewWell (
 
 /****************************************************************************
  * FUNCTION: LoggerAddSample
+ * DESCRIPTION:
+ *   This Function adds a line to the current File.
+ * PARAMETER:
+ *   aLogger - The Address of the Logger
+ *   aOrigin - The Number of the Circuit it was taken from (Starting with 0)
+ *   aWellX  - The Index of the Hole in the Well (X-Axis, Starting with 0)
+ *   aWellY  - The Index of the Hole in the Well (Y-Axis, Starting with 0)
  ****************************************************************************/
 PUBLIC TBoolean
 LoggerAddSample (
@@ -138,16 +158,18 @@ LoggerAddSample (
 	char line[150];
 
 	filePointer = fopen(aLogger->CurrentLogFile, "a");
-	sprintf(line, "%c%i, Circuit: %i, %02d.%02d-%02d:%02d",
+	sprintf(line, "%c%i, Circuit: %i, %02d.%02d.%04d-%02d:%02d\n",
 		(char)('A' + aWellX),
 		aWellY,
-		aOrigin,
+		aOrigin + 1,
 		formatTime->tm_mday,
 		formatTime->tm_mon + 1,
+		formatTime->tm_year + 1900,
 		formatTime->tm_hour,
 		formatTime->tm_min);
 
 	fputs(line, filePointer);
+	fclose(filePointer);
 	return EFALSE;
 }
 /****************************************************************************
@@ -155,6 +177,11 @@ LoggerAddSample (
  ****************************************************************************/
 /****************************************************************************
  * FUNCTION: LoggerCloseWell
+ * DESCRIPTION:
+ *   This Function adds a short Footnote to the File before discarding the
+ *   CurrentLogFile Member of the Logger
+ * PARAMETER:
+ *   aLogger: The Address of the Logger
  ****************************************************************************/
 PRIVATE TBoolean
 LoggerCloseWell (
