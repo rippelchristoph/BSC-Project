@@ -74,6 +74,9 @@ DigIOSetCircuit (
  ****************************************************************************/
 /****************************************************************************
  * FUNCTION: DigIOSetDefault
+ * DESCRIPTION:
+ *   This Function sets the Defaults for the DigIO Pins. This means, that all
+ *   circuits are cloed and the Peltier is set to 0.
  ****************************************************************************/
 PUBLIC void
 DigIOSetDefault ( void )
@@ -88,7 +91,11 @@ DigIOSetDefault ( void )
 /****************************************************************************
  * FUNCTION: setupDigIO
  * DESCTIPTION:
- *   Sets up the Digital IO Pins including the setup of the wiringPi Library
+ *   Sets up the Digital IO Pins including the setup of the wiringPi Library.
+ *   Then it sets the Pins to their Default values
+ * RETURN:
+ *   Returns whether the Setup was successful. EFALSE if Succesfull, ETRUE if
+ *   not.
  ****************************************************************************/
 PUBLIC TBoolean
 setupDigIO ( void )
@@ -107,6 +114,11 @@ setupDigIO ( void )
 
 /****************************************************************************
  * FUNCTION: DigIOOpenCircuit
+ * DESCRIPTION:
+ *   Opens the Circuit with the corresponding CircuitNumber. Opening means
+ *   that a probe can be filled
+ * RETURN:
+ *   Returns whether it was successful. EFALSE if yes, ETRUE if not.
  ****************************************************************************/
 PUBLIC TBoolean
 DigIOOpenCircuit (
@@ -118,6 +130,9 @@ DigIOOpenCircuit (
 
 /****************************************************************************
  * FUNCTION: DigIOCloseCircuit
+ * DESCRIPTION:
+ *   Closes the Circuit with the corresponding CircuitNumber. Closing means
+ *   that the primary circuit is flowing and no probe is filled.
  ****************************************************************************/
 PUBLIC TBoolean
 DigIOCloseCircuit (
@@ -129,6 +144,7 @@ DigIOCloseCircuit (
 
 /****************************************************************************
  * FUNCTION: DigIOSetPeltier
+
  ****************************************************************************/
 PUBLIC TBoolean
 DigIOSetPeltier (
@@ -168,6 +184,5 @@ DigIOSetCircuit (
 		digitalWrite(ValveOutputPins[aCircuitNumber-1][0], LOW);
 		digitalWrite(ValveOutputPins[aCircuitNumber-1][1], HIGH);
 	}
-
 	return EFALSE;
 }

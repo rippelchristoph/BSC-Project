@@ -488,7 +488,22 @@ ProcessBSCController (
 		SamplerAddToQueue(aBSCController->Sampler, retVal);
 	}
 	//Process Sampler, that Controls the Plotter and the Valves
-	ProcessSampler(aBSCController->Sampler);
+	//If the Sampler is finished with Collecting a Sample it returns a "TSample" Type
+	TSample* retPtr = NULL;
+	if ((retPtr = ProcessSampler(aBSCController->Sampler)) != NULL) {
+		struct tm * formattime = localtime(retPtr->Time);
+		DeviceDeviceClass_onSampleCollected(aBSCController->EwDeviceObject, 
+			retPtr->WellPosX,
+			retPtr->WellPosY, 
+			retPtr->aCiruitNumber,
+			formattime->tm_year + 1900,
+			formattime->tm_mon + 1,
+			formattime->tm_mday,
+			formattime->tm_hour,
+			formattime->tm_min);
+
+		destroySample(retPtr);
+	}
 
 	//Process TemperatureController that controls the Peltier
 	//and reads the Temperature
@@ -530,7 +545,6 @@ BSCShutdown ( void )
  *   aOrigin   - The CircuitNumber of which the Probes should be collected
  *               [0..5]
  ****************************************************************************/
-
 PUBLIC void
 BSCAddOrder (
   int aInterval,
@@ -550,7 +564,6 @@ BSCAddOrder (
  * PARAMETER:
  *   aOrigin - The CircuitNumber of which all Orders will be removed.
  ****************************************************************************/
-
 PUBLIC void
 BSCRemoveOrder (
   int aOrigin )

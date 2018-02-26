@@ -29,6 +29,7 @@
  *   BSCSetCurrentPosition
  *   BSCStartConfig
  *   BSCStopConfig
+ *   BSCNewWell
  ****************************************************************************/
 
 #ifndef BSCCONTROLLER_H
@@ -43,7 +44,6 @@
 #include "Device.h"
 #include "OrderController.h"
 #include "Sampler.h"
-#include "Logger.h"
 #include "TemperatureController.h"
 #include <time.h>
 
@@ -59,7 +59,6 @@
 
 typedef struct BSCController {
 	TBSCConfig* Configuration;
-	TLogger* Logger;
 	TTemperatureController* TempContr;
 	TWellData** Well;
 	TOrderController* Orders;
@@ -360,11 +359,12 @@ PUBLIC void
 BSCStopConfig ( void );
 
 
-/**
+/****************************************************************************
  * FUNCTION: BSCNewWell
-*/
+ ****************************************************************************/
 
-PUBLIC void BSCNewWell();
+PUBLIC void
+BSCNewWell ( void );
 
 
 

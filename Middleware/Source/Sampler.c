@@ -193,7 +193,7 @@ PRIVATE void
 EnterStateBackOut (
   TSampler *                    aSampler );
 
-PRIVATE void
+PRIVATE TSample *
 StateBackOut (
   TSampler *                    aSampler );
 
@@ -307,10 +307,12 @@ SamplerAddToQueue (
  * PARAMETER:
  *   aSampler - The Address of the Sampler
  ****************************************************************************/
-PUBLIC TBoolean
+PUBLIC TSample *
 ProcessSampler (
   TSampler * aSampler )
 {
+	TSample* retPtr = NULL;
+
 	switch (aSampler->State)
 	{
 	case Wait:
@@ -338,7 +340,7 @@ ProcessSampler (
 		StateFlow(aSampler);
 		break;
 	case BackOut:
-		StateBackOut(aSampler);
+		retPtr = StateBackOut(aSampler);
 		break;
 	case DrawerClose:
 		StateDrawerClose(aSampler);
@@ -353,7 +355,7 @@ ProcessSampler (
 	default:
 		break;
 	}
-	return EFALSE;
+	return retPtr;
 }
 
 /****************************************************************************
@@ -785,7 +787,7 @@ EnterStateBackOut (
  *     Function is called periodically when the State is 'Wait' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
-PRIVATE void
+PRIVATE TSample *
 StateBackOut (
   TSampler * aSampler )
 {
@@ -793,18 +795,21 @@ StateBackOut (
 	int* retPtr;
 	timespec_get(&now, TIME_UTC);
 	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
+		TSample* retSmpl;
 		int x = GetNextHoleX(aSampler);
 		int y = GetNextHoleY(aSampler);
 		//Remove executed sample from Queue
 		retPtr = ListRemoveByIndex(aSampler->Queue, 0);
 		
 		LoggerAddSample(aSampler->Logger, *retPtr, x, y);
-		
+		retSmpl = newSample(time(NULL), x, y, *retPtr);
+
 		free(retPtr);
 		EnterStateDrawerClose(aSampler);
+		return retSmpl;
 	}
 
-	return;
+	return NULL;
 }
 /****************************************************************************
  * FUNCTION: EnterStateDrawerClose

@@ -13,7 +13,6 @@
  * PUBLIC FUNCTIONS:
  *   newOrderController
  *   destroyOrderController
- *   OrderControllerAddOrder
  *   ProcessOrderController
  *   OrderControllerAddOrder
  *   OrderControllerRemoveOrder
@@ -108,33 +107,6 @@ destroyOrderController (
 	}
 }
 
-/****************************************************************************
- * FUNCTION: OrderControllerAddOrder
- * DESCRIPTION:
- *   The Function creates another Order according to the Parameters and adds
- *   it to the OrderList
- * PARAMETER:
- *   aOrderController - The Order Controller the Order should be added to
- *   aOrigin          - The Origin the Order should be taken From starting
- *                      with 1
- *   aInterval        - The Interval of the new Order in seconds
- ****************************************************************************/
-
-PUBLIC TBoolean
-OrderControllerAddOrder (
-  TOrderController * aOrderController,
-  int                aOrigin,
-  int                aInterval )
-{
-	TOrder* aOrder = newOrder(aOrigin, aInterval);
-	if (ListAdd(aOrderController->OrderList, aOrder) != NULL) {
-		return ETRUE;
-	}
-	else {
-		return EFALSE;
-	}
-
-}
 
 /****************************************************************************
  * FUNCTION: ProcessOrderController
@@ -147,7 +119,6 @@ OrderControllerAddOrder (
  * RETURN:
  *   Returns an Origin, if an Order is ready. if not it returns -1
  ****************************************************************************/
-
 PUBLIC int
 ProcessOrderController (
   TOrderController * aOrderController )

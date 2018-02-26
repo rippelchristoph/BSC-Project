@@ -10,8 +10,8 @@
  *   This class represents a sample that was taken.
  *
  * PUBLIC FUNCTIONS:
- *   newSampler
- *   destroySampler
+ *   newSample
+ *   destroySample
  ****************************************************************************/
 #include "Sample.h"
 #include <stdlib.h>
@@ -35,10 +35,10 @@ typedef struct Sample {
 #endif // !1
 
 /****************************************************************************
- * FUNCTION: newSampler
+ * FUNCTION: newSample
  ****************************************************************************/
 PUBLIC TSample *
-newSampler (
+newSample (
   time_t aTimestamp,
   int    aX,
   int    aY,
@@ -55,10 +55,10 @@ newSampler (
 }
 
 /****************************************************************************
- * FUNCTION: destroySampler
+ * FUNCTION: destroySample
  ****************************************************************************/
 PUBLIC void
-destroySampler (
+destroySample (
   TSample * aSample )
 {
 	if (aSample != NULL) {

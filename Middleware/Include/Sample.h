@@ -5,12 +5,13 @@
  *
  ****************************************************************************
  * FILE: Sample.h
+ *
  * DESCRIPTION:
  *   This class represents a sample that was taken.
  *
  * PUBLIC FUNCTIONS:
- *   newSampler
- *   destroySampler
+ *   newSample
+ *   destroySample
  ****************************************************************************/
 
 #ifndef SAMPLE_H
@@ -39,11 +40,11 @@ typedef struct Sample {
 
 
 /****************************************************************************
- * FUNCTION: newSampler
+ * FUNCTION: newSample
  ****************************************************************************/
 
 PUBLIC TSample *
-newSampler (
+newSample (
   time_t aTimestamp,
   int    aX,
   int    aY,
@@ -51,11 +52,11 @@ newSampler (
 
 
 /****************************************************************************
- * FUNCTION: destroySampler
+ * FUNCTION: destroySample
  ****************************************************************************/
 
 PUBLIC void
-destroySampler (
+destroySample (
   TSample * aSample );
 
 
