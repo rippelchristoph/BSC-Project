@@ -219,7 +219,7 @@ SerialReadBytes (
 	}
 	else {
 		printf("Nothing to Read! c=%d\n", c);
-		strcpy(aBuffer, "");
+		//strcpy(aBuffer, "");
 		return 0;
 	}
 	return c;

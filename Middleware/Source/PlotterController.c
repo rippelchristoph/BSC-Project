@@ -175,6 +175,7 @@ PLTGoTo (
   double     aY,
   double     aZ )
 {
+	
 	char cmd[100];
 	char exp[50];
 	strcpy(cmd, CONTROLLED_MOVEMENT);
@@ -190,7 +191,6 @@ PLTGoTo (
 		sprintf(exp, " Z%lf", aZ);
 		strcat(cmd, exp);
 	}
-
 	PLTSendCommand(aPlotter, cmd);
 }
 

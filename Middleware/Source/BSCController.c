@@ -165,7 +165,7 @@ newBSCController ( void )
 	//TTemperatureController* TempContr;
 	//DeviceDeviceClass EwDeviceObject;
 	
-	printf("BSCInit");
+	printf("BSCInit\n");
 	int i = 0;
 	int j = 0;
 	//Allocate Storage for Controller itself
@@ -183,8 +183,11 @@ newBSCController ( void )
 	strcat(ConfigPath, "/Configuration.txt");
 	retPtr->Configuration = malloc(sizeof(TBSCConfig));
 	BSCReadConfiguration(retPtr->Configuration, ConfigPath);
+
+
+
 	//Allocate Storage for multidimensional array
-	printf("Well init");
+	printf("Well init\n");
 	retPtr->Well = malloc(retPtr->Configuration->NumHolesX * sizeof(TWellData*));
 	for (i = 0; i < retPtr->Configuration->NumHolesX; i++) {
 		retPtr->Well[i] = malloc(retPtr->Configuration->NumHolesY * sizeof(TWellData));
@@ -193,7 +196,7 @@ newBSCController ( void )
 		}
 	}
 	//Initialize Sampler
-	retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well);
+	retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well, retPtr->WorkingDirectory);
 	//Initialize TemperatureController
 	retPtr->TempContr = newTemperatureController(0x4F, 0.5, -22.0);
 	//Get DeviceObject from Embedded Wizard
@@ -256,10 +259,10 @@ destroyBSCController (
 		free(aController);
 	}
 	else {
-		return ETRUE;
+		return;
 	}
 
-	return EFALSE;
+	return;
 }
 
 /****************************************************************************
@@ -291,6 +294,16 @@ BSCReadConfiguration (
 
 	if (fp == NULL)
 	{
+		aConfiguration->EndPosXMM = 10;
+		aConfiguration->EndPosYMM = 10;
+		aConfiguration->EndPosZMM = 10;
+		aConfiguration->FlowULPS = 4.5;
+		aConfiguration->MovingPosZMM = 45;
+		aConfiguration->NeedleGapMM = 5.5;
+		aConfiguration->NumHolesX = 6;
+		aConfiguration->NumHolesY = 8;
+		aConfiguration->ProbeVolUL = 40;
+		aConfiguration->StartPosXMM = 10;
 		return ETRUE;
 	}
 
@@ -487,11 +500,12 @@ ProcessBSCController (
 		EwPrint("Added to Queue: %i", retVal);
 		SamplerAddToQueue(aBSCController->Sampler, retVal);
 	}
+
 	//Process Sampler, that Controls the Plotter and the Valves
 	//If the Sampler is finished with Collecting a Sample it returns a "TSample" Type
 	TSample* retPtr = NULL;
 	if ((retPtr = ProcessSampler(aBSCController->Sampler)) != NULL) {
-		struct tm * formattime = localtime(retPtr->Time);
+		struct tm * formattime = localtime(&(retPtr->Time));
 		DeviceDeviceClass_onSampleCollected(aBSCController->EwDeviceObject, 
 			retPtr->WellPosX,
 			retPtr->WellPosY, 

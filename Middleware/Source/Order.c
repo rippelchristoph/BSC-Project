@@ -22,7 +22,7 @@
  ****************************************************************************/
 
 #include <stdlib.h>
-
+#include <stdio.h>
 
 /** HEADER ******************************************************************
  */
@@ -81,7 +81,7 @@ newOrder (
 	retPtr->interval = aInterval;
 	retPtr->lastExe = time(NULL);
 
-	EwPrint("New Order: CN: aOrigin = %i, aInterval = %i", aOrigin, aInterval);
+	printf("New Order: CN: aOrigin = %i, aInterval = %i", aOrigin, (int) aInterval);
 	return retPtr;
 }
 

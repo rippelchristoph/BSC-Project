@@ -12,5 +12,6 @@ PlotterController.c\
 Sampler.c\
 TemperatureController.c\
 TemperatureReader.c\
-Logger.c
+Logger.c\
+Sample.c
 

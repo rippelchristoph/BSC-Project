@@ -13,6 +13,7 @@
  ****************************************************************************/
 
 #include <stdlib.h>
+#include <time.h>
 
 #ifndef TEMPERATUREREADER_H
 
@@ -91,7 +92,9 @@ TemperatureReaderGetTemperature (
 		}
 
 		TempReader->ReadVal = updateVal;
+		destroyI2C(dataStream);
 	}
+
 
 	return TempReader->ReadVal;
 }

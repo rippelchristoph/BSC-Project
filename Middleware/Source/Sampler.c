@@ -21,6 +21,7 @@
  *   SamplerConfigSetPlotter
  *
  * PRIVATE FUNCTIONS:
+ *   StateConfig
  *   EnterStateWait
  *   StateWait
  *   EnterStateHome
@@ -124,6 +125,10 @@ typedef struct Sampler {
 /****************************************************************************
  * SECTION: Declaration of private functions
  ****************************************************************************/
+
+PRIVATE void
+StateConfig (
+  TSampler *                    TSampler );
 
 PRIVATE void
 EnterStateWait (
@@ -239,13 +244,15 @@ newSampler (
   TWellData ** aWell,
   char *       WorkingDirectory )
 {
-	printf("Sampler Init");
 	TSampler* retSampler;
 	retSampler = malloc(sizeof(TSampler));
+
+	retSampler->Config = aConfiguration;
 
 	retSampler->Logger = newLogger(WorkingDirectory);
 	retSampler->Timestamp = malloc(sizeof(struct timespec));
 	timespec_get(retSampler->Timestamp, TIME_UTC);
+
 	retSampler->Well = aWell;
 	retSampler->Queue = newList();
 	retSampler->Plotter = newPlotter();
@@ -349,6 +356,7 @@ ProcessSampler (
 		StateERROR(aSampler);
 		break;
 	case Config:
+		StateConfig(aSampler);
 		break;
 	case NewWell:
 		break;
@@ -376,13 +384,18 @@ SamplerStartConfig (
   TSampler * aSampler )
 {
 	//Remove all Circuit in Queue
+
+	if (ListIsNotEmty(aSampler->Queue)) {
+		DigIOCloseCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
+	}
+
 	int* retPtr;
-	while ((retPtr = ListRemoveByIndex(aSampler->Queue, 0)) != NULL)
+	while ((retPtr = ListRemoveByIndex(aSampler->Queue, 0)) != NULL) {
 		free(retPtr);
-
-
+	}
+		
 	aSampler->State = Config;
-	DigIOCloseCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
+	
 	PLTGoTo(aSampler->Plotter,
 		-1.0,
 		-1.0,
@@ -391,7 +404,6 @@ SamplerStartConfig (
 	PLTHomeYAxis(aSampler->Plotter);
 	PLTHomeAxis(aSampler->Plotter);
 	timespec_get(aSampler->Timestamp, TIME_UTC);
-	aSampler->Timestamp->tv_sec -= 10;
 }
 
 /****************************************************************************
@@ -425,24 +437,32 @@ SamplerConfigSetPlotter (
 	aSampler->ConfX = aX;
 	aSampler->ConfY = aY;
 	aSampler->ConfZ = aZ;
-	struct timespec now;
-	timespec_get(&now, TIME_UTC);
 
-	if (aSampler->Timestamp->tv_sec < now.tv_sec) {
-		if (aSampler->State == Config) {
-			PLTGoTo(aSampler->Plotter,
-				aX, aY, aZ);
-		}
-		else {
-			return;
-		}
-	}
 	return;
 }
 
 /****************************************************************************
 * SECTION: Implementation of private functions
 ****************************************************************************/
+/****************************************************************************
+ * FUNCTION: StateConfig
+ ****************************************************************************/
+PRIVATE void
+StateConfig (
+  TSampler * aSampler )
+{
+	struct timespec now;
+	timespec_get(&now, TIME_UTC);
+
+	if (aSampler->Timestamp->tv_sec < now.tv_sec) {
+			timespec_get(aSampler->Timestamp, TIME_UTC);
+			PLTGoTo(aSampler->Plotter,
+				aSampler->ConfX,
+				aSampler->ConfY,
+				aSampler->ConfZ);
+	}
+}
+
 /****************************************************************************
  * FUNCTION: EnterStateWait
  *
@@ -456,6 +476,7 @@ PRIVATE void
 EnterStateWait (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State Wait");
 	aSampler->State = Wait;
 }
 
@@ -488,6 +509,7 @@ PRIVATE void
 EnterStateHome (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State Home");
 	PLTSendCommand(aSampler->Plotter, HOMEX);
 	PLTSendCommand(aSampler->Plotter, HOMEY);
 	PLTSendCommand(aSampler->Plotter, HOMEZ);
@@ -523,6 +545,7 @@ PRIVATE void
 EnterStateWaistPos (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State WaistPos");
 	PLTGoTo(aSampler->Plotter,
 		aSampler->Config->WaistPosXMM,
 		-1.0,

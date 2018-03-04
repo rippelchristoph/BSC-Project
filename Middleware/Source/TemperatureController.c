@@ -13,6 +13,7 @@
  ****************************************************************************/
 
 #include <stdlib.h>
+#include <stdio.h>
 #include "DigIO.h"
 
 /** HEADER ******************************************************************
@@ -46,7 +47,7 @@ newTemperatureController (
   double        aHysteresis,
   double        aSetValue )
 {
-	printf("TC Init");
+	printf("TC Init\n");
 	TTemperatureController* retPtr = malloc(sizeof(TTemperatureController));
 	retPtr->TempReader = newTemperatureReader(aSensorAddress);
 	retPtr->Hysteresis = aHysteresis;

@@ -24,6 +24,7 @@
 
 #include <stdlib.h>
 #include <time.h>
+#include <stdio.h>
 
 /** HEADER ******************************************************************
  */
@@ -74,7 +75,7 @@ typedef struct OrderController {
 PUBLIC TOrderController *
 newOrderController ( void )
 {
-	printf("OC Init");
+	printf("OC Init\n");
 	TOrderController* retPtr;
 	retPtr = (TOrderController*)malloc(sizeof(TOrderController));
 	retPtr->OrderList = newList();

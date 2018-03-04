@@ -36,6 +36,7 @@
 ****************************************************************************/
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifndef  LIST_H
 
@@ -97,11 +98,12 @@ freeNode (
 PUBLIC TListHeader *
 newList ( void )
 {
-	printf("List Init");
+	printf("List Init\n");
 	TListHeader * aList;
 	if ((aList = (TListHeader*) malloc(sizeof(TListHeader))) != NULL) {
 		aList->Len = 0;
-		aList->First = aList->Last = NULL;
+		aList->First = NULL;
+		aList->Last = NULL;
 	}
 
 	aList->ReadPointer = aList->First;
