@@ -1,0 +1,544 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Ressourcendateien">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien\Platforms">
+      <UniqueIdentifier>{7917ebb2-2af2-47a6-8c7f-629d5b692bf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Platforms\RaspberryPi">
+      <UniqueIdentifier>{a22fe7da-4bde-4ef3-98bf-39bda8721bfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Platforms">
+      <UniqueIdentifier>{cc88966a-043c-47dd-b0ff-6f7ac5287bfd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Platforms\RaspberryPi">
+      <UniqueIdentifier>{7fc82eb5-0176-4d29-98b4-5efba847f8e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Application">
+      <UniqueIdentifier>{59509948-e5b2-4d75-a2a3-1ea82eba7c1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Middleware">
+      <UniqueIdentifier>{f816db8d-2138-4242-8279-944adea08b17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Middleware">
+      <UniqueIdentifier>{d40b8008-92b1-49d4-9832-1f29ef7c28cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Common">
+      <UniqueIdentifier>{4d73bc38-d855-4472-8c36-2a5804de3a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Common">
+      <UniqueIdentifier>{66016831-17f4-4f11-ba9a-6930a8a9833f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\GUI">
+      <UniqueIdentifier>{83a0eccd-0f0e-4f13-8f45-39477c0d4853}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\GUI">
+      <UniqueIdentifier>{57187e6c-5b11-4321-83cb-797c8f9cf178}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Source">
+      <UniqueIdentifier>{d411a212-eac6-49c9-a22e-1d1306ead15e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\PlatformPackage">
+      <UniqueIdentifier>{56e6227f-0d58-4997-94c8-6f4c22b561d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\PlatformPackage\RGBA8888">
+      <UniqueIdentifier>{a72b3796-4203-4e91-a903-7a189e15036c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\PlatformPackage\RTE">
+      <UniqueIdentifier>{9a0f2ef8-c2f9-4605-9af5-8ae2c4a41c58}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Platforms\RaspberryPi\Include\SerialConnection.h">
+      <Filter>Headerdateien\Platforms\RaspberryPi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Common\Include\HtlStdDef.h">
+      <Filter>Headerdateien\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Middleware\Include\PlotterController.h">
+      <Filter>Headerdateien\Middleware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Middleware\Include\BSCController.h">
+      <Filter>Headerdateien\Middleware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Common\Include\BSCCommonTypes.h">
+      <Filter>Headerdateien\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Common\Include\List.h">
+      <Filter>Headerdateien\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Middleware\Include\OrderController.h">
+      <Filter>Headerdateien\Middleware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Middleware\Include\Order.h">
+      <Filter>Headerdateien\Middleware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Middleware\Include\Sampler.h">
+      <Filter>Headerdateien\Middleware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Platforms\RaspberryPi\Include\i2c.h">
+      <Filter>Headerdateien\Platforms\RaspberryPi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewextfnt.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewextgfx.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewextpxl_RGBA8888.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewgfx.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewgfxcore.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewgfxdefs.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewgfxdriver.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewgfxlinks.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewgfxres.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewgfxtasks.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewextbmp.h">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RTE\ewextrte.h">
+      <Filter>Headerdateien\PlatformPackage\RTE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RTE\ewrte.h">
+      <Filter>Headerdateien\PlatformPackage\RTE</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationAActionButton.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationAHorzBar.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationAHorzSlider.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationAIndicator.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationANumKeyboard.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationApplication.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationATextEditor.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationAToggleButton.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationClock.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationConfig.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationConfigPosition.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationControllMenu.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationMainMenu.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationMainMenue.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationNumKeyboard.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationSampleController.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationTemperature.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationTextEditor.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationWell.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationWellLabel.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ApplicationWellPart.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreCursorEvent.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreCursorGrabEvent.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreCursorHit.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreDragEvent.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreEvent.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreGroup.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreKeyEvent.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreKeyPressHandler.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreLayoutContext.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreLayoutLineContext.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreLayoutQuadContext.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreLineView.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreModalContext.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreOutline.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CorePropertyObserver.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreQuadView.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreRectView.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreResource.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreRoot.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreSimpleTouchHandler.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreSlideTouchHandler.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreSystemEvent.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreSystemEventHandler.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreSystemEventTask.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreTask.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreTaskQueue.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreTime.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreTimer.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_CoreView.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_DeviceCurrentTimeContext.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_DeviceDeviceClass.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_DeviceRemainingTimeContext.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_DeviceSampleCollectedContext.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_DeviceTimeContext.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_DeviceTimeTillFullContext.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_EffectsBoolEffect.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_EffectsEffect.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_EffectsEffectTimerClass.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_EffectsInt32Effect.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_EffectsPointEffect.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_EffectsTimingList.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_FlatActionButton.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_FlatDigitalDisplay.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_FlatHorzBar.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_FlatHorzSlider.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_FlatIndicator.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_FlatLabel.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_FlatMinMaxText.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_FlatSwitch.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_GraphicsCanvas.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_GraphicsWarpMatrix.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ResourcesBitmap.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ResourcesFont.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_TemplatesDeviceClass.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_TemplatesNumKeyboard.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_TemplatesTextEditor.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ViewsBorder.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ViewsFrame.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ViewsImage.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ViewsLine.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ViewsRectangle.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ViewsText.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ViewsWarpGroup.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ViewsWarpImage.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\_ViewsWarpView.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Application.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Charts.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Core.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Device.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Effects.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\ewlocale.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Flat.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Graphics.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Resources.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Steel.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Templates.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Views.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\XFlat.h">
+      <Filter>Headerdateien\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Platforms\RaspberryPi\Include\DigIO.h">
+      <Filter>Headerdateien\Platforms\RaspberryPi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Middleware\Include\TemperatureController.h">
+      <Filter>Headerdateien\Middleware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Middleware\Include\TemperatureReader.h">
+      <Filter>Headerdateien\Middleware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Middleware\Include\Logger.h">
+      <Filter>Headerdateien\Middleware</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\Middleware\Include\Sample.h">
+      <Filter>Headerdateien\Middleware</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\..\Platforms\RaspberryPi\Source\SerialConnection.c">
+      <Filter>Quelldateien\Platforms\RaspberryPi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Application\Source\main.c">
+      <Filter>Quelldateien\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Middleware\Source\BSCController.c">
+      <Filter>Quelldateien\Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Middleware\Source\PlotterController.c">
+      <Filter>Quelldateien\Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Common\Source\List.c">
+      <Filter>Quelldateien\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Middleware\Source\OrderController.c">
+      <Filter>Quelldateien\Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Middleware\Source\Order.c">
+      <Filter>Quelldateien\Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Middleware\Source\Sampler.c">
+      <Filter>Quelldateien\Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Platforms\RaspberryPi\Source\i2c.c">
+      <Filter>Quelldateien\Platforms\RaspberryPi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\main.c">
+      <Filter>Quelldateien\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Application.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Charts.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Core.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Device.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Effects.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Flat.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Graphics.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Resources.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Steel.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Templates.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\Views.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\GeneratedCode\XFlat.c">
+      <Filter>Quelldateien\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Platforms\RaspberryPi\Source\DigIO.c">
+      <Filter>Quelldateien\Platforms\RaspberryPi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Middleware\Source\TemperatureController.c">
+      <Filter>Quelldateien\Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Middleware\Source\TemperatureReader.c">
+      <Filter>Quelldateien\Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Middleware\Source\Logger.c">
+      <Filter>Quelldateien\Middleware</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\Middleware\Source\Sample.c">
+      <Filter>Quelldateien\Middleware</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\ewgfx.inc">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </None>
+    <None Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RTE\ewrte.inc">
+      <Filter>Headerdateien\PlatformPackage\RTE</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RGBA8888\libewgfx.a">
+      <Filter>Headerdateien\PlatformPackage\RGBA8888</Filter>
+    </Library>
+    <Library Include="..\..\..\..\..\BuildEnvironment\RaspberryPi\PlatformPackage\RTE\libewrte.a">
+      <Filter>Headerdateien\PlatformPackage\RTE</Filter>
+    </Library>
+  </ItemGroup>
+</Project>

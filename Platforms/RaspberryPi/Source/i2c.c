@@ -8,9 +8,6 @@
  *
  *   DESCRIPTION:
  *
- *
- *   PUBLIC FUNCTIONS: UARTInit(); UARTTransmit(); UARTReceive();
- *
  * PUBLIC FUNCTIONS:
  *   newI2C
  *   destroyI2C

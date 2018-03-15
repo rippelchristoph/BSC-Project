@@ -1,0 +1,35 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(937,5): warning MSB8027: Mehrere Dateien mit dem Namen main.c führen zu Ausgaben am selben Speicherort. Dadurch kann ein falsches Buildergebnis entstehen. Die betroffenen Dateien sind ..\..\..\..\..\Application\Source\main.c, ..\..\..\..\..\BuildEnvironment\RaspberryPi\Template\main.c.
+  SerialConnection.c
+  i2c.c
+c:\users\jakob\google drive\a_schule\maturaprojekt\bsc-project\platforms\raspberrypi\source\i2c.c(26): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "unistd.h": No such file or directory
+  Sampler.c
+c:\users\jakob\google drive\a_schule\maturaprojekt\bsc-project\middleware\include\bsccontroller.h(33): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "Device.h": No such file or directory
+  PlotterController.c
+c:\users\jakob\google drive\a_schule\maturaprojekt\bsc-project\middleware\source\plottercontroller.c(129): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(136): note: Siehe Deklaration von "strcpy"
+c:\users\jakob\google drive\a_schule\maturaprojekt\bsc-project\middleware\source\plottercontroller.c(130): error C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.15063.0\ucrt\string.h(93): note: Siehe Deklaration von "strcat"
+  OrderController.c
+  Order.c
+  BSCController.c
+c:\users\jakob\google drive\a_schule\maturaprojekt\bsc-project\middleware\include\bsccontroller.h(33): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "Device.h": No such file or directory
+  List.c
+  main.c
+c:\users\jakob\google drive\a_schule\maturaprojekt\bsc-project\buildenvironment\raspberrypi\template\main.c(41): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "Core.h": No such file or directory
+  XFlat.c
+  Views.c
+  Templates.c
+  Steel.c
+  Resources.c
+  Graphics.c
+  Flat.c
+  Effects.c
+  Device.c
+  Core.c
+  Charts.c
+  Code wird generiert...
+  Kompilieren...
+  Application.c
+  main.c
+c:\users\jakob\google drive\a_schule\maturaprojekt\bsc-project\application\source\main.c(38): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "stm32746g_discovery.h": No such file or directory
+  Code wird generiert...

@@ -8,9 +8,6 @@
  *
  *   DESCRIPTION:
  *
- *
- *   PUBLIC FUNCTIONS: UARTInit(); UARTTransmit(); UARTReceive();
- *
  * PUBLIC FUNCTIONS:
  *   newI2C
  *   destroyI2C
@@ -52,7 +49,7 @@ typedef struct I2C {
 PUBLIC TI2C *
 newI2C (
   unsigned char aAddr,
-	int aI2CNumber);
+  int           aI2CNumber );
 
 
 /****************************************************************************
