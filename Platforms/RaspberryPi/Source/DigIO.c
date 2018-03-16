@@ -18,8 +18,11 @@
  ****************************************************************************/
 
 #include "wiringPi.h"
+#include "softPwm.h"
 #include "DigIO.h"
-#define TemperaturePin 7
+#define TemperaturePinI 28
+#define TemperaturePinU 27
+#define PeltierMaxI 8.0
 
 /****************************************************************************
  * This Array declarates the wiringPi Pin the valves are assigned to
@@ -28,10 +31,13 @@
  *		0 - The bigger valve that can disrupt the primary circuit or 
  *		1 - The smaller valve that leads to the Well
  ****************************************************************************/
-#define NCircuits 3
+#define NCircuits 6
 const int ValveOutputPins[NCircuits][2] =	{	{0,2},
 												{12,13},
-												{4,5}
+												{4,5},
+												{14,21},
+												{22,23},
+												{24,25}
 											};
 
 
@@ -102,12 +108,21 @@ setupDigIO ( void )
 {
 	int i = 0;
 	wiringPiSetup();
-
+	//Set Valve Pins Output
 	for (i = 0; i < NCircuits; i++) {
 		pinMode(ValveOutputPins[i][0], OUTPUT);
 		pinMode(ValveOutputPins[i][1], OUTPUT);
 	}
-	pinMode(TemperaturePin, OUTPUT);
+
+	//Set Peltier Pins PWM
+	if (softPwmCreate(TemperaturePinU, 0, 100) != 0) {
+		//Something Wrong
+	}
+	
+	if (softPwmCreate(TemperaturePinI, 0, 100) != 0) {
+		//Do something
+	}
+
 	DigIOSetDefault();
 	return EFALSE;
 }
@@ -144,18 +159,21 @@ DigIOCloseCircuit (
 
 /****************************************************************************
  * FUNCTION: DigIOSetPeltier
-
  ****************************************************************************/
 PUBLIC TBoolean
 DigIOSetPeltier (
   float aValue )
 {
-	if (aValue >= 1.0f) {
-		digitalWrite(TemperaturePin, HIGH);
-	}
-	else {
-		digitalWrite(TemperaturePin, LOW);
-	}
+	int UValue = 0;
+	int IValue = 0;
+
+	if (aValue > 0.1) {
+		UValue = (int)(100.0* 15.0 / 18.0);
+		IValue = (int)(aValue* 100.0*(PeltierMaxI/20.0));
+	} 
+
+	softPwmWrite(TemperaturePinU, UValue);
+	softPwmWrite(TemperaturePinU, UValue);
 	return EFALSE;
 }
 

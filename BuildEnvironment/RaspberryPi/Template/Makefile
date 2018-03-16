@@ -77,7 +77,7 @@ LIBS :=     m                                                                 \
             bcm_host                                                          \
             GLESv2                                                            \
             EGL                                                               \
-            pthread 																													\
+            pthread 														\
 			wiringPi                                                          \
             $(EMWI_RTE_LIB)                                                   \
             $(EMWI_GFX_LIB)                                                   \
