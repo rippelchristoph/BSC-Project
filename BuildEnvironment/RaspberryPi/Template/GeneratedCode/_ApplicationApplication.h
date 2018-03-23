@@ -43,6 +43,7 @@
 #endif
 
 #include "_ApplicationError.h"
+#include "_ApplicationNewWellDialoge.h"
 #include "_ApplicationTab1.h"
 #include "_ApplicationTab2.h"
 #include "_CoreOutline.h"
@@ -102,6 +103,7 @@ EW_DEFINE_FIELDS( ApplicationApplication, CoreRoot )
   EW_OBJECT  ( WellObj,         ApplicationTab2 )
   EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
   EW_OBJECT  ( WellViewEnabledObserver, CorePropertyObserver )
+  EW_OBJECT  ( NewWellDialoge,  ApplicationNewWellDialoge )
   EW_OBJECT  ( Error,           ApplicationError )
 EW_END_OF_FIELDS( ApplicationApplication )
 

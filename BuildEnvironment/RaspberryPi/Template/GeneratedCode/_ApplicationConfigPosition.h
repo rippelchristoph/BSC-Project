@@ -164,8 +164,8 @@ void ApplicationConfigPosition_UpdateLayout( ApplicationConfigPosition _this, XP
 void ApplicationConfigPosition_UpdateViewState( ApplicationConfigPosition _this, 
   XSet aState );
 
-/* 'C' function for method : 'Application::ConfigPosition.OnChangePos()' */
-void ApplicationConfigPosition_OnChangePos( ApplicationConfigPosition _this, XObject 
+/* 'C' function for method : 'Application::ConfigPosition.onChangePos()' */
+void ApplicationConfigPosition_onChangePos( ApplicationConfigPosition _this, XObject 
   sender );
 
 /* 'C' function for method : 'Application::ConfigPosition.OnSetonNext()' */

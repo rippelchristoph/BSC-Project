@@ -56,6 +56,7 @@
 #include "_ApplicationConfigPosition.h"
 #include "_ApplicationControllMenu.h"
 #include "_ApplicationError.h"
+#include "_ApplicationNewWellDialoge.h"
 #include "_ApplicationSampleController.h"
 #include "_ApplicationTab1.h"
 #include "_ApplicationTab2.h"

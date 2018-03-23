@@ -36,63 +36,72 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x000003E8, /* ratio 47.20 % */
+  0x0000040E, /* ratio 47.78 % */
   0xB8002300, 0x80000452, 0x00C20029, 0x0E000368, 0xCA003600, 0xE002B000, 0x750043CD,
-  0xA0044616, 0x058020C3, 0x70020B03, 0xC0CEF1B2, 0x1A21108D, 0x20D210F4, 0x01093A42,
-  0x130001C8, 0x0E8642A1, 0xE001A621, 0x0019C006, 0x00B40020, 0x4F09200A, 0xDA671B9A,
-  0xA3929989, 0x892D09C7, 0x73B0010E, 0x548C18E6, 0xC8CC9291, 0xA7524C50, 0x9416A32B,
-  0x93EC8002, 0x5E834EB2, 0xE8F15991, 0xAB53A0CF, 0x719AB802, 0x1AADCC27, 0x699C4ABD,
-  0xB4588350, 0x5476D166, 0xCF62D6CB, 0xC28F45B7, 0xA9600BDC, 0x3106A6C2, 0x31A9B544,
-  0x16A9C6E7, 0xBABC4A9B, 0xA2190018, 0x01628343, 0xD440C00B, 0x4415A42C, 0x2B254A0D,
-  0x0D1D8943, 0xC2EA8816, 0x06826CE3, 0x1A8ECA83, 0x006E289B, 0x259ED163, 0x4CE4F83B,
-  0x66A53EC3, 0x2ED58AB5, 0xBF5DBC51, 0x97F0FEF6, 0xBEE2606C, 0x4A25BB0B, 0x85432256,
-  0x4F867B3B, 0x6BE77ADE, 0x232621D2, 0x3290E8B5, 0x11E38BCE, 0x97100687, 0x77ACDD2D,
-  0x3C6746B1, 0xC170BABD, 0x1DB71DD9, 0xD5CDCB5C, 0x01FA569C, 0xBD5B17A0, 0x14151059,
-  0x9481CD6D, 0x17213B73, 0xF5467CD4, 0x784499F4, 0x6AC07690, 0xDBD68C00, 0x8505BF87,
-  0x6A2088DA, 0xBF649A41, 0x4CD1954D, 0x13D44933, 0x245A104C, 0xB6144C21, 0x227153D5,
-  0x8757F53E, 0xD0D105CE, 0xA8193A90, 0x7A3A8E10, 0x307A80F4, 0x4C133429, 0x46651D98,
-  0xE4193F56, 0x5C465440, 0x08499164, 0x44912439, 0x4106F59F, 0x74296B54, 0x651446E3,
-  0x1E6C2096, 0x491BF95D, 0x91767A5F, 0xE4C44744, 0x8A6E6F50, 0x48001D04, 0x449105B4,
-  0x66D89E12, 0xA9F67B54, 0xA621A026, 0xA475DFE6, 0x40400479, 0x00000000
+  0xA0044616, 0x0A0020C3, 0x70020B03, 0xC0CEF1B2, 0x7621108D, 0x49E00104, 0x006E8DC3,
+  0xF31001A4, 0x0490478C, 0x6894920D, 0x8BCA0AF2, 0xB90C012B, 0x4C8E7168, 0x1A6C009A,
+  0x20D210F4, 0x01093A42, 0x150001C8, 0x0E8642A1, 0x09ACCE21, 0xAE8B6580, 0x85209200,
+  0x9DAA712A, 0x7A3929A8, 0xEC14D09C, 0xC75399D0, 0x950A3C60, 0x62864664, 0xB8ED4E36,
+  0x29416DB4, 0x04BB0000, 0x54E7D41C, 0xBE595C8B, 0x6E400A95, 0xE77599C6, 0x51EBD5E2,
+  0x98C0DF83, 0x6965AB07, 0x9B5222B8, 0x24C6C52C, 0xC2ACF8CB, 0xB43106B4, 0xEB31AAB5,
+  0xD316A1C6, 0x9A4B944A, 0x2CAFD80C, 0x6835A8B1, 0xDD966DA0, 0x65B41400, 0x4328E549,
+  0x14017C89, 0xE3C2EB68, 0x0D609CF2, 0x9C99173E, 0x99BFC8B3, 0x8C661731, 0xA3DBA938,
+  0x0642E771, 0xDE63576B, 0x5C3FC0B2, 0x3B582C06, 0x41DDCED8, 0x50C89663, 0x5CA3D6E1,
+  0x0E3CCF8B, 0xAA6AC43C, 0x1AC4399E, 0x27DD1756, 0x81426E1F, 0x007898D7, 0x7A193796,
+  0x1D07A9C9, 0xF611ED76, 0x7D9F771E, 0x8F82D707, 0x00192835, 0x9C9631E7, 0xE1416D05,
+  0x8D505199, 0x5E775337, 0x001A2581, 0x078449B6, 0x070C0770, 0xD5C96E80, 0xBF4B1D08,
+  0x16A368E5, 0xDD06A9C0, 0x354D1950, 0x01A34495, 0x00516260, 0x4C59E8AA, 0xD6B8E141,
+  0x178E3365, 0xCDAE4BC4, 0x29429724, 0x03D1E93E, 0xD0A541FF, 0x86C15054, 0x29471994,
+  0x6D038005, 0x00144119, 0x90E42126, 0x96D91244, 0xF96D041C, 0x1B8A10A4, 0x87DB1451,
+  0x26C479C8, 0x646D3B74, 0x1D12441B, 0xC9439511, 0x83922A0D, 0x19E12000, 0xD51800A2,
+  0x416DA0A3, 0x129FE92A, 0x47A52519, 0x0004051E, 0x00000000
+};
+
+/* Compressed strings for the language 'Default'. */
+static const unsigned int _StringsDefault1[] =
+{
+  0x00000018, /* ratio 116.67 % */
+  0xB8001500, 0x80000452, 0x24005282, 0x8010A27C, 0x0D10830E, 0x00000406, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
 static const XStringRes _Const0000 = { _StringsDefault0, 0x0003 };
 static const XStringRes _Const0001 = { _StringsDefault0, 0x0014 };
-static const XStringRes _Const0002 = { _StringsDefault0, 0x001F };
-static const XStringRes _Const0003 = { _StringsDefault0, 0x003D };
-static const XStringRes _Const0004 = { _StringsDefault0, 0x0050 };
-static const XStringRes _Const0005 = { _StringsDefault0, 0x006E };
-static const XStringRes _Const0006 = { _StringsDefault0, 0x0088 };
-static const XStringRes _Const0007 = { _StringsDefault0, 0x00A0 };
-static const XStringRes _Const0008 = { _StringsDefault0, 0x00A6 };
-static const XStringRes _Const0009 = { _StringsDefault0, 0x00B0 };
-static const XStringRes _Const000A = { _StringsDefault0, 0x00B5 };
-static const XStringRes _Const000B = { _StringsDefault0, 0x00BA };
-static const XStringRes _Const000C = { _StringsDefault0, 0x00BF };
-static const XStringRes _Const000D = { _StringsDefault0, 0x00DF };
-static const XStringRes _Const000E = { _StringsDefault0, 0x00FE };
-static const XStringRes _Const000F = { _StringsDefault0, 0x011F };
-static const XStringRes _Const0010 = { _StringsDefault0, 0x013E };
-static const XStringRes _Const0011 = { _StringsDefault0, 0x0154 };
-static const XStringRes _Const0012 = { _StringsDefault0, 0x015B };
-static const XStringRes _Const0013 = { _StringsDefault0, 0x0162 };
-static const XStringRes _Const0014 = { _StringsDefault0, 0x0169 };
-static const XColor _Const0015 = { 0xF3, 0x89, 0x00, 0xFF };
-static const XColor _Const0016 = { 0x32, 0xCE, 0x00, 0xFF };
-static const XColor _Const0017 = { 0x1E, 0x60, 0x33, 0xFF };
-static const XColor _Const0018 = { 0x00, 0x00, 0xFF, 0xFF };
-static const XColor _Const0019 = { 0x00, 0xFF, 0xFF, 0xFF };
-static const XColor _Const001A = { 0xFF, 0x00, 0xFF, 0xFF };
-static const XColor _Const001B = { 0xFF, 0x00, 0x00, 0xFF };
-static const XStringRes _Const001C = { _StringsDefault0, 0x0181 };
-static const XStringRes _Const001D = { _StringsDefault0, 0x0194 };
-static const XStringRes _Const001E = { _StringsDefault0, 0x01A3 };
-static const XStringRes _Const001F = { _StringsDefault0, 0x01B1 };
-static const XStringRes _Const0020 = { _StringsDefault0, 0x01C1 };
-static const XStringRes _Const0021 = { _StringsDefault0, 0x01CF };
-static const XStringRes _Const0022 = { _StringsDefault0, 0x01DD };
-static const XStringRes _Const0023 = { _StringsDefault0, 0x01EB };
+static const XStringRes _Const0002 = { _StringsDefault0, 0x0028 };
+static const XStringRes _Const0003 = { _StringsDefault0, 0x003C };
+static const XStringRes _Const0004 = { _StringsDefault0, 0x005A };
+static const XStringRes _Const0005 = { _StringsDefault0, 0x006D };
+static const XStringRes _Const0006 = { _StringsDefault0, 0x008B };
+static const XStringRes _Const0007 = { _StringsDefault0, 0x00A5 };
+static const XStringRes _Const0008 = { _StringsDefault0, 0x00BD };
+static const XStringRes _Const0009 = { _StringsDefault0, 0x00C3 };
+static const XStringRes _Const000A = { _StringsDefault0, 0x00CD };
+static const XStringRes _Const000B = { _StringsDefault0, 0x00D2 };
+static const XStringRes _Const000C = { _StringsDefault0, 0x00D7 };
+static const XStringRes _Const000D = { _StringsDefault0, 0x00DC };
+static const XStringRes _Const000E = { _StringsDefault0, 0x00FC };
+static const XStringRes _Const000F = { _StringsDefault0, 0x011B };
+static const XStringRes _Const0010 = { _StringsDefault0, 0x013C };
+static const XStringRes _Const0011 = { _StringsDefault0, 0x015B };
+static const XStringRes _Const0012 = { _StringsDefault0, 0x0171 };
+static const XStringRes _Const0013 = { _StringsDefault0, 0x0178 };
+static const XStringRes _Const0014 = { _StringsDefault0, 0x017F };
+static const XStringRes _Const0015 = { _StringsDefault0, 0x0186 };
+static const XColor _Const0016 = { 0xF3, 0x89, 0x00, 0xFF };
+static const XColor _Const0017 = { 0x32, 0xCE, 0x00, 0xFF };
+static const XColor _Const0018 = { 0x1E, 0x60, 0x33, 0xFF };
+static const XColor _Const0019 = { 0x00, 0x00, 0xFF, 0xFF };
+static const XColor _Const001A = { 0x00, 0xFF, 0xFF, 0xFF };
+static const XColor _Const001B = { 0xFF, 0x00, 0xFF, 0xFF };
+static const XColor _Const001C = { 0xFF, 0x00, 0x00, 0xFF };
+static const XStringRes _Const001D = { _StringsDefault0, 0x019E };
+static const XStringRes _Const001E = { _StringsDefault0, 0x01B1 };
+static const XStringRes _Const001F = { _StringsDefault0, 0x01C0 };
+static const XStringRes _Const0020 = { _StringsDefault0, 0x01CE };
+static const XStringRes _Const0021 = { _StringsDefault0, 0x01DE };
+static const XStringRes _Const0022 = { _StringsDefault0, 0x01EC };
+static const XStringRes _Const0023 = { _StringsDefault0, 0x01FA };
+static const XStringRes _Const0024 = { _StringsDefault1, 0x0003 };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
@@ -180,9 +189,15 @@ void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value )
   if ( _this->NewWell == value )
     return;
 
+  _this->NewWell = value;
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNewWell, DeviceDeviceClass_OnSetNewWell 
     ), 0 );
-  EwTrace( "%s", EwLoadString( &_Const0001 ));
+
+  if ( _this->NewWell == 1 )
+    EwTrace( "%s", EwLoadString( &_Const0001 ));
+
+  if ( _this->NewWell == 0 )
+    EwTrace( "%s", EwLoadString( &_Const0002 ));
 }
 
 /* intervall in seconds; circuitNumber from 1 to 6 */
@@ -192,20 +207,20 @@ void DeviceDeviceClass_StartSampling( DeviceDeviceClass _this, XInt32 aIntervall
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0002 
-    ), EwNewStringInt( aIntervall, 0, 10 )), EwLoadString( &_Const0003 )), EwNewStringInt( 
+  EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0003 
+    ), EwNewStringInt( aIntervall, 0, 10 )), EwLoadString( &_Const0004 )), EwNewStringInt( 
     aCircuitNumber, 0, 10 )));
 
   if (( aCircuitNumber < 0 ) || ( aCircuitNumber > 5 ))
   {
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0004 ), EwNewStringInt( 
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0005 ), EwNewStringInt( 
       aCircuitNumber, 0, 10 )));
     return;
   }
 
   if ( aIntervall <= 0 )
   {
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0005 ), EwNewStringInt( 
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0006 ), EwNewStringInt( 
       aIntervall, 0, 10 )));
     return;
   }
@@ -224,13 +239,13 @@ void DeviceDeviceClass_onSampleCollected( DeviceDeviceClass _this, XInt32 aXPosi
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
     EwConcatString( EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
     EwConcatString( EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0006 ), EwNewStringInt( aXPosition, 0, 
-    10 )), EwLoadString( &_Const0007 )), EwNewStringInt( aYPosition, 0, 10 )), EwLoadString( 
-    &_Const0003 )), EwNewStringInt( aCircuitNumber, 0, 10 )), EwLoadString( &_Const0008 
-    )), EwNewStringInt( aDay, 0, 10 )), EwLoadString( &_Const0009 )), EwNewStringInt( 
-    aMonth, 0, 10 )), EwLoadString( &_Const0009 )), EwNewStringInt( aYear, 0, 10 
-    )), EwLoadString( &_Const000A )), EwNewStringInt( aHour, 0, 10 )), EwLoadString( 
-    &_Const000B )), EwNewStringInt( aMinute, 0, 10 )));
+    EwConcatString( EwLoadString( &_Const0007 ), EwNewStringInt( aXPosition, 0, 
+    10 )), EwLoadString( &_Const0008 )), EwNewStringInt( aYPosition, 0, 10 )), EwLoadString( 
+    &_Const0004 )), EwNewStringInt( aCircuitNumber, 0, 10 )), EwLoadString( &_Const0009 
+    )), EwNewStringInt( aDay, 0, 10 )), EwLoadString( &_Const000A )), EwNewStringInt( 
+    aMonth, 0, 10 )), EwLoadString( &_Const000A )), EwNewStringInt( aYear, 0, 10 
+    )), EwLoadString( &_Const000B )), EwNewStringInt( aHour, 0, 10 )), EwLoadString( 
+    &_Const000C )), EwNewStringInt( aMinute, 0, 10 )));
   context = EwNewObject( DeviceSampleCollectedContext, 0 );
   DeviceSampleCollectedContext_OnSetCircuitNumber( context, aCircuitNumber );
   DeviceSampleCollectedContext_OnSetYear( context, aYear );
@@ -267,14 +282,14 @@ void DeviceDeviceClass_onRemainingTime( DeviceDeviceClass _this, XInt32 aCircuit
 
   if (( aCircuitNumber > 5 ) || ( aCircuitNumber < 0 ))
   {
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const000C ), EwNewStringInt( 
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const000D ), EwNewStringInt( 
       aCircuitNumber, 0, 10 )));
     return;
   }
 
   if ( aRemainingTime < 0 )
   {
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const000D ), EwNewStringInt( 
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const000E ), EwNewStringInt( 
       aRemainingTime, 0, 10 )));
   }
 
@@ -296,17 +311,15 @@ void DeviceDeviceClass_StopSampling( DeviceDeviceClass _this, XInt32 aCircuitNum
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000E ), EwNewStringInt( aCircuitNumber, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const000F ), EwNewStringInt( aCircuitNumber, 
     0, 10 )));
 
   if (( aCircuitNumber < 0 ) || ( aCircuitNumber > 5 ))
   {
-    EwTrace( "%s", EwConcatString( EwLoadString( &_Const000F ), EwNewStringInt( 
+    EwTrace( "%s", EwConcatString( EwLoadString( &_Const0010 ), EwNewStringInt( 
       aCircuitNumber, 0, 10 )));
     return;
   }
-
-  BSCRemoveOrder(aCircuitNumber);
 }
 
 /* 'C' function for method : 'Device::DeviceClass.SetPosition()' */
@@ -317,10 +330,10 @@ void DeviceDeviceClass_SetPosition( DeviceDeviceClass _this, XInt32 aIndex, XInt
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0010 ), 
-    EwNewStringInt( aIndex, 0, 10 )), EwLoadString( &_Const0011 )), EwNewStringInt( 
-    aX, 0, 10 )), EwLoadString( &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( 
-    &_Const0013 )), EwNewStringInt( aZ, 0, 10 )));
+    EwConcatString( EwConcatString( EwConcatString( EwLoadString( &_Const0011 ), 
+    EwNewStringInt( aIndex, 0, 10 )), EwLoadString( &_Const0012 )), EwNewStringInt( 
+    aX, 0, 10 )), EwLoadString( &_Const0013 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( 
+    &_Const0014 )), EwNewStringInt( aZ, 0, 10 )));
   BSCSetPosition(aIndex, aX, aY, aZ);
 }
 
@@ -332,8 +345,8 @@ void DeviceDeviceClass_SetCurrentPosition( DeviceDeviceClass _this, XInt32 aX, X
   EW_UNUSED_ARG( _this );
 
   EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0014 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0012 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0013 )), 
+    EwConcatString( EwLoadString( &_Const0015 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
+    &_Const0013 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0014 )), 
     EwNewStringInt( aZ, 0, 10 )));
   BSCSetCurrentPosition(aX,aY,aZ);
 }
@@ -365,25 +378,25 @@ XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumbe
   switch ( aCircuitNumber )
   {
     case 0 :
-      return _Const0015;
-
-    case 1 :
       return _Const0016;
 
-    case 2 :
+    case 1 :
       return _Const0017;
 
-    case 3 :
+    case 2 :
       return _Const0018;
 
-    case 4 :
+    case 3 :
       return _Const0019;
 
-    case 5 :
+    case 4 :
       return _Const001A;
 
-    default : 
+    case 5 :
       return _Const001B;
+
+    default : 
+      return _Const001C;
   }
 }
 
@@ -416,7 +429,7 @@ void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this )
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwLoadString( &_Const001C ));
+  EwTrace( "%s", EwLoadString( &_Const001D ));
   BSCShutdown();
 }
 
@@ -426,7 +439,7 @@ void DeviceDeviceClass_StartConfig( DeviceDeviceClass _this )
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwLoadString( &_Const001D ));
+  EwTrace( "%s", EwLoadString( &_Const001E ));
   BSCStartConfig();
 }
 
@@ -437,7 +450,7 @@ void DeviceDeviceClass_OnSetFlowSpeed( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->FlowSpeed = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const001E ), EwNewStringInt( _this->FlowSpeed, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const001F ), EwNewStringInt( _this->FlowSpeed, 
     0, 10 )));
   BSCSetFlowSpeed(value); //ul/s
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetFlowSpeed, DeviceDeviceClass_OnSetFlowSpeed 
@@ -451,7 +464,7 @@ void DeviceDeviceClass_OnSetWasteVolume( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->WasteVolume = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const001F ), EwNewStringInt( _this->WasteVolume, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0020 ), EwNewStringInt( _this->WasteVolume, 
     0, 10 )));
   BSCSetWasteVolume(value); //ul
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetWasteVolume, DeviceDeviceClass_OnSetWasteVolume 
@@ -465,7 +478,7 @@ void DeviceDeviceClass_OnSetNeedleGap( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->NeedleGap = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0020 ), EwNewStringInt( _this->NeedleGap, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0021 ), EwNewStringInt( _this->NeedleGap, 
     0, 10 )));
   BSCSetNeedleGap(value); //um
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNeedleGap, DeviceDeviceClass_OnSetNeedleGap 
@@ -505,7 +518,7 @@ void DeviceDeviceClass_OnSetNumHolesY( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->NumHolesY = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0021 ), EwNewStringInt( _this->NumHolesY, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0022 ), EwNewStringInt( _this->NumHolesY, 
     0, 10 )));
 
   if (( _this->NumHolesX < 7 ) && ( _this->NumHolesY < 9 ))
@@ -529,7 +542,7 @@ void DeviceDeviceClass_OnSetNumHolesX( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->NumHolesX = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0022 ), EwNewStringInt( _this->NumHolesX, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0023 ), EwNewStringInt( _this->NumHolesX, 
     0, 10 )));
 
   if (( _this->NumHolesX < 7 ) && ( _this->NumHolesY < 9 ))
@@ -553,7 +566,7 @@ void DeviceDeviceClass_onError( DeviceDeviceClass _this, XString aErrorMessage )
   DeviceErrorContext context = EwNewObject( DeviceErrorContext, 0 );
 
   DeviceErrorContext_OnSetErrorMessage( context, aErrorMessage );
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0023 ), aErrorMessage ));
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0024 ), aErrorMessage ));
   CoreSystemEvent_Trigger( &_this->ErrorEvent, ((XObject)context ), 0 );
 }
 

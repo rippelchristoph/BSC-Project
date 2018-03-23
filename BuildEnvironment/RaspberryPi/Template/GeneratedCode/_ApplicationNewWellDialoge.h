@@ -24,8 +24,8 @@
 *
 *******************************************************************************/
 
-#ifndef _ApplicationConfig2Int_H
-#define _ApplicationConfig2Int_H
+#ifndef _ApplicationNewWellDialoge_H
+#define _ApplicationNewWellDialoge_H
 
 #ifdef __cplusplus
   extern "C"
@@ -43,16 +43,15 @@
 #endif
 
 #include "_ApplicationAActionButton.h"
-#include "_ApplicationANumKeyboard.h"
-#include "_ApplicationATextEditor.h"
 #include "_CoreGroup.h"
+#include "_CorePropertyObserver.h"
 #include "_ViewsRectangle.h"
 #include "_ViewsText.h"
 
-/* Forward declaration of the class Application::Config2Int */
-#ifndef _ApplicationConfig2Int_
-  EW_DECLARE_CLASS( ApplicationConfig2Int )
-#define _ApplicationConfig2Int_
+/* Forward declaration of the class Application::NewWellDialoge */
+#ifndef _ApplicationNewWellDialoge_
+  EW_DECLARE_CLASS( ApplicationNewWellDialoge )
+#define _ApplicationNewWellDialoge_
 #endif
 
 /* Forward declaration of the class Core::KeyPressHandler */
@@ -80,21 +79,17 @@
 #endif
 
 
-/* Deklaration of class : 'Application::Config2Int' */
-EW_DEFINE_FIELDS( ApplicationConfig2Int, CoreGroup )
+/* Deklaration of class : 'Application::NewWellDialoge' */
+EW_DEFINE_FIELDS( ApplicationNewWellDialoge, CoreGroup )
   EW_OBJECT  ( Rectangle,       ViewsRectangle )
-  EW_OBJECT  ( Btn_Next,        ApplicationAActionButton )
-  EW_OBJECT  ( TextTitle,       ViewsText )
-  EW_PROPERTY( onNext,          XSlot )
-  EW_OBJECT  ( TextEditorX,     ApplicationATextEditor )
-  EW_OBJECT  ( NumKeyboard,     ApplicationANumKeyboard )
-  EW_OBJECT  ( TextX,           ViewsText )
-  EW_OBJECT  ( TextY,           ViewsText )
-  EW_OBJECT  ( TextEditorY,     ApplicationATextEditor )
-EW_END_OF_FIELDS( ApplicationConfig2Int )
+  EW_OBJECT  ( Title,           ViewsText )
+  EW_OBJECT  ( Btn_Ok,          ApplicationAActionButton )
+  EW_OBJECT  ( MessageText,     ViewsText )
+  EW_OBJECT  ( NewWellObserver, CorePropertyObserver )
+EW_END_OF_FIELDS( ApplicationNewWellDialoge )
 
-/* Virtual Method Table (VMT) for the class : 'Application::Config2Int' */
-EW_DEFINE_METHODS( ApplicationConfig2Int, CoreGroup )
+/* Virtual Method Table (VMT) for the class : 'Application::NewWellDialoge' */
+EW_DEFINE_METHODS( ApplicationNewWellDialoge, CoreGroup )
   EW_METHOD( initLayoutContext, void )( CoreRectView _this, XRect aBounds, CoreOutline 
     aOutline )
   EW_METHOD( GetRoot,           CoreRoot )( CoreView _this )
@@ -115,14 +110,15 @@ EW_DEFINE_METHODS( ApplicationConfig2Int, CoreGroup )
   EW_METHOD( DispatchEvent,     XObject )( CoreGroup _this, CoreEvent aEvent )
   EW_METHOD( BroadcastEvent,    XObject )( CoreGroup _this, CoreEvent aEvent, XSet 
     aFilter )
-  EW_METHOD( UpdateLayout,      void )( ApplicationConfig2Int _this, XPoint aSize )
-  EW_METHOD( UpdateViewState,   void )( ApplicationConfig2Int _this, XSet aState )
+  EW_METHOD( UpdateLayout,      void )( ApplicationNewWellDialoge _this, XPoint 
+    aSize )
+  EW_METHOD( UpdateViewState,   void )( ApplicationNewWellDialoge _this, XSet aState )
   EW_METHOD( InvalidateArea,    void )( CoreGroup _this, XRect aArea )
   EW_METHOD( Restack,           void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
   EW_METHOD( Add,               void )( CoreGroup _this, CoreView aView, XInt32 
     aOrder )
-EW_END_OF_METHODS( ApplicationConfig2Int )
+EW_END_OF_METHODS( ApplicationNewWellDialoge )
 
 /* The method UpdateLayout() is invoked automatically after the size of the component 
    has been changed. This method can be overridden and filled with logic to perform 
@@ -131,7 +127,8 @@ EW_END_OF_METHODS( ApplicationConfig2Int )
    Usually, all enclosed views are arranged automatically accordingly to their @Layout 
    property. UpdateLayout() gives the derived components a chance to extend this 
    automatism by a user defined algorithm. */
-void ApplicationConfig2Int_UpdateLayout( ApplicationConfig2Int _this, XPoint aSize );
+void ApplicationNewWellDialoge_UpdateLayout( ApplicationNewWellDialoge _this, XPoint 
+  aSize );
 
 /* The method UpdateViewState() is invoked automatically after the state of the 
    component has been changed. This method can be overridden and filled with logic 
@@ -147,19 +144,22 @@ void ApplicationConfig2Int_UpdateLayout( ApplicationConfig2Int _this, XPoint aSi
    state 'on' or 'off' and change accordingly the location of the slider, etc.
    Usually, this method will be invoked automatically by the framework. Optionally 
    you can request its invocation by using the method @InvalidateViewState(). */
-void ApplicationConfig2Int_UpdateViewState( ApplicationConfig2Int _this, XSet aState );
+void ApplicationNewWellDialoge_UpdateViewState( ApplicationNewWellDialoge _this, 
+  XSet aState );
 
-/* 'C' function for method : 'Application::Config2Int.onBtnNext()' */
-void ApplicationConfig2Int_onBtnNext( ApplicationConfig2Int _this, XObject sender );
+/* 'C' function for method : 'Application::NewWellDialoge.onBtn_Ok()' */
+void ApplicationNewWellDialoge_onBtn_Ok( ApplicationNewWellDialoge _this, XObject 
+  sender );
 
-/* 'C' function for method : 'Application::Config2Int.onChangeTextEditor()' */
-void ApplicationConfig2Int_onChangeTextEditor( ApplicationConfig2Int _this, XObject 
+/* This slot method is executed when the associated property observer 'PropertyObserver' 
+   is notified. */
+void ApplicationNewWellDialoge_onNewWell( ApplicationNewWellDialoge _this, XObject 
   sender );
 
 #ifdef __cplusplus
   }
 #endif
 
-#endif /* _ApplicationConfig2Int_H */
+#endif /* _ApplicationNewWellDialoge_H */
 
 /* Embedded Wizard */

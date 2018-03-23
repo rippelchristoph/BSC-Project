@@ -161,8 +161,8 @@ void ApplicationConfigInt_OnSetTitle( ApplicationConfigInt _this, XString value 
 /* 'C' function for method : 'Application::ConfigInt.onBtnNext()' */
 void ApplicationConfigInt_onBtnNext( ApplicationConfigInt _this, XObject sender );
 
-/* 'C' function for method : 'Application::ConfigInt.onTextEditorChange()' */
-void ApplicationConfigInt_onTextEditorChange( ApplicationConfigInt _this, XObject 
+/* 'C' function for method : 'Application::ConfigInt.onChangeTextEditor()' */
+void ApplicationConfigInt_onChangeTextEditor( ApplicationConfigInt _this, XObject 
   sender );
 
 /* 'C' function for method : 'Application::ConfigInt.OnSetMaxValue()' */
