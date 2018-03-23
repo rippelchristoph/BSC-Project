@@ -1,0 +1,1035 @@
+$version 6.60
+
+$rect <50,270,250,310>
+inline BSCHeader
+{
+  #include "BSCController.h"
+  #include <stdlib.h>
+  #include <stdio.h>
+}
+
+$rect <60,70,260,110>
+$output false
+class DeviceClass : Templates::DeviceClass
+{
+  $rect <920,120,1120,160>
+  property int32 SampleVolume = 0;
+
+  $rect <1120,120,1320,160>
+  onset SampleVolume
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure SampleVolume == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure SampleVolume = value;
+    trace "SampleVolume:"+string(SampleVolume);
+
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        BSCSetSampleVolume(value);//ul
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^SampleVolume;
+  }
+
+  $rect <480,260,680,300>
+  property bool NewWell = false;
+
+  $rect <680,260,880,300>
+  onset NewWell
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure NewWell == value )
+      return;
+
+    pure NewWell=value;
+
+    notifyobservers ^NewWell;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+    //wenn newwell==false dann screenshot 
+    $endif
+    if(NewWell==true)
+      trace "NewWell: Opening";
+    if(NewWell==false)
+      trace "NewWell: Closing";
+
+    // Notify all associated property observers.
+
+  }
+
+  // intervall in seconds; circuitNumber from 1 to 6
+  $rect <480,160,680,200>
+  method void StartSampling( arg int32 aIntervall, arg int32 aCircuitNumber )
+  {
+    trace "StartSampling - Intervall:"+string(aIntervall)+" CircuitNumber:"+string(aCircuitNumber);
+
+    $if !$prototyper
+     
+    if(aCircuitNumber<0||aCircuitNumber>5){
+      trace "ERROR: Wrong CircuitNumber"+string(aCircuitNumber);
+      return;
+    }if(aIntervall<=0){
+      trace "ERROR: Wrong Intervall"+string(aIntervall);
+      return;
+    }
+
+      native(aIntervall,aCircuitNumber){
+        BSCAddOrder(aIntervall, aCircuitNumber);
+
+      }
+     
+    $endif
+  }
+
+  $rect <240,180,440,220>
+  object Core::SystemEvent SampleCollectedEvent;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about a particular system event.
+  $rect <40,180,240,220>
+  $output true
+  method void onSampleCollected( arg int32 aXPosition, arg int32 aYPosition, arg int32 aCircuitNumber, arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
+  {
+    trace "SampleCollected - X:"+string(aXPosition)
+    +"Y:"+string(aYPosition)
+    +" CircuitNumber:"+string(aCircuitNumber)
+    +" Time:"+string(aDay)+"."
+    +string(aMonth)+"."
+    +string(aYear)+" "
+    +string(aHour)+":"
+    +string(aMinute);
+
+
+    var Device::SampleCollectedContext context = new Device::SampleCollectedContext;
+
+
+    context.CircuitNumber = aCircuitNumber;
+    context.Year=aYear;
+    context.Month=aMonth;
+    context.Day=aDay;
+    context.Hour=aHour;
+    context.Minute=aMinute;
+    context.XPosition=aXPosition;
+    context.YPosition=aYPosition;
+
+
+
+    if(WellViewEnabled==true){
+      SampleCollectedEvent.Trigger( context, false );
+    }
+  }
+
+  $rect <240,230,440,270>
+  object Core::SystemEvent RemainingTimeEvent;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about a particular system event.
+  $rect <40,230,240,270>
+  $output true
+  method void onRemainingTime( arg int32 aCircuitNumber, arg int32 aRemainingTime )
+  {
+    var Device::RemainingTimeContext context = new Device::RemainingTimeContext;
+    if(aCircuitNumber>5||aCircuitNumber<0){
+      trace "ERROR: Wrong Circuit Number:"+string(aCircuitNumber);
+      return;
+    }
+    if(aRemainingTime<0){
+      trace"ERROR: Wrong RemainingTime:"+string(aRemainingTime);
+
+    }
+    //trace "DEVICE: RemainingTime="+string(aRemainingTime);
+    context.CircuitNumber=aCircuitNumber;
+    context.RemainingTime=aRemainingTime;
+    RemainingTimeEvent.Trigger( context, false );
+  }
+
+  $rect <480,210,680,250>
+  method void StopSampling( arg int32 aCircuitNumber )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+    $endif
+    trace "StopSampling - CircuitNumber:"+string(aCircuitNumber);
+    $if !$prototyper
+
+    if(aCircuitNumber<0||aCircuitNumber>5){
+      trace "ERROR: Wrong CircuitNumber:"+string(aCircuitNumber);
+      return;
+    }
+     
+    $endif
+  }
+
+  $rect <920,360,1120,400>
+  method void SetPosition( arg int32 aIndex, arg int32 aX, arg int32 aY, arg int32 aZ )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+    $endif
+
+    trace "Postition - Index:"+string(aIndex)+" X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+
+    $if !$prototyper
+    native(aIndex, aX, aY, aZ){
+      BSCSetPosition(aIndex, aX, aY, aZ);
+    }
+    $endif
+  }
+
+  $rect <920,400,1120,440>
+  method void SetCurrentPosition( arg int32 aX, arg int32 aY, arg int32 aZ )
+  {
+    // The following code is used during prototyping only. It simply returns
+    // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+
+    $endif
+
+    trace "CurrentPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+
+    $if !$prototyper
+    native(aX,aY,aZ){
+      BSCSetCurrentPosition(aX,aY,aZ);  
+    } 
+    $endif
+  }
+
+  // Anwendungsseitige Events
+  note group Note1
+  {
+    attr Bounds = <20,40,450,390>;
+  }
+
+  $rect <240,130,440,170>
+  property float Temperature = 0.0;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about an alternation of its setting or state value.
+  $rect <40,130,240,170>
+  $output true
+  method void UpdateTemperature( arg float aNewArgument )
+  {
+    // Only if the reported value does differ from the one stored currently in the property.
+    if ( aNewArgument != pure Temperature )
+    {
+      // Remember the new value in the internal memory of the property.
+      pure Temperature = aNewArgument;
+      //trace "Temperature: "+string(Temperature);
+
+      // Notify all associated property observers.
+      notifyobservers ^Temperature;
+    }
+  }
+
+  // Ony for UI
+  note group Note2
+  {
+    attr Bounds = <20,590,480,780>;
+  }
+
+  $rect <40,660,240,700>
+  method color getColor( arg int32 aCircuitNumber )
+  {
+    switch ( aCircuitNumber )
+    {
+      case 0  : return #F38900FF;    
+      case 1  : return #32CE00FF;  
+      case 2  : return #1E6033FF;  
+      case 3  : return #0000FFFF;  
+      case 4  : return #00FFFFFF; 
+      case 5  : return #FF00FFFF;  
+      default : return #FF0000FF; //rot=ERROR           
+    }
+
+      
+
+      
+
+  }
+
+  $rect <240,280,440,320>
+  object Core::SystemEvent TimeEvent;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about a particular system event.
+  $rect <40,280,240,320>
+  $output true
+  method void onTime( arg int32 aYear, arg int32 aMonth, arg int32 aDay, arg int32 aHour, arg int32 aMinute )
+  {
+    var Device::TimeContext context = new Device::TimeContext;
+    context.Year=aYear;
+    context.Month=aMonth;
+    context.Day=aDay;
+    context.Hour=aHour;
+    context.Minute=aMinute;
+
+    //trace "Time: "+string(context.Day)+"."+string(context.Month)+"."+string(context.Year)+" "
+                          //+string(context.Hour)+":"+string(context.Minute);
+
+    TimeEvent.Trigger( context, false );
+  }
+
+  $rect <480,100,680,140>
+  method void ExitApplication()
+  {
+    trace "ExitApplication";
+    $if $prototyper
+    $endif
+
+    $if !$prototyper
+    native{
+
+       BSCShutdown();
+
+    }
+    $endif
+
+  }
+
+  // Anwenderseitige Events
+  note group Note3
+  {
+    attr Bounds = <460,40,1390,550>;
+  }
+
+  // Konfiguration
+  note group Note
+  {
+    attr Bounds = <900,80,1330,540>;
+  }
+
+  $rect <920,440,1120,480>
+  method void StartConfig()
+  {
+    trace "StartConfig";
+
+    $if !$prototyper
+    native{
+      BSCStartConfig();
+    }
+    $endif
+  }
+
+  $rect <920,160,1120,200>
+  property int32 FlowSpeed = 0;
+
+  $rect <1120,160,1320,200>
+  onset FlowSpeed
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure FlowSpeed == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure FlowSpeed = value;
+    trace "FlowSpeed:"+string(FlowSpeed);
+
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        BSCSetFlowSpeed(value); //ul/s
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^FlowSpeed;
+  }
+
+  $rect <920,200,1120,240>
+  property int32 WasteVolume = 0;
+
+  $rect <1120,200,1320,240>
+  onset WasteVolume
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure WasteVolume == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure WasteVolume = value;
+    trace "WasteVolume:"+string(WasteVolume);
+
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        BSCSetWasteVolume(value); //ul
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^WasteVolume;
+  }
+
+  $rect <920,240,1120,280>
+  property int32 NeedleGap = 0;
+
+  $rect <1120,240,1320,280>
+  onset NeedleGap
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure NeedleGap == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure NeedleGap = value;
+    trace "NeedleGap:"+string(NeedleGap);
+
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        BSCSetNeedleGap(value); //um
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^NeedleGap;
+  }
+
+  $rect <40,710,240,750>
+  property bool WellViewEnabled = true;
+
+  $rect <240,710,440,750>
+  onset WellViewEnabled
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure WellViewEnabled == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure WellViewEnabled = value;
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        /*
+           TO DO:
+
+           You can call a function of your own device API or you simply
+           modify a variable existing in your middleware to reflect the
+           new value:
+
+           YourDevice_SetSomeValue( value );
+
+           or
+
+           YourDevice_SomeVariable = value;
+        */
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^WellViewEnabled;
+  }
+
+  $rect <920,320,1120,360>
+  property int32 NumHolesY = 0;
+
+  $rect <1120,320,1320,360>
+  onset NumHolesY
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure NumHolesY == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure NumHolesY = value;
+
+    trace "NumHolesY:"+string(NumHolesY);
+     //look if the WellView is Enabled 
+
+      if((NumHolesX<7)&&(NumHolesY<9)){
+        WellViewEnabled=true;
+
+      }else{
+        WellViewEnabled=false;
+
+      }
+
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        BSCSetNumHolesY(value);
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^NumHolesY;
+  }
+
+  $rect <920,280,1120,320>
+  property int32 NumHolesX = 0;
+
+  $rect <1120,280,1320,320>
+  onset NumHolesX
+  {
+    // The property doesn't change -> nothing to do.
+    if ( pure NumHolesX == value )
+      return;
+
+    // Remember the new value in the internal memory of the property.
+    pure NumHolesX = value;
+
+
+    trace "NumHolesX:"+string(NumHolesX);
+     //look if the WellView is Enabled 
+
+      if((NumHolesX<7)&&(NumHolesY<9)){
+        WellViewEnabled=true;
+
+      }else{
+        WellViewEnabled=false;
+
+      }
+
+    // For target code generation you will use your specific device API 
+    // to change the affected value.
+    $if !$prototyper
+      native ( value )
+      {
+        BSCSetNumHolesX(value);
+      }
+    $endif
+
+    // Notify all associated property observers.
+    notifyobservers ^NumHolesX;
+  }
+
+  $rect <240,330,440,370>
+  object Core::SystemEvent ErrorEvent;
+
+  // This method is intended to be called by the device to notify the GUI application \
+  // about a particular system event.
+  $rect <40,330,240,370>
+  $output true
+  method void onError( arg string aErrorMessage )
+  {
+    var Device::ErrorContext context = new Device::ErrorContext;
+
+    context.ErrorMessage=aErrorMessage;
+
+    trace "ERROR:" + aErrorMessage;
+
+    ErrorEvent.Trigger( context, false );
+
+  }
+
+  $rect <920,480,1120,520>
+  method void StopConfig()
+  {
+    $if $prototyper
+      /*
+         TO DO:
+
+         List all parameters of this method not used explicitly. This will
+         suppress the Chora warnings because of unused parameters.
+      */
+
+
+      /*
+         TO DO:
+
+         The following code is necessary for command methods intended to
+         return a value. It can be removed if the method is declared with
+         'void' as its return data type.
+
+         In the case a return value is desired, adapt the 'return' statement
+         to match the method's return data type. The value is just a dummy
+         used during prototyping only.
+      */
+
+    $endif
+
+    // For target code generation you will use your specific device API 
+    // to perform the command in the device.
+    $if !$prototyper
+      
+
+      native 
+      {
+       
+        BSCStopConfig();
+      }
+
+      /*
+         TO DO:
+
+         The following 'return' statement is needed only when the command method
+         is declared to return a value. Otherwise you can remove the statement.
+      */
+    $endif
+  }
+}
+
+$rect <60,110,260,150>
+autoobject Device::DeviceClass Device;
+
+$rect <400,70,600,110>
+$output false
+class SampleCollectedContext
+{
+  $rect <40,40,240,80>
+  property int32 XPosition = 0;
+
+  $rect <40,80,240,120>
+  onset XPosition
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure XPosition == value )
+      return;
+
+    // Remember the property's new value.
+    pure XPosition = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <40,120,240,160>
+  onget XPosition
+  {
+    return pure XPosition;
+  }
+
+  $rect <260,40,460,80>
+  property int32 CircuitNumber = 0;
+
+  $rect <260,80,460,120>
+  onset CircuitNumber
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CircuitNumber == value )
+      return;
+
+    // Remember the property's new value.
+    pure CircuitNumber = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <260,120,460,160>
+  onget CircuitNumber
+  {
+    return pure CircuitNumber;
+  }
+
+  $rect <500,40,700,80>
+  property int32 Year = 0;
+
+  $rect <500,80,700,120>
+  onset Year
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Year == value )
+      return;
+
+    // Remember the property's new value.
+    pure Year = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <500,120,700,160>
+  onget Year
+  {
+    return pure Year;
+  }
+
+  $rect <730,40,930,80>
+  property int32 Month = 0;
+
+  $rect <730,80,930,120>
+  onset Month
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Month == value )
+      return;
+
+    // Remember the property's new value.
+    pure Month = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <730,120,930,160>
+  onget Month
+  {
+    return pure Month;
+  }
+
+  $rect <950,40,1150,80>
+  property int32 Day = 0;
+
+  $rect <950,80,1150,120>
+  onset Day
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Day == value )
+      return;
+
+    // Remember the property's new value.
+    pure Day = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <950,120,1150,160>
+  onget Day
+  {
+    return pure Day;
+  }
+
+  $rect <730,180,930,220>
+  property int32 Minute = 0;
+
+  $rect <730,220,930,260>
+  onset Minute
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Minute == value )
+      return;
+
+    // Remember the property's new value.
+    pure Minute = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <730,260,930,300>
+  onget Minute
+  {
+    return pure Minute;
+  }
+
+  $rect <500,180,700,220>
+  property int32 Hour = 0;
+
+  $rect <500,220,700,260>
+  onset Hour
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Hour == value )
+      return;
+
+    // Remember the property's new value.
+    pure Hour = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <500,260,700,300>
+  onget Hour
+  {
+    return pure Hour;
+  }
+
+  $rect <40,170,240,210>
+  property int32 YPosition = 0;
+
+  $rect <40,210,240,250>
+  onset YPosition
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure YPosition == value )
+      return;
+
+    // Remember the property's new value.
+    pure YPosition = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <40,250,240,290>
+  onget YPosition
+  {
+    return pure YPosition;
+  }
+}
+
+$rect <400,110,600,150>
+$output false
+class RemainingTimeContext
+{
+  $rect <10,10,210,50>
+  property int32 RemainingTime = 0;
+
+  $rect <10,50,210,90>
+  onset RemainingTime
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure RemainingTime == value )
+      return;
+
+    // Remember the property's new value.
+    pure RemainingTime = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <10,90,210,130>
+  onget RemainingTime
+  {
+    return pure RemainingTime;
+  }
+
+  $rect <220,10,420,50>
+  property int32 CircuitNumber = 0;
+
+  $rect <220,50,420,90>
+  onset CircuitNumber
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure CircuitNumber == value )
+      return;
+
+    // Remember the property's new value.
+    pure CircuitNumber = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <220,90,420,130>
+  onget CircuitNumber
+  {
+    return pure CircuitNumber;
+  }
+}
+
+// System Event Context
+note group Note
+{
+  attr Bounds = <340,20,640,280>;
+}
+
+// Device Interface
+note group Note1
+{
+  attr Bounds = <10,20,310,220>;
+}
+
+$rect <400,150,600,190>
+$output false
+class TimeContext
+{
+  $rect <10,0,210,40>
+  property int32 Day = 0;
+
+  $rect <10,40,210,80>
+  onset Day
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Day == value )
+      return;
+
+    // Remember the property's new value.
+    pure Day = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <10,80,210,120>
+  onget Day
+  {
+    return pure Day;
+  }
+
+  $rect <220,0,420,40>
+  property int32 Month = 0;
+
+  $rect <220,40,420,80>
+  onset Month
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Month == value )
+      return;
+
+    // Remember the property's new value.
+    pure Month = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <220,80,420,120>
+  onget Month
+  {
+    return pure Month;
+  }
+
+  $rect <440,0,640,40>
+  property int32 Year = 0;
+
+  $rect <440,40,640,80>
+  onset Year
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Year == value )
+      return;
+
+    // Remember the property's new value.
+    pure Year = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <440,80,640,120>
+  onget Year
+  {
+    return pure Year;
+  }
+
+  $rect <0,140,200,180>
+  property int32 Hour = 0;
+
+  $rect <0,180,200,220>
+  onset Hour
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Hour == value )
+      return;
+
+    // Remember the property's new value.
+    pure Hour = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <0,220,200,260>
+  onget Hour
+  {
+    return pure Hour;
+  }
+
+  $rect <220,140,420,180>
+  property int32 Minute = 0;
+
+  $rect <220,180,420,220>
+  onset Minute
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure Minute == value )
+      return;
+
+    // Remember the property's new value.
+    pure Minute = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <220,220,420,260>
+  onget Minute
+  {
+    return pure Minute;
+  }
+}
+
+// Header
+note group Note2
+{
+  attr Bounds = <10,230,310,340>;
+}
+
+$rect <720,60,920,100>
+$output false
+const int32 I_TR = 0;
+
+// SetPositionIndex
+note group Note3
+{
+  attr Bounds = <660,20,960,240>;
+}
+
+$rect <720,100,920,140>
+$output false
+const int32 I_BL = 1;
+
+$rect <720,140,920,180>
+$output false
+const int32 I_Waste = 3;
+
+$rect <720,180,920,220>
+$output false
+const int32 I_Top = 4;
+
+$rect <400,190,600,230>
+$output false
+class ErrorContext
+{
+  $rect <40,20,240,60>
+  property string ErrorMessage = "";
+
+  $rect <40,60,240,100>
+  onset ErrorMessage
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure ErrorMessage == value )
+      return;
+
+    // Remember the property's new value.
+    pure ErrorMessage = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <40,100,240,140>
+  onget ErrorMessage
+  {
+    return pure ErrorMessage;
+  }
+}

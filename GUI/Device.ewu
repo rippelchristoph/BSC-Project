@@ -155,14 +155,16 @@ class DeviceClass : Templates::DeviceClass
   {
     // The following code is used during prototyping only. It simply returns
     // a dummy value. No device specific API is used during prototyping.
-    $if $prototyper
-    $endif
     trace "StopSampling - CircuitNumber:"+string(aCircuitNumber);
     $if !$prototyper
 
     if(aCircuitNumber<0||aCircuitNumber>5){
       trace "ERROR: Wrong CircuitNumber:"+string(aCircuitNumber);
       return;
+    }
+
+    native(aCircuitNumber) {
+      BSCRemoveOrder(aCircuitNumber);
     }
      
     $endif

@@ -160,7 +160,7 @@ LoggerAddSample (
 	filePointer = fopen(aLogger->CurrentLogFile, "a");
 	sprintf(line, "%c%i, Circuit: %i, %02d.%02d.%04d-%02d:%02d\n",
 		(char)('A' + aWellX),
-		aWellY,
+		aWellY + 1,
 		aOrigin + 1,
 		formatTime->tm_mday,
 		formatTime->tm_mon + 1,

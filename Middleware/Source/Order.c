@@ -81,7 +81,6 @@ newOrder (
 	retPtr->interval = aInterval;
 	retPtr->lastExe = time(NULL);
 
-	printf("New Order: CN: aOrigin = %i, aInterval = %i", aOrigin, (int) aInterval);
 	return retPtr;
 }
 

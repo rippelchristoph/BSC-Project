@@ -173,7 +173,7 @@ DigIOSetPeltier (
 	} 
 
 	softPwmWrite(TemperaturePinU, UValue);
-	softPwmWrite(TemperaturePinU, UValue);
+	softPwmWrite(TemperaturePinI, IValue);
 	return EFALSE;
 }
 

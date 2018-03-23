@@ -156,6 +156,7 @@ OrderControllerAddOrder (
 {
 	TOrder* addOrder = newOrder(aOrigin, aInterval);
 	ListAdd(aOrderController->OrderList, addOrder);
+	printf("Added Order: Interval=%d, Origin=%d\n",(int) aInterval, aOrigin);
 }
 
 /****************************************************************************
@@ -174,11 +175,14 @@ OrderControllerRemoveOrder (
 {
 	TOrder* testOrder;
 	ListSetReadPointer(aOrderController->OrderList, 0);
-
+	int i = 0;
 	while ((testOrder = ListGetNext(aOrderController->OrderList))!=NULL)
 	{
 		if (testOrder->Origin == aOrigin) {
-			destroyOrder(ListRemoveByDataPointer(aOrderController->OrderList, testOrder));
+			destroyOrder(
+				(TOrder*)ListRemoveByIndex(aOrderController->OrderList, i)
+			);
 		}
+		i++;
 	}
 }

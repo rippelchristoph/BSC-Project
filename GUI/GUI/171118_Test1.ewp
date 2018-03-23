@@ -1,0 +1,125 @@
+$version 6.60
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,70,240,110>
+unit Core
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,110,240,150>
+unit Resources
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,150,240,190>
+unit Graphics
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,190,240,230>
+unit Effects
+{
+  attr Directory = $Mosaic;
+}
+
+// This unit is a part of the Embedded Wizard class library 'Mosaic20'
+$rect <40,230,240,270>
+unit Views
+{
+  attr Directory = $Mosaic;
+}
+
+// This is a profile member for the project. This profile controls the code generation \
+// for the target system.
+$rect <290,100,490,140>
+profile RasPi : RaspberryPi.OpenGL.RGBA8888
+{
+  attr ScreenSize = <800,480>;
+  attr Optimization = High;
+  attr ApplicationClass = Application::Application;
+  attr CleanOutputDirectories = false;
+  attr OutputDirectory = ../BuildEnvironment/RaspberryPi/Template/GeneratedCode;
+  attr Verbose = false;
+  attr ApplicationTitle = "BSC";
+
+  $rect <10,10,154,50>
+  macro Author = "Oliver Peter";
+}
+
+// The 'default' Language. Each project has to contain at least one language brick \
+// called 'Default'
+$rect <540,100,740,140>
+language Default;
+
+// This unit is intended to contain the application class and another GUI components.
+$rect <290,230,490,270>
+unit Application
+{
+  attr Directory = .\;
+}
+
+// Mosaic Framework
+note group Note1
+{
+  attr Bounds = <20,20,260,500>;
+}
+
+// Configuration for the target code generation
+note group Note2
+{
+  attr Bounds = <270,20,510,160>;
+}
+
+// The default language identifier
+note group Note3
+{
+  attr Bounds = <520,20,760,160>;
+}
+
+// Project Units
+note group Note5
+{
+  attr Bounds = <270,170,760,320>;
+}
+
+$rect <40,270,240,310>
+unit Templates
+{
+  attr Directory = $Mosaic;
+}
+
+$rect <40,310,240,350>
+unit Charts
+{
+  attr Directory = $Mosaic\Charts;
+}
+
+$rect <40,350,240,390>
+unit Flat
+{
+  attr Directory = $Mosaic\Flat;
+}
+
+$rect <40,390,240,430>
+unit XFlat
+{
+  attr Directory = $Mosaic\XFlat;
+}
+
+$rect <530,230,730,270>
+unit Device
+{
+  attr Directory = .\;
+}
+
+$rect <40,430,240,470>
+unit Steel
+{
+  attr Directory = $Mosaic\Steel;
+}

@@ -305,6 +305,8 @@ void DeviceDeviceClass_StopSampling( DeviceDeviceClass _this, XInt32 aCircuitNum
       aCircuitNumber, 0, 10 )));
     return;
   }
+
+  BSCRemoveOrder(aCircuitNumber);
 }
 
 /* 'C' function for method : 'Device::DeviceClass.SetPosition()' */

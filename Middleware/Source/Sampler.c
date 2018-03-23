@@ -476,7 +476,7 @@ PRIVATE void
 EnterStateWait (
   TSampler * aSampler )
 {
-	printf("Sampler: Enter State Wait");
+	printf("Sampler: Enter State Wait\n");
 	aSampler->State = Wait;
 }
 
@@ -509,11 +509,12 @@ PRIVATE void
 EnterStateHome (
   TSampler * aSampler )
 {
-	printf("Sampler: Enter State Home");
+	printf("Sampler: Enter State Home\n");
 	PLTSendCommand(aSampler->Plotter, HOMEX);
 	PLTSendCommand(aSampler->Plotter, HOMEY);
 	PLTSendCommand(aSampler->Plotter, HOMEZ);
 	timespec_get(aSampler->Timestamp, TIME_UTC);
+	aSampler->State = Home;
 }
 
 /****************************************************************************
@@ -545,7 +546,7 @@ PRIVATE void
 EnterStateWaistPos (
   TSampler * aSampler )
 {
-	printf("Sampler: Enter State WaistPos");
+	printf("Sampler: Enter State WaistPos\n");
 	PLTGoTo(aSampler->Plotter,
 		aSampler->Config->WaistPosXMM,
 		-1.0,
@@ -553,6 +554,7 @@ EnterStateWaistPos (
 
 	//Don´t use Y Axis (-1.0)
 	timespec_get(aSampler->Timestamp, TIME_UTC);
+	aSampler->State = WaistPos;
 }
 
 /****************************************************************************
@@ -584,8 +586,10 @@ PRIVATE void
 EnterStateWaist (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State Waist\n");
 	DigIOOpenCircuit( *((int*) ListGetByIndex(aSampler->Queue, 0)));
 	timespec_get(aSampler->Timestamp, TIME_UTC);
+	aSampler->State = Waist;
 }
 
 /****************************************************************************
@@ -624,6 +628,7 @@ PRIVATE void
 EnterStateOverPos (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State OverPos\n");
 	DigIOCloseCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
 	
 	PLTGoTo(aSampler->Plotter,
@@ -632,6 +637,8 @@ EnterStateOverPos (
 		aSampler->Config->MovingPosZMM);
 
 	timespec_get(aSampler->Timestamp, TIME_UTC);
+
+	aSampler->State = OverPos;
 }
 
 /****************************************************************************
@@ -662,6 +669,7 @@ PRIVATE void
 EnterStateDrawerOpen (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State DraweOpen\n");
 	TBSCConfig* c = aSampler->Config;
 	double XPos = 0, YPos = 0;
 	XPos =	c->StartPosXMM + (double) GetNextHoleX(aSampler) * 
@@ -678,6 +686,8 @@ EnterStateDrawerOpen (
 		-1.0);
 
 	timespec_get(aSampler->Timestamp, TIME_UTC);
+
+	aSampler->State = DrawerOpen;
 }
 
 /****************************************************************************
@@ -710,6 +720,7 @@ PRIVATE void
 EnterStateDropPos (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State DropPos\n");
 	TBSCConfig* c = aSampler->Config;
 	double ZPos = 0;
 
@@ -723,6 +734,8 @@ EnterStateDropPos (
 		ZPos);
 
 	timespec_get(aSampler->Timestamp, TIME_UTC);
+
+	aSampler->State = DropPos;
 }
 
 /****************************************************************************
@@ -753,8 +766,10 @@ PRIVATE void
 EnterStateFlow (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State DraweOpen\n");
 	DigIOOpenCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
 	timespec_get(aSampler->Timestamp, TIME_UTC);
+	aSampler->State = Flow;
 }
 
 /****************************************************************************
@@ -792,6 +807,7 @@ PRIVATE void
 EnterStateBackOut (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State BackOut\n");
 	DigIOCloseCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
 	PLTGoTo(aSampler->Plotter,
 		-1.0,
@@ -801,6 +817,7 @@ EnterStateBackOut (
 	
 
 	timespec_get(aSampler->Timestamp, TIME_UTC);
+	aSampler->State = BackOut;
 }
 
 /****************************************************************************
@@ -845,10 +862,12 @@ PRIVATE void
 EnterStateDrawerClose (
   TSampler * aSampler )
 {
+	printf("Sampler: Enter State DrawerClose\n");
 	PLTHomeAxis(aSampler->Plotter);
 	//Order: YXZ
 
 	timespec_get(aSampler->Timestamp, TIME_UTC);
+	aSampler->State = DrawerClose;
 }
 
 /****************************************************************************
