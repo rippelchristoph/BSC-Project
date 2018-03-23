@@ -50,15 +50,19 @@ class DeviceClass : Templates::DeviceClass
     if ( pure NewWell == value )
       return;
 
+    pure NewWell=value;
+
     notifyobservers ^NewWell;
 
     // For target code generation you will use your specific device API 
     // to change the affected value.
     $if !$prototyper
-     
+    //wenn newwell==false dann screenshot 
     $endif
-
-    trace "NewWell";
+    if(NewWell==true)
+      trace "NewWell: Opening";
+    if(NewWell==false)
+      trace "NewWell: Closing";
 
     // Notify all associated property observers.
 
@@ -155,16 +159,14 @@ class DeviceClass : Templates::DeviceClass
   {
     // The following code is used during prototyping only. It simply returns
     // a dummy value. No device specific API is used during prototyping.
+    $if $prototyper
+    $endif
     trace "StopSampling - CircuitNumber:"+string(aCircuitNumber);
     $if !$prototyper
 
     if(aCircuitNumber<0||aCircuitNumber>5){
       trace "ERROR: Wrong CircuitNumber:"+string(aCircuitNumber);
       return;
-    }
-
-    native(aCircuitNumber) {
-      BSCRemoveOrder(aCircuitNumber);
     }
      
     $endif
@@ -208,7 +210,7 @@ class DeviceClass : Templates::DeviceClass
   // Anwendungsseitige Events
   note group Note1
   {
-    attr Bounds = <20,40,450,410>;
+    attr Bounds = <20,40,450,390>;
   }
 
   $rect <240,130,440,170>
@@ -280,7 +282,7 @@ class DeviceClass : Templates::DeviceClass
     TimeEvent.Trigger( context, false );
   }
 
-  $rect <480,100,680,140>
+  $rect <480,110,680,150>
   method void ExitApplication()
   {
     trace "ExitApplication";
@@ -300,13 +302,13 @@ class DeviceClass : Templates::DeviceClass
   // Anwenderseitige Events
   note group Note3
   {
-    attr Bounds = <460,40,1390,580>;
+    attr Bounds = <460,40,1390,550>;
   }
 
   // Konfiguration
   note group Note
   {
-    attr Bounds = <900,80,1330,560>;
+    attr Bounds = <900,80,1330,540>;
   }
 
   $rect <920,440,1120,480>

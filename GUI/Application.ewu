@@ -30,27 +30,6 @@ class Application : Core::Root
     */
   }
 
-  // To do:
-  // 
-  // - The simplest way to compose the appearance of the application is to use the \
-  // 'Views' and 'Widget Sets' from the Gallery.
-  // 
-  // - To react to touch or keyboard events use the templates from the Gallery folder \
-  // 'Event Handlers'.
-  // 
-  // - To perform transitions (animations) use the templates from the Gallery folder \
-  // 'Effects'.
-  // 
-  // - To store values use the 'Variable', 'Array' and 'Property' templates available \
-  // in the Gallery folder 'Chora'.
-  // 
-  // - To implement behavior use the 'Method' and 'Slot Method' templates available \
-  // in the Gallery folder 'Chora'.
-  note legend Note1
-  {
-    attr Bounds = <10,500,790,700>;
-  }
-
   $rect <20,20,160,60>
   object Core::SlideTouchHandler SlideTouchHandler
   {
@@ -98,7 +77,11 @@ class Application : Core::Root
   $rect <1010,70,1210,110>
   slot onNewWell
   {
-    Outline.ScrollOffset.x=-800;
+    if(Device::Device.NewWell==false){
+      Outline.ScrollOffset.x=-800;
+
+
+    }
   }
 
   $rect <810,130,1010,170>
@@ -115,6 +98,14 @@ class Application : Core::Root
   {
     WellObj.Enabled=Device::Device.WellViewEnabled;
     WellObj.Visible=Device::Device.WellViewEnabled;
+  }
+
+  $rect <20,20,160,60>
+  object Application::NewWellDialoge NewWellDialoge
+  {
+    preset Bounds = <50,130,750,330>;
+    preset Enabled = false;
+    preset Visible = false;
   }
 
   $rect <20,20,160,60>
@@ -902,12 +893,15 @@ class Tab2 : Core::Group
   $rect <1020,180,1220,220>
   slot onNewWell
   {
-    var int32 r;
-    var int32 c;
+    if(Device::Device.NewWell==false){
 
-    for(r=0; r<6;r=r+1){
-      for(c=0;c<8;c=c+1){
-        WellPartArray[c,r].Text.String="";
+      var int32 r;
+      var int32 c;
+
+      for(r=0; r<6;r=r+1){
+        for(c=0;c<8;c=c+1){
+          WellPartArray[c,r].Text.String="";
+        }
       }
     }
 
@@ -3878,10 +3872,6 @@ class Config : Core::Group
     ConfigNumHoles.Enabled=true;
     ConfigNumHoles.Visible=true;
 
-
-
-
-
     ControllMenu.Enabled=true;
 
 
@@ -3953,10 +3943,10 @@ class Config : Core::Group
     preset Font = Flat::FontL;
   }
 
-  $rect <230,540,430,580>
+  $rect <840,140,1040,180>
   property Application::ControllMenu ControllMenu = null;
 
-  $rect <230,580,430,620>
+  $rect <840,180,1040,220>
   onset ControllMenu
   {
     // The value doesn't change - nothing to do.
@@ -3971,7 +3961,7 @@ class Config : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <230,620,430,660>
+  $rect <840,220,1040,260>
   onget ControllMenu
   {
     return pure ControllMenu;
@@ -4019,7 +4009,7 @@ class Config : Core::Group
   {
     Btn_Ok.Enabled=true;
     Btn_Cancel.Enabled=true;
-
+                               
   }
 
   $rect <20,20,160,60>
@@ -4070,7 +4060,6 @@ class Config : Core::Group
   object Application::Config2Int ConfigNumHoles
   {
     preset Bounds = <0,0,800,480>;
-    preset Title = "Bitte geben sie die Anzahl der Wellöffnungen in X und Y Richtung an (Wellübersicht ist nur bei X<=6 und Y<=8 verfügbar)";
   }
 }
 
@@ -4238,7 +4227,7 @@ class ConfigPosition : Core::Group
   {
     preset Bounds = <70,230,760,300>;
     preset CurrentValue = 0;
-    preset OnChange = OnChangePos;
+    preset OnChange = onChangePos;
   }
 
   $rect <20,20,160,60>
@@ -4246,11 +4235,11 @@ class ConfigPosition : Core::Group
   {
     preset Bounds = <70,300,760,360>;
     preset CurrentValue = 0;
-    preset OnChange = OnChangePos;
+    preset OnChange = onChangePos;
   }
 
-  $rect <830,340,1030,380>
-  slot OnChangePos
+  $rect <820,470,1020,510>
+  slot onChangePos
   {
     Device::Device.SetCurrentPosition( XSlider.CurrentValue, YSlider.CurrentValue, ZSlider.CurrentValue );
 
@@ -4262,13 +4251,13 @@ class ConfigPosition : Core::Group
   {
     preset Bounds = <70,360,760,420>;
     preset CurrentValue = 0;
-    preset OnChange = OnChangePos;
+    preset OnChange = onChangePos;
   }
 
-  $rect <830,20,1030,60>
+  $rect <820,0,1020,40>
   property slot onNext = null;
 
-  $rect <830,60,1030,100>
+  $rect <820,40,1020,80>
   onset onNext
   {
     // The value doesn't change - nothing to do.
@@ -4283,16 +4272,16 @@ class ConfigPosition : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <830,100,1030,140>
+  $rect <820,80,1020,120>
   onget onNext
   {
     return pure onNext;
   }
 
-  $rect <830,160,1030,200>
+  $rect <820,130,1020,170>
   property string Title = "";
 
-  $rect <830,200,1030,240>
+  $rect <820,170,1020,210>
   onset Title
   {
     // The value doesn't change - nothing to do.
@@ -4309,7 +4298,7 @@ class ConfigPosition : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <830,240,1030,280>
+  $rect <820,210,1020,250>
   onget Title
   {
     return pure Title;
@@ -4323,7 +4312,7 @@ class ConfigPosition : Core::Group
     preset Visible = false;
   }
 
-  $rect <830,300,1030,340>
+  $rect <820,390,1020,430>
   slot onBtnNext
   {
     signal onNext;
@@ -4358,10 +4347,10 @@ class ConfigPosition : Core::Group
     preset Font = Flat::FontL;
   }
 
-  $rect <1070,30,1270,70>
+  $rect <820,260,1020,300>
   property Resources::Bitmap Help = null;
 
-  $rect <1070,70,1270,110>
+  $rect <820,300,1020,340>
   onset Help
   {
     // The value doesn't change - nothing to do.
@@ -4376,7 +4365,7 @@ class ConfigPosition : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <1070,110,1270,150>
+  $rect <820,340,1020,380>
   onget Help
   {
     return pure Help;
@@ -4390,7 +4379,7 @@ class ConfigPosition : Core::Group
     preset Caption = "Help";
   }
 
-  $rect <1100,240,1300,280>
+  $rect <820,430,1020,470>
   slot onBtn_Help
   {
     if(Btn_Help.Active){
@@ -4668,13 +4657,14 @@ class ControllMenu : Core::Group
     preset Bounds = <590,230,770,260>;
     preset Enabled = false;
     preset OnAction = onBtn_NewWell;
-    preset Caption = "Neues Well";
+    preset Caption = "Neue Plate";
   }
 
   $rect <830,230,1030,270>
   slot onBtn_NewWell
   {
     Device::Device.NewWell=true;
+
   }
 
   $rect <830,340,1030,380>
@@ -6692,10 +6682,10 @@ class ConfigInt : Core::Group
     preset Font = Flat::FontL;
   }
 
-  $rect <830,20,1030,60>
+  $rect <830,0,1030,40>
   property slot onNext = null;
 
-  $rect <830,60,1030,100>
+  $rect <830,40,1030,80>
   onset onNext
   {
     // The value doesn't change - nothing to do.
@@ -6710,16 +6700,16 @@ class ConfigInt : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <830,100,1030,140>
+  $rect <830,80,1030,120>
   onget onNext
   {
     return pure onNext;
   }
 
-  $rect <830,160,1030,200>
-  property string Title = "";
+  $rect <1050,0,1250,40>
+  property string Title = "Title";
 
-  $rect <830,200,1030,240>
+  $rect <1050,40,1250,80>
   onset Title
   {
     // The value doesn't change - nothing to do.
@@ -6735,13 +6725,13 @@ class ConfigInt : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <830,240,1030,280>
+  $rect <1050,80,1250,120>
   onget Title
   {
     return pure Title;
   }
 
-  $rect <830,300,1030,340>
+  $rect <820,400,1020,440>
   slot onBtnNext
   {
     signal onNext;
@@ -6754,7 +6744,7 @@ class ConfigInt : Core::Group
   {
     preset Bounds = <330,140,470,200>;
     preset Enabled = true;
-    preset OnChange = onTextEditorChange;
+    preset OnChange = onChangeTextEditor;
     preset String = "";
     preset Font = Flat::FontL;
   }
@@ -6766,8 +6756,8 @@ class ConfigInt : Core::Group
     preset Enabled = true;
   }
 
-  $rect <830,360,1030,400>
-  slot onTextEditorChange
+  $rect <820,440,1020,480>
+  slot onChangeTextEditor
   {
     if((TextEditor.String.parse_int32( 0 )<=MaxValue)&&(TextEditor.String.parse_int32( 0 )>=MinValue)){
       Btn_Next.Enabled=true;
@@ -6776,10 +6766,10 @@ class ConfigInt : Core::Group
     }
   }
 
-  $rect <1060,20,1260,60>
+  $rect <830,130,1030,170>
   property int32 MaxValue = 1000;
 
-  $rect <1060,60,1260,100>
+  $rect <830,170,1030,210>
   onset MaxValue
   {
     // The value doesn't change - nothing to do.
@@ -6795,16 +6785,16 @@ class ConfigInt : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <1060,100,1260,140>
+  $rect <830,210,1030,250>
   onget MaxValue
   {
     return pure MaxValue;
   }
 
-  $rect <1060,160,1260,200>
+  $rect <1050,130,1250,170>
   property int32 MinValue = 1;
 
-  $rect <1060,200,1260,240>
+  $rect <1050,170,1250,210>
   onset MinValue
   {
     // The value doesn't change - nothing to do.
@@ -6820,16 +6810,16 @@ class ConfigInt : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <1060,240,1260,280>
+  $rect <1050,210,1250,250>
   onget MinValue
   {
     return pure MinValue;
   }
 
-  $rect <1270,20,1470,60>
-  property string Unit = "";
+  $rect <830,260,1030,300>
+  property string Unit = "Einheit";
 
-  $rect <1270,60,1470,100>
+  $rect <830,300,1030,340>
   onset Unit
   {
     // The value doesn't change - nothing to do.
@@ -6844,7 +6834,7 @@ class ConfigInt : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <1270,100,1470,140>
+  $rect <830,340,1030,380>
   onget Unit
   {
     return pure Unit;
@@ -7015,14 +7005,14 @@ class Config2Int : Core::Group
   {
     preset Bounds = <60,10,690,120>;
     preset WrapText = true;
-    preset String = "Beispiel Text";
+    preset String = "Bitte geben sie die Anzahl der Wellöffnungen in X und Y Richtung an (Wellübersicht ist nur bei X<=6 und Y<=8 verfügbar)";
     preset Font = Flat::FontL;
   }
 
-  $rect <830,20,1030,60>
+  $rect <1240,70,1440,110>
   property slot onNext = null;
 
-  $rect <830,60,1030,100>
+  $rect <1240,110,1440,150>
   onset onNext
   {
     // The value doesn't change - nothing to do.
@@ -7037,39 +7027,13 @@ class Config2Int : Core::Group
     // Now you can handle the alternation of the property.
   }
 
-  $rect <830,100,1030,140>
+  $rect <1240,150,1440,190>
   onget onNext
   {
     return pure onNext;
   }
 
-  $rect <830,160,1030,200>
-  property string Title = "";
-
-  $rect <830,200,1030,240>
-  onset Title
-  {
-    // The value doesn't change - nothing to do.
-    if ( pure Title == value )
-      return;
-
-    // Remember the property's new value.
-    pure Title = value;
-
-    TextTitle.String=Title;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <830,240,1030,280>
-  onget Title
-  {
-    return pure Title;
-  }
-
-  $rect <830,300,1030,340>
+  $rect <820,10,1020,50>
   slot onBtnNext
   {
     signal onNext;
@@ -7085,34 +7049,6 @@ class Config2Int : Core::Group
     preset OnChange = onChangeTextEditor;
     preset String = "6";
     preset Font = Flat::FontL;
-  }
-
-  $rect <1050,20,1250,60>
-  property int32 DefaultValue = 0;
-
-  $rect <1050,60,1250,100>
-  onset DefaultValue
-  {
-    TextEditorX.String=string(DefaultValue);
-
-    // The value doesn't change - nothing to do.
-    if ( pure DefaultValue == value )
-      return;
-      
-
-
-    // Remember the property's new value.
-    pure DefaultValue = value;
-
-    // TO DO:
-    // 
-    // Now you can handle the alternation of the property.
-  }
-
-  $rect <1050,100,1250,140>
-  onget DefaultValue
-  {
-    return pure DefaultValue;
   }
 
   $rect <20,20,160,60>
@@ -7150,7 +7086,7 @@ class Config2Int : Core::Group
     preset Font = Flat::FontL;
   }
 
-  $rect <830,360,1030,400>
+  $rect <820,50,1020,90>
   slot onChangeTextEditor
   {
     if(TextEditorY.String.parse_int32( 0)<1||TextEditorX.String.parse_int32( 0)<1){
@@ -7367,3 +7303,205 @@ class Error : Core::Group
 $rect <610,20,810,60>
 $output false
 autoobject Application::Application ApplicationObj;
+
+$rect <900,150,1100,190>
+$output false
+class NewWellDialoge : Core::Group
+{
+  $rect <10,230,210,270>
+  inherited property Bounds = <0,0,700,200>;
+
+  $rect <10,390,210,430>
+  inherited method UpdateLayout()
+  {
+    // Always invoke the inherited method.
+    super( aSize );
+
+    /*
+
+      HINT:
+
+      This method exists for sophisticated layout calculation. Please note, that in 
+      most cases it is completely sufficient to use the views property 'Layout' to
+      determine how the view should behave when the component is resized.
+
+    */
+
+    /*
+
+      TO DO:
+
+      Put here the code to calculate new position and size of enclosed views. The
+      current (new) size of the component itself is passed in the parameter aSize.
+      For example:
+
+        SomeView.Bounds = rect( 10, 10, aSize.x - 20, aSize.y - 20 );
+
+    */
+  }
+
+  $rect <10,350,210,390>
+  inherited method UpdateViewState()
+  {
+    // Always invoke the inherited method.
+    super( aState );
+
+    /*
+
+      HINT 1:
+
+      This method is invoked automatically when the state set of the component has
+      been changed. The new state set can be found in the parameter aState.
+      Following are the important states:
+
+        Enabled   --> The component can react to user inputs.
+
+        Selected  --> The component is selected in context of its owner.
+
+        Focused   --> The component is selected in context of its owner and 
+                      the owner can react to keyboard events. In this manner the
+                      component is also able to react to keyboard events.
+
+        Modal     --> The component is modal. All events are redirected to this
+                      component.
+
+      To determine whether a state is currently active or not you have to test
+      the aState parameter. For example to test the 'Selected' state:
+
+        if ( aState.contains( Core::ViewState[ Selected ]))
+        {
+          ... yes, this component is currently selected.
+        }
+
+    */
+
+    /*
+
+      HINT 2:
+
+      Alternatively you can request this method invocation by executing explicitly
+      following code:
+
+
+        InvalidateViewState();
+
+    */
+      
+    /*
+
+      TO DO 1:
+
+      Put here the code to ensure that the visual aspect of the component does
+      reflect its current state. For example, depending on its 'Enabled' state
+      a component may appear with full colors or pale if it is disabled:
+
+        if ( aState.contains( Core::ViewState[ Enabled ]))
+        {
+          SomeBackgroundView.Opacity = 255;
+          SomeTextView.Color         = #000000FF;
+        }
+        else
+        {
+          SomeBackgroundView.Opacity = 128;
+          SomeTextView.Color         = #00000080;
+        }
+
+
+      TO DO 2:
+
+      You can evaluate here also the state of any other member in your component.
+      For example in a push-button component, the button should appear highlighted
+      as long as the user holds the finger within a touch area of the button:
+
+        if ( SomeTouchHandler.Down && SomeTouchHandler.Inside )
+          HighlightedBackground.Visible = true;
+        else
+          HighlightedBackground.Visible = false;
+
+      The touch handler itself only requests the update method to be called. Use
+      for this purpose 'InvalidateViewState()' method.
+
+
+      TO DO 3:
+
+      You can calculate here also the position/size of views accordingly to the
+      state of any other member in your component. For example in a slider you
+      can calculate the position of the slider knob from some properties like
+      'SliderValue' and 'SliderRange':
+
+        SliderKnob.Bounds.origin.x = ( SliderValue * Bounds.w ) / SliderRange;
+
+      Changing the 'SliderValue' or 'SliderRange' property should only request
+      the update method to be called. Use for this purpose 'InvalidateViewState()'
+      method.
+
+    */
+  }
+
+  $rect <20,20,160,60>
+  object Views::Rectangle Rectangle
+  {
+    preset Bounds = <0,0,700,200>;
+    preset Color = #B3B8B6FF;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Title
+  {
+    preset Bounds = <0,0,700,40>;
+    preset WrapText = true;
+    preset String = "Drücken Sie Ok wenn das Well eingesetzt wurde";
+    preset Font = Flat::FontL;
+  }
+
+  $rect <20,20,160,60>
+  object Application::AActionButton Btn_Ok
+  {
+    preset Bounds = <570,160,690,190>;
+    preset OnAction = onBtn_Ok;
+    preset Caption = "Ok";
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text MessageText
+  {
+    preset Bounds = <0,40,700,160>;
+    preset WrapText = true;
+    preset String = "";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <420,230,620,270>
+  slot onBtn_Ok
+  {
+    this.Enabled=false;
+    this.Visible=false;
+    Application::ApplicationObj.WellObj.Enabled=true;
+    Application::ApplicationObj.MainMenu.Enabled=true;
+
+    Device::Device.NewWell=false;
+  }
+
+  $rect <720,60,920,100>
+  object Core::PropertyObserver NewWellObserver
+  {
+    preset OnEvent = onNewWell;
+    preset Outlet = ^Device::Device.NewWell;
+  }
+
+  // This slot method is executed when the associated property observer 'PropertyObserver' \
+  // is notified.
+  $rect <920,60,1120,100>
+  slot onNewWell
+  {
+    if(Device::Device.NewWell==true){
+      Application::ApplicationObj.WellObj.Enabled=false;
+      Application::ApplicationObj.MainMenu.Enabled=false;
+
+
+      this.Visible=true;
+      this.Enabled=true;
+    }
+
+  }
+}
