@@ -1797,7 +1797,7 @@ class SampleController : Core::Group
   $rect <20,210,220,250>
   slot onChangeEditor
   {
-    if((TextEditor.String.parse_int32(0)>0)&&(TextEditor.String.parse_int32(0)<1000)){
+    if((TextEditor.String.parse_int32(0)>0)&&(TextEditor.String.parse_int32(0)<1000)&&(Active==false)){
       BtnStart.Enabled=true;
     } else{
       BtnStart.Enabled=false;

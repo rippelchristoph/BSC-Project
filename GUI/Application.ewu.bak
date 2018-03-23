@@ -6707,7 +6707,7 @@ class ConfigInt : Core::Group
   }
 
   $rect <1050,0,1250,40>
-  property string Title = "";
+  property string Title = "Title";
 
   $rect <1050,40,1250,80>
   onset Title
@@ -6744,7 +6744,7 @@ class ConfigInt : Core::Group
   {
     preset Bounds = <330,140,470,200>;
     preset Enabled = true;
-    preset OnChange = onTextEditorChange;
+    preset OnChange = onChangeTextEditor;
     preset String = "";
     preset Font = Flat::FontL;
   }
@@ -6757,7 +6757,7 @@ class ConfigInt : Core::Group
   }
 
   $rect <820,440,1020,480>
-  slot onTextEditorChange
+  slot onChangeTextEditor
   {
     if((TextEditor.String.parse_int32( 0 )<=MaxValue)&&(TextEditor.String.parse_int32( 0 )>=MinValue)){
       Btn_Next.Enabled=true;
@@ -6817,7 +6817,7 @@ class ConfigInt : Core::Group
   }
 
   $rect <830,260,1030,300>
-  property string Unit = "";
+  property string Unit = "Einheit";
 
   $rect <830,300,1030,340>
   onset Unit

@@ -2176,9 +2176,9 @@ void ApplicationSampleController_onChangeEditor( ApplicationSampleController _th
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( sender );
 
-  if (( EwStringParseInt32( ApplicationATextEditor_OnGetString( &_this->TextEditor 
+  if ((( EwStringParseInt32( ApplicationATextEditor_OnGetString( &_this->TextEditor 
       ), 0, 10 ) > 0 ) && ( EwStringParseInt32( ApplicationATextEditor_OnGetString( 
-      &_this->TextEditor ), 0, 10 ) < 1000 ))
+      &_this->TextEditor ), 0, 10 ) < 1000 )) && ( _this->Active == 0 ))
   {
     CoreGroup_OnSetEnabled((CoreGroup)&_this->BtnStart, 1 );
   }

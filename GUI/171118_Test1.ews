@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Application::SampleController;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,9>;
-attr codeInspector = Device::DeviceClass.OnSetNewWell;
-attr codeSelEnd = <23,13>;
-attr codeSelStart = <23,13>;
+attr codeFirstPos = <0,0>;
+attr codeInspector = Application::SampleController.onChangeEditor;
+attr codeSelEnd = <97,0>;
+attr codeSelStart = <97,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -121,10 +121,10 @@ view class Application::ControllMenu
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
+  attr codeFirstPos = <0,9>;
   attr codeInspector = OnSetNewWell;
-  attr codeSelEnd = <13,4>;
-  attr codeSelStart = <13,4>;
+  attr codeSelEnd = <23,13>;
+  attr codeSelStart = <23,13>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -151,6 +151,14 @@ view class Application::NewWellDialoge
   attr codeInspector = onNewWell;
   attr codeSelEnd = <14,3>;
   attr codeSelStart = <14,3>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::SampleController
+{
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
