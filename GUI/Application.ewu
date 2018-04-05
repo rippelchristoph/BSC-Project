@@ -79,7 +79,9 @@ class Application : Core::Root
   {
     if(Device::Device.NewWell==false){
       Outline.ScrollOffset.x=-800;
-
+      native{
+        system("scrot ~/screenshots/%Y-%m-%d-%T-Well.png");
+      }
 
     }
   }
@@ -406,6 +408,17 @@ class Tab2 : Core::Group
       method.
 
     */
+  }
+
+  $rect <1040,0,1180,40>
+  inherited method Init()
+  {
+    // TO DO: Write your code here ... 
+    var int32 i;
+    for(i=0; i<6; i=i+1) {
+     LegendArray[i].Color=Device::Device.getColor( i );
+
+    }     
   }
 
   $rect <20,20,160,60>
@@ -1091,6 +1104,65 @@ class Tab2 : Core::Group
     Default[5] = WellLabel5;
     Default[6] = WellLabel6;
     Default[7] = WellLabel7;
+  );
+
+  $rect <20,20,160,60>
+  object Views::Text Leg1
+  {
+    preset Bounds = <660,110,780,140>;
+    preset String = "Kreislauf 1";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Leg2
+  {
+    preset Bounds = <660,140,780,170>;
+    preset String = "Kreislauf 2";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Leg3
+  {
+    preset Bounds = <660,170,780,200>;
+    preset String = "Kreislauf 3";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Leg4
+  {
+    preset Bounds = <660,200,780,230>;
+    preset String = "Kreislauf 4";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Leg5
+  {
+    preset Bounds = <660,230,780,260>;
+    preset String = "Kreislauf 5";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <20,20,160,60>
+  object Views::Text Leg6
+  {
+    preset Bounds = <660,260,780,290>;
+    preset String = "Kreislauf 6";
+    preset Font = Flat::FontM;
+  }
+
+  $rect <820,0,1020,40>
+  array Views::Text LegendArray[ 6 ] =
+  (
+    Default[0] = Leg1;
+    Default[1] = Leg2;
+    Default[2] = Leg3;
+    Default[3] = Leg4;
+    Default[4] = Leg5;
+    Default[5] = Leg6;
   );
 
   $reorder Rectangle 76

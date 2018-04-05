@@ -49,6 +49,7 @@
 #include "_CorePropertyObserver.h"
 #include "_CoreSystemEventHandler.h"
 #include "_ViewsRectangle.h"
+#include "_ViewsText.h"
 #include "_ViewsWarpImage.h"
 
 /* Forward declaration of the class Application::Tab2 */
@@ -156,6 +157,13 @@ EW_DEFINE_FIELDS( ApplicationTab2, CoreGroup )
   EW_OBJECT  ( NumHolesXObserver, CorePropertyObserver )
   EW_OBJECT  ( NumHolesYObserver, CorePropertyObserver )
   EW_ARRAY   ( WellLabelArrayY, ApplicationWellLabel, [8])
+  EW_OBJECT  ( Leg1,            ViewsText )
+  EW_OBJECT  ( Leg2,            ViewsText )
+  EW_OBJECT  ( Leg3,            ViewsText )
+  EW_OBJECT  ( Leg4,            ViewsText )
+  EW_OBJECT  ( Leg5,            ViewsText )
+  EW_OBJECT  ( Leg6,            ViewsText )
+  EW_ARRAY   ( LegendArray,     ViewsText, [6])
 EW_END_OF_FIELDS( ApplicationTab2 )
 
 /* Virtual Method Table (VMT) for the class : 'Application::Tab2' */
@@ -213,6 +221,11 @@ void ApplicationTab2_UpdateLayout( ApplicationTab2 _this, XPoint aSize );
    Usually, this method will be invoked automatically by the framework. Optionally 
    you can request its invocation by using the method @InvalidateViewState(). */
 void ApplicationTab2_UpdateViewState( ApplicationTab2 _this, XSet aState );
+
+/* The method Init() is invoked automatically after the component has been created. 
+   This method can be overridden and filled with logic containing additional initialization 
+   statements. */
+void ApplicationTab2_Init( ApplicationTab2 _this, XHandle aArg );
 
 /* Writes the given Time in the chosen WellPart */
 void ApplicationTab2_timeToWellPart( ApplicationTab2 _this, XInt32 aCircuitNumber, 

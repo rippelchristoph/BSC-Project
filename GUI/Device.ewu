@@ -245,12 +245,12 @@ class DeviceClass : Templates::DeviceClass
   {
     switch ( aCircuitNumber )
     {
-      case 0  : return #F38900FF;    
-      case 1  : return #32CE00FF;  
-      case 2  : return #1E6033FF;  
-      case 3  : return #0000FFFF;  
-      case 4  : return #00FFFFFF; 
-      case 5  : return #FF00FFFF;  
+      case 0  : return #0000FFFF;    
+      case 1  : return #00FFFFFF;  
+      case 2  : return #FF00FFFF;  
+      case 3  : return #1E6033FF;  
+      case 4  : return #32CE00FF; 
+      case 5  : return #F38900FF;  
       default : return #FF0000FF; //rot=ERROR           
     }
 
