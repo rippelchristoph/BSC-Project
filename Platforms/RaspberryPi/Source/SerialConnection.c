@@ -121,6 +121,7 @@ newSerialConnection (
 	int retval = poll(retPtr->serial_poll, 1, 200); //Timeout 200, 1 File Descriptor
 	if (retval == -1) {	//Error
 		//TODO: Error melden FileDescriptor
+		printf("Error while initializing SerialConnection\n");
 	}
 	else if (!retval) {
 		//No filedescriptor ready

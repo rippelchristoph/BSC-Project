@@ -16,6 +16,7 @@
  *   SamplerAddToQueue
  *   ProcessSampler
  *   SamplerNewWell
+ *   SamplerNewOrder
  *   SamplerStartConfig
  *   SamplerEndConfig
  *   SamplerConfigSetPlotter
@@ -128,7 +129,7 @@ typedef struct Sampler {
 
 PRIVATE void
 StateConfig (
-  TSampler *                    TSampler );
+  TSampler *                    aSampler );
 
 PRIVATE void
 EnterStateWait (
@@ -373,7 +374,23 @@ PUBLIC void
 SamplerNewWell (
   TSampler * aSampler )
 {
+	PLTGoTo(aSampler->Plotter, -1, -1, aSampler->Config->MovingPosZMM);
+	PLTGoTo(aSampler->Plotter, -1, 90, -1);
+	DigIOSetDefault();
+	aSampler->State = NewWell;
+}
 
+/****************************************************************************
+ * FUNCTION: SamplerNewOrder
+ ****************************************************************************/
+PUBLIC void
+SamplerNewOrder (
+  TSampler * aSampler )
+{
+	if (aSampler->State == NewWell) {
+		PLTHomeAxis(aSampler->Plotter);
+		EnterStateWait(aSampler);
+	}
 }
 
 /****************************************************************************

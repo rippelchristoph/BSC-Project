@@ -95,6 +95,5 @@ TemperatureReaderGetTemperature (
 		destroyI2C(dataStream);
 	}
 
-
 	return TempReader->ReadVal;
 }

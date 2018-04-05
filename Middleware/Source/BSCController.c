@@ -564,6 +564,8 @@ BSCAddOrder (
   int aInterval,
   int aOrigin )
 {
+	SamplerNewOrder(ControllerObj->Sampler);
+	
 	if (aInterval <= 0) {
 		SamplerAddToQueue(ControllerObj->Sampler, aOrigin);
 	}
@@ -774,8 +776,8 @@ BSCStopConfig ( void )
 PUBLIC void
 BSCNewWell ( void )
 {
+	//system("");		//For Screenshot
 	SamplerNewWell(ControllerObj->Sampler);
-
 }
 
 
