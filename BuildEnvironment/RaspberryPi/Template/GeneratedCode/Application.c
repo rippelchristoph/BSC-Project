@@ -6294,7 +6294,7 @@ void ApplicationConfig_onBtn_OkCancel( ApplicationConfig _this, XObject sender )
     ), EwStringParseInt32( ApplicationATextEditor_OnGetString( &_this->ConfigSampleVolume.TextEditor 
     ), 200, 10 ));
     DeviceDeviceClass_SetPosition( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
-    ), 3, _this->ConfigWaste.XSlider.CurrentValue, _this->ConfigWaste.YSlider.CurrentValue, 
+    ), 2, _this->ConfigWaste.XSlider.CurrentValue, _this->ConfigWaste.YSlider.CurrentValue, 
     _this->ConfigWaste.ZSlider.CurrentValue );
     DeviceDeviceClass_SetPosition( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
     ), 1, _this->ConfigBL.XSlider.CurrentValue, _this->ConfigBL.YSlider.CurrentValue, 
@@ -6303,7 +6303,7 @@ void ApplicationConfig_onBtn_OkCancel( ApplicationConfig _this, XObject sender )
     ), 0, _this->ConfigTR.XSlider.CurrentValue, _this->ConfigTR.YSlider.CurrentValue, 
     _this->ConfigTR.ZSlider.CurrentValue );
     DeviceDeviceClass_SetPosition( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
-    ), 4, _this->ConfigTop.XSlider.CurrentValue, _this->ConfigTop.YSlider.CurrentValue, 
+    ), 3, _this->ConfigTop.XSlider.CurrentValue, _this->ConfigTop.YSlider.CurrentValue, 
     _this->ConfigTop.ZSlider.CurrentValue );
     DeviceDeviceClass_StopConfig( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
     ));

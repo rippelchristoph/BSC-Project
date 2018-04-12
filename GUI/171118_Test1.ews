@@ -1,6 +1,6 @@
 $version 1.0
 
-attr active = Device::DeviceClass;
+attr active = Device;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
@@ -123,8 +123,8 @@ view class Device::DeviceClass
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
   attr codeInspector = getColor;
-  attr codeSelEnd = <28,2>;
-  attr codeSelStart = <28,2>;
+  attr codeSelEnd = <2,2>;
+  attr codeSelStart = <46,8>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
