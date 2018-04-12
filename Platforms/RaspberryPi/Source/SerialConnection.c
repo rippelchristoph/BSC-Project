@@ -48,9 +48,9 @@
 #include <linux/serial.h>
 #include <errno.h>
 
-   /****************************************************************************
-	* SECTION: typedef
-	****************************************************************************/
+/****************************************************************************
+ * SECTION: typedef
+ ****************************************************************************/
 typedef struct pollfd TPollfd;
 
 typedef struct
@@ -61,19 +61,9 @@ typedef struct
 
 #endif
 
-
-
-
 /****************************************************************************
 * SECTION: #define
 ****************************************************************************/
-
-
-/****************************************************************************
-* SECTION: typedef
-****************************************************************************/
-
-
 /****************************************************************************
  * SECTION: Declaration of private functions
  ****************************************************************************/
@@ -93,10 +83,11 @@ setBaudDivisor (
 /****************************************************************************
  * FUNCTION: newSerialConnection
  *
- *   DESCRIPTION:
- *     Initializes the Serial interface
- *
- *   PARAMETER:
+ * DESCRIPTION:
+ *   Initializes the Serial interface
+ * PARAMETER:
+ *   aPort-The Port that should be used to initialize the Connection
+ *   aBaud-The Baud Rate of the Connection
  ****************************************************************************/
 PUBLIC TSerialConnection *
 newSerialConnection (

@@ -63,6 +63,12 @@ destroyTemperatureReader (
 
 /****************************************************************************
  * FUNCTION: TemperatureReaderGetTemperature
+ * DESCRIPTION:
+ *   Returns the current Temperature, that is read every 5 seconds.
+ * PARAMETER:
+ *   TempReader-The Address of the temperature Reader
+ * RETURN:
+ *   The Current Temperature Value in °C
  ****************************************************************************/
 PUBLIC double
 TemperatureReaderGetTemperature (

@@ -89,6 +89,8 @@ typedef struct BSCController {
  * SECTION: Declaration of Global Variables
  ****************************************************************************/
 TBoolean ShutdownBSCController;
+
+//Define Object of BSCController in Header, so EmWi Functions are easier
 TBSCController* ControllerObj;
 #endif
 
@@ -198,7 +200,7 @@ newBSCController ( void )
 	//Initialize Sampler
 	retPtr->Sampler = newSampler(retPtr->Configuration, retPtr->Well, retPtr->WorkingDirectory);
 	//Initialize TemperatureController
-	retPtr->TempContr = newTemperatureController(0x4F, 0.5, -22.0);
+	retPtr->TempContr = newTemperatureController(0x4F, 0.5, -20.0);
 	//Get DeviceObject from Embedded Wizard
 	retPtr->EwDeviceObject = EwGetAutoObject(&DeviceDevice, DeviceDeviceClass);
 
