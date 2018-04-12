@@ -128,7 +128,7 @@ PLTSendCommand (
   TPlotter * aPlotter,
   char *     aCommand )
 {
-	char sendString[30];
+	char sendString[100];
 	strcpy(sendString, aCommand);
 	strcat(sendString, "\r\n");
 
@@ -179,18 +179,19 @@ PLTGoTo (
 	char cmd[100];
 	char exp[50];
 	strcpy(cmd, CONTROLLED_MOVEMENT);
-	if (aX > 0.0) {
+	if (aX >= 0.0) {
 		sprintf(exp, " X%lf", aX);
 		strcat(cmd, exp);
 	}
-	if (aY > 0.0) {
+	if (aY >= 0.0) {
 		sprintf(exp, " Y%lf", aY);
 		strcat(cmd, exp);
 	}
-	if (aZ > 0.0) {
+	if (aZ >= 0.0) {
 		sprintf(exp, " Z%lf", aZ);
 		strcat(cmd, exp);
 	}
+	//printf("Plotter Command: <%s>len=%d\n", cmd, strlen(cmd));
 	PLTSendCommand(aPlotter, cmd);
 }
 
