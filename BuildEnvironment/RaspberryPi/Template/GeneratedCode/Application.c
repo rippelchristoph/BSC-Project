@@ -573,7 +573,7 @@ void ApplicationApplication_onNewWell( ApplicationApplication _this, XObject sen
   {
     CoreOutline_OnSetScrollOffset( &_this->Outline, EwSetPointX( _this->Outline.ScrollOffset, 
     -800 ));
-    system("scrot ~/screenshots/%Y-%m-%d-%T-Well.png");
+    //system("scrot ~/screenshots/%Y-%m-%d-%T-Well.png");
   }
 }
 
