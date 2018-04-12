@@ -39,6 +39,15 @@ typedef struct TemperatureController {
 
 /****************************************************************************
  * FUNCTION: newTemperatureController
+ * DESCRIPTION:
+ *   Allocates memory for the TemperatureController Object and initializes
+ *   it.
+ * PARAMETER:
+ *   aSensorAddress- The I2C Address of the Temperature Sensor
+ *   aHysteresis - The Hysteresis for Controlling the Peltier Element [°C]
+ *   aSetValue - The desired Temperature [°C]
+ * RETURN:
+ *   The Address of the initialized Object
  ****************************************************************************/
 
 PUBLIC TTemperatureController *
@@ -72,6 +81,9 @@ destroyTemperatureController (
 
 /****************************************************************************
  * FUNCTION: ProcessTemperatureController
+ * DESCRIPTION:
+ *   Sets the Peltier to 1.0 if the Temperature is too low, otherwise set it
+ *   to 0.0
  ****************************************************************************/
 PUBLIC TBoolean
 ProcessTemperatureController (

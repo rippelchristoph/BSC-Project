@@ -519,7 +519,7 @@ StateWait (
  * FUNCTION: EnterStateHome
  *
  *   DESCRIPTION:
- *     Function is called when beginning the State 'Wait' PARAMETER:
+ *     Function is called when beginning the State 'Home' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
@@ -538,7 +538,7 @@ EnterStateHome (
  * FUNCTION: StateHome
  *
  *   DESCRIPTION:
- *     Function is called periodically when the State is 'Wait' PARAMETER:
+ *     Function is called periodically when the State is 'Home' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
@@ -556,7 +556,7 @@ StateHome (
  * FUNCTION: EnterStateWaistPos
  *
  *   DESCRIPTION:
- *     Function is called when beginning the State 'Wait' PARAMETER:
+ *     Function is called when beginning the State 'WaitPos' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
@@ -578,7 +578,7 @@ EnterStateWaistPos (
  * FUNCTION: StateWaistPos
  *
  *   DESCRIPTION:
- *     Function is called periodically when the State is 'Wait' PARAMETER:
+ *     Function is called periodically when the State is 'WaistPos' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
@@ -596,7 +596,7 @@ StateWaistPos (
  * FUNCTION: EnterStateWaist
  *
  *   DESCRIPTION:
- *     Function is called when beginning the State 'Wait' PARAMETER:
+ *     Function is called when beginning the State 'Waist' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
@@ -613,7 +613,7 @@ EnterStateWaist (
  * FUNCTION: StateWaist
  *
  *   DESCRIPTION:
- *     Function is called periodically when the State is 'Wait' PARAMETER:
+ *     Function is called periodically when the State is 'Waist' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
@@ -638,7 +638,7 @@ StateWaist (
  * FUNCTION: EnterStateOverPos
  *
  *   DESCRIPTION:
- *     Function is called when beginning the State 'Wait' PARAMETER:
+ *     Function is called when beginning the State 'OverPos' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
@@ -662,7 +662,7 @@ EnterStateOverPos (
  * FUNCTION: StateOverPos
  *
  *   DESCRIPTION:
- *     Function is called periodically when the State is 'Wait' PARAMETER:
+ *     Function is called periodically when the State is 'OverPos' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
@@ -679,7 +679,7 @@ StateOverPos (
  * FUNCTION: EnterStateDrawerOpen
  *
  *   DESCRIPTION:
- *     Function is called when beginning the State 'Wait' PARAMETER:
+ *     Function is called when beginning the State 'DrawerOpen' PARAMETER:
  *     aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
