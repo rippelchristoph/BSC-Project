@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Device;
+attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Device::DeviceClass.getColor;
-attr codeSelEnd = <2,2>;
-attr codeSelStart = <46,8>;
+attr codeInspector = Device::DeviceClass.SetCurrentPosition;
+attr codeSelEnd = <5,6>;
+attr codeSelStart = <5,6>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;

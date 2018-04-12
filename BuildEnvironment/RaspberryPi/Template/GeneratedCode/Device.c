@@ -36,7 +36,7 @@
 /* Compressed strings for the language 'Default'. */
 static const unsigned int _StringsDefault0[] =
 {
-  0x0000040E, /* ratio 47.78 % */
+  0x000003F2, /* ratio 47.92 % */
   0xB8002300, 0x80000452, 0x00C20029, 0x0E000368, 0xCA003600, 0xE002B000, 0x750043CD,
   0xA0044616, 0x0A0020C3, 0x70020B03, 0xC0CEF1B2, 0x7621108D, 0x49E00104, 0x006E8DC3,
   0xF31001A4, 0x0490478C, 0x6894920D, 0x8BCA0AF2, 0xB90C012B, 0x4C8E7168, 0x1A6C009A,
@@ -50,18 +50,11 @@ static const unsigned int _StringsDefault0[] =
   0x0E3CCF8B, 0xAA6AC43C, 0x1AC4399E, 0x27DD1756, 0x81426E1F, 0x007898D7, 0x7A193796,
   0x1D07A9C9, 0xF611ED76, 0x7D9F771E, 0x8F82D707, 0x00192835, 0x9C9631E7, 0xE1416D05,
   0x8D505199, 0x5E775337, 0x001A2581, 0x078449B6, 0x070C0770, 0xD5C96E80, 0xBF4B1D08,
-  0x16A368E5, 0xDD06A9C0, 0x354D1950, 0x01A34495, 0x00516260, 0x4C59E8AA, 0xD6B8E141,
-  0x178E3365, 0xCDAE4BC4, 0x29429724, 0x03D1E93E, 0xD0A541FF, 0x86C15054, 0x29471994,
-  0x6D038005, 0x00144119, 0x90E42126, 0x96D91244, 0xF96D041C, 0x1B8A10A4, 0x87DB1451,
-  0x26C479C8, 0x646D3B74, 0x1D12441B, 0xC9439511, 0x83922A0D, 0x19E12000, 0xD51800A2,
-  0x416DA0A3, 0x129FE92A, 0x47A52519, 0x0004051E, 0x00000000
-};
-
-/* Compressed strings for the language 'Default'. */
-static const unsigned int _StringsDefault1[] =
-{
-  0x00000018, /* ratio 116.67 % */
-  0xB8001500, 0x80000452, 0x24005282, 0x8010A27C, 0x0D10830E, 0x00000406, 0x00000000
+  0x16A368E5, 0x2135B1C0, 0x178E3300, 0xCDAE4BC4, 0x29429724, 0x4193167A, 0x9507FC0F,
+  0x05415342, 0x1C66521B, 0x0E0014A5, 0x510465B4, 0x90849800, 0x64491243, 0xB410725B,
+  0x284293E5, 0x6C51446E, 0x51E7221F, 0xB4EDD097, 0x49106D91, 0x0E544474, 0x48A74725,
+  0x8480020E, 0x60027967, 0xB6738F54, 0x70A0E815, 0x8E14644A, 0x2437091E, 0xE7B92D7B,
+  0x01014791, 0x00000000
 };
 
 /* Constant values used in this 'C' module only. */
@@ -86,22 +79,21 @@ static const XStringRes _Const0011 = { _StringsDefault0, 0x015B };
 static const XStringRes _Const0012 = { _StringsDefault0, 0x0171 };
 static const XStringRes _Const0013 = { _StringsDefault0, 0x0178 };
 static const XStringRes _Const0014 = { _StringsDefault0, 0x017F };
-static const XStringRes _Const0015 = { _StringsDefault0, 0x0186 };
-static const XColor _Const0016 = { 0x00, 0x00, 0xFF, 0xFF };
-static const XColor _Const0017 = { 0x00, 0xFF, 0xFF, 0xFF };
-static const XColor _Const0018 = { 0xFF, 0x00, 0xFF, 0xFF };
-static const XColor _Const0019 = { 0x1E, 0x60, 0x33, 0xFF };
-static const XColor _Const001A = { 0x32, 0xCE, 0x00, 0xFF };
-static const XColor _Const001B = { 0xF3, 0x89, 0x00, 0xFF };
-static const XColor _Const001C = { 0xFF, 0x00, 0x00, 0xFF };
-static const XStringRes _Const001D = { _StringsDefault0, 0x019E };
-static const XStringRes _Const001E = { _StringsDefault0, 0x01B1 };
-static const XStringRes _Const001F = { _StringsDefault0, 0x01C0 };
-static const XStringRes _Const0020 = { _StringsDefault0, 0x01CE };
-static const XStringRes _Const0021 = { _StringsDefault0, 0x01DE };
-static const XStringRes _Const0022 = { _StringsDefault0, 0x01EC };
-static const XStringRes _Const0023 = { _StringsDefault0, 0x01FA };
-static const XStringRes _Const0024 = { _StringsDefault1, 0x0003 };
+static const XColor _Const0015 = { 0x00, 0x00, 0xFF, 0xFF };
+static const XColor _Const0016 = { 0x00, 0xFF, 0xFF, 0xFF };
+static const XColor _Const0017 = { 0xFF, 0x00, 0xFF, 0xFF };
+static const XColor _Const0018 = { 0x1E, 0x60, 0x33, 0xFF };
+static const XColor _Const0019 = { 0x32, 0xCE, 0x00, 0xFF };
+static const XColor _Const001A = { 0xF3, 0x89, 0x00, 0xFF };
+static const XColor _Const001B = { 0xFF, 0x00, 0x00, 0xFF };
+static const XStringRes _Const001C = { _StringsDefault0, 0x0186 };
+static const XStringRes _Const001D = { _StringsDefault0, 0x0199 };
+static const XStringRes _Const001E = { _StringsDefault0, 0x01A8 };
+static const XStringRes _Const001F = { _StringsDefault0, 0x01B6 };
+static const XStringRes _Const0020 = { _StringsDefault0, 0x01C6 };
+static const XStringRes _Const0021 = { _StringsDefault0, 0x01D4 };
+static const XStringRes _Const0022 = { _StringsDefault0, 0x01E2 };
+static const XStringRes _Const0023 = { _StringsDefault0, 0x01F0 };
 
 /* User defined inline code: 'Device::BSCHeader' */
 #include "BSCController.h"
@@ -344,10 +336,6 @@ void DeviceDeviceClass_SetCurrentPosition( DeviceDeviceClass _this, XInt32 aX, X
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwConcatString( EwConcatString( EwConcatString( EwConcatString( 
-    EwConcatString( EwLoadString( &_Const0015 ), EwNewStringInt( aX, 0, 10 )), EwLoadString( 
-    &_Const0013 )), EwNewStringInt( aY, 0, 10 )), EwLoadString( &_Const0014 )), 
-    EwNewStringInt( aZ, 0, 10 )));
   BSCSetCurrentPosition(aX,aY,aZ);
 }
 
@@ -378,25 +366,25 @@ XColor DeviceDeviceClass_getColor( DeviceDeviceClass _this, XInt32 aCircuitNumbe
   switch ( aCircuitNumber )
   {
     case 0 :
-      return _Const0016;
+      return _Const0015;
 
     case 1 :
-      return _Const0017;
+      return _Const0016;
 
     case 2 :
-      return _Const0018;
+      return _Const0017;
 
     case 3 :
-      return _Const0019;
+      return _Const0018;
 
     case 4 :
-      return _Const001A;
+      return _Const0019;
 
     case 5 :
-      return _Const001B;
+      return _Const001A;
 
     default : 
-      return _Const001C;
+      return _Const001B;
   }
 }
 
@@ -429,7 +417,7 @@ void DeviceDeviceClass_ExitApplication( DeviceDeviceClass _this )
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwLoadString( &_Const001D ));
+  EwTrace( "%s", EwLoadString( &_Const001C ));
   BSCShutdown();
 }
 
@@ -439,7 +427,7 @@ void DeviceDeviceClass_StartConfig( DeviceDeviceClass _this )
   /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
   EW_UNUSED_ARG( _this );
 
-  EwTrace( "%s", EwLoadString( &_Const001E ));
+  EwTrace( "%s", EwLoadString( &_Const001D ));
   BSCStartConfig();
 }
 
@@ -450,7 +438,7 @@ void DeviceDeviceClass_OnSetFlowSpeed( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->FlowSpeed = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const001F ), EwNewStringInt( _this->FlowSpeed, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const001E ), EwNewStringInt( _this->FlowSpeed, 
     0, 10 )));
   BSCSetFlowSpeed(value); //ul/s
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetFlowSpeed, DeviceDeviceClass_OnSetFlowSpeed 
@@ -464,7 +452,7 @@ void DeviceDeviceClass_OnSetWasteVolume( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->WasteVolume = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0020 ), EwNewStringInt( _this->WasteVolume, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const001F ), EwNewStringInt( _this->WasteVolume, 
     0, 10 )));
   BSCSetWasteVolume(value); //ul
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetWasteVolume, DeviceDeviceClass_OnSetWasteVolume 
@@ -478,7 +466,7 @@ void DeviceDeviceClass_OnSetNeedleGap( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->NeedleGap = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0021 ), EwNewStringInt( _this->NeedleGap, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0020 ), EwNewStringInt( _this->NeedleGap, 
     0, 10 )));
   BSCSetNeedleGap(value); //um
   EwNotifyRefObservers( EwNewRef( _this, DeviceDeviceClass_OnGetNeedleGap, DeviceDeviceClass_OnSetNeedleGap 
@@ -518,7 +506,7 @@ void DeviceDeviceClass_OnSetNumHolesY( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->NumHolesY = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0022 ), EwNewStringInt( _this->NumHolesY, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0021 ), EwNewStringInt( _this->NumHolesY, 
     0, 10 )));
 
   if (( _this->NumHolesX < 7 ) && ( _this->NumHolesY < 9 ))
@@ -542,7 +530,7 @@ void DeviceDeviceClass_OnSetNumHolesX( DeviceDeviceClass _this, XInt32 value )
     return;
 
   _this->NumHolesX = value;
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0023 ), EwNewStringInt( _this->NumHolesX, 
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0022 ), EwNewStringInt( _this->NumHolesX, 
     0, 10 )));
 
   if (( _this->NumHolesX < 7 ) && ( _this->NumHolesY < 9 ))
@@ -566,7 +554,7 @@ void DeviceDeviceClass_onError( DeviceDeviceClass _this, XString aErrorMessage )
   DeviceErrorContext context = EwNewObject( DeviceErrorContext, 0 );
 
   DeviceErrorContext_OnSetErrorMessage( context, aErrorMessage );
-  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0024 ), aErrorMessage ));
+  EwTrace( "%s", EwConcatString( EwLoadString( &_Const0023 ), aErrorMessage ));
   CoreSystemEvent_Trigger( &_this->ErrorEvent, ((XObject)context ), 0 );
 }
 

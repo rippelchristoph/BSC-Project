@@ -983,7 +983,7 @@ note group Note2
   attr Bounds = <10,230,310,340>;
 }
 
-$rect <720,60,920,100>
+$rect <720,62,920,102>
 $output false
 const int32 I_TR = 0;
 
@@ -999,11 +999,11 @@ const int32 I_BL = 1;
 
 $rect <720,140,920,180>
 $output false
-const int32 I_Waste = 3;
+const int32 I_Waste = 2;
 
 $rect <720,180,920,220>
 $output false
-const int32 I_Top = 4;
+const int32 I_Top = 3;
 
 $rect <400,190,600,230>
 $output false

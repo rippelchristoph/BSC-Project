@@ -198,7 +198,7 @@ class DeviceClass : Templates::DeviceClass
 
     $endif
 
-    trace "CurrentPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
+    //trace "CurrentPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);
 
     $if !$prototyper
     native(aX,aY,aZ){
