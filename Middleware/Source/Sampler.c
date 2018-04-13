@@ -565,6 +565,16 @@ EnterStateWaistPos (
 {
 	printf("Sampler: Enter State WaistPos\n");
 	PLTGoTo(aSampler->Plotter,
+		-1.0,
+		-1.0,
+		aSampler->Config->WaistPosZMM + 20.0);
+	
+	PLTGoTo(aSampler->Plotter,
+		aSampler->Config->WaistPosXMM,
+		-1.0,
+		-1.0);
+
+	PLTGoTo(aSampler->Plotter,
 		aSampler->Config->WaistPosXMM,
 		-1.0,
 		aSampler->Config->WaistPosZMM);
@@ -587,7 +597,7 @@ StateWaistPos (
 {
 	struct timespec now;
 	timespec_get(&now, TIME_UTC);
-	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
+	if (now.tv_sec - 30 > aSampler->Timestamp->tv_sec) {
 		EnterStateWaist(aSampler);
 	}
 }
@@ -647,11 +657,15 @@ EnterStateOverPos (
 {
 	printf("Sampler: Enter State OverPos\n");
 	DigIOCloseCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
-	
+	PLTGoTo(aSampler->Plotter,
+		-1.0,
+		-1.0,
+		aSampler->Config->MovingPosZMM);
+
 	PLTGoTo(aSampler->Plotter,
 		aSampler->Config->StartPosXMM,
 		-1.0,
-		aSampler->Config->MovingPosZMM);
+		-1.0);
 
 	timespec_get(aSampler->Timestamp, TIME_UTC);
 
@@ -671,7 +685,7 @@ StateOverPos (
 {
 	struct timespec now;
 	timespec_get(&now, TIME_UTC);
-	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
+	if (now.tv_sec - 20 > aSampler->Timestamp->tv_sec) {
 		EnterStateDrawerOpen(aSampler);
 	}
 }
@@ -768,7 +782,7 @@ StateDropPos (
 {
 	struct timespec now;
 	timespec_get(&now, TIME_UTC);
-	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
+	if (now.tv_sec - 20 > aSampler->Timestamp->tv_sec) {
 		EnterStateFlow(aSampler);
 	}
 }
