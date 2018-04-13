@@ -80,7 +80,7 @@ class Application : Core::Root
     if(Device::Device.NewWell==false){
       Outline.ScrollOffset.x=-800;
       native{
-        system("scrot ~/screenshots/%Y-%m-%d-%T-Well.png");
+        //system("scrot ~/screenshots/%Y-%m-%d-%T-Well.png");
       }
 
     }
@@ -4052,7 +4052,7 @@ class Config : Core::Group
   object Application::ConfigPosition ConfigTR
   {
     preset Bounds = <0,0,800,480>;
-    preset onNext = null;
+    preset onNext = onNextTR;
     preset Title = "Bewegen Sie den Schluch über die Well Öffnung rechts hinten";
     preset Help = Application::ConfigTR;
   }
@@ -4061,7 +4061,7 @@ class Config : Core::Group
   object Application::ConfigPosition ConfigBL
   {
     preset Bounds = <0,0,800,480>;
-    preset onNext = null;
+    preset onNext = onNextBL;
     preset Title = "Bewegen Sie den Schluch über die Well Öffnung links vorne";
     preset Help = Application::ConfigBL;
   }
@@ -4071,7 +4071,7 @@ class Config : Core::Group
   {
     preset Bounds = <0,0,800,480>;
     preset Visible = true;
-    preset onNext = null;
+    preset onNext = onNextWaste;
     preset Title = "Bewegen Sie die erste Kanüle über den Abfallbehälter";
     preset Help = Application::ConfigWaste;
   }
@@ -4132,6 +4132,30 @@ class Config : Core::Group
   object Application::Config2Int ConfigNumHoles
   {
     preset Bounds = <0,0,800,480>;
+  }
+
+  $rect <1070,50,1270,90>
+  slot onNextWaste
+  {
+    ConfigBL.XSlider.CurrentValue=ConfigWaste.XSlider.CurrentValue;
+    ConfigBL.YSlider.CurrentValue=ConfigWaste.YSlider.CurrentValue;
+    ConfigBL.ZSlider.CurrentValue=ConfigWaste.ZSlider.CurrentValue;
+  }
+
+  $rect <1070,90,1270,130>
+  slot onNextBL
+  {
+    ConfigTR.XSlider.CurrentValue=ConfigBL.XSlider.CurrentValue;
+    ConfigTR.YSlider.CurrentValue=ConfigBL.YSlider.CurrentValue;
+    ConfigTR.ZSlider.CurrentValue=ConfigBL.ZSlider.CurrentValue;
+  }
+
+  $rect <1070,130,1270,170>
+  slot onNextTR
+  {
+    ConfigTop.XSlider.CurrentValue=ConfigTR.XSlider.CurrentValue;
+    ConfigTop.YSlider.CurrentValue=ConfigTR.YSlider.CurrentValue;
+    ConfigTop.ZSlider.CurrentValue=ConfigTR.ZSlider.CurrentValue;
   }
 }
 

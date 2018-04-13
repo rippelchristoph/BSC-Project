@@ -6130,13 +6130,16 @@ void ApplicationConfig__Init( ApplicationConfig _this, XObject aLink, XHandle aA
   ));
   ApplicationConfigPosition_OnSetHelp( &_this->ConfigTop, EwLoadResource( &ApplicationConfigTop, 
   ResourcesBitmap ));
-  ApplicationConfigPosition_OnSetonNext( &_this->ConfigTR, EwNullSlot );
+  ApplicationConfigPosition_OnSetonNext( &_this->ConfigTR, EwNewSlot( _this, ApplicationConfig_onNextTR 
+  ));
   ApplicationConfigPosition_OnSetHelp( &_this->ConfigTR, EwLoadResource( &ApplicationConfigTR, 
   ResourcesBitmap ));
-  ApplicationConfigPosition_OnSetonNext( &_this->ConfigBL, EwNullSlot );
+  ApplicationConfigPosition_OnSetonNext( &_this->ConfigBL, EwNewSlot( _this, ApplicationConfig_onNextBL 
+  ));
   ApplicationConfigPosition_OnSetHelp( &_this->ConfigBL, EwLoadResource( &ApplicationConfigBL, 
   ResourcesBitmap ));
-  ApplicationConfigPosition_OnSetonNext( &_this->ConfigWaste, EwNullSlot );
+  ApplicationConfigPosition_OnSetonNext( &_this->ConfigWaste, EwNewSlot( _this, 
+  ApplicationConfig_onNextWaste ));
   ApplicationConfigPosition_OnSetHelp( &_this->ConfigWaste, EwLoadResource( &ApplicationConfigWaste, 
   ResourcesBitmap ));
   ApplicationConfigInt_OnSetonNext( &_this->ConfigSampleVolume, EwNullSlot );
@@ -6344,6 +6347,48 @@ void ApplicationConfig_onLastElement( ApplicationConfig _this, XObject sender )
 
   CoreGroup_OnSetEnabled((CoreGroup)&_this->Btn_Ok, 1 );
   CoreGroup_OnSetEnabled((CoreGroup)&_this->Btn_Cancel, 1 );
+}
+
+/* 'C' function for method : 'Application::Config.onNextWaste()' */
+void ApplicationConfig_onNextWaste( ApplicationConfig _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  ApplicationAHorzSlider_OnSetCurrentValue( &_this->ConfigBL.XSlider, _this->ConfigWaste.XSlider.CurrentValue 
+  );
+  ApplicationAHorzSlider_OnSetCurrentValue( &_this->ConfigBL.YSlider, _this->ConfigWaste.YSlider.CurrentValue 
+  );
+  ApplicationAHorzSlider_OnSetCurrentValue( &_this->ConfigBL.ZSlider, _this->ConfigWaste.ZSlider.CurrentValue 
+  );
+}
+
+/* 'C' function for method : 'Application::Config.onNextBL()' */
+void ApplicationConfig_onNextBL( ApplicationConfig _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  ApplicationAHorzSlider_OnSetCurrentValue( &_this->ConfigTR.XSlider, _this->ConfigBL.XSlider.CurrentValue 
+  );
+  ApplicationAHorzSlider_OnSetCurrentValue( &_this->ConfigTR.YSlider, _this->ConfigBL.YSlider.CurrentValue 
+  );
+  ApplicationAHorzSlider_OnSetCurrentValue( &_this->ConfigTR.ZSlider, _this->ConfigBL.ZSlider.CurrentValue 
+  );
+}
+
+/* 'C' function for method : 'Application::Config.onNextTR()' */
+void ApplicationConfig_onNextTR( ApplicationConfig _this, XObject sender )
+{
+  /* Dummy expressions to avoid the 'C' warning 'unused argument'. */
+  EW_UNUSED_ARG( sender );
+
+  ApplicationAHorzSlider_OnSetCurrentValue( &_this->ConfigTop.XSlider, _this->ConfigTR.XSlider.CurrentValue 
+  );
+  ApplicationAHorzSlider_OnSetCurrentValue( &_this->ConfigTop.YSlider, _this->ConfigTR.YSlider.CurrentValue 
+  );
+  ApplicationAHorzSlider_OnSetCurrentValue( &_this->ConfigTop.ZSlider, _this->ConfigTR.ZSlider.CurrentValue 
+  );
 }
 
 /* Variants derived from the class : 'Application::Config' */

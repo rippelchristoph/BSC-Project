@@ -171,6 +171,15 @@ void ApplicationConfig_OnSetControllMenu( ApplicationConfig _this, ApplicationCo
 /* 'C' function for method : 'Application::Config.onLastElement()' */
 void ApplicationConfig_onLastElement( ApplicationConfig _this, XObject sender );
 
+/* 'C' function for method : 'Application::Config.onNextWaste()' */
+void ApplicationConfig_onNextWaste( ApplicationConfig _this, XObject sender );
+
+/* 'C' function for method : 'Application::Config.onNextBL()' */
+void ApplicationConfig_onNextBL( ApplicationConfig _this, XObject sender );
+
+/* 'C' function for method : 'Application::Config.onNextTR()' */
+void ApplicationConfig_onNextTR( ApplicationConfig _this, XObject sender );
+
 #ifdef __cplusplus
   }
 #endif
