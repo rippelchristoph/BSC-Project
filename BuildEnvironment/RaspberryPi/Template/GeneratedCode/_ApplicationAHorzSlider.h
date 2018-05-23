@@ -169,6 +169,10 @@ void ApplicationAHorzSlider_UpdateViewState( ApplicationAHorzSlider _this, XSet
    automatism by a user defined algorithm. */
 void ApplicationAHorzSlider_UpdateLayout( ApplicationAHorzSlider _this, XPoint aSize );
 
+/* 'C' function for method : 'Application::AHorzSlider.OnSetMaxValue()' */
+void ApplicationAHorzSlider_OnSetMaxValue( ApplicationAHorzSlider _this, XInt32 
+  value );
+
 /* 'C' function for method : 'Application::AHorzSlider.OnSetCurrentValue()' */
 void ApplicationAHorzSlider_OnSetCurrentValue( ApplicationAHorzSlider _this, XInt32 
   value );

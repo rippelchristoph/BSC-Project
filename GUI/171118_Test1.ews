@@ -1,12 +1,12 @@
 $version 1.0
 
-attr active = Application::Config;
+attr active = Application::ConfigPosition;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Device::DeviceClass.SetCurrentPosition;
-attr codeSelEnd = <3,5>;
-attr codeSelStart = <3,5>;
+attr codeInspector = Application::ConfigPosition.onChangePos;
+attr codeSelEnd = <0,0>;
+attr codeSelStart = <0,0>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;

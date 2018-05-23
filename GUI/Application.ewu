@@ -4322,6 +4322,7 @@ class ConfigPosition : Core::Group
   object Application::AHorzSlider XSlider
   {
     preset Bounds = <70,230,760,300>;
+    preset MaxValue = 200;
     preset CurrentValue = 0;
     preset OnChange = onChangePos;
   }
@@ -4330,6 +4331,7 @@ class ConfigPosition : Core::Group
   object Application::AHorzSlider YSlider
   {
     preset Bounds = <70,300,760,360>;
+    preset MaxValue = 170;
     preset CurrentValue = 0;
     preset OnChange = onChangePos;
   }
@@ -4346,6 +4348,7 @@ class ConfigPosition : Core::Group
   object Application::AHorzSlider ZSlider
   {
     preset Bounds = <70,360,760,420>;
+    preset MaxValue = 180;
     preset CurrentValue = 0;
     preset OnChange = onChangePos;
   }

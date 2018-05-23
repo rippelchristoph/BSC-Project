@@ -6452,10 +6452,13 @@ void ApplicationConfigPosition__Init( ApplicationConfigPosition _this, XObject a
   ViewsText_OnSetWrapText( &_this->TextTitle, 1 );
   ViewsText_OnSetString( &_this->TextTitle, EwLoadString( &_Const00C2 ));
   CoreRectView__OnSetBounds( &_this->XSlider, _Const00C3 );
+  ApplicationAHorzSlider_OnSetMaxValue( &_this->XSlider, 200 );
   ApplicationAHorzSlider_OnSetCurrentValue( &_this->XSlider, 0 );
   CoreRectView__OnSetBounds( &_this->YSlider, _Const00C4 );
+  ApplicationAHorzSlider_OnSetMaxValue( &_this->YSlider, 170 );
   ApplicationAHorzSlider_OnSetCurrentValue( &_this->YSlider, 0 );
   CoreRectView__OnSetBounds( &_this->ZSlider, _Const00C5 );
+  ApplicationAHorzSlider_OnSetMaxValue( &_this->ZSlider, 180 );
   ApplicationAHorzSlider_OnSetCurrentValue( &_this->ZSlider, 0 );
   CoreRectView__OnSetBounds( &_this->Img_Help, _Const00C6 );
   ViewsImage_OnSetVisible( &_this->Img_Help, 0 );
@@ -19715,6 +19718,17 @@ void ApplicationAHorzSlider_UpdateLayout( ApplicationAHorzSlider _this, XPoint a
   0 ));
   CoreRectView__OnSetBounds( &_this->MoveText, EwSetRectY2( _this->MoveText.Super1.Bounds, 
   _this->Rectangle.Super1.Bounds.Point1.Y ));
+}
+
+/* 'C' function for method : 'Application::AHorzSlider.OnSetMaxValue()' */
+void ApplicationAHorzSlider_OnSetMaxValue( ApplicationAHorzSlider _this, XInt32 
+  value )
+{
+  if ( _this->MaxValue == value )
+    return;
+
+  _this->MaxValue = value;
+  CoreGroup_InvalidateViewState((CoreGroup)_this );
 }
 
 /* 'C' function for method : 'Application::AHorzSlider.OnSetCurrentValue()' */
