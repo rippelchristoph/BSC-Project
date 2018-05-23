@@ -1,10 +1,10 @@
 $version 1.0
 
-attr active = Application::ConfigPosition;
+attr active = Application;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
 attr codeFirstPos = <0,0>;
-attr codeInspector = Application::ConfigPosition.onChangePos;
+attr codeInspector = Application::Config.onBtn_OkCancel;
 attr codeSelEnd = <0,0>;
 attr codeSelStart = <0,0>;
 attr connectInspectors = false;
@@ -57,7 +57,7 @@ view class Application::Config
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = OnGetControllMenu;
+  attr codeInspector = onBtn_OkCancel;
   attr codeSelEnd = <0,0>;
   attr codeSelStart = <0,0>;
   attr enableGrid = true;
@@ -70,9 +70,9 @@ view class Application::ConfigPosition
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = onChangePos;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeInspector = UpdateViewState;
+  attr codeSelEnd = <0,2>;
+  attr codeSelStart = <0,2>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -83,20 +83,7 @@ view class Application::Config2Int
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = onChangeTextEditor;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::ConfigInt
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onChangeTextEditor;
+  attr codeInspector = onBtnNext;
   attr codeSelEnd = <0,0>;
   attr codeSelStart = <0,0>;
   attr enableGrid = true;
@@ -109,7 +96,7 @@ view class Application::ControllMenu
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtn_NewWell;
+  attr codeInspector = onBtn_Test;
   attr codeSelEnd = <0,0>;
   attr codeSelStart = <0,0>;
   attr enableGrid = true;
@@ -121,10 +108,10 @@ view class Application::ControllMenu
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,9>;
-  attr codeInspector = OnSetNewWell;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeFirstPos = <0,4>;
+  attr codeInspector = StopSampling;
+  attr codeSelEnd = <39,11>;
+  attr codeSelStart = <39,11>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -161,9 +148,9 @@ view class Application::SampleController
 {
   attr codeColSelect = false;
   attr codeFirstPos = <0,0>;
-  attr codeInspector = onChangeEditor;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeInspector = onBtn_Stop;
+  attr codeSelEnd = <52,1>;
+  attr codeSelStart = <52,1>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
@@ -181,4 +168,17 @@ view class Application::Tab2
   attr grid = 10;
   attr scrollTo = <-7,-7>;
   attr zoom = 1.75;
+}
+
+view class Application::ConfigInt
+{
+  attr codeColSelect = false;
+  attr codeFirstPos = <0,0>;
+  attr codeInspector = UpdateViewState;
+  attr codeSelEnd = <1,3>;
+  attr codeSelStart = <28,3>;
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
 }

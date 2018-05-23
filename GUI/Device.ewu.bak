@@ -195,7 +195,9 @@ class DeviceClass : Templates::DeviceClass
     // The following code is used during prototyping only. It simply returns
     // a dummy value. No device specific API is used during prototyping.
     $if $prototyper
-
+    aX;
+    aY;
+    aZ;
     $endif
 
     //trace "CurrentPostition: X:"+string(aX)+" Y:"+string(aY)+" Z:"+string(aZ);

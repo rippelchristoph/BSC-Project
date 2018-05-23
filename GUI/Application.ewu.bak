@@ -4044,7 +4044,7 @@ class Config : Core::Group
   {
     preset Bounds = <0,0,800,480>;
     preset onNext = onLastElement;
-    preset Title = "Bewegen sie den Schlauch so hoch, damit er die Kühlvorrichtung nicht berührt";
+    preset Title = "Bewegen sie die Kanülen so hoch, damit er die Kühlvorrichtung nicht berührt";
     preset Help = Application::ConfigTop;
   }
 
@@ -4053,7 +4053,7 @@ class Config : Core::Group
   {
     preset Bounds = <0,0,800,480>;
     preset onNext = onNextTR;
-    preset Title = "Bewegen Sie den Schluch über die Well Öffnung rechts hinten";
+    preset Title = "Bewegen Sie die linke Kanüle über die Well Öffnung rechts hinten";
     preset Help = Application::ConfigTR;
   }
 
@@ -4062,7 +4062,7 @@ class Config : Core::Group
   {
     preset Bounds = <0,0,800,480>;
     preset onNext = onNextBL;
-    preset Title = "Bewegen Sie den Schluch über die Well Öffnung links vorne";
+    preset Title = "Bewegen Sie die linke Kanüle über die Well Öffnung links vorne";
     preset Help = Application::ConfigBL;
   }
 
@@ -4093,6 +4093,7 @@ class Config : Core::Group
     preset MaxValue = 5000;
     preset MinValue = 50;
     preset Unit = "µl";
+    preset StdValue = "800";
   }
 
   $rect <20,20,160,60>
@@ -4104,6 +4105,7 @@ class Config : Core::Group
     preset MaxValue = 50000;
     preset MinValue = 10;
     preset Unit = "µl/s";
+    preset StdValue = "50";
   }
 
   $rect <20,20,160,60>
@@ -4115,6 +4117,7 @@ class Config : Core::Group
     preset MaxValue = 50000;
     preset MinValue = 200;
     preset Unit = "µl";
+    preset StdValue = "3000";
   }
 
   $rect <20,20,160,60>
@@ -4126,6 +4129,7 @@ class Config : Core::Group
     preset MaxValue = 100000;
     preset MinValue = 500;
     preset Unit = "µm";
+    preset StdValue = "1000";
   }
 
   $rect <20,20,160,60>
@@ -4200,7 +4204,9 @@ class ConfigPosition : Core::Group
   {
     // Always invoke the inherited method.
     super( aState );
-
+    XSlider.CurrentValue=stdX;
+    YSlider.CurrentValue=stdY;
+    ZSlider.CurrentValue=stdZ;
     /*
 
       HINT 1:
@@ -4322,6 +4328,7 @@ class ConfigPosition : Core::Group
   object Application::AHorzSlider XSlider
   {
     preset Bounds = <70,230,760,300>;
+    preset MaxValue = 190;
     preset CurrentValue = 0;
     preset OnChange = onChangePos;
   }
@@ -4330,7 +4337,7 @@ class ConfigPosition : Core::Group
   object Application::AHorzSlider YSlider
   {
     preset Bounds = <70,300,760,360>;
-    preset MaxValue = 170;
+    preset MaxValue = 190;
     preset CurrentValue = 0;
     preset OnChange = onChangePos;
   }
@@ -4485,6 +4492,79 @@ class ConfigPosition : Core::Group
     }else{
       Img_Help.Visible=false;
     }
+  }
+
+  $rect <1050,0,1250,40>
+  property int32 stdX = 0;
+
+  $rect <1050,40,1250,80>
+  onset stdX
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure stdX == value )
+      return;
+    XSlider.CurrentValue=stdX;
+
+    // Remember the property's new value.
+    pure stdX = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <1050,80,1250,120>
+  onget stdX
+  {
+    return pure stdX;
+  }
+
+  $rect <1050,130,1250,170>
+  property int32 stdY = 0;
+
+  $rect <1050,170,1250,210>
+  onset stdY
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure stdY == value )
+      return;
+    YSlider.CurrentValue=stdY;
+    // Remember the property's new value.
+    pure stdY = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <1050,210,1250,250>
+  onget stdY
+  {
+    return pure stdY;
+  }
+
+  $rect <1040,260,1240,300>
+  property int32 stdZ = 0;
+
+  $rect <1040,300,1240,340>
+  onset stdZ
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure stdZ == value )
+      return;
+    ZSlider.CurrentValue=stdZ;
+    // Remember the property's new value.
+    pure stdZ = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <1040,340,1240,380>
+  onget stdZ
+  {
+    return pure stdZ;
   }
 }
 
@@ -6663,6 +6743,7 @@ class ConfigInt : Core::Group
     // Always invoke the inherited method.
     super( aState );
     TextTitle.String=Title + " (ein Wert zwischen "+string(MinValue)+Unit+" und "+string(MaxValue)+Unit+")";
+     TextEditor.String=StdValue;
     /*
 
       HINT 1:
@@ -6766,7 +6847,7 @@ class ConfigInt : Core::Group
   object Application::AActionButton Btn_Next
   {
     preset Bounds = <670,439,790,469>;
-    preset Enabled = false;
+    preset Enabled = true;
     preset OnAction = onBtnNext;
     preset Caption = "Next";
   }
@@ -6946,6 +7027,31 @@ class ConfigInt : Core::Group
     preset Width = 2;
     preset Color = #000000FF;
   }
+
+  $rect <1050,270,1250,310>
+  property string StdValue = "";
+
+  $rect <1050,310,1250,350>
+  onset StdValue
+  {
+    // The value doesn't change - nothing to do.
+    if ( pure StdValue == value )
+      return;
+     TextEditor.String=StdValue;
+
+    // Remember the property's new value.
+    pure StdValue = value;
+
+    // TO DO:
+    // 
+    // Now you can handle the alternation of the property.
+  }
+
+  $rect <1050,350,1250,390>
+  onget StdValue
+  {
+    return pure StdValue;
+  }
 }
 
 $rect <150,590,350,630>
@@ -7103,7 +7209,7 @@ class Config2Int : Core::Group
   {
     preset Bounds = <60,10,690,120>;
     preset WrapText = true;
-    preset String = "Bitte geben sie die Anzahl der Wellöffnungen in X und Y Richtung an (Wellübersicht ist nur bei X<=6 und Y<=8 verfügbar)";
+    preset String = "Bitte geben sie die Anzahl der Wells in X und Y Richtung an (Wellübersicht ist nur bei X<=6 und Y<=8 verfügbar)";
     preset Font = Flat::FontL;
   }
 
