@@ -94,6 +94,7 @@ EW_DEFINE_FIELDS( ApplicationConfigInt, CoreGroup )
   EW_PROPERTY( MinValue,        XInt32 )
   EW_PROPERTY( Unit,            XString )
   EW_OBJECT  ( Line,            ViewsLine )
+  EW_PROPERTY( StdValue,        XString )
 EW_END_OF_FIELDS( ApplicationConfigInt )
 
 /* Virtual Method Table (VMT) for the class : 'Application::ConfigInt' */
@@ -173,6 +174,9 @@ void ApplicationConfigInt_OnSetMinValue( ApplicationConfigInt _this, XInt32 valu
 
 /* 'C' function for method : 'Application::ConfigInt.OnSetUnit()' */
 void ApplicationConfigInt_OnSetUnit( ApplicationConfigInt _this, XString value );
+
+/* 'C' function for method : 'Application::ConfigInt.OnSetStdValue()' */
+void ApplicationConfigInt_OnSetStdValue( ApplicationConfigInt _this, XString value );
 
 #ifdef __cplusplus
   }

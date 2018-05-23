@@ -3,10 +3,10 @@ $version 1.0
 attr active = Application;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,0>;
-attr codeInspector = Application::Config.onBtn_OkCancel;
-attr codeSelEnd = <0,0>;
-attr codeSelStart = <0,0>;
+attr codeFirstPos = <0,4>;
+attr codeInspector = Device::DeviceClass.StopSampling;
+attr codeSelEnd = <26,11>;
+attr codeSelStart = <26,11>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
