@@ -2214,13 +2214,19 @@ void ApplicationSampleController_onBtn_Start( ApplicationSampleController _this,
   EW_UNUSED_ARG( sender );
 
   if ( EwStringParseInt32( ApplicationATextEditor_OnGetString( &_this->TextEditor 
-      ), 0, 10 ) > 0 )
+      ), 0, 10 ) >= 0 )
   {
     ApplicationAHorzBar_OnSetMaxValue( &_this->HorzBar, EwStringParseInt32( ApplicationATextEditor_OnGetString( 
     &_this->TextEditor ), 0, 10 ));
     ApplicationAHorzBar_OnSetCurrentValue( &_this->HorzBar, EwStringParseInt32( 
     ApplicationATextEditor_OnGetString( &_this->TextEditor ), 0, 10 ));
-    ApplicationSampleController_OnSetActive( _this, 1 );
+
+    if ( EwStringParseInt32( ApplicationATextEditor_OnGetString( &_this->TextEditor 
+        ), 0, 10 ) > 0 )
+    {
+      ApplicationSampleController_OnSetActive( _this, 1 );
+    }
+
     DeviceDeviceClass_StartSampling( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
     ), EwStringParseInt32( ApplicationATextEditor_OnGetString( &_this->TextEditor 
     ), 1, 10 ), EwStringParseInt32( EwNewStringChar( _this->CircuitNumber, 1 ), 
@@ -2281,7 +2287,7 @@ void ApplicationSampleController_onChangeEditor( ApplicationSampleController _th
   EW_UNUSED_ARG( sender );
 
   if ((( EwStringParseInt32( ApplicationATextEditor_OnGetString( &_this->TextEditor 
-      ), 0, 10 ) > 0 ) && ( EwStringParseInt32( ApplicationATextEditor_OnGetString( 
+      ), 0, 10 ) >= 0 ) && ( EwStringParseInt32( ApplicationATextEditor_OnGetString( 
       &_this->TextEditor ), 0, 10 ) < 1000 )) && ( _this->Active == 0 ))
   {
     CoreGroup_OnSetEnabled((CoreGroup)&_this->BtnStart, 1 );

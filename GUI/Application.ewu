@@ -1751,10 +1751,12 @@ class SampleController : Core::Group
   $rect <20,170,220,210>
   slot onBtn_Start
   {
-    if(TextEditor.String.parse_int32(0)>0){ //User has to enter a Integer > 0
+    if(TextEditor.String.parse_int32(0)>=0){ //User has to enter a Integer > 0
       HorzBar.MaxValue=TextEditor.String.parse_int32( 0 );
       HorzBar.CurrentValue=TextEditor.String.parse_int32( 0 );
-      Active=true;
+      if(TextEditor.String.parse_int32(0)>0){
+        Active=true;
+      }
       Device::Device.StartSampling( TextEditor.String.parse_int32(1), string(CircuitNumber).parse_int32(0) -1);
     }
 
@@ -1869,7 +1871,7 @@ class SampleController : Core::Group
   $rect <20,210,220,250>
   slot onChangeEditor
   {
-    if((TextEditor.String.parse_int32(0)>0)&&(TextEditor.String.parse_int32(0)<1000)&&(Active==false)){
+    if((TextEditor.String.parse_int32(0)>=0)&&(TextEditor.String.parse_int32(0)<1000)&&(Active==false)){
       BtnStart.Enabled=true;
     } else{
       BtnStart.Enabled=false;

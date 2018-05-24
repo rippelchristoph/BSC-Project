@@ -1869,7 +1869,7 @@ class SampleController : Core::Group
   $rect <20,210,220,250>
   slot onChangeEditor
   {
-    if((TextEditor.String.parse_int32(0)>0)&&(TextEditor.String.parse_int32(0)<1000)&&(Active==false)){
+    if((TextEditor.String.parse_int32(0)>=0)&&(TextEditor.String.parse_int32(0)<1000)&&(Active==false)){
       BtnStart.Enabled=true;
     } else{
       BtnStart.Enabled=false;
@@ -4072,7 +4072,7 @@ class Config : Core::Group
     preset Bounds = <0,0,800,480>;
     preset Visible = true;
     preset onNext = onNextWaste;
-    preset Title = "Bewegen Sie die erste Kanüle über den Abfallbehälter";
+    preset Title = "Bewegen Sie die linke Kanüle über den Abfallbehälter";
     preset Help = Application::ConfigWaste;
   }
 
@@ -4125,7 +4125,7 @@ class Config : Core::Group
   {
     preset Bounds = <0,0,800,480>;
     preset onNext = null;
-    preset Title = "Geben Sie den Abstand zwischen den Nadeln ein";
+    preset Title = "Geben Sie den Abstand zwischen den Kanülen ein";
     preset MaxValue = 100000;
     preset MinValue = 500;
     preset Unit = "µm";

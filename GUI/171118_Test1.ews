@@ -1,11 +1,12 @@
 $version 1.0
 
+attr active = Application::SampleController;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,2>;
-attr codeInspector = Application::Config.onBtn_OkCancel;
-attr codeSelEnd = <112,4>;
-attr codeSelStart = <112,4>;
+attr codeFirstPos = <0,0>;
+attr codeInspector = Application::SampleController.onBtn_Start;
+attr codeSelEnd = <4,4>;
+attr codeSelStart = <4,4>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -29,6 +30,22 @@ attr search_WholeWords = false;
 attr search_WildCards = false;
 
 view Project
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view unit Application
+{
+  attr enableGrid = true;
+  attr grid = 10;
+  attr scrollTo = <-7,-7>;
+  attr zoom = 1.0;
+}
+
+view class Application::SampleController
 {
   attr enableGrid = true;
   attr grid = 10;
