@@ -79,7 +79,7 @@ class DeviceClass : Templates::DeviceClass
     if(aCircuitNumber<0||aCircuitNumber>5){
       trace "ERROR: Wrong CircuitNumber"+string(aCircuitNumber);
       return;
-    }if(aIntervall<=0){
+    }if(aIntervall<0){
       trace "ERROR: Wrong Intervall"+string(aIntervall);
       return;
     }

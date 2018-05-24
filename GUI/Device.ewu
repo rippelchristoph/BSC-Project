@@ -988,9 +988,9 @@ note group Note2
   attr Bounds = <10,230,310,340>;
 }
 
-$rect <720,62,920,102>
+$rect <720,100,920,140>
 $output false
-const int32 I_TR = 0;
+const int32 I_TR = 1;
 
 // SetPositionIndex
 note group Note3
@@ -998,9 +998,9 @@ note group Note3
   attr Bounds = <660,20,960,240>;
 }
 
-$rect <720,100,920,140>
+$rect <720,60,920,100>
 $output false
-const int32 I_BL = 1;
+const int32 I_BL = 0;
 
 $rect <720,140,920,180>
 $output false

@@ -6319,10 +6319,10 @@ void ApplicationConfig_onBtn_OkCancel( ApplicationConfig _this, XObject sender )
     ), 2, _this->ConfigWaste.XSlider.CurrentValue, _this->ConfigWaste.YSlider.CurrentValue, 
     _this->ConfigWaste.ZSlider.CurrentValue );
     DeviceDeviceClass_SetPosition( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
-    ), 1, _this->ConfigBL.XSlider.CurrentValue, _this->ConfigBL.YSlider.CurrentValue, 
+    ), 0, _this->ConfigBL.XSlider.CurrentValue, _this->ConfigBL.YSlider.CurrentValue, 
     _this->ConfigBL.ZSlider.CurrentValue );
     DeviceDeviceClass_SetPosition( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
-    ), 0, _this->ConfigTR.XSlider.CurrentValue, _this->ConfigTR.YSlider.CurrentValue, 
+    ), 1, _this->ConfigTR.XSlider.CurrentValue, _this->ConfigTR.YSlider.CurrentValue, 
     _this->ConfigTR.ZSlider.CurrentValue );
     DeviceDeviceClass_SetPosition( EwGetAutoObject( &DeviceDevice, DeviceDeviceClass 
     ), 3, _this->ConfigTop.XSlider.CurrentValue, _this->ConfigTop.YSlider.CurrentValue, 
