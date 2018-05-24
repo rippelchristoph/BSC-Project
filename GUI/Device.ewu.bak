@@ -168,8 +168,9 @@ class DeviceClass : Templates::DeviceClass
       trace "ERROR: Wrong CircuitNumber:"+string(aCircuitNumber);
       return;
     }
-
+    native(aCircuitNumber){
     BSCRemoveOrder(aCircuitNumber);
+    }
      
     $endif
   }

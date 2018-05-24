@@ -210,7 +210,7 @@ void DeviceDeviceClass_StartSampling( DeviceDeviceClass _this, XInt32 aIntervall
     return;
   }
 
-  if ( aIntervall <= 0 )
+  if ( aIntervall < 0 )
   {
     EwTrace( "%s", EwConcatString( EwLoadString( &_Const0006 ), EwNewStringInt( 
       aIntervall, 0, 10 )));
