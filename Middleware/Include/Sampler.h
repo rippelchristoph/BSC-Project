@@ -16,6 +16,7 @@
  *   SamplerAddToQueue
  *   ProcessSampler
  *   SamplerNewWell
+ *   SamplerNewOrder
  *   SamplerStartConfig
  *   SamplerEndConfig
  *   SamplerConfigSetPlotter
@@ -152,12 +153,12 @@ SamplerNewWell (
 
 
 /****************************************************************************
-* FUNCTION: SamplerNewOrder
-****************************************************************************/
+ * FUNCTION: SamplerNewOrder
+ ****************************************************************************/
 
 PUBLIC void
-SamplerNewOrder(
-	TSampler * aSampler);
+SamplerNewOrder (
+  TSampler * aSampler );
 
 
 /****************************************************************************
