@@ -303,8 +303,10 @@ SamplerAddToQueue (
   int        aOrigin )
 {
 	int* dynInt = malloc(sizeof(int));
-
+	*dynInt = aOrigin;
 	ListAdd(aSampler->Queue, dynInt);
+
+	printf("Added to Sampler Queue: CircuitNumber=%i\n", *((int*)ListGetByIndex(aSampler->Queue, 0)));
 }
 
 
@@ -567,7 +569,7 @@ EnterStateWaistPos (
 	PLTGoTo(aSampler->Plotter,
 		-1.0,
 		-1.0,
-		aSampler->Config->WaistPosZMM + 20.0);
+		aSampler->Config->MovingPosZMM);
 	
 	PLTGoTo(aSampler->Plotter,
 		aSampler->Config->WaistPosXMM,
@@ -588,8 +590,8 @@ EnterStateWaistPos (
  * FUNCTION: StateWaistPos
  *
  *   DESCRIPTION:
- *     Function is called periodically when the State is 'WaistPos' PARAMETER:
- *     aSampler - The Address of the Sampler
+ *     Function is called periodically when the State is 'WaistPos'
+ *     PARAMETER: aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
 StateWaistPos (
@@ -662,11 +664,6 @@ EnterStateOverPos (
 		-1.0,
 		aSampler->Config->MovingPosZMM);
 
-	PLTGoTo(aSampler->Plotter,
-		aSampler->Config->StartPosXMM,
-		-1.0,
-		-1.0);
-
 	timespec_get(aSampler->Timestamp, TIME_UTC);
 
 	aSampler->State = OverPos;
@@ -692,27 +689,25 @@ StateOverPos (
 /****************************************************************************
  * FUNCTION: EnterStateDrawerOpen
  *
- *   DESCRIPTION:
- *     Function is called when beginning the State 'DrawerOpen' PARAMETER:
- *     aSampler - The Address of the Sampler
+ * DESCRIPTION:
+ *   Function is called when beginning the State 'DrawerOpen'
+ * PARAMETER:
+ *   aSampler - The Address of the Sampler
  ****************************************************************************/
 PRIVATE void
 EnterStateDrawerOpen (
   TSampler * aSampler )
 {
-	printf("Sampler: Enter State DraweOpen\n");
+	printf("Sampler: Enter State DrawerOpen\n");
 	TBSCConfig* c = aSampler->Config;
-	double XPos = 0, YPos = 0;
-	XPos =	c->StartPosXMM + (double) GetNextHoleX(aSampler) * 
-		((c->EndPosXMM - c->StartPosXMM) / ((double)c->NumHolesX))
-		+ c->NeedleGapMM * *((int*)ListGetByIndex(aSampler->Queue, 0));
-
+	double YPos = 0;
+	
 	YPos = c->StartPosYMM + (double)GetNextHoleY(aSampler) *
-		((c->EndPosYMM - c->StartPosYMM) / ((double)c->NumHolesY));
+		((c->EndPosYMM - c->StartPosYMM) / ((double)(c->NumHolesY-1)));
 
 
 	PLTGoTo(aSampler->Plotter,
-		XPos,
+		-1.0,
 		YPos,
 		-1.0);
 
@@ -754,10 +749,22 @@ EnterStateDropPos (
 	printf("Sampler: Enter State DropPos\n");
 	TBSCConfig* c = aSampler->Config;
 	double ZPos = 0;
+	double XPos = 0;
+	int circuitNumber = *((int*)ListGetByIndex(aSampler->Queue, 0));
+
+	XPos = c->StartPosXMM + (double)GetNextHoleX(aSampler) *
+		((c->EndPosXMM - c->StartPosXMM) / ((double)(c->NumHolesX-1)))
+		- c->NeedleGapMM * circuitNumber;
+
+	PLTGoTo(aSampler->Plotter,
+		XPos,
+		-1.0,
+		-1.0);
+
 
 	ZPos = c->StartPosZMM
-		+ GetNextHoleX(aSampler) * (c->EndPosZMM - c->StartPosZMM) / (double)c->NumHolesX	//X Correction
-		+ GetNextHoleY(aSampler) * (c->EndPosZMM - c->StartPosZMM) / (double)c->NumHolesY;	//Y Correction
+		+ (double) GetNextHoleX(aSampler) * (c->EndPosZMM - c->StartPosZMM) / (double)c->NumHolesX	//X Correction
+		+ (double) GetNextHoleY(aSampler) * (c->EndPosZMM - c->StartPosZMM) / (double)c->NumHolesY;	//Y Correction
 
 	PLTGoTo(aSampler->Plotter,
 		-1.0,
@@ -876,10 +883,12 @@ StateBackOut (
 		printf("x=%i, y=%i\n", x, y);
 		//Remove executed sample from Queue
 		retPtr = ListRemoveByIndex(aSampler->Queue, 0);
-		printf("CircuitNumber=%i\n", *retPtr);
+		//Add Sample to Log File
 		LoggerAddSample(aSampler->Logger, *retPtr, x, y);
-		printf("Log added\n");
 		retSmpl = newSample(time(NULL), x, y, *retPtr);
+
+		aSampler->Well[x][y].Status =  FULL;
+		aSampler->Well[x][y].Origin = *retPtr;
 
 		free(retPtr);
 		EnterStateDrawerClose(aSampler);
@@ -902,8 +911,10 @@ EnterStateDrawerClose (
   TSampler * aSampler )
 {
 	printf("Sampler: Enter State DrawerClose\n");
-	PLTHomeAxis(aSampler->Plotter);
-	//Order: YXZ
+	
+	PLTHomeXAxis(aSampler->Plotter);
+	PLTHomeYAxis(aSampler->Plotter);
+	PLTHomeZAxis(aSampler->Plotter);
 
 	timespec_get(aSampler->Timestamp, TIME_UTC);
 	aSampler->State = DrawerClose;

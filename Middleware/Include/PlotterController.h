@@ -15,6 +15,8 @@
  *   PLTSendCommand
  *   PLTHomeAxis
  *   PLTHomeYAxis
+ *   PLTHomeXAxis
+ *   PLTHomeZAxis
  *   PLTGoTo
  ****************************************************************************/
 
@@ -116,6 +118,24 @@ PLTHomeAxis (
 
 PUBLIC void
 PLTHomeYAxis (
+  TPlotter * aPlotter );
+
+
+/****************************************************************************
+ * FUNCTION: PLTHomeXAxis
+ ****************************************************************************/
+
+PUBLIC void
+PLTHomeXAxis (
+  TPlotter * aPlotter );
+
+
+/****************************************************************************
+ * FUNCTION: PLTHomeZAxis
+ ****************************************************************************/
+
+PUBLIC void
+PLTHomeZAxis (
   TPlotter * aPlotter );
 
 

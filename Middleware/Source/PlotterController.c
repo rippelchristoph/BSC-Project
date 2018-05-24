@@ -15,6 +15,8 @@
  *   PLTSendCommand
  *   PLTHomeAxis
  *   PLTHomeYAxis
+ *   PLTHomeXAxis
+ *   PLTHomeZAxis
  *   PLTGoTo
  ****************************************************************************/
 
@@ -164,7 +166,24 @@ PLTHomeYAxis (
 {
 	PLTSendCommand(aPlotter, HOMEY);
 }
-
+/****************************************************************************
+ * FUNCTION: PLTHomeXAxis
+ ****************************************************************************/
+PUBLIC void
+PLTHomeXAxis (
+  TPlotter * aPlotter )
+{
+	PLTSendCommand(aPlotter, HOMEX);
+}
+/****************************************************************************
+ * FUNCTION: PLTHomeZAxis
+ ****************************************************************************/
+PUBLIC void
+PLTHomeZAxis (
+  TPlotter * aPlotter )
+{
+	PLTSendCommand(aPlotter, HOMEZ);
+}
 /****************************************************************************
  * FUNCTION: PLTGoTo
  ****************************************************************************/
