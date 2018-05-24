@@ -507,6 +507,7 @@ ProcessBSCController (
 	//If the Sampler is finished with Collecting a Sample it returns a "TSample" Type
 	TSample* retPtr = NULL;
 	if ((retPtr = ProcessSampler(aBSCController->Sampler)) != NULL) {
+		printf("retPtr = %p\n", retPtr);
 		struct tm * formattime = localtime(&(retPtr->Time));
 		DeviceDeviceClass_onSampleCollected(aBSCController->EwDeviceObject, 
 			retPtr->WellPosX,
@@ -571,7 +572,10 @@ BSCAddOrder (
 	if (aInterval <= 0) {
 		SamplerAddToQueue(ControllerObj->Sampler, aOrigin);
 	}
-	OrderControllerAddOrder(ControllerObj->Orders, (time_t)(aInterval * 60), aOrigin);
+	else {
+		OrderControllerAddOrder(ControllerObj->Orders, (time_t)(aInterval * 60), aOrigin);
+	}
+	
 }
 
 /****************************************************************************

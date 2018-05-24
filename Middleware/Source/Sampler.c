@@ -797,7 +797,7 @@ PRIVATE void
 EnterStateFlow (
   TSampler * aSampler )
 {
-	printf("Sampler: Enter State DraweOpen\n");
+	printf("Sampler: Enter State Flow\n");
 	DigIOOpenCircuit(*((int*)ListGetByIndex(aSampler->Queue, 0)));
 	timespec_get(aSampler->Timestamp, TIME_UTC);
 	aSampler->State = Flow;
@@ -849,6 +849,7 @@ EnterStateBackOut (
 
 	timespec_get(aSampler->Timestamp, TIME_UTC);
 	aSampler->State = BackOut;
+	printf("Enter Function Ended\n");
 }
 
 /****************************************************************************
@@ -864,19 +865,26 @@ StateBackOut (
 {
 	struct timespec now;
 	int* retPtr;
+	TSample* retSmpl;
 	timespec_get(&now, TIME_UTC);
+	
 	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
-		TSample* retSmpl;
+		printf("Before Times Up\n");
+		printf("Times up.\n");
 		int x = GetNextHoleX(aSampler);
 		int y = GetNextHoleY(aSampler);
+		printf("x=%i, y=%i\n", x, y);
 		//Remove executed sample from Queue
 		retPtr = ListRemoveByIndex(aSampler->Queue, 0);
-		
+		printf("CircuitNumber=%i\n", *retPtr);
 		LoggerAddSample(aSampler->Logger, *retPtr, x, y);
+		printf("Log added\n");
 		retSmpl = newSample(time(NULL), x, y, *retPtr);
 
 		free(retPtr);
 		EnterStateDrawerClose(aSampler);
+		printf("Returned Sample: x=%i, y=%i, CircuitNumber=%i, time=%i", retSmpl->WellPosX, retSmpl->WellPosY,
+			retSmpl->aCiruitNumber, retSmpl->Time - time(NULL));
 		return retSmpl;
 	}
 

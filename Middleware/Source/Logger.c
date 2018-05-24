@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <time.h>
+#include "Logger.h"
 
 
 #ifndef LOGGER_H
@@ -68,7 +69,7 @@ newLogger (
 	}
 
 	retPtr->WorkingDirectory = aWorkingDirectory;
-
+	LoggerNewWell(retPtr);
 	return retPtr;
 }
 
@@ -168,6 +169,7 @@ LoggerAddSample (
 		formatTime->tm_hour,
 		formatTime->tm_min);
 
+	printf("Line = <%s>\n", line);
 	fputs(line, filePointer);
 	fclose(filePointer);
 	return EFALSE;
