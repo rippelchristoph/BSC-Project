@@ -4044,7 +4044,7 @@ class Config : Core::Group
   {
     preset Bounds = <0,0,800,480>;
     preset onNext = onLastElement;
-    preset Title = "Bewegen sie die Kanülen so hoch, damit er die Kühlvorrichtung nicht berührt";
+    preset Title = "Bewegen sie die Kanülen so hoch, damit sie die Kühlvorrichtung nicht berühren";
     preset Help = Application::ConfigTop;
   }
 
@@ -4072,7 +4072,7 @@ class Config : Core::Group
     preset Bounds = <0,0,800,480>;
     preset Visible = true;
     preset onNext = onNextWaste;
-    preset Title = "Bewegen Sie die erste Kanüle über den Abfallbehälter";
+    preset Title = "Bewegen Sie die linke Kanüle über den Abfallbehälter";
     preset Help = Application::ConfigWaste;
   }
 
@@ -4105,7 +4105,7 @@ class Config : Core::Group
     preset MaxValue = 50000;
     preset MinValue = 10;
     preset Unit = "µl/s";
-    preset StdValue = "50";
+    preset StdValue = "200";
   }
 
   $rect <20,20,160,60>
@@ -4125,7 +4125,7 @@ class Config : Core::Group
   {
     preset Bounds = <0,0,800,480>;
     preset onNext = null;
-    preset Title = "Geben Sie den Abstand zwischen den Nadeln ein";
+    preset Title = "Geben Sie den Abstand zwischen den Kanülen ein";
     preset MaxValue = 100000;
     preset MinValue = 500;
     preset Unit = "µm";

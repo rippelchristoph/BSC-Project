@@ -1,12 +1,11 @@
 $version 1.0
 
-attr active = Application;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,4>;
-attr codeInspector = Device::DeviceClass.StopSampling;
-attr codeSelEnd = <26,11>;
-attr codeSelStart = <26,11>;
+attr codeFirstPos = <0,2>;
+attr codeInspector = Application::Config.onBtn_OkCancel;
+attr codeSelEnd = <112,4>;
+attr codeSelStart = <112,4>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -31,152 +30,6 @@ attr search_WildCards = false;
 
 view Project
 {
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view unit Application
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view unit Device
-{
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Config
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtn_OkCancel;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::ConfigPosition
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = UpdateViewState;
-  attr codeSelEnd = <0,2>;
-  attr codeSelStart = <0,2>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Config2Int
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtnNext;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::ControllMenu
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtn_Test;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Device::DeviceClass
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,4>;
-  attr codeInspector = StopSampling;
-  attr codeSelEnd = <39,11>;
-  attr codeSelStart = <39,11>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Application
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onNewWell;
-  attr codeSelEnd = <6,3>;
-  attr codeSelStart = <6,3>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::NewWellDialoge
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onNewWell;
-  attr codeSelEnd = <14,3>;
-  attr codeSelStart = <14,3>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::SampleController
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = onBtn_Stop;
-  attr codeSelEnd = <52,1>;
-  attr codeSelStart = <52,1>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
-}
-
-view class Application::Tab2
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = Init;
-  attr codeSelEnd = <73,2>;
-  attr codeSelStart = <73,2>;
-  attr enableGrid = true;
-  attr grid = 10;
-  attr scrollTo = <-7,-7>;
-  attr zoom = 1.75;
-}
-
-view class Application::ConfigInt
-{
-  attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = UpdateViewState;
-  attr codeSelEnd = <1,3>;
-  attr codeSelStart = <28,3>;
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
