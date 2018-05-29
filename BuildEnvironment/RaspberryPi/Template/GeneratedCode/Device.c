@@ -186,6 +186,16 @@ void DeviceDeviceClass_OnSetNewWell( DeviceDeviceClass _this, XBool value )
     ), 0 );
 
   if ( _this->NewWell == 1 )
+  {
+    BSCNewWellStart();
+  }
+
+  if ( _this->NewWell == 0 )
+  {
+    BSCNewWellStop();
+  }
+
+  if ( _this->NewWell == 1 )
     EwTrace( "%s", EwLoadString( &_Const0001 ));
 
   if ( _this->NewWell == 0 )

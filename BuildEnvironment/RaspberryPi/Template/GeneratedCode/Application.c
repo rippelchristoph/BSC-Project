@@ -5931,6 +5931,9 @@ void ApplicationTemperature__Init( ApplicationTemperature _this, XObject aLink, 
   ));
   _this->PropertyObserver.OnEvent = EwNewSlot( _this, ApplicationTemperature_onEvent 
   );
+  CorePropertyObserver_OnSetOutlet( &_this->PropertyObserver, EwNewRef( EwGetAutoObject( 
+  &DeviceDevice, DeviceDeviceClass ), DeviceDeviceClass_OnGetTemperature, DeviceDeviceClass_OnSetTemperature 
+  ));
 }
 
 /* Re-Initializer for the class 'Application::Temperature' */

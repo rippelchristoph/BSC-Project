@@ -3739,6 +3739,7 @@ class Temperature : Core::Group
   object Core::PropertyObserver PropertyObserver
   {
     preset OnEvent = onEvent;
+    preset Outlet = ^Device::Device.Temperature;
   }
 
   // This slot method is executed when the associated property observer 'PropertyObserver' \
