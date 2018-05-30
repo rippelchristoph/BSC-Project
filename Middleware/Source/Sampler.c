@@ -15,7 +15,8 @@
  *   destroySampler
  *   SamplerAddToQueue
  *   ProcessSampler
- *   SamplerNewWell
+ *   SamplerNewWellStart
+ *   SamplerNewWellStop
  *   SamplerNewOrder
  *   SamplerStartConfig
  *   SamplerEndConfig
@@ -56,6 +57,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "DigIO.h"
+#include "Sampler.h"
 
 
 
@@ -370,16 +372,35 @@ ProcessSampler (
 }
 
 /****************************************************************************
- * FUNCTION: SamplerNewWell
+ * FUNCTION: SamplerNewWellStart
  ****************************************************************************/
 PUBLIC void
-SamplerNewWell (
+SamplerNewWellStart (
   TSampler * aSampler )
 {
-	PLTGoTo(aSampler->Plotter, -1, -1, aSampler->Config->MovingPosZMM);
-	PLTGoTo(aSampler->Plotter, -1, 90, -1);
 	DigIOSetDefault();
+	PLTGoTo(aSampler->Plotter, -1, -1, aSampler->Config->MovingPosZMM);
+	PLTGoTo(aSampler->Plotter, 0.1, -1, -1);
+	PLTGoTo(aSampler->Plotter, -1, aSampler->Config->EndPosYMM + 20, -1);
 	aSampler->State = NewWell;
+	LoggerNewWell(aSampler->Logger);
+
+	int i, j;
+	for (i = 0; i < aSampler->Config->NumHolesX; i++) {
+		for (j = 0; j < aSampler->Config->NumHolesY; i++) {
+			aSampler->Well[i][j].Status = EMPTY;
+		}
+	}
+}
+
+/****************************************************************************
+ * FUNCTION: SamplerNewWellStop
+ ****************************************************************************/
+PUBLIC void
+SamplerNewWellStop (
+  TSampler * aSampler )
+{
+	EnterStateWait(aSampler);
 }
 
 /****************************************************************************
@@ -437,8 +458,9 @@ SamplerEndConfig (
 		-1.0,
 		aSampler->Config->MovingPosZMM);
 
+	PLTHomeXAxis(aSampler->Plotter);
 	PLTHomeYAxis(aSampler->Plotter);
-	PLTHomeAxis(aSampler->Plotter);
+	PLTHomeZAxis(aSampler->Plotter);
 
 	EnterStateWait(aSampler);
 }
@@ -495,6 +517,7 @@ PRIVATE void
 EnterStateWait (
   TSampler * aSampler )
 {
+	PLTHomeAxis(aSampler->Plotter);
 	printf("Sampler: Enter State Wait\n");
 	aSampler->State = Wait;
 }
@@ -856,7 +879,6 @@ EnterStateBackOut (
 
 	timespec_get(aSampler->Timestamp, TIME_UTC);
 	aSampler->State = BackOut;
-	printf("Enter Function Ended\n");
 }
 
 /****************************************************************************
@@ -876,11 +898,8 @@ StateBackOut (
 	timespec_get(&now, TIME_UTC);
 	
 	if (now.tv_sec - 10 > aSampler->Timestamp->tv_sec) {
-		printf("Before Times Up\n");
-		printf("Times up.\n");
 		int x = GetNextHoleX(aSampler);
 		int y = GetNextHoleY(aSampler);
-		printf("x=%i, y=%i\n", x, y);
 		//Remove executed sample from Queue
 		retPtr = ListRemoveByIndex(aSampler->Queue, 0);
 		//Add Sample to Log File
@@ -893,7 +912,7 @@ StateBackOut (
 		free(retPtr);
 		EnterStateDrawerClose(aSampler);
 		printf("Returned Sample: x=%i, y=%i, CircuitNumber=%i, time=%i", retSmpl->WellPosX, retSmpl->WellPosY,
-			retSmpl->aCiruitNumber, retSmpl->Time - time(NULL));
+			retSmpl->aCiruitNumber, (int) (retSmpl->Time - time(NULL)));
 		return retSmpl;
 	}
 
@@ -948,7 +967,7 @@ PRIVATE void
 EnterStateERROR (
   TSampler * aSampler )
 {
-
+	
 }
 /****************************************************************************
  * FUNCTION: StateERROR

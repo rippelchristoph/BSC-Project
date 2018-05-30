@@ -15,7 +15,8 @@
  *   destroySampler
  *   SamplerAddToQueue
  *   ProcessSampler
- *   SamplerNewWell
+ *   SamplerNewWellStart
+ *   SamplerNewWellStop
  *   SamplerNewOrder
  *   SamplerStartConfig
  *   SamplerEndConfig
@@ -144,11 +145,20 @@ ProcessSampler (
 
 
 /****************************************************************************
- * FUNCTION: SamplerNewWell
+ * FUNCTION: SamplerNewWellStart
  ****************************************************************************/
 
 PUBLIC void
-SamplerNewWell (
+SamplerNewWellStart (
+  TSampler * aSampler );
+
+
+/****************************************************************************
+ * FUNCTION: SamplerNewWellStop
+ ****************************************************************************/
+
+PUBLIC void
+SamplerNewWellStop (
   TSampler * aSampler );
 
 

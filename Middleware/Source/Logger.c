@@ -108,6 +108,7 @@ LoggerNewWell (
 	time_t now = time(NULL);
 	struct tm* formatTime = localtime(&now);
 	FILE* filePointer;
+
 	LoggerCloseWell(aLogger);
 
 	char fileName[150];

@@ -152,8 +152,8 @@ PUBLIC void
 PLTHomeAxis (
   TPlotter * aPlotter )
 {
-	PLTSendCommand(aPlotter, HOMEY);
 	PLTSendCommand(aPlotter, HOMEX);
+	PLTSendCommand(aPlotter, HOMEY);
 	PLTSendCommand(aPlotter, HOMEZ);
 }
 

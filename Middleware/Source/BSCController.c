@@ -29,7 +29,8 @@
  *   BSCSetCurrentPosition
  *   BSCStartConfig
  *   BSCStopConfig
- *   BSCNewWell
+ *   BSCNewWellStart
+ *   BSCNewWellStop
  *
  * PRIVATE FUNCTIONS:
  *   UpdateRemainingTimes
@@ -465,6 +466,7 @@ BSCWriteConfiguration (
 			  break;
 		  }
 		  sprintf(line, "%s=%lf\n", ConfigSyntaxWords[i], value);
+		  printf("%s", line);
 		  fputs(line, fp);
 		  i++;
 	  }
@@ -777,13 +779,22 @@ BSCStopConfig ( void )
 }
 
 /****************************************************************************
- * FUNCTION: BSCNewWell
+ * FUNCTION: BSCNewWellStart
  ****************************************************************************/
 PUBLIC void
-BSCNewWell ( void )
+BSCNewWellStart ( void )
 {
 	//system("");		//For Screenshot
-	SamplerNewWell(ControllerObj->Sampler);
+	SamplerNewWellStart(ControllerObj->Sampler);
+}
+
+/****************************************************************************
+ * FUNCTION: BSCNewWellStop
+ ****************************************************************************/
+PUBLIC void
+BSCNewWellStop ( void )
+{
+	SamplerNewWellStop(ControllerObj->Sampler);
 }
 
 

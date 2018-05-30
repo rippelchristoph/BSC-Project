@@ -29,7 +29,8 @@
  *   BSCSetCurrentPosition
  *   BSCStartConfig
  *   BSCStopConfig
- *   BSCNewWell
+ *   BSCNewWellStart
+ *   BSCNewWellStop
  ****************************************************************************/
 
 #ifndef BSCCONTROLLER_H
@@ -72,6 +73,8 @@ typedef struct BSCController {
  * SECTION: Declaration of Global Variables
  ****************************************************************************/
 TBoolean ShutdownBSCController;
+
+//Define Object of BSCController in Header, so EmWi Functions are easier
 TBSCController* ControllerObj;
 
 
@@ -360,11 +363,19 @@ BSCStopConfig ( void );
 
 
 /****************************************************************************
- * FUNCTION: BSCNewWell
+ * FUNCTION: BSCNewWellStart
  ****************************************************************************/
 
 PUBLIC void
-BSCNewWell ( void );
+BSCNewWellStart ( void );
+
+
+/****************************************************************************
+ * FUNCTION: BSCNewWellStop
+ ****************************************************************************/
+
+PUBLIC void
+BSCNewWellStop ( void );
 
 
 
