@@ -1556,10 +1556,10 @@ $rect <150,290,350,330>
 $output false
 class SampleController : Core::Group
 {
-  $rect <20,420,220,460>
+  $rect <10,260,210,300>
   inherited property Bounds = <0,0,450,68>;
 
-  $rect <20,500,220,540>
+  $rect <10,340,210,380>
   inherited method UpdateLayout()
   {
     // Always invoke the inherited method.
@@ -1588,7 +1588,7 @@ class SampleController : Core::Group
     */
   }
 
-  $rect <20,460,220,500>
+  $rect <10,300,210,340>
   inherited method UpdateViewState()
   {
     // Always invoke the inherited method.
@@ -4814,34 +4814,6 @@ class ControllMenu : Core::Group
     SampleController[context.CircuitNumber].RemainingTime=context.RemainingTime;
 
 
-  }
-
-  $rect <1320,130,1520,170>
-  slot onBtn_Test
-  {
-    var int32 x;
-    var int32 y;
-    var int32 i = 0;
-
-    for(y=0;y<6;y=y+1){
-      for(x=0;x<8;x=x+1){
-        Device::Device.onSampleCollected( x, y, i, 2018, 02, 01, 12, 08 ) ;
-        i=i+1;
-        if(i>5){
-          i=0;
-        }
-      }
-    }
-
-
-    Device::Device.onRemainingTime( 0, 0 );
-    Device::Device.onRemainingTime( 1, 1 );
-    Device::Device.onRemainingTime( 2, 2 );
-    Device::Device.onRemainingTime( 3, 3 );
-    Device::Device.onRemainingTime( 4, 4 );
-    Device::Device.onRemainingTime( 5, 5 );
-    Device::Device.onTime( 2018, 01, 11, 20, 30 );
-    Device::Device.UpdateTemperature( -22.5 );  
   }
 
   $rect <20,20,160,60>

@@ -57,7 +57,17 @@ class DeviceClass : Templates::DeviceClass
     // For target code generation you will use your specific device API 
     // to change the affected value.
     $if !$prototyper
-    //wenn newwell==false dann screenshot 
+    //wenn newwell==false dann screenshot
+    if(NewWell==true){
+      native{ 
+        BSCNewWellStart();
+      }
+    }else{
+      native{ 
+        BSCNewWellStop();
+      }
+    }
+
     $endif
     if(NewWell==true)
       trace "NewWell: Opening";
