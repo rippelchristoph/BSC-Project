@@ -62,7 +62,7 @@ class DeviceClass : Templates::DeviceClass
       native{ 
         BSCNewWellStart();
       }
-    }else{
+    }if(NewWell==false){
       native{ 
         BSCNewWellStop();
       }

@@ -3,10 +3,10 @@ $version 1.0
 attr active = Device::DeviceClass;
 attr callStackMonitor_Show = false;
 attr codeColSelect = false;
-attr codeFirstPos = <0,11>;
+attr codeFirstPos = <0,12>;
 attr codeInspector = Device::DeviceClass.OnSetNewWell;
-attr codeSelEnd = <20,18>;
-attr codeSelStart = <20,18>;
+attr codeSelEnd = <18,16>;
+attr codeSelStart = <18,16>;
 attr connectInspectors = false;
 attr debug_TrackUpdates = false;
 attr extractDoc_ClassOverview = true;
@@ -63,7 +63,7 @@ view class Application::SampleController
   attr enableGrid = true;
   attr grid = 10;
   attr scrollTo = <-7,-7>;
-  attr zoom = 1.0;
+  attr zoom = 1.25;
 }
 
 view class Application::Config
@@ -77,13 +77,13 @@ view class Application::Config
 view class Device::DeviceClass
 {
   attr codeColSelect = false;
-  attr codeFirstPos = <0,0>;
-  attr codeInspector = OnSetNumHolesX;
-  attr codeSelEnd = <0,0>;
-  attr codeSelStart = <0,0>;
+  attr codeFirstPos = <0,12>;
+  attr codeInspector = OnSetNewWell;
+  attr codeSelEnd = <18,16>;
+  attr codeSelStart = <18,16>;
   attr enableGrid = true;
   attr grid = 10;
-  attr scrollTo = <139,-7>;
+  attr scrollTo = <-7,-7>;
   attr zoom = 1.0;
 }
 
