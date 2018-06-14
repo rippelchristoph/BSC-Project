@@ -466,7 +466,6 @@ BSCWriteConfiguration (
 			  break;
 		  }
 		  sprintf(line, "%s=%lf\n", ConfigSyntaxWords[i], value);
-		  printf("%s", line);
 		  fputs(line, fp);
 		  i++;
 	  }
@@ -654,6 +653,7 @@ BSCSetNeedleGap (
   int aNeedleGapum )
 {
 	ControllerObj->Configuration->NeedleGapMM =(double) aNeedleGapum / (double) 1000;
+	printf("NeedleGapMM = %lf\n", ControllerObj->Configuration->NeedleGapMM);
 }
 
 /****************************************************************************
